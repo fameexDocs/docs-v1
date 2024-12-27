@@ -2,6 +2,7 @@
 <!doctype html>
 <html>
   <head>
+    <link href="../images/favicon-5d3e445d.ico" rel="icon" type="image/ico" />
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -9,7 +10,7 @@
             name="FameEX OpenAPI Docs"
             content="Documentation for the FameEX OpenAPI"
         >
-    <title>t(:title)</title>
+    <title>FameEX OpenAPI Docs</title>
 
     <style media="screen">
       .highlight table td { padding: 5px; }
@@ -286,15 +287,22 @@
   color: #859900;
 }
     </style>
-    <link href="../stylesheets/screen-9c19b03a.css" rel="stylesheet" media="screen" />
-    <link href="../stylesheets/print-966d6edc.css" rel="stylesheet" media="print" />
-      <script src="../javascripts/all-024da600.js"></script>
+    <link href="../stylesheets/screen-0ae3ae24.css" rel="stylesheet" media="screen" />
+    <link href="../stylesheets/print-e3a9e2c4.css" rel="stylesheet" media="print" />
+      <script src="../javascripts/all-8e135379.js"></script>
 
     <script>
       $(function() { setupCodeCopy(); });
     </script>
   </head>
-
+  <header class="fixed-header">
+    <span class="header-logo-wrapper">
+      <img src="../images/logo-8495a1c2.svg" alt="" />
+    </span>
+    <span class="header-button-wrapper">
+      <a href="/docs-v1/zh/index.html" class="header-button">中文</a>
+    </span>
+  </header>      
   <body class="en en_index" data-languages="[&quot;http&quot;,&quot;shell&quot;,&quot;java&quot;,&quot;go&quot;,&quot;python&quot;,&quot;php&quot;,&quot;javascript--node&quot;]">
     <a href="#" id="nav-button">
       <span>
@@ -303,7 +311,6 @@
       </span>
     </a>
     <div class="toc-wrapper">
-      <img src="../images/logo-1e815a84.png" class="logo" alt="" />
         <div class="lang-selector">
               <a href="#" data-language-name="http">HTTP</a>
               <a href="#" data-language-name="shell">SHELL</a>
@@ -323,6 +330,11 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#example-of-interface" class="toc-h2 toc-link" data-title="Example of Interface">Example of Interface</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#check-server-time" class="toc-h3 toc-link" data-title="Check Server Time">Check Server Time</a>
+                          </li>
+                      </ul>
                   </li>
                   <li>
                     <a href="#document-parameter-specifications" class="toc-h2 toc-link" data-title="Document Parameter Specifications">Document Parameter Specifications</a>
@@ -361,12 +373,138 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#10xx-general-server-or-network-issues" class="toc-h2 toc-link" data-title="10XX - General Server or Network Issues">10XX - General Server or Network Issues</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#code-1000-unknown" class="toc-h3 toc-link" data-title="Code:-1000 UNKNOWN">Code:-1000 UNKNOWN</a>
+                          </li>
+                          <li>
+                            <a href="#code-1001-disconnected" class="toc-h3 toc-link" data-title="Code:-1001 DISCONNECTED">Code:-1001 DISCONNECTED</a>
+                          </li>
+                          <li>
+                            <a href="#code-1002-unauthorized" class="toc-h3 toc-link" data-title="Code:-1002 UNAUTHORIZED">Code:-1002 UNAUTHORIZED</a>
+                          </li>
+                          <li>
+                            <a href="#code-1003-too_many_requests" class="toc-h3 toc-link" data-title="Code:-1003 TOO_MANY_REQUESTS">Code:-1003 TOO_MANY_REQUESTS</a>
+                          </li>
+                          <li>
+                            <a href="#code-1004-no_this_company" class="toc-h3 toc-link" data-title="Code:-1004 NO_THIS_COMPANY">Code:-1004 NO_THIS_COMPANY</a>
+                          </li>
+                          <li>
+                            <a href="#code-1006-unexpected_resp" class="toc-h3 toc-link" data-title="Code:-1006 UNEXPECTED_RESP">Code:-1006 UNEXPECTED_RESP</a>
+                          </li>
+                          <li>
+                            <a href="#code-1007-timeout" class="toc-h3 toc-link" data-title="Code:-1007 TIMEOUT">Code:-1007 TIMEOUT</a>
+                          </li>
+                          <li>
+                            <a href="#code-1014-unknown_order_composition" class="toc-h3 toc-link" data-title="Code:-1014 UNKNOWN_ORDER_COMPOSITION">Code:-1014 UNKNOWN_ORDER_COMPOSITION</a>
+                          </li>
+                          <li>
+                            <a href="#code-1015-too_many_orders" class="toc-h3 toc-link" data-title="Code:-1015 TOO_MANY_ORDERS">Code:-1015 TOO_MANY_ORDERS</a>
+                          </li>
+                          <li>
+                            <a href="#code-1016-service_shutting_down" class="toc-h3 toc-link" data-title="Code:-1016 SERVICE_SHUTTING_DOWN">Code:-1016 SERVICE_SHUTTING_DOWN</a>
+                          </li>
+                          <li>
+                            <a href="#code-1017-no_content_type" class="toc-h3 toc-link" data-title="Code:-1017 NO_CONTENT_TYPE">Code:-1017 NO_CONTENT_TYPE</a>
+                          </li>
+                          <li>
+                            <a href="#code-1020-unsupported_operation" class="toc-h3 toc-link" data-title="Code:-1020 UNSUPPORTED_OPERATION">Code:-1020 UNSUPPORTED_OPERATION</a>
+                          </li>
+                          <li>
+                            <a href="#code-1021-invalid_timestamp" class="toc-h3 toc-link" data-title="Code:-1021 INVALID_TIMESTAMP">Code:-1021 INVALID_TIMESTAMP</a>
+                          </li>
+                          <li>
+                            <a href="#code-1022-invalid_signature" class="toc-h3 toc-link" data-title="Code:-1022 INVALID_SIGNATURE">Code:-1022 INVALID_SIGNATURE</a>
+                          </li>
+                          <li>
+                            <a href="#code-1023-unauthorized" class="toc-h3 toc-link" data-title="Code:-1023 UNAUTHORIZED">Code:-1023 UNAUTHORIZED</a>
+                          </li>
+                          <li>
+                            <a href="#code-1024-unauthorized" class="toc-h3 toc-link" data-title="Code:-1024 UNAUTHORIZED">Code:-1024 UNAUTHORIZED</a>
+                          </li>
+                      </ul>
                   </li>
                   <li>
                     <a href="#11xx-request-issues" class="toc-h2 toc-link" data-title="11XX - Request Issues">11XX - Request Issues</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#code-1100-illegal_chars" class="toc-h3 toc-link" data-title="Code:-1100 ILLEGAL_CHARS">Code:-1100 ILLEGAL_CHARS</a>
+                          </li>
+                          <li>
+                            <a href="#code-1101-too_many_parameters" class="toc-h3 toc-link" data-title="Code:-1101 TOO_MANY_PARAMETERS">Code:-1101 TOO_MANY_PARAMETERS</a>
+                          </li>
+                          <li>
+                            <a href="#code-1102-mandatory_param_empty_or_malformed" class="toc-h3 toc-link" data-title="Code:-1102 MANDATORY_PARAM_EMPTY_OR_MALFORMED">Code:-1102 MANDATORY_PARAM_EMPTY_OR_MALFORMED</a>
+                          </li>
+                          <li>
+                            <a href="#code-1103-unknown_param" class="toc-h3 toc-link" data-title="Code:-1103 UNKNOWN_PARAM">Code:-1103 UNKNOWN_PARAM</a>
+                          </li>
+                          <li>
+                            <a href="#code-1104-unread_parameters" class="toc-h3 toc-link" data-title="Code:-1104 UNREAD_PARAMETERS">Code:-1104 UNREAD_PARAMETERS</a>
+                          </li>
+                          <li>
+                            <a href="#code-1105" class="toc-h3 toc-link" data-title="Code:-1105">Code:-1105</a>
+                          </li>
+                          <li>
+                            <a href="#code-1106-param_not_required" class="toc-h3 toc-link" data-title="Code:-1106 PARAM_NOT_REQUIRED">Code:-1106 PARAM_NOT_REQUIRED</a>
+                          </li>
+                          <li>
+                            <a href="#code-1111-bad_precision" class="toc-h3 toc-link" data-title="Code:-1111 BAD_PRECISION">Code:-1111 BAD_PRECISION</a>
+                          </li>
+                          <li>
+                            <a href="#code-1112" class="toc-h3 toc-link" data-title="Code:-1112">Code:-1112</a>
+                          </li>
+                          <li>
+                            <a href="#code-1116-invalid_order_type" class="toc-h3 toc-link" data-title="Code:-1116 INVALID_ORDER_TYPE">Code:-1116 INVALID_ORDER_TYPE</a>
+                          </li>
+                          <li>
+                            <a href="#code-1117-invalid_side" class="toc-h3 toc-link" data-title="Code:-1117 INVALID_SIDE">Code:-1117 INVALID_SIDE</a>
+                          </li>
+                          <li>
+                            <a href="#code-1121" class="toc-h3 toc-link" data-title="Code:-1121">Code:-1121</a>
+                          </li>
+                          <li>
+                            <a href="#code-1136-order_quantity_too_small" class="toc-h3 toc-link" data-title="Code:-1136 ORDER_QUANTITY_TOO_SMALL">Code:-1136 ORDER_QUANTITY_TOO_SMALL</a>
+                          </li>
+                          <li>
+                            <a href="#code-1138-order_price_wave_exceed" class="toc-h3 toc-link" data-title="Code:-1138 ORDER_PRICE_WAVE_EXCEED">Code:-1138 ORDER_PRICE_WAVE_EXCEED</a>
+                          </li>
+                          <li>
+                            <a href="#code-1139-order_not_support_market" class="toc-h3 toc-link" data-title="Code:-1139 ORDER_NOT_SUPPORT_MARKET">Code:-1139 ORDER_NOT_SUPPORT_MARKET</a>
+                          </li>
+                          <li>
+                            <a href="#code-1145" class="toc-h3 toc-link" data-title="Code:-1145">Code:-1145</a>
+                          </li>
+                          <li>
+                            <a href="#code-1147-price_volume_presion_error" class="toc-h3 toc-link" data-title="Code:-1147 PRICE_VOLUME_PRESION_ERROR">Code:-1147 PRICE_VOLUME_PRESION_ERROR</a>
+                          </li>
+                      </ul>
                   </li>
                   <li>
                     <a href="#2xxx-other-issues" class="toc-h2 toc-link" data-title="2XXX - Other Issues">2XXX - Other Issues</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#code-2013-no_such_order" class="toc-h3 toc-link" data-title="Code:-2013 NO_SUCH_ORDER">Code:-2013 NO_SUCH_ORDER</a>
+                          </li>
+                          <li>
+                            <a href="#code-2015" class="toc-h3 toc-link" data-title="Code:-2015">Code:-2015</a>
+                          </li>
+                          <li>
+                            <a href="#code-2016" class="toc-h3 toc-link" data-title="Code:-2016">Code:-2016</a>
+                          </li>
+                          <li>
+                            <a href="#code-2017-balance_not_enough" class="toc-h3 toc-link" data-title="Code:-2017 balance_not_enough">Code:-2017 balance_not_enough</a>
+                          </li>
+                          <li>
+                            <a href="#code-2100" class="toc-h3 toc-link" data-title="Code:-2100">Code:-2100</a>
+                          </li>
+                          <li>
+                            <a href="#code-2200" class="toc-h3 toc-link" data-title="Code:-2200">Code:-2200</a>
+                          </li>
+                          <li>
+                            <a href="#code-35" class="toc-h3 toc-link" data-title="Code:35">Code:35</a>
+                          </li>
+                      </ul>
                   </li>
               </ul>
           </li>
@@ -395,15 +533,83 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#public" class="toc-h2 toc-link" data-title="Public">Public</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#security-none" class="toc-h3 toc-link" data-title="Security: None">Security: None</a>
+                          </li>
+                          <li>
+                            <a href="#test-connectivity" class="toc-h3 toc-link" data-title="Test Connectivity">Test Connectivity</a>
+                          </li>
+                          <li>
+                            <a href="#check-server-time-2" class="toc-h3 toc-link" data-title="Check Server Time">Check Server Time</a>
+                          </li>
+                          <li>
+                            <a href="#symbol-pair-list" class="toc-h3 toc-link" data-title="Symbol Pair List">Symbol Pair List</a>
+                          </li>
+                      </ul>
                   </li>
                   <li>
                     <a href="#market" class="toc-h2 toc-link" data-title="Market">Market</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#security-none-2" class="toc-h3 toc-link" data-title="Security: None">Security: None</a>
+                          </li>
+                          <li>
+                            <a href="#depth" class="toc-h3 toc-link" data-title="Depth">Depth</a>
+                          </li>
+                          <li>
+                            <a href="#24hrs-ticker" class="toc-h3 toc-link" data-title="24hrs Ticker">24hrs Ticker</a>
+                          </li>
+                          <li>
+                            <a href="#recent-trade-list" class="toc-h3 toc-link" data-title="Recent Trade List">Recent Trade List</a>
+                          </li>
+                          <li>
+                            <a href="#k-line-candlestick-data" class="toc-h3 toc-link" data-title="K-Line/Candlestick Data">K-Line/Candlestick Data</a>
+                          </li>
+                      </ul>
                   </li>
                   <li>
                     <a href="#trade" class="toc-h2 toc-link" data-title="Trade">Trade</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#security-trade" class="toc-h3 toc-link" data-title="Security: TRADE">Security: TRADE</a>
+                          </li>
+                          <li>
+                            <a href="#create-new-order" class="toc-h3 toc-link" data-title="Create New Order">Create New Order</a>
+                          </li>
+                          <li>
+                            <a href="#test-new-order" class="toc-h3 toc-link" data-title="Test New Order">Test New Order</a>
+                          </li>
+                          <li>
+                            <a href="#batch-orders" class="toc-h3 toc-link" data-title="Batch Orders">Batch Orders</a>
+                          </li>
+                          <li>
+                            <a href="#query-order" class="toc-h3 toc-link" data-title="Query Order">Query Order</a>
+                          </li>
+                          <li>
+                            <a href="#cancel-order" class="toc-h3 toc-link" data-title="Cancel Order">Cancel Order</a>
+                          </li>
+                          <li>
+                            <a href="#batch-order-cancellation" class="toc-h3 toc-link" data-title="Batch Order Cancellation">Batch Order Cancellation</a>
+                          </li>
+                          <li>
+                            <a href="#current-open-orders" class="toc-h3 toc-link" data-title="Current Open Orders">Current Open Orders</a>
+                          </li>
+                          <li>
+                            <a href="#trading-records" class="toc-h3 toc-link" data-title="Trading Records">Trading Records</a>
+                          </li>
+                      </ul>
                   </li>
                   <li>
                     <a href="#account" class="toc-h2 toc-link" data-title="Account">Account</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#security-user_data" class="toc-h3 toc-link" data-title="Security: USER_DATA">Security: USER_DATA</a>
+                          </li>
+                          <li>
+                            <a href="#account-information" class="toc-h3 toc-link" data-title="Account Information">Account Information</a>
+                          </li>
+                      </ul>
                   </li>
               </ul>
           </li>
@@ -412,12 +618,84 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#public-2" class="toc-h2 toc-link" data-title="Public">Public</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#security-none-3" class="toc-h3 toc-link" data-title="Security: None">Security: None</a>
+                          </li>
+                          <li>
+                            <a href="#test-connectivity-2" class="toc-h3 toc-link" data-title="Test Connectivity">Test Connectivity</a>
+                          </li>
+                          <li>
+                            <a href="#check-server-time-3" class="toc-h3 toc-link" data-title="Check Server Time">Check Server Time</a>
+                          </li>
+                          <li>
+                            <a href="#futures-list" class="toc-h3 toc-link" data-title="Futures List">Futures List</a>
+                          </li>
+                      </ul>
                   </li>
                   <li>
                     <a href="#market-2" class="toc-h2 toc-link" data-title="Market">Market</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#security-none-4" class="toc-h3 toc-link" data-title="Security: None">Security: None</a>
+                          </li>
+                          <li>
+                            <a href="#depth-2" class="toc-h3 toc-link" data-title="Depth">Depth</a>
+                          </li>
+                          <li>
+                            <a href="#24hrs-ticker-2" class="toc-h3 toc-link" data-title="24hrs Ticker">24hrs Ticker</a>
+                          </li>
+                          <li>
+                            <a href="#obtain-index-mark-price" class="toc-h3 toc-link" data-title="Obtain Index/Mark Price">Obtain Index/Mark Price</a>
+                          </li>
+                          <li>
+                            <a href="#k-line-candlestick-data-2" class="toc-h3 toc-link" data-title="K-Line/Candlestick Data">K-Line/Candlestick Data</a>
+                          </li>
+                      </ul>
                   </li>
                   <li>
                     <a href="#trade-2" class="toc-h2 toc-link" data-title="Trade">Trade</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#security-trade-2" class="toc-h3 toc-link" data-title="Security: TRADE">Security: TRADE</a>
+                          </li>
+                          <li>
+                            <a href="#create-new-order-2" class="toc-h3 toc-link" data-title="Create New Order">Create New Order</a>
+                          </li>
+                          <li>
+                            <a href="#create-conditional-order" class="toc-h3 toc-link" data-title="Create Conditional Order">Create Conditional Order</a>
+                          </li>
+                          <li>
+                            <a href="#cancel-order-2" class="toc-h3 toc-link" data-title="Cancel Order">Cancel Order</a>
+                          </li>
+                          <li>
+                            <a href="#cancel-trigger-order" class="toc-h3 toc-link" data-title="Cancel Trigger Order">Cancel Trigger Order</a>
+                          </li>
+                          <li>
+                            <a href="#order-details" class="toc-h3 toc-link" data-title="Order Details">Order Details</a>
+                          </li>
+                          <li>
+                            <a href="#current-order-information" class="toc-h3 toc-link" data-title="Current Order Information">Current Order Information</a>
+                          </li>
+                          <li>
+                            <a href="#historical-order-records" class="toc-h3 toc-link" data-title="Historical Order Records">Historical Order Records</a>
+                          </li>
+                          <li>
+                            <a href="#pnl-records" class="toc-h3 toc-link" data-title="PnL Records">PnL Records</a>
+                          </li>
+                          <li>
+                            <a href="#trading-record" class="toc-h3 toc-link" data-title="Trading Record">Trading Record</a>
+                          </li>
+                          <li>
+                            <a href="#change-position-mode" class="toc-h3 toc-link" data-title="Change Position Mode">Change Position Mode</a>
+                          </li>
+                          <li>
+                            <a href="#change-margin-mode" class="toc-h3 toc-link" data-title="Change Margin Mode">Change Margin Mode</a>
+                          </li>
+                          <li>
+                            <a href="#change-leverage" class="toc-h3 toc-link" data-title="Change Leverage">Change Leverage</a>
+                          </li>
+                      </ul>
                   </li>
               </ul>
           </li>
@@ -429,12 +707,40 @@
                   </li>
                   <li>
                     <a href="#ws-information" class="toc-h2 toc-link" data-title="Ws Information">Ws Information</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#heartbeat" class="toc-h3 toc-link" data-title="Heartbeat">Heartbeat</a>
+                          </li>
+                          <li>
+                            <a href="#demo" class="toc-h3 toc-link" data-title="Demo">Demo</a>
+                          </li>
+                      </ul>
                   </li>
                   <li>
                     <a href="#command-format" class="toc-h2 toc-link" data-title="Command Format">Command Format</a>
                   </li>
                   <li>
                     <a href="#subscription" class="toc-h2 toc-link" data-title="Subscription">Subscription</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#subscribe-full-depth" class="toc-h3 toc-link" data-title="Subscribe Full Depth">Subscribe Full Depth</a>
+                          </li>
+                          <li>
+                            <a href="#subscribe-to-real-time-trade" class="toc-h3 toc-link" data-title="Subscribe to Real Time Trade">Subscribe to Real Time Trade</a>
+                          </li>
+                          <li>
+                            <a href="#subscribe-to-k-line-market" class="toc-h3 toc-link" data-title="Subscribe to K-Line Market">Subscribe to K-Line Market</a>
+                          </li>
+                          <li>
+                            <a href="#subscribe-to-market-tickers" class="toc-h3 toc-link" data-title="Subscribe to Market Tickers">Subscribe to Market Tickers</a>
+                          </li>
+                          <li>
+                            <a href="#request-k-line-history-data" class="toc-h3 toc-link" data-title="Request K-Line History Data">Request K-Line History Data</a>
+                          </li>
+                          <li>
+                            <a href="#request-history-trade" class="toc-h3 toc-link" data-title="Request History Trade">Request History Trade</a>
+                          </li>
+                      </ul>
                   </li>
               </ul>
           </li>
@@ -443,9 +749,31 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#example-of-signature" class="toc-h2 toc-link" data-title="Example of signature">Example of signature</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#java" class="toc-h3 toc-link" data-title="Java">Java</a>
+                          </li>
+                      </ul>
                   </li>
                   <li>
                     <a href="#example-of-create-order" class="toc-h2 toc-link" data-title="Example of create order">Example of create order</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#java-2" class="toc-h3 toc-link" data-title="Java">Java</a>
+                          </li>
+                          <li>
+                            <a href="#go" class="toc-h3 toc-link" data-title="Go">Go</a>
+                          </li>
+                          <li>
+                            <a href="#python" class="toc-h3 toc-link" data-title="Python">Python</a>
+                          </li>
+                          <li>
+                            <a href="#php" class="toc-h3 toc-link" data-title="PHP">PHP</a>
+                          </li>
+                          <li>
+                            <a href="#node-js" class="toc-h3 toc-link" data-title="Node.js">Node.js</a>
+                          </li>
+                      </ul>
                   </li>
               </ul>
           </li>
