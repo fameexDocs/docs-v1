@@ -47,11 +47,11 @@ Interface types are divided into: Public, Market, Trade, Account.
 *   The interfaces under the "Public" and "Market" categories can be accessed without requiring an API key or signature.
 *   "Trade" and "Account" security require API-Key and signature verification before access.
 *   The signature content is related to the parameters. If the parameters are entered incorrectly, the parameter error or null value will be returned.
-*   For interfaces that require signature verification, X-CH-SIGN, X-CH-APIKEY, and X-CH-TS must be added to the header for signature verification. For signature rules and examples, please refer to: [Signature Example](https://fameexdoc.github.io/docs-v1/en/index.html?go#example-of-signature) (apiKey and secretKey in this document are virtual values. The real content needs to be obtained by the user in the API management of the front page.)
+*   For interfaces that require signature verification, X-CH-SIGN, X-CH-APIKEY, and X-CH-TS must be added to the header for signature verification. For signature rules and examples, please refer to: [Signature Example](https://fameexdocs.github.io/docs-v1/en/index.html?go#example-of-signature) (apiKey and secretKey in this document are virtual values. The real content needs to be obtained by the user in the API management of the front page.)
 
 ## Return Code Type
 
-Please refer to the document: [Return Enums](https://fameexdoc.github.io/docs-v1/en/index.html?go#return-code-type-2)
+Please refer to the document: [Return Enums](https://fameexdocs.github.io/docs-v1/en/index.html?go#return-code-type-2)
 
 ## API Basic Information
 

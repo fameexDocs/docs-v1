@@ -47,11 +47,11 @@ GET https://openapi.xxx.com/sapi/v1/time
 *   公共和行情类下的接口无需API-Key或者签名就可访问。
 *   交易和账户安全需要API-Key和签名验证后才可访问。
 *   签名内容和参数有关，若参数输入错误则会返回提示参数错误或空值。
-*   需要签名验证的接口 要在Header中添加X-CH-SIGN，X-CH-APIKEY，X-CH-TS进行验签。签名规则和示例可参照：[签名示例](https://fameexdoc.github.io/docs-v1/zh/index.html?go#09957702bc)(文档中的apiKey，secretKey均为虚拟值；真实内容需要用户在前台页面的API管理中申请获取)。
+*   需要签名验证的接口 要在Header中添加X-CH-SIGN，X-CH-APIKEY，X-CH-TS进行验签。签名规则和示例可参照：[签名示例](https://fameexdocs.github.io/docs-v1/zh/index.html?go#09957702bc)(文档中的apiKey，secretKey均为虚拟值；真实内容需要用户在前台页面的API管理中申请获取)。
 
 ## 返回码的类型
 
-见 [返回码类型](https://fameexdoc.github.io/docs-v1/zh/index.html#8ec82582cd)
+见 [返回码类型](https://fameexdocs.github.io/docs-v1/zh/index.html#8ec82582cd)
 
 ## API基本信息
 
