@@ -838,14 +838,14 @@
         <h1 id='11affa2be2'>文档说明</h1><h2 id='b5ed0cdb50'>接口示例</h2>
 <p>下方接口为获取服务器时间的接口，以该接口作为示例，展示接口格式、访问链接和参数说明描述。</p>
 <h3 id='3f1907847c'>获取服务器时间</h3>
-<p><code>GET https://openapi.xxx.com/sapi/v1/time</code></p>
+<p><code>GET https://openapi.fameex.net/sapi/v1/time</code></p>
 
 <p>获取服务器时间</p>
 
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.xxx.com/sapi/v1/time
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/time
 </span></code></pre></div>
 <blockquote>
 <p>返回示例</p>
@@ -897,7 +897,7 @@
 <p>见 <a href="https://fameexdocs.github.io/docs-v1/zh/index.html#8ec82582cd">返回码类型</a></p>
 <h2 id='api'>API基本信息</h2>
 <ul>
-<li>  本篇列出REST接口的baseurl<code>https://openapi.xxx.com</code>。</li>
+<li>  本篇列出REST接口的baseurl<code>https://openapi.fameex.net</code>。</li>
 <li>  所有接口都会返回一个JSON object或者array。</li>
 <li>  响应中如有数组，数组元素以时间倒序排列，越早的数据越靠前。</li>
 <li>  所有时间、时间戳均为Unix时间，单位为<strong>毫秒</strong>。</li>
@@ -1263,23 +1263,23 @@
 <h1 id='57aa173947'>现货交易</h1><h2 id='4f270f1396'>公共</h2><h3 id='none'>安全类型: None</h3>
 <aside class='notice'>公共类型接口不需要API-key或者签名就能自由访问。</aside>
 <h3 id='10b7d8eccc'>测试连接</h3>
-<p><code>GET https://openapi.xxx.com/sapi/v1/ping</code></p>
+<p><code>GET https://openapi.fameex.netsapi/v1/ping</code></p>
 
 <p>测试REST API的连通性</p>
 
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.xxx.com/sapi/v1/ping
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/ping
 </span></code></pre></div><h3 id='e76ff2af0c'>服务器时间</h3>
-<p><code>GET https://openapi.xxx.com/sapi/v1/time</code></p>
+<p><code>GET https://openapi.fameex.net/sapi/v1/time</code></p>
 
 <p>获取服务器时间</p>
 
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.xxx.com/sapi/v1/time
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/time
 </span></code></pre></div>
 <blockquote>
 <p>返回示例</p>
@@ -1313,14 +1313,14 @@
 </tr>
 </tbody></table>
 <h3 id='df6185ef0f'>币对列表</h3>
-<p><code>GET https://openapi.xxx.com/sapi/v1/symbols</code></p>
+<p><code>GET https://openapi.fameex.net/sapi/v1/symbols</code></p>
 
 <p>获取市场支持的币对集合</p>
 
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.xxx.com/sapi/v1/symbols
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/symbols
 </span></code></pre></div>
 <blockquote>
 <p>返回示例</p>
@@ -1453,14 +1453,14 @@
 <h2 id='8e4b902c12'>行情</h2><h3 id='none-2'>安全类型: None</h3>
 <aside class='notice'>行情下方的接口不需要API-Key或者签名就能自由访问。</aside>
 <h3 id='b754edd9d5'>订单薄</h3>
-<p><code>GET https://openapi.xxx.com/sapi/v1/depth</code></p>
+<p><code>GET https://openapi.fameex.net/sapi/v1/depth</code></p>
 
 <p>获取市场订单薄深度信息</p>
 
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.xxx.com/sapi/v1/depth?symbol=BTCUSDT&amp;limit=100
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/depth?symbol=BTCUSDT&amp;limit=100
 </span></code></pre></div>
 <p><strong>请求参数</strong></p>
 
@@ -1542,14 +1542,14 @@
 
 <p>bids和asks所对应的信息代表了订单薄的所有价格以及价格对应的数量的信息, 由最优价格从上到下排列</p>
 <h3 id='ticker'>行情Ticker</h3>
-<p><code>GET https://openapi.xxx.com/sapi/v1/ticker</code></p>
+<p><code>GET https://openapi.fameex.net/sapi/v1/ticker</code></p>
 
 <p>获取24小时价格变化数据</p>
 
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.xxx.com/sapi/v1/ticker?symbol=BTCUSDT
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/ticker?symbol=BTCUSDT
 </span></code></pre></div>
 <p><strong>请求参数</strong></p>
 
@@ -1648,14 +1648,14 @@
 </tr>
 </tbody></table>
 <h3 id='fceaf3d0b6'>最近成交</h3>
-<p><code>GET https://openapi.xxx.com/sapi/v1/trades</code></p>
+<p><code>GET https://openapi.fameex.net/sapi/v1/trades</code></p>
 
 <p>获取最近成交数据</p>
 
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.xxx.com/sapi/v1/trades?symbol=BTCUSDT&amp;limit=100
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/trades?symbol=BTCUSDT&amp;limit=100
 </span></code></pre></div>
 <p><strong>请求参数</strong></p>
 
@@ -1732,14 +1732,14 @@
 </tr>
 </tbody></table>
 <h3 id='k-2'>K线/蜡烛图数据</h3>
-<p><code>GET https://openapi.xxx.com/sapi/v1/klines</code></p>
+<p><code>GET https://openapi.fameex.net/sapi/v1/klines</code></p>
 
 <p>获取K线数据</p>
 
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.xxx.com/sapi/v1/klines?symbol=BTCUSDT&amp;interval=1min&amp;limit=100
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/klines?symbol=BTCUSDT&amp;interval=1min&amp;limit=100
 </span></code></pre></div>
 <p><strong>请求参数</strong></p>
 
@@ -1847,7 +1847,7 @@
 <h2 id='dfe799947f'>交易</h2><h3 id='trade'>安全类型: TRADE</h3>
 <aside class='notice'>交易下方的接口都需要签名和API-key验证。</aside>
 <h3 id='8be954be0d'>创建新订单</h3>
-<p><code>POST https://openapi.xxx.com/sapi/v1/order</code></p>
+<p><code>POST https://openapi.fameex.net/sapi/v1/order</code></p>
 
 <p><strong>限速规则: 100次/2s</strong></p>
 
@@ -1880,7 +1880,7 @@
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.xxx.com/sapi/v1/order
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.fameex.net/sapi/v1/order
 
 body
 {
@@ -2023,7 +2023,7 @@ body
 </tr>
 </tbody></table>
 <h3 id='623198186c'>创建测试订单</h3>
-<p><code>POST https://openapi.xxx.com/sapi/v1/order/test</code></p>
+<p><code>POST https://openapi.fameex.net/sapi/v1/order/test</code></p>
 
 <p>创建和验证新订单, 但不会送入撮合引擎</p>
 
@@ -2056,7 +2056,7 @@ body
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.xxx.com/sapi/v1/order/test
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.fameex.net/sapi/v1/order/test
 
 body
 {
@@ -2114,7 +2114,7 @@ body
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{}</span><span class="w">
 </span></code></pre></div><h3 id='de93fae07b'>批量下单</h3>
-<p><code>POST https://openapi.xxx.com/sapi/v1/batchOrders</code></p>
+<p><code>POST https://openapi.fameex.net/sapi/v1/batchOrders</code></p>
 
 <p><strong>限速规则: 50次/2s 一个批量最多10个订单</strong></p>
 
@@ -2147,7 +2147,7 @@ body
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.xxx.com/sapi/v1/batchOrders
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.fameex.net/sapi/v1/batchOrders
 
 body
 {
@@ -2239,7 +2239,7 @@ body
 </tr>
 </tbody></table>
 <h3 id='1285d91409'>订单查询</h3>
-<p><code>GET https://openapi.xxx.com/sapi/v1/order</code></p>
+<p><code>GET https://openapi.fameex.net/sapi/v1/order</code></p>
 
 <p><strong>限速规则: 20次/2s</strong></p>
 
@@ -2272,7 +2272,7 @@ body
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.xxx.com/sapi/v1/order?symbol=ethusdt&amp;orderID=111000111
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/order?symbol=ethusdt&amp;orderID=111000111
 </span></code></pre></div>
 <p><strong>请求参数</strong></p>
 
@@ -2389,7 +2389,7 @@ body
 </tr>
 </tbody></table>
 <h3 id='4e53c0fccd'>撤销订单</h3>
-<p><code>POST https://openapi.xxx.com/sapi/v1/cancel</code></p>
+<p><code>POST https://openapi.fameex.net/sapi/v1/cancel</code></p>
 
 <p><strong>限速规则: 100次/2s</strong></p>
 
@@ -2422,7 +2422,7 @@ body
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.xxx.com/sapi/v1/cancel
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.fameex.net/sapi/v1/cancel
 
 body
 {
@@ -2492,7 +2492,7 @@ body
 </tr>
 </tbody></table>
 <h3 id='ad00632ed5'>批量撤销订单</h3>
-<p><code>POST https://openapi.xxx.com/sapi/v1/batchCancel</code></p>
+<p><code>POST https://openapi.fameex.net/sapi/v1/batchCancel</code></p>
 
 <p><strong>限速规则: 50次/2s 一次批量最多10个订单</strong></p>
 
@@ -2525,7 +2525,7 @@ body
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.xxx.com/sapi/v1/batchCancel
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.fameex.net/sapi/v1/batchCancel
 
 body
 {
@@ -2573,7 +2573,7 @@ body
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{}</span><span class="w"> </span><span class="err">//通常是因为订单号错误，需要检查orderIds里的内容是否正确</span><span class="w">
 </span></code></pre></div><h3 id='936545ae3e'>当前订单</h3>
-<p><code>GET https://openapi.xxx.com/sapi/v1/openOrders</code></p>
+<p><code>GET https://openapi.fameex.net/sapi/v1/openOrders</code></p>
 
 <p><strong>限速规则: 20次/2s</strong></p>
 
@@ -2726,7 +2726,7 @@ body
 </tr>
 </tbody></table>
 <h3 id='7d44b7792d'>交易记录</h3>
-<p><code>GET https://openapi.xxx.com/sapi/v1/myTrades</code></p>
+<p><code>GET https://openapi.fameex.net/sapi/v1/myTrades</code></p>
 
 <p><strong>限速规则: 20次/2s</strong></p>
 
@@ -2759,7 +2759,7 @@ body
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.xxx.com/sapi/v1/myTrades?symbol=BTCUSDT&amp;limit=100
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&amp;limit=100
 </span></code></pre></div>
 <p><strong>请求参数</strong></p>
 
@@ -2926,7 +2926,7 @@ body
 <h2 id='c3d92b20c8'>账户</h2><h3 id='user_data'>安全类型: USER_DATA</h3>
 <aside class="notice">账户下方的接口都需要签名和API-key验证。</aside>
 <h3 id='bd9157656f'>账户信息</h3>
-<p><code>GET https://openapi.xxx.com/sapi/v1/account</code></p>
+<p><code>GET https://openapi.fameex.net/sapi/v1/account</code></p>
 
 <p><strong>限速规则: 20次/2s</strong></p>
 
@@ -3012,11 +3012,11 @@ body
 <h1 id='5bf19eee5a'>合约交易</h1><h2 id='4f270f1396-2'>公共</h2><h3 id='none-3'>安全类型: None</h3>
 <aside class="notice">公共下方的接口不需要API-key或者签名就能自由访问。</aside>
 <h3 id='10b7d8eccc-2'>测试连接</h3>
-<p><code>GET https://futuresopenapi.xxx.com/fapi/v1/ping</code></p>
+<p><code>GET https://futuresopenapi.fameex.net/fapi/v1/ping</code></p>
 
 <p>测试REST API的连通性</p>
 <h3 id='3f1907847c-2'>获取服务器时间</h3>
-<p><code>GET https://futuresopenapi.xxx.com/fapi/v1/time</code></p>
+<p><code>GET https://futuresopenapi.fameex.net/fapi/v1/time</code></p>
 
 <blockquote>
 <p>返回示例</p>
@@ -3050,12 +3050,12 @@ body
 </tr>
 </tbody></table>
 <h3 id='5ae89a50fd'>合约列表</h3>
-<p><code>GET https://futuresopenapi.xxx.com/fapi/v1/contracts</code></p>
+<p><code>GET https://futuresopenapi.fameex.net/fapi/v1/contracts</code></p>
 
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.xxx.com/fapi/v1/contracts
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.fameex.net/fapi/v1/contracts
 </span></code></pre></div>
 <blockquote>
 <p>返回示例</p>
@@ -3187,14 +3187,14 @@ body
 <h2 id='8e4b902c12-2'>行情</h2><h3 id='none-4'>安全类型: None</h3>
 <aside class="notice">行情下方的接口不需要API-Key或者签名就能自由访问</aside>
 <h3 id='b754edd9d5-2'>订单薄</h3>
-<p><code>GET https://futuresopenapi.xxx.com/fapi/v1/depth</code></p>
+<p><code>GET https://futuresopenapi.fameex.net/fapi/v1/depth</code></p>
 
 <p>市场订单薄深度信息</p>
 
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.xxx.com/fapi/v1/depth?contractName=E-BTC-USDT&amp;limit=100
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.fameex.net/fapi/v1/depth?contractName=E-BTC-USDT&amp;limit=100
 </span></code></pre></div>
 <p><strong>请求参数</strong></p>
 
@@ -3276,14 +3276,14 @@ body
 
 <p>bids和asks所对应的信息代表了订单薄的所有价格以及价格对应的数量的信息, 由最优价格从上到下排列</p>
 <h3 id='ticker-2'>行情Ticker</h3>
-<p><code>GET https://futuresopenapi.xxx.com/fapi/v1/ticker</code></p>
+<p><code>GET https://futuresopenapi.fameex.net/fapi/v1/ticker</code></p>
 
 <p>24小时价格变化数据</p>
 
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.xxx.com/fapi/v1/ticker?contractName=E-BTC-USDT
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.fameex.net/fapi/v1/ticker?contractName=E-BTC-USDT
 </span></code></pre></div>
 <p><strong>请求参数</strong></p>
 
@@ -3375,12 +3375,12 @@ body
 </tr>
 </tbody></table>
 <h3 id='c3474f0c9f'>获取指数/标记价格</h3>
-<p><code>GET</code> <code>https://futuresopenapi.xxx.com/fapi/v1/index</code></p>
+<p><code>GET</code> <code>https://futuresopenapi.fameex.net/fapi/v1/index</code></p>
 
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.xxx.com/fapi/v1/index?contractName=E-BTC-USDT
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.fameex.net/fapi/v1/index?contractName=E-BTC-USDT
 </span></code></pre></div>
 <p><strong>请求参数</strong></p>
 
@@ -3449,12 +3449,12 @@ body
 </tr>
 </tbody></table>
 <h3 id='k-3'>K线/蜡烛图数据</h3>
-<p><code>GET https://futuresopenapi.xxx.com/fapi/v1/klines</code></p>
+<p><code>GET https://futuresopenapi.fameex.net/fapi/v1/klines</code></p>
 
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.xxx.com/fapi/v1/klines?contractName=E-BTC-USDT&amp;interval=1min&amp;limit=100&amp;startTime=1111111100000&amp;endTime=222222222000000
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.fameex.net/fapi/v1/klines?contractName=E-BTC-USDT&amp;interval=1min&amp;limit=100&amp;startTime=1111111100000&amp;endTime=222222222000000
 </span></code></pre></div>
 <p><strong>请求参数</strong></p>
 
@@ -3572,7 +3572,7 @@ body
 <h2 id='dfe799947f-2'>交易</h2><h3 id='trade-2'>安全类型: TRADE</h3>
 <aside class="notice">交易下方的接口都需要签名和API-key验证</aside>
 <h3 id='5ac84906d9'>创建订单</h3>
-<p><code>POST https://futuresopenapi.xxx.com/fapi/v1/order</code></p>
+<p><code>POST https://futuresopenapi.fameex.net/fapi/v1/order</code></p>
 
 <p>创建单个新订单</p>
 
@@ -3605,7 +3605,7 @@ body
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://futuresopenapi.xxx.com/fapi/v1/order
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://futuresopenapi.fameex.net/fapi/v1/order
 
 body
 {
@@ -3701,7 +3701,7 @@ body
 </tr>
 </tbody></table>
 <h3 id='af8cccfe1d'>创建条件单</h3>
-<p><code>POST https://futuresopenapi.xxx.com/fapi/v1/conditionOrder</code></p>
+<p><code>POST https://futuresopenapi.fameex.net/fapi/v1/conditionOrder</code></p>
 
 <p><strong>请求头</strong></p>
 
@@ -3732,7 +3732,7 @@ body
 <blockquote>
 <p>请求示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://futuresopenapi.xxx.com/fapi/v1/conditionOrder
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://futuresopenapi.fameex.net/fapi/v1/conditionOrder
 
 body
 {
@@ -3822,7 +3822,7 @@ body
 </span></code></pre></div>
 <p>如果该接口返回与期望不符，请联系技术团队，我们会为您提供相关帮助</p>
 <h3 id='3eedd32d80'>取消订单</h3>
-<p><code>POST https://futuresopenapi.xxx.com/fapi/v1/cancel</code></p>
+<p><code>POST https://futuresopenapi.fameex.net/fapi/v1/cancel</code></p>
 
 <p><strong>限速规则: 20次/2s</strong></p>
 
@@ -3880,7 +3880,7 @@ body
     </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"256609229205684228"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='054ef2401f'>取消条件单</h3>
-<p><code>POST https://futuresopenapi.xxx.com/fapi/v1/cancel_trigger_order</code></p>
+<p><code>POST https://futuresopenapi.fameex.net/fapi/v1/cancel_trigger_order</code></p>
 
 <p><strong>限速规则: 20次/2s</strong></p>
 
@@ -3943,7 +3943,7 @@ body
     </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"256609229205684228"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='dea71f6fbe'>订单详情</h3>
-<p><code>GET https://futuresopenapi.xxx.com/fapi/v1/order</code></p>
+<p><code>GET https://futuresopenapi.fameex.net/fapi/v1/order</code></p>
 
 <p><strong>请求参数</strong></p>
 
@@ -4082,7 +4082,7 @@ body
 </tr>
 </tbody></table>
 <h3 id='936545ae3e-2'>当前订单</h3>
-<p><code>GET https://futuresopenapi.xxx.com/fapi/v1/openOrders</code></p>
+<p><code>GET https://futuresopenapi.fameex.net/fapi/v1/openOrders</code></p>
 
 <p><strong>限速规则: 20次/2s</strong></p>
 
@@ -4225,7 +4225,7 @@ body
 </tr>
 </tbody></table>
 <h3 id='6d4fb4cfcd'>历史委托</h3>
-<p><code>POST https://futuresopenapi.xxx.com/fapi/v1/orderHistorical</code></p>
+<p><code>POST https://futuresopenapi.fameex.net/fapi/v1/orderHistorical</code></p>
 
 <p><strong>请求头</strong></p>
 
@@ -4310,7 +4310,7 @@ body
 </span></code></pre></div>
 <p>如果该接口返回与期望不符，请联系技术团队，我们会为您提供相关帮助</p>
 <h3 id='cc30a051b8'>盈亏记录</h3>
-<p><code>POST https://futuresopenapi.xxx.com/fapi/v1/profitHistorical</code></p>
+<p><code>POST https://futuresopenapi.fameex.net/fapi/v1/profitHistorical</code></p>
 
 <p>如果该接口返回报错，请联系技术团队，我们会为您提供相关帮助</p>
 
@@ -4393,7 +4393,7 @@ body
 </span></code></pre></div>
 <p>如果该接口返回与期望不符，请联系技术团队，我们会为您提供相关帮助</p>
 <h3 id='7d44b7792d-2'>交易记录</h3>
-<p><code>GET https://futuresopenapi.xxx.com/fapi/v1/myTrades</code></p>
+<p><code>GET https://futuresopenapi.fameex.net/fapi/v1/myTrades</code></p>
 
 <p><strong>限速规则: 20次/2s</strong></p>
 
@@ -4583,7 +4583,7 @@ body
 </tr>
 </tbody></table>
 <h3 id='97ef08e65e'>更改持仓模式</h3>
-<p><code>POST https://futuresopenapi.xxx.com/fapi/v1/edit_user_position_model</code></p>
+<p><code>POST https://futuresopenapi.fameex.net/fapi/v1/edit_user_position_model</code></p>
 
 <p><strong>请求头</strong></p>
 
@@ -4641,7 +4641,7 @@ body
     </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='168f63da47'>更改保证金模式</h3>
-<p><code>POST https://futuresopenapi.xxx.com/fapi/v1/edit_user_margin_model</code></p>
+<p><code>POST https://futuresopenapi.fameex.net/fapi/v1/edit_user_margin_model</code></p>
 
 <p><strong>请求头</strong></p>
 
@@ -4699,7 +4699,7 @@ body
     </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w"> 
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='a417f8d88a'>更改杠杆倍数</h3>
-<p><code>POST</code> <code>https://futuresopenapi.xxx.com/fapi/v1/edit_lever</code></p>
+<p><code>POST</code> <code>https://futuresopenapi.fameex.net/fapi/v1/edit_lever</code></p>
 
 <p><strong>请求头</strong></p>
 
@@ -4738,8 +4738,8 @@ body
 <aside class="notice">强烈建议开发者使用WebSocket API获取市场行情和买卖深度等信息。</aside>
 <h2 id='b122f813d5'>基本信息</h2>
 <ul>
-<li>  币币行情基础站点：<a href="wss://ws.xxx.yyy/kline-api/ws">wss://ws.xxx.yyy/kline-api/ws</a>，将其中xxx.yyy替换成交易所的主域。</li>
-<li>  合约行情基础站点：<a href="wss://futuresws.xxx.yyy/kline-api/ws">wss://futuresws.xxx.yyy/kline-api/ws</a>，将其中xxx.yyy替换成交易所的主域。</li>
+<li>  币币行情基础站点：<a href="wss://ws.fameex.net/kline-api/ws">wss://ws.fameex.net/kline-api/ws</a>。</li>
+<li>  合约行情基础站点：<a href="wss://futuresws.fameex.net/kline-api/ws">wss://futuresws.fameex.net/kline-api/ws</a>。</li>
 <li>  返回数据除了心跳数据都会二进制压缩（用户需要通过Gzip算法进行解压）。</li>
 </ul>
 <h3 id='94a9a32795'>心跳</h3>
@@ -5072,7 +5072,7 @@ body
 <span class="nc">MediaType</span> <span class="n">mediaType</span> <span class="o">=</span> <span class="nc">MediaType</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">"application/json"</span><span class="o">);</span>
 <span class="nc">RequestBody</span> <span class="n">body</span> <span class="o">=</span> <span class="nc">RequestBody</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">mediaType</span><span class="o">,</span> <span class="s">"{\"symbol\":\"BTCUSDT\",\"volume\":1,\"side\":\"BUY\",\"type\":\"LIMIT\",\"price\":10000,\"newClientOrderId\":\"\",\"recvWindow\":5000}"</span><span class="o">);</span>
 <span class="nc">Request</span> <span class="n">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Request</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
-<span class="o">.</span><span class="na">url</span><span class="o">(</span><span class="s">"https://openapi.xxx.com"</span><span class="o">)</span>
+<span class="o">.</span><span class="na">url</span><span class="o">(</span><span class="s">"https://openapi.fameex.net"</span><span class="o">)</span>
 <span class="o">.</span><span class="na">method</span><span class="o">(</span><span class="s">"POST"</span><span class="o">,</span> <span class="n">body</span><span class="o">)</span>
 <span class="o">.</span><span class="na">addHeader</span><span class="o">(</span><span class="s">"X-CH-APIKEY"</span><span class="o">,</span> <span class="s">"Your API key"</span><span class="o">)</span>
 <span class="o">.</span><span class="na">addHeader</span><span class="o">(</span><span class="s">"X-CH-TS"</span><span class="o">,</span> <span class="s">"1596543296058"</span><span class="o">)</span>
@@ -5088,7 +5088,7 @@ body
 <span class="s">"io/ioutil"</span>
 <span class="p">)</span>
 <span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">url</span> <span class="o">:=</span> <span class="s">"https://openapi.xxx.com"</span>
+  <span class="n">url</span> <span class="o">:=</span> <span class="s">"https://openapi.fameex.net"</span>
   <span class="n">method</span> <span class="o">:=</span> <span class="s">"POST"</span>
   <span class="n">payload</span> <span class="o">:=</span> <span class="n">strings</span><span class="o">.</span><span class="n">NewReader</span><span class="p">(</span><span class="s">"{</span><span class="se">\"</span><span class="s">symbol</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">BTCUSDT</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">volume</span><span class="se">\"</span><span class="s">:1,</span><span class="se">\"</span><span class="s">side</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">BUY</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">type</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">LIMIT</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">price</span><span class="se">\"</span><span class="s">:10000,</span><span class="se">\"</span><span class="s">newClientOrderId</span><span class="se">\"</span><span class="s">:</span><span class="se">\"\"</span><span class="s">,</span><span class="se">\"</span><span class="s">recvWindow</span><span class="se">\"</span><span class="s">:5000}"</span><span class="p">)</span>
   <span class="n">client</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="n">http</span><span class="o">.</span><span class="n">Client</span> <span class="p">{</span>
@@ -5107,7 +5107,7 @@ body
   <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="kt">string</span><span class="p">(</span><span class="n">body</span><span class="p">))</span>
 <span class="p">}</span>
 </code></pre></div><h3 id='python'>Python</h3><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://openapi.xxx.com"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://openapi.fameex.net"</span>
 <span class="n">payload</span> <span class="o">=</span> <span class="s">"{</span><span class="se">\"</span><span class="s">symbol</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">BTCUSDT</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">volume</span><span class="se">\"</span><span class="s">:1,</span><span class="se">\"</span><span class="s">side</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">BUY</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">type</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">LIMIT</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">price</span><span class="se">\"</span><span class="s">:10000,</span><span class="se">\"</span><span class="s">newClientOrderId</span><span class="se">\"</span><span class="s">:</span><span class="se">\"\"</span><span class="s">,</span><span class="se">\"</span><span class="s">recvWindow</span><span class="se">\"</span><span class="s">:5000}"</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
 <span class="s">'X-CH-APIKEY'</span><span class="p">:</span> <span class="s">'Your API key'</span><span class="p">,</span>
@@ -5120,7 +5120,7 @@ body
 </code></pre></div><h3 id='php'>PHP</h3><div class="highlight"><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="k">require_once</span> <span class="s1">'HTTP/Request2.php'</span><span class="p">;</span>
 <span class="nv">$request</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HTTP_Request2</span><span class="p">();</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">setUrl</span><span class="p">(</span><span class="s1">'https://openapi.xxx.com'</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">setUrl</span><span class="p">(</span><span class="s1">'https://openapi.fameex.net'</span><span class="p">);</span>
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">setMethod</span><span class="p">(</span><span class="n">HTTP_Request2</span><span class="o">::</span><span class="no">METHOD_POST</span><span class="p">);</span>
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">setConfig</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
 <span class="s1">'follow_redirects'</span> <span class="o">=&gt;</span> <span class="kc">TRUE</span>
@@ -5148,7 +5148,7 @@ body
 </code></pre></div><h3 id='node-js'>Node.js</h3><div class="highlight"><pre class="highlight javascript tab-javascript--node"><code><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">request</span><span class="dl">'</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
 <span class="dl">'</span><span class="s1">method</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
-<span class="dl">'</span><span class="s1">url</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https://openapi.xxx.com</span><span class="dl">'</span><span class="p">,</span>
+<span class="dl">'</span><span class="s1">url</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https://openapi.fameex.net</span><span class="dl">'</span><span class="p">,</span>
 <span class="dl">'</span><span class="s1">headers</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
 <span class="dl">'</span><span class="s1">X-CH-APIKEY</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Your API key</span><span class="dl">'</span><span class="p">,</span>
 <span class="dl">'</span><span class="s1">X-CH-TS</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1596543881257</span><span class="dl">'</span><span class="p">,</span>
