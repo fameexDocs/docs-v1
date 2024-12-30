@@ -1478,21 +1478,21 @@ GET https://futuresopenapi.xxx.com/fapi/v1/contracts
 
 **返回参数**
 
-| 参数名          | 类型   | 示例                      | 描述                                                      |
-| :---------------|-:------| :-------------------------| :---------------------------------------------------------|
-| symbol          | string | `E-BTC-USDT`              | `大写`合约名称                                            |
-| pricePrecision  | number | `3`                       | 价格精度                                                  |
-| status          | number | `1`                       | 合约状态（0：`不可交易`，1：`可交易`）                      |
+| 参数名          | 类型   | 示例                      | 描述                                                       |
+| :---------------| :-----| :-------------------------| :----------------------------------------------------------|
+| symbol          | string | `E-BTC-USDT`              | `大写`合约名称                                             |
+| pricePrecision  | number | `3`                       | 价格精度                                                   |
+| status          | number | `1`                       | 合约状态（0：`不可交易`，1：`可交易`）                     |
 | type            | string | `E`                       | 合约类型（E：`永续合约`，S：`模拟合约`，其他为`混合合约`） |
 | side            | number | `1`                       | 合约方向（0：`反向`，1：`正向`）                           |
-| multiplier      | number | `1.0000000000000000`      | 合约面值                                                  |
-| minOrderVolume  | number | `1`                       | 最小下单量                                                |
-| minOrderMoney   | number | `1.0000000000000000`      | 最小下单金额                                              |
-| maxMarketVolume | number | `200000`                  | 市价单最大下单数量                                        |
-| maxMarketMoney  | number | `500000.0000000000000000` | 市价最大下单金额                                          |
-| maxLimitVolume  | number | `300000`                  | 限价单最大下单数量                                        |
-| maxLimitMoney   | number | `500000.0000000000000000` | 限价最大下单金额                                          |
-| maxValidOrder   | number | `10`                      | 最大有效委托的订单数量                                    |
+| multiplier      | number | `1.0000000000000000`      | 合约面值                                                   |
+| minOrderVolume  | number | `1`                       | 最小下单量                                                 |
+| minOrderMoney   | number | `1.0000000000000000`      | 最小下单金额                                               |
+| maxMarketVolume | number | `200000`                  | 市价单最大下单数量                                         |
+| maxMarketMoney  | number | `500000.0000000000000000` | 市价最大下单金额                                           |
+| maxLimitVolume  | number | `300000`                  | 限价单最大下单数量                                         |
+| maxLimitMoney   | number | `500000.0000000000000000` | 限价最大下单金额                                           |
+| maxValidOrder   | number | `10`                      | 最大有效委托的订单数量                                     |
 
 ## 行情
 
