@@ -6,14 +6,14 @@ The interface below is the interface for obtaining server time. This interface i
 
 ### Check Server Time
 
-`GET https://openapi.xxx.com/sapi/v1/time`
+`GET https://openapi.fameex.net/sapi/v1/time`
 
 Check Server Time
 
 > request example
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/time
+GET https://openapi.fameex.net/sapi/v1/time
 ```
 
 > response example
@@ -55,7 +55,7 @@ Please refer to the document: [Return Enums](https://fameexdocs.github.io/docs-v
 
 ## API Basic Information
 
-*   baseurl `https://openapi.xxx.com`
+*   baseurl `https://openapi.fameex.net`
 *   All endpoints return either a JSON object or array. 
 *   Data is returned in Reverse order. newest first, oldest last.
 *   All time and timestamp related fields are in **milliseconds**.
@@ -474,26 +474,26 @@ min -> minutes; h -> hours; day -> days; week -> weeks; month -> months
 
 ### Test Connectivity
 
-`GET https://openapi.xxx.com/sapi/v1/ping`
+`GET https://openapi.fameex.net/sapi/v1/ping`
 
 Test the connectivity of the REST API.
 
 > request example
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/ping
+GET https://openapi.fameex.net/sapi/v1/ping
 ```
 
 ### Check Server Time
 
-`GET https://openapi.xxx.com/sapi/v1/time`
+`GET https://openapi.fameex.net/sapi/v1/time`
 
 Check Server Time
 
 > request example
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/time
+GET https://openapi.fameex.net/sapi/v1/time
 ```
 
 > response example
@@ -514,14 +514,14 @@ GET https://openapi.xxx.com/sapi/v1/time
 
 ### Symbol Pair List 
 
-`GET https://openapi.xxx.com/sapi/v1/symbols`
+`GET https://openapi.fameex.net/sapi/v1/symbols`
 
 The supported symbol pair collection which in the exchange.
 
 > request example
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/symbols
+GET https://openapi.fameex.net/sapi/v1/symbols
 ```
 
 > response example
@@ -610,14 +610,14 @@ GET https://openapi.xxx.com/sapi/v1/symbols
 
 ### Depth
 
-`GET https://openapi.xxx.com/sapi/v1/depth`
+`GET https://openapi.fameex.net/sapi/v1/depth`
 
 Market detpth data
 
 > request example
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/depth?symbol=BTCUSDT&limit=100
+GET https://openapi.fameex.net/sapi/v1/depth?symbol=BTCUSDT&limit=100
 ```
 
 **Request Parameters**
@@ -667,14 +667,14 @@ The bid and ask information represents all the prices in the order book along wi
 
 ### 24hrs Ticker
 
-`GET https://openapi.xxx.com/sapi/v1/ticker`
+`GET https://openapi.fameex.net/sapi/v1/ticker`
 
 24-hour price change data
 
 > request example
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/ticker?symbol=BTCUSDT
+GET https://openapi.fameex.net/sapi/v1/ticker?symbol=BTCUSDT
 ```
 
 **Request Parameters**
@@ -715,14 +715,14 @@ GET https://openapi.xxx.com/sapi/v1/ticker?symbol=BTCUSDT
 
 ### Recent Trade List
 
-`GET https://openapi.xxx.com/sapi/v1/trades`
+`GET https://openapi.fameex.net/sapi/v1/trades`
 
 Market recent trade
 
 > request example
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/trades?symbol=BTCUSDT&limit=100
+GET https://openapi.fameex.net/sapi/v1/trades?symbol=BTCUSDT&limit=100
 ```
 
 **Request Parameters**
@@ -762,14 +762,14 @@ GET https://openapi.xxx.com/sapi/v1/trades?symbol=BTCUSDT&limit=100
 
 ### K-Line/Candlestick Data
 
-`GET https://openapi.xxx.com/sapi/v1/klines`
+`GET https://openapi.fameex.net/sapi/v1/klines`
 
 K-Line/Candlestick data
 
 > request example
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/klines?symbol=BTCUSDT&interval=1min&limit=100
+GET https://openapi.fameex.net/sapi/v1/klines?symbol=BTCUSDT&interval=1min&limit=100
 ```
 
 **Request Parameters**
@@ -830,7 +830,7 @@ GET https://openapi.xxx.com/sapi/v1/klines?symbol=BTCUSDT&interval=1min&limit=10
 
 ### Create New Order
 
-`POST https://openapi.xxx.com/sapi/v1/order`
+`POST https://openapi.fameex.net/sapi/v1/order`
 
 **Rate Limit: 100 times/2s**
 
@@ -845,7 +845,7 @@ GET https://openapi.xxx.com/sapi/v1/klines?symbol=BTCUSDT&interval=1min&limit=10
 > request example
 
 ```http
-POST https://openapi.xxx.com/sapi/v1/order
+POST https://openapi.fameex.net/sapi/v1/order
 
 body
 {
@@ -905,7 +905,7 @@ body
 
 ### Test New Order
 
-`POST https://openapi.xxx.com/sapi/v1/order/test`
+`POST https://openapi.fameex.net/sapi/v1/order/test`
 
 Create and validate a new order but do not send the order into the matching engine.
 
@@ -920,7 +920,7 @@ Create and validate a new order but do not send the order into the matching engi
 > request example
 
 ```http
-POST https://openapi.xxx.com/sapi/v1/order/test
+POST https://openapi.fameex.net/sapi/v1/order/test
 
 body
 {
@@ -951,7 +951,7 @@ body
 
 ### Batch Orders
 
-`POST https://openapi.xxx.com/sapi/v1/batchOrders`
+`POST https://openapi.fameex.net/sapi/v1/batchOrders`
 
 **Rate Limit: 50 times/2s Up to 10 orders in one batch order request**
 
@@ -966,7 +966,7 @@ body
 > request example
 
 ```http
-POST https://openapi.xxx.com/sapi/v1/batchOrders
+POST https://openapi.fameex.net/sapi/v1/batchOrders
 
 body
 {
@@ -1019,7 +1019,7 @@ body
 
 ### Query Order
 
-`GET https://openapi.xxx.com/sapi/v1/order`
+`GET https://openapi.fameex.net/sapi/v1/order`
 
 **Rate Limit: 20 times/2s**
 
@@ -1034,7 +1034,7 @@ body
 > request example
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/order?symbol=ethusdt&orderID=111000111
+GET https://openapi.fameex.net/sapi/v1/order?symbol=ethusdt&orderID=111000111
 ```
 
 **Request Parameters**
@@ -1079,7 +1079,7 @@ GET https://openapi.xxx.com/sapi/v1/order?symbol=ethusdt&orderID=111000111
 
 ### Cancel Order
 
-`POST https://openapi.xxx.com/sapi/v1/cancel`
+`POST https://openapi.fameex.net/sapi/v1/cancel`
 
 **Rate Limit: 100 times/2s**
 
@@ -1094,7 +1094,7 @@ GET https://openapi.xxx.com/sapi/v1/order?symbol=ethusdt&orderID=111000111
 > request example
 
 ```http
-POST https://openapi.xxx.com/sapi/v1/cancel
+POST https://openapi.fameex.net/sapi/v1/cancel
 
 body
 {
@@ -1132,7 +1132,7 @@ body
 
 ### Batch Order Cancellation
 
-`POST https://openapi.xxx.com/sapi/v1/batchCancel`
+`POST https://openapi.fameex.net/sapi/v1/batchCancel`
 
 **Rate Limit: 50 times/2s  Every batch cancellation request contains at most 10 orders**
 
@@ -1147,7 +1147,7 @@ body
 > request example
 
 ```http
-POST https://openapi.xxx.com/sapi/v1/batchCancel
+POST https://openapi.fameex.net/sapi/v1/batchCancel
 
 body
 {
@@ -1186,7 +1186,7 @@ body
 
 ### Current Open Orders
 
-`GET https://openapi.xxx.com/sapi/v1/openOrders`
+`GET https://openapi.fameex.net/sapi/v1/openOrders`
 
 **Rate Limit: 20 times/2s**
 
@@ -1253,7 +1253,7 @@ body
 
 ### Trading Records
 
-`GET https://openapi.xxx.com/sapi/v1/myTrades`
+`GET https://openapi.fameex.net/sapi/v1/myTrades`
 
 **Rate Limit: 20 times/2s**
 
@@ -1269,7 +1269,7 @@ body
 > request example
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
+GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 ```
 
 **Request Parameters**
@@ -1348,7 +1348,7 @@ GET https://openapi.xxx.com/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 
 ### Account Information
 
-`GET https://openapi.xxx.com/sapi/v1/account`
+`GET https://openapi.fameex.net/sapi/v1/account`
 
 **Rate Limit: 20 times/2s**
 
@@ -1403,13 +1403,13 @@ GET https://openapi.xxx.com/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 
 ### Test Connectivity
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/ping`
+`GET https://futuresopenapi.fameex.net/fapi/v1/ping`
 
 This interface checks connectivity to the host.
 
 ### Check Server Time
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/time`
+`GET https://futuresopenapi.fameex.net/fapi/v1/time`
 
 > return example
 
@@ -1429,12 +1429,12 @@ This interface checks connectivity to the host.
 
 ### Futures List
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/contracts`
+`GET https://futuresopenapi.fameex.net/fapi/v1/contracts`
 
 > request example
 
 ```http
-GET https://futuresopenapi.xxx.com/fapi/v1/contracts
+GET https://futuresopenapi.fameex.net/fapi/v1/contracts
 ```
 
 > response example
@@ -1502,14 +1502,14 @@ GET https://futuresopenapi.xxx.com/fapi/v1/contracts
 
 ### Depth
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/depth`
+`GET https://futuresopenapi.fameex.net/fapi/v1/depth`
 
 Market detpth data
 
 > request example
 
 ```http
-GET https://futuresopenapi.xxx.com/fapi/v1/depth?contractName=E-BTC-USDT&limit=100
+GET https://futuresopenapi.fameex.net/fapi/v1/depth?contractName=E-BTC-USDT&limit=100
 ```
 
 **Request Parameters**
@@ -1559,14 +1559,14 @@ The bid and ask information represents all the prices in the order book along wi
 
 ### 24hrs Ticker
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/ticker`
+`GET https://futuresopenapi.fameex.net/fapi/v1/ticker`
 
 24-hour price change data
 
 > request example
 
 ```http
-GET https://futuresopenapi.xxx.com/fapi/v1/ticker?contractName=E-BTC-USDT
+GET https://futuresopenapi.fameex.net/fapi/v1/ticker?contractName=E-BTC-USDT
 ```
 
 **Request Parameters**
@@ -1606,12 +1606,12 @@ GET https://futuresopenapi.xxx.com/fapi/v1/ticker?contractName=E-BTC-USDT
 
 ### Obtain Index/Mark Price
 
-`GET` `https://futuresopenapi.xxx.com/fapi/v1/index`
+`GET` `https://futuresopenapi.fameex.net/fapi/v1/index`
 
 > request example
 
 ```http
-GET https://futuresopenapi.xxx.com/fapi/v1/index?contractName=E-BTC-USDT
+GET https://futuresopenapi.fameex.net/fapi/v1/index?contractName=E-BTC-USDT
 ```
 
 **Request Parameters**
@@ -1643,12 +1643,12 @@ GET https://futuresopenapi.xxx.com/fapi/v1/index?contractName=E-BTC-USDT
 
 ### K-Line/Candlestick Data
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/klines`
+`GET https://futuresopenapi.fameex.net/fapi/v1/klines`
 
 > request example
 
 ```http
-GET https://futuresopenapi.xxx.com/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1111111100000&endTime=222222222000000
+GET https://futuresopenapi.fameex.net/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1111111100000&endTime=222222222000000
 ```
 
 **Request Parameter**
@@ -1711,7 +1711,7 @@ GET https://futuresopenapi.xxx.com/fapi/v1/klines?contractName=E-BTC-USDT&interv
 
 ### Create New Order
 
-`POST https://futuresopenapi.xxx.com/fapi/v1/order`
+`POST https://futuresopenapi.fameex.net/fapi/v1/order`
 
 Create a new single order.
 
@@ -1726,7 +1726,7 @@ Create a new single order.
 > request example
 
 ```http
-POST https://futuresopenapi.xxx.com/fapi/v1/order
+POST https://futuresopenapi.fameex.net/fapi/v1/order
 
 body
 {
@@ -1772,7 +1772,7 @@ body
 
 ### Create Conditional Order
 
-`POST https://futuresopenapi.xxx.com/fapi/v1/conditionOrder`
+`POST https://futuresopenapi.fameex.net/fapi/v1/conditionOrder`
 
 **Request Headers**
 
@@ -1785,7 +1785,7 @@ body
 > request example
 
 ```http
-POST https://futuresopenapi.xxx.com/fapi/v1/conditionOrder
+POST https://futuresopenapi.fameex.net/fapi/v1/conditionOrder
 
 body
 {
@@ -1833,7 +1833,7 @@ If this interface (/fapi/v1/conditionOrder) return does not meet expectations, p
 
 ### Cancel Order
 
-`POST https://futuresopenapi.xxx.com/fapi/v1/cancel`
+`POST https://futuresopenapi.fameex.net/fapi/v1/cancel`
 
 **Rate Limit: 20 times/2s**
 
@@ -1862,7 +1862,7 @@ If this interface (/fapi/v1/conditionOrder) return does not meet expectations, p
 
 ### Cancel Trigger Order
 
-`POST https://futuresopenapi.xxx.com/fapi/v1/cancel_trigger_order`
+`POST https://futuresopenapi.fameex.net/fapi/v1/cancel_trigger_order`
 
 **Rate Limit: 20 times/2s**
 
@@ -1892,7 +1892,7 @@ If this interface (/fapi/v1/conditionOrder) return does not meet expectations, p
 
 ### Order Details
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/order`
+`GET https://futuresopenapi.fameex.net/fapi/v1/order`
 
 **Request Parameter**
 
@@ -1944,7 +1944,7 @@ If this interface (/fapi/v1/conditionOrder) return does not meet expectations, p
 
 ### Current Order Information
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/openOrders`
+`GET https://futuresopenapi.fameex.net/fapi/v1/openOrders`
 
 **Rate Limit: 20 times/2s**
 
@@ -2000,7 +2000,7 @@ Response Parameter
 
 ### Historical Order Records
 
-`POST https://futuresopenapi.xxx.com/fapi/v1/orderHistorical`
+`POST https://futuresopenapi.fameex.net/fapi/v1/orderHistorical`
 
 **Request Headers**
 
@@ -2052,7 +2052,7 @@ If this interface (/fapi/v1/orderHistorical) return does not meet expectations, 
 
 ### PnL Records
 
-`POST https://futuresopenapi.xxx.com/fapi/v1/profitHistorical`
+`POST https://futuresopenapi.fameex.net/fapi/v1/profitHistorical`
 
 **Request Headers**
 
@@ -2100,7 +2100,7 @@ If this interface (/fapi/v1/orderHistorical) return does not meet expectations, 
 
 ### Trading Record
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/myTrades`
+`GET https://futuresopenapi.fameex.net/fapi/v1/myTrades`
 
 **Rate Limit: 20 times/2s**
 
@@ -2180,7 +2180,7 @@ If this interface (/fapi/v1/orderHistorical) return does not meet expectations, 
 
 ### Change Position Mode
 
-`POST https://futuresopenapi.xxx.com/fapi/v1/edit_user_position_model`
+`POST https://futuresopenapi.fameex.net/fapi/v1/edit_user_position_model`
 
 **Request Headers**
 
@@ -2209,7 +2209,7 @@ If this interface (/fapi/v1/orderHistorical) return does not meet expectations, 
 
 ### Change Margin Mode
 
-`POST https://futuresopenapi.xxx.com/fapi/v1/edit_user_margin_model`
+`POST https://futuresopenapi.fameex.net/fapi/v1/edit_user_margin_model`
 
 **Request Headers**
 
@@ -2238,7 +2238,7 @@ If this interface (/fapi/v1/orderHistorical) return does not meet expectations, 
 
 ### Change Leverage
 
-`POST` `https://futuresopenapi.xxx.com/fapi/v1/edit_lever`
+`POST` `https://futuresopenapi.fameex.net/fapi/v1/edit_lever`
 
 **Request Header**
 
@@ -2262,8 +2262,8 @@ Websocket is a new HTML5 Protocol. It achieves full-duplex data transmission bet
 
 ## Ws Information
 
-* Basic spot market data site: <wss://ws.xxx.yyy/kline-api/ws>, Replace xxx.yyy with the exchange's main domain.
-* Basic futures market data site: <wss://futuresws.xxx.yyy/kline-api/ws>, Replace xxx.yyy with the exchange's main domain.
+* Basic spot market data site: <wss://ws.fameex.net/kline-api/ws>.
+* Basic futures market data site: <wss://futuresws.fameex.net/kline-api/ws>.
 * The returned data will be binary compressed except the heartbeat data (the user needs to decompress through Gzip algorithm).
 
 ### Heartbeat
@@ -2607,7 +2607,7 @@ OkHttpClient client = new OkHttpClient().newBuilder()
 MediaType mediaType = MediaType.parse("application/json");
 RequestBody body = RequestBody.create(mediaType, "{\"symbol\":\"BTCUSDT\",\"volume\":1,\"side\":\"BUY\",\"type\":\"LIMIT\",\"price\":10000,\"newClientOrderId\":\"\",\"recvWindow\":5000}");
 Request request = new Request.Builder()
-.url("https://openapi.xxx.com")
+.url("https://openapi.fameex.net")
 .method("POST", body)
 .addHeader("X-CH-APIKEY", "Your API key")
 .addHeader("X-CH-TS", "1596543296058")
@@ -2628,7 +2628,7 @@ import (
 "io/ioutil"
 )
 func main() {
-  url := "https://openapi.xxx.com"
+  url := "https://openapi.fameex.net"
   method := "POST"
   payload := strings.NewReader("{\"symbol\":\"BTCUSDT\",\"volume\":1,\"side\":\"BUY\",\"type\":\"LIMIT\",\"price\":10000,\"newClientOrderId\":\"\",\"recvWindow\":5000}")
   client := &http.Client {
@@ -2652,7 +2652,7 @@ if err != nil {
 
 ```python
 import requests
-url = "https://openapi.xxx.com"
+url = "https://openapi.fameex.net"
 payload = "{\"symbol\":\"BTCUSDT\",\"volume\":1,\"side\":\"BUY\",\"type\":\"LIMIT\",\"price\":10000,\"newClientOrderId\":\"\",\"recvWindow\":5000}"
 headers = {
 'X-CH-APIKEY': 'Your API key',
@@ -2670,7 +2670,7 @@ print(response.text.encode('utf8'))
 <?php
 require_once 'HTTP/Request2.php';
 $request = new HTTP_Request2();
-$request->setUrl('https://openapi.xxx.com');
+$request->setUrl('https://openapi.fameex.net');
 $request->setMethod(HTTP_Request2::METHOD_POST);
 $request->setConfig(array(
 'follow_redirects' => TRUE
@@ -2703,7 +2703,7 @@ catch(HTTP_Request2_Exception $e) {
 var request = require('request');
 var options = {
 'method': 'POST',
-'url': 'https://openapi.xxx.com',
+'url': 'https://openapi.fameex.net',
 'headers': {
 'X-CH-APIKEY': 'Your API key',
 'X-CH-TS': '1596543881257',

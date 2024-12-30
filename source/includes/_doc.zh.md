@@ -6,14 +6,14 @@
 
 ### 获取服务器时间
 
-`GET https://openapi.xxx.com/sapi/v1/time`
+`GET https://openapi.fameex.net/sapi/v1/time`
 
 获取服务器时间
 
 > 请求示例
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/time
+GET https://openapi.fameex.net/sapi/v1/time
 ```
 
 > 返回示例
@@ -55,7 +55,7 @@ GET https://openapi.xxx.com/sapi/v1/time
 
 ## API基本信息
 
-*   本篇列出REST接口的baseurl`https://openapi.xxx.com`。
+*   本篇列出REST接口的baseurl`https://openapi.fameex.net`。
 *   所有接口都会返回一个JSON object或者array。
 *   响应中如有数组，数组元素以时间倒序排列，越早的数据越靠前。
 *   所有时间、时间戳均为Unix时间，单位为**毫秒**。
@@ -474,26 +474,26 @@ min -> 分钟；h -> 小时；day -> 天；week -> 周；month -> 月
 
 ### 测试连接
 
-`GET https://openapi.xxx.com/sapi/v1/ping`
+`GET https://openapi.fameex.netsapi/v1/ping`
 
 测试REST API的连通性
 
 > 请求示例
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/ping
+GET https://openapi.fameex.net/sapi/v1/ping
 ```
 
 ### 服务器时间
 
-`GET https://openapi.xxx.com/sapi/v1/time`
+`GET https://openapi.fameex.net/sapi/v1/time`
 
 获取服务器时间
 
 > 请求示例
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/time
+GET https://openapi.fameex.net/sapi/v1/time
 ```
 
 > 返回示例
@@ -514,14 +514,14 @@ GET https://openapi.xxx.com/sapi/v1/time
 
 ### 币对列表
 
-`GET https://openapi.xxx.com/sapi/v1/symbols`
+`GET https://openapi.fameex.net/sapi/v1/symbols`
 
 获取市场支持的币对集合
 
 > 请求示例
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/symbols
+GET https://openapi.fameex.net/sapi/v1/symbols
 ```
 
 > 返回示例
@@ -610,14 +610,14 @@ GET https://openapi.xxx.com/sapi/v1/symbols
 
 ### 订单薄
 
-`GET https://openapi.xxx.com/sapi/v1/depth`
+`GET https://openapi.fameex.net/sapi/v1/depth`
 
 获取市场订单薄深度信息
 
 > 请求示例
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/depth?symbol=BTCUSDT&limit=100
+GET https://openapi.fameex.net/sapi/v1/depth?symbol=BTCUSDT&limit=100
 ```
 
 **请求参数**
@@ -668,14 +668,14 @@ bids和asks所对应的信息代表了订单薄的所有价格以及价格对应
 
 ### 行情Ticker
 
-`GET https://openapi.xxx.com/sapi/v1/ticker`
+`GET https://openapi.fameex.net/sapi/v1/ticker`
 
 获取24小时价格变化数据
 
 > 请求示例
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/ticker?symbol=BTCUSDT
+GET https://openapi.fameex.net/sapi/v1/ticker?symbol=BTCUSDT
 ```
 
 **请求参数**
@@ -716,14 +716,14 @@ GET https://openapi.xxx.com/sapi/v1/ticker?symbol=BTCUSDT
 
 ### 最近成交
 
-`GET https://openapi.xxx.com/sapi/v1/trades`
+`GET https://openapi.fameex.net/sapi/v1/trades`
 
 获取最近成交数据
 
 > 请求示例
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/trades?symbol=BTCUSDT&limit=100
+GET https://openapi.fameex.net/sapi/v1/trades?symbol=BTCUSDT&limit=100
 ```
 
 **请求参数**
@@ -763,14 +763,14 @@ GET https://openapi.xxx.com/sapi/v1/trades?symbol=BTCUSDT&limit=100
 
 ### K线/蜡烛图数据
 
-`GET https://openapi.xxx.com/sapi/v1/klines`
+`GET https://openapi.fameex.net/sapi/v1/klines`
 
 获取K线数据
 
 > 请求示例
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/klines?symbol=BTCUSDT&interval=1min&limit=100
+GET https://openapi.fameex.net/sapi/v1/klines?symbol=BTCUSDT&interval=1min&limit=100
 ```
 
 **请求参数**
@@ -831,7 +831,7 @@ GET https://openapi.xxx.com/sapi/v1/klines?symbol=BTCUSDT&interval=1min&limit=10
 
 ### 创建新订单
 
-`POST https://openapi.xxx.com/sapi/v1/order`
+`POST https://openapi.fameex.net/sapi/v1/order`
 
 **限速规则: 100次/2s**
 
@@ -846,7 +846,7 @@ GET https://openapi.xxx.com/sapi/v1/klines?symbol=BTCUSDT&interval=1min&limit=10
 > 请求示例
 
 ```http
-POST https://openapi.xxx.com/sapi/v1/order
+POST https://openapi.fameex.net/sapi/v1/order
 
 body
 {
@@ -906,7 +906,7 @@ body
 
 ### 创建测试订单
 
-`POST https://openapi.xxx.com/sapi/v1/order/test`
+`POST https://openapi.fameex.net/sapi/v1/order/test`
 
 创建和验证新订单, 但不会送入撮合引擎
 
@@ -921,7 +921,7 @@ body
 > 请求示例
 
 ```http
-POST https://openapi.xxx.com/sapi/v1/order/test
+POST https://openapi.fameex.net/sapi/v1/order/test
 
 body
 {
@@ -952,7 +952,7 @@ body
 
 ### 批量下单
 
-`POST https://openapi.xxx.com/sapi/v1/batchOrders`
+`POST https://openapi.fameex.net/sapi/v1/batchOrders`
 
 **限速规则: 50次/2s 一个批量最多10个订单**
 
@@ -967,7 +967,7 @@ body
 > 请求示例
 
 ```http
-POST https://openapi.xxx.com/sapi/v1/batchOrders
+POST https://openapi.fameex.net/sapi/v1/batchOrders
 
 body
 {
@@ -1020,7 +1020,7 @@ body
 
 ### 订单查询
 
-`GET https://openapi.xxx.com/sapi/v1/order`
+`GET https://openapi.fameex.net/sapi/v1/order`
 
 **限速规则: 20次/2s**
 
@@ -1035,7 +1035,7 @@ body
 > 请求示例
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/order?symbol=ethusdt&orderID=111000111
+GET https://openapi.fameex.net/sapi/v1/order?symbol=ethusdt&orderID=111000111
 ```
 
 **请求参数**
@@ -1080,7 +1080,7 @@ GET https://openapi.xxx.com/sapi/v1/order?symbol=ethusdt&orderID=111000111
 
 ### 撤销订单
 
-`POST https://openapi.xxx.com/sapi/v1/cancel`
+`POST https://openapi.fameex.net/sapi/v1/cancel`
 
 **限速规则: 100次/2s**
 
@@ -1095,7 +1095,7 @@ GET https://openapi.xxx.com/sapi/v1/order?symbol=ethusdt&orderID=111000111
 > 请求示例
 
 ```http
-POST https://openapi.xxx.com/sapi/v1/cancel
+POST https://openapi.fameex.net/sapi/v1/cancel
 
 body
 {
@@ -1133,7 +1133,7 @@ body
 
 ### 批量撤销订单
 
-`POST https://openapi.xxx.com/sapi/v1/batchCancel`
+`POST https://openapi.fameex.net/sapi/v1/batchCancel`
 
 **限速规则: 50次/2s 一次批量最多10个订单**
 
@@ -1148,7 +1148,7 @@ body
 > 请求示例
 
 ```http
-POST https://openapi.xxx.com/sapi/v1/batchCancel
+POST https://openapi.fameex.net/sapi/v1/batchCancel
 
 body
 {
@@ -1187,7 +1187,7 @@ body
 
 ### 当前订单
 
-`GET https://openapi.xxx.com/sapi/v1/openOrders`
+`GET https://openapi.fameex.net/sapi/v1/openOrders`
 
 **限速规则: 20次/2s**
 
@@ -1254,7 +1254,7 @@ body
 
 ### 交易记录
 
-`GET https://openapi.xxx.com/sapi/v1/myTrades`
+`GET https://openapi.fameex.net/sapi/v1/myTrades`
 
 **限速规则: 20次/2s**
 
@@ -1269,7 +1269,7 @@ body
 > 请求示例
 
 ```http
-GET https://openapi.xxx.com/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
+GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 ```
 
 **请求参数**
@@ -1348,7 +1348,7 @@ GET https://openapi.xxx.com/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 
 ### 账户信息
 
-`GET https://openapi.xxx.com/sapi/v1/account`
+`GET https://openapi.fameex.net/sapi/v1/account`
 
 **限速规则: 20次/2s**
 
@@ -1403,13 +1403,13 @@ GET https://openapi.xxx.com/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 
 ### 测试连接
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/ping`
+`GET https://futuresopenapi.fameex.net/fapi/v1/ping`
 
 测试REST API的连通性
 
 ### 获取服务器时间
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/time`
+`GET https://futuresopenapi.fameex.net/fapi/v1/time`
 
 > 返回示例
 
@@ -1429,12 +1429,12 @@ GET https://openapi.xxx.com/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 
 ### 合约列表
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/contracts`
+`GET https://futuresopenapi.fameex.net/fapi/v1/contracts`
 
 > 请求示例
 
 ```http
-GET https://futuresopenapi.xxx.com/fapi/v1/contracts
+GET https://futuresopenapi.fameex.net/fapi/v1/contracts
 ```
 
 > 返回示例
@@ -1502,14 +1502,14 @@ GET https://futuresopenapi.xxx.com/fapi/v1/contracts
 
 ### 订单薄
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/depth`
+`GET https://futuresopenapi.fameex.net/fapi/v1/depth`
 
 市场订单薄深度信息
 
 > 请求示例
 
 ```http
-GET https://futuresopenapi.xxx.com/fapi/v1/depth?contractName=E-BTC-USDT&limit=100
+GET https://futuresopenapi.fameex.net/fapi/v1/depth?contractName=E-BTC-USDT&limit=100
 ```
 
 **请求参数**
@@ -1559,14 +1559,14 @@ bids和asks所对应的信息代表了订单薄的所有价格以及价格对应
 
 ### 行情Ticker
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/ticker`
+`GET https://futuresopenapi.fameex.net/fapi/v1/ticker`
 
 24小时价格变化数据
 
 > 请求示例
 
 ```http
-GET https://futuresopenapi.xxx.com/fapi/v1/ticker?contractName=E-BTC-USDT
+GET https://futuresopenapi.fameex.net/fapi/v1/ticker?contractName=E-BTC-USDT
 ```
 
 **请求参数**
@@ -1606,12 +1606,12 @@ GET https://futuresopenapi.xxx.com/fapi/v1/ticker?contractName=E-BTC-USDT
 
 ### 获取指数/标记价格
 
-`GET` `https://futuresopenapi.xxx.com/fapi/v1/index`
+`GET` `https://futuresopenapi.fameex.net/fapi/v1/index`
 
 > 请求示例
 
 ```http
-GET https://futuresopenapi.xxx.com/fapi/v1/index?contractName=E-BTC-USDT
+GET https://futuresopenapi.fameex.net/fapi/v1/index?contractName=E-BTC-USDT
 ```
 
 **请求参数**
@@ -1643,12 +1643,12 @@ GET https://futuresopenapi.xxx.com/fapi/v1/index?contractName=E-BTC-USDT
 
 ### K线/蜡烛图数据
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/klines`
+`GET https://futuresopenapi.fameex.net/fapi/v1/klines`
 
 > 请求示例
 
 ```http
-GET https://futuresopenapi.xxx.com/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1111111100000&endTime=222222222000000
+GET https://futuresopenapi.fameex.net/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1111111100000&endTime=222222222000000
 ```
 
 **请求参数**
@@ -1711,7 +1711,7 @@ GET https://futuresopenapi.xxx.com/fapi/v1/klines?contractName=E-BTC-USDT&interv
 
 ### 创建订单
 
-`POST https://futuresopenapi.xxx.com/fapi/v1/order`
+`POST https://futuresopenapi.fameex.net/fapi/v1/order`
 
 创建单个新订单
 
@@ -1726,7 +1726,7 @@ GET https://futuresopenapi.xxx.com/fapi/v1/klines?contractName=E-BTC-USDT&interv
 > 请求示例
 
 ```http
-POST https://futuresopenapi.xxx.com/fapi/v1/order
+POST https://futuresopenapi.fameex.net/fapi/v1/order
 
 body
 {
@@ -1772,7 +1772,7 @@ body
 
 ### 创建条件单
 
-`POST https://futuresopenapi.xxx.com/fapi/v1/conditionOrder`
+`POST https://futuresopenapi.fameex.net/fapi/v1/conditionOrder`
 
 **请求头**
 
@@ -1785,7 +1785,7 @@ body
 > 请求示例
 
 ```http
-POST https://futuresopenapi.xxx.com/fapi/v1/conditionOrder
+POST https://futuresopenapi.fameex.net/fapi/v1/conditionOrder
 
 body
 {
@@ -1833,7 +1833,7 @@ body
 
 ### 取消订单
 
-`POST https://futuresopenapi.xxx.com/fapi/v1/cancel`
+`POST https://futuresopenapi.fameex.net/fapi/v1/cancel`
 
 **限速规则: 20次/2s**
 
@@ -1862,7 +1862,7 @@ body
 
 ### 取消条件单
 
-`POST https://futuresopenapi.xxx.com/fapi/v1/cancel_trigger_order`
+`POST https://futuresopenapi.fameex.net/fapi/v1/cancel_trigger_order`
 
 **限速规则: 20次/2s**
 
@@ -1892,7 +1892,7 @@ body
 
 ### 订单详情
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/order`
+`GET https://futuresopenapi.fameex.net/fapi/v1/order`
 
 **请求参数**
 
@@ -1944,7 +1944,7 @@ body
 
 ### 当前订单
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/openOrders`
+`GET https://futuresopenapi.fameex.net/fapi/v1/openOrders`
 
 **限速规则: 20次/2s**
 
@@ -2000,7 +2000,7 @@ body
 
 ### 历史委托
 
-`POST https://futuresopenapi.xxx.com/fapi/v1/orderHistorical`
+`POST https://futuresopenapi.fameex.net/fapi/v1/orderHistorical`
 
 **请求头**
 
@@ -2052,7 +2052,7 @@ body
 
 ### 盈亏记录
 
-`POST https://futuresopenapi.xxx.com/fapi/v1/profitHistorical`
+`POST https://futuresopenapi.fameex.net/fapi/v1/profitHistorical`
 
 如果该接口返回报错，请联系技术团队，我们会为您提供相关帮助
 
@@ -2102,7 +2102,7 @@ body
 
 ### 交易记录
 
-`GET https://futuresopenapi.xxx.com/fapi/v1/myTrades`
+`GET https://futuresopenapi.fameex.net/fapi/v1/myTrades`
 
 **限速规则: 20次/2s**
 
@@ -2182,7 +2182,7 @@ body
 
 ### 更改持仓模式
 
-`POST https://futuresopenapi.xxx.com/fapi/v1/edit_user_position_model`
+`POST https://futuresopenapi.fameex.net/fapi/v1/edit_user_position_model`
 
 **请求头**
 
@@ -2211,7 +2211,7 @@ body
 
 ### 更改保证金模式
 
-`POST https://futuresopenapi.xxx.com/fapi/v1/edit_user_margin_model`
+`POST https://futuresopenapi.fameex.net/fapi/v1/edit_user_margin_model`
 
 **请求头**
 
@@ -2240,7 +2240,7 @@ body
 
 ### 更改杠杆倍数
 
-`POST` `https://futuresopenapi.xxx.com/fapi/v1/edit_lever`
+`POST` `https://futuresopenapi.fameex.net/fapi/v1/edit_lever`
 
 **请求头**
 
@@ -2264,8 +2264,8 @@ WebSocket是HTML5一种新的协议（Protocol）。它实现了客户端与服�
 
 ## 基本信息
 
-*   币币行情基础站点：<wss://ws.xxx.yyy/kline-api/ws>，将其中xxx.yyy替换成交易所的主域。
-*   合约行情基础站点：<wss://futuresws.xxx.yyy/kline-api/ws>，将其中xxx.yyy替换成交易所的主域。
+*   币币行情基础站点：<wss://ws.fameex.net/kline-api/ws>。
+*   合约行情基础站点：<wss://futuresws.fameex.net/kline-api/ws>。
 *   返回数据除了心跳数据都会二进制压缩（用户需要通过Gzip算法进行解压）。
 
 ### 心跳
@@ -2607,7 +2607,7 @@ OkHttpClient client = new OkHttpClient().newBuilder()
 MediaType mediaType = MediaType.parse("application/json");
 RequestBody body = RequestBody.create(mediaType, "{\"symbol\":\"BTCUSDT\",\"volume\":1,\"side\":\"BUY\",\"type\":\"LIMIT\",\"price\":10000,\"newClientOrderId\":\"\",\"recvWindow\":5000}");
 Request request = new Request.Builder()
-.url("https://openapi.xxx.com")
+.url("https://openapi.fameex.net")
 .method("POST", body)
 .addHeader("X-CH-APIKEY", "Your API key")
 .addHeader("X-CH-TS", "1596543296058")
@@ -2628,7 +2628,7 @@ import (
 "io/ioutil"
 )
 func main() {
-  url := "https://openapi.xxx.com"
+  url := "https://openapi.fameex.net"
   method := "POST"
   payload := strings.NewReader("{\"symbol\":\"BTCUSDT\",\"volume\":1,\"side\":\"BUY\",\"type\":\"LIMIT\",\"price\":10000,\"newClientOrderId\":\"\",\"recvWindow\":5000}")
   client := &http.Client {
@@ -2652,7 +2652,7 @@ if err != nil {
 
 ```python
 import requests
-url = "https://openapi.xxx.com"
+url = "https://openapi.fameex.net"
 payload = "{\"symbol\":\"BTCUSDT\",\"volume\":1,\"side\":\"BUY\",\"type\":\"LIMIT\",\"price\":10000,\"newClientOrderId\":\"\",\"recvWindow\":5000}"
 headers = {
 'X-CH-APIKEY': 'Your API key',
@@ -2670,7 +2670,7 @@ print(response.text.encode('utf8'))
 <?php
 require_once 'HTTP/Request2.php';
 $request = new HTTP_Request2();
-$request->setUrl('https://openapi.xxx.com');
+$request->setUrl('https://openapi.fameex.net');
 $request->setMethod(HTTP_Request2::METHOD_POST);
 $request->setConfig(array(
 'follow_redirects' => TRUE
@@ -2703,7 +2703,7 @@ catch(HTTP_Request2_Exception $e) {
 var request = require('request');
 var options = {
 'method': 'POST',
-'url': 'https://openapi.xxx.com',
+'url': 'https://openapi.fameex.net',
 'headers': {
 'X-CH-APIKEY': 'Your API key',
 'X-CH-TS': '1596543881257',
