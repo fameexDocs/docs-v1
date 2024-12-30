@@ -3097,21 +3097,93 @@ body
 </span></code></pre></div>
 <p><strong>返回参数</strong></p>
 
-<p>| 参数名          | 类型   | 示例                      | 描述                                                      |
-| :---------------|-:------| :-------------------------| :---------------------------------------------------------|
-| symbol          | string | <code>E-BTC-USDT</code>              | <code>大写</code>合约名称                                            |
-| pricePrecision  | number | <code>3</code>                       | 价格精度                                                  |
-| status          | number | <code>1</code>                       | 合约状态（0：<code>不可交易</code>，1：<code>可交易</code>）                      |
-| type            | string | <code>E</code>                       | 合约类型（E：<code>永续合约</code>，S：<code>模拟合约</code>，其他为<code>混合合约</code>） |
-| side            | number | <code>1</code>                       | 合约方向（0：<code>反向</code>，1：<code>正向</code>）                           |
-| multiplier      | number | <code>1.0000000000000000</code>      | 合约面值                                                  |
-| minOrderVolume  | number | <code>1</code>                       | 最小下单量                                                |
-| minOrderMoney   | number | <code>1.0000000000000000</code>      | 最小下单金额                                              |
-| maxMarketVolume | number | <code>200000</code>                  | 市价单最大下单数量                                        |
-| maxMarketMoney  | number | <code>500000.0000000000000000</code> | 市价最大下单金额                                          |
-| maxLimitVolume  | number | <code>300000</code>                  | 限价单最大下单数量                                        |
-| maxLimitMoney   | number | <code>500000.0000000000000000</code> | 限价最大下单金额                                          |
-| maxValidOrder   | number | <code>10</code>                      | 最大有效委托的订单数量                                    |</p>
+<table><thead>
+<tr>
+<th style="text-align: left">参数名</th>
+<th style="text-align: left">类型</th>
+<th style="text-align: left">示例</th>
+<th style="text-align: left">描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">symbol</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>E-BTC-USDT</code></td>
+<td style="text-align: left"><code>大写</code>合约名称</td>
+</tr>
+<tr>
+<td style="text-align: left">pricePrecision</td>
+<td style="text-align: left">number</td>
+<td style="text-align: left"><code>3</code></td>
+<td style="text-align: left">价格精度</td>
+</tr>
+<tr>
+<td style="text-align: left">status</td>
+<td style="text-align: left">number</td>
+<td style="text-align: left"><code>1</code></td>
+<td style="text-align: left">合约状态（0：<code>不可交易</code>，1：<code>可交易</code>）</td>
+</tr>
+<tr>
+<td style="text-align: left">type</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>E</code></td>
+<td style="text-align: left">合约类型（E：<code>永续合约</code>，S：<code>模拟合约</code>，其他为<code>混合合约</code>）</td>
+</tr>
+<tr>
+<td style="text-align: left">side</td>
+<td style="text-align: left">number</td>
+<td style="text-align: left"><code>1</code></td>
+<td style="text-align: left">合约方向（0：<code>反向</code>，1：<code>正向</code>）</td>
+</tr>
+<tr>
+<td style="text-align: left">multiplier</td>
+<td style="text-align: left">number</td>
+<td style="text-align: left"><code>1.0000000000000000</code></td>
+<td style="text-align: left">合约面值</td>
+</tr>
+<tr>
+<td style="text-align: left">minOrderVolume</td>
+<td style="text-align: left">number</td>
+<td style="text-align: left"><code>1</code></td>
+<td style="text-align: left">最小下单量</td>
+</tr>
+<tr>
+<td style="text-align: left">minOrderMoney</td>
+<td style="text-align: left">number</td>
+<td style="text-align: left"><code>1.0000000000000000</code></td>
+<td style="text-align: left">最小下单金额</td>
+</tr>
+<tr>
+<td style="text-align: left">maxMarketVolume</td>
+<td style="text-align: left">number</td>
+<td style="text-align: left"><code>200000</code></td>
+<td style="text-align: left">市价单最大下单数量</td>
+</tr>
+<tr>
+<td style="text-align: left">maxMarketMoney</td>
+<td style="text-align: left">number</td>
+<td style="text-align: left"><code>500000.0000000000000000</code></td>
+<td style="text-align: left">市价最大下单金额</td>
+</tr>
+<tr>
+<td style="text-align: left">maxLimitVolume</td>
+<td style="text-align: left">number</td>
+<td style="text-align: left"><code>300000</code></td>
+<td style="text-align: left">限价单最大下单数量</td>
+</tr>
+<tr>
+<td style="text-align: left">maxLimitMoney</td>
+<td style="text-align: left">number</td>
+<td style="text-align: left"><code>500000.0000000000000000</code></td>
+<td style="text-align: left">限价最大下单金额</td>
+</tr>
+<tr>
+<td style="text-align: left">maxValidOrder</td>
+<td style="text-align: left">number</td>
+<td style="text-align: left"><code>10</code></td>
+<td style="text-align: left">最大有效委托的订单数量</td>
+</tr>
+</tbody></table>
 <h2 id='8e4b902c12-2'>行情</h2><h3 id='none-4'>安全类型: None</h3>
 <aside class="notice">行情下方的接口不需要API-Key或者签名就能自由访问</aside>
 <h3 id='b754edd9d5-2'>订单薄</h3>
