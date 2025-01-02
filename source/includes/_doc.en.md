@@ -949,7 +949,7 @@ body
 {}
 ```
 
-### Batch Orders
+<!-- ### Batch Orders
 
 `POST https://openapi.fameex.net/sapi/v1/batchOrders`
 
@@ -1014,8 +1014,7 @@ body
 
 | Parameter | Type  | Example | Description       |
 | :---------| :-----| :-------| :-----------------|
-| ids       | array |         | ids of Order List |
-
+| ids       | array |         | ids of Order List | -->
 
 ### Query Order
 

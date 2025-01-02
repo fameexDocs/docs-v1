@@ -950,7 +950,7 @@ body
 {}
 ```
 
-### 批量下单
+<!-- ### 批量下单
 
 `POST https://openapi.fameex.net/sapi/v1/batchOrders`
 
@@ -1015,8 +1015,7 @@ body
 
 | 参数名 | 类型  | 示例 | 描述       |
 | :------| :-----| :----| :----------|
-| ids    | array |      | 订单id数组 |
-
+| ids    | array |      | 订单id数组 | -->
 
 ### 订单查询
 
