@@ -581,9 +581,6 @@
                             <a href="#test-new-order" class="toc-h3 toc-link" data-title="Test New Order">Test New Order</a>
                           </li>
                           <li>
-                            <a href="#batch-orders" class="toc-h3 toc-link" data-title="Batch Orders">Batch Orders</a>
-                          </li>
-                          <li>
                             <a href="#query-order" class="toc-h3 toc-link" data-title="Query Order">Query Order</a>
                           </li>
                           <li>
@@ -2113,41 +2110,25 @@ body
 <p>response example</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{}</span><span class="w">
-</span></code></pre></div><h3 id='batch-orders'>Batch Orders</h3>
-<p><code>POST https://openapi.fameex.net/sapi/v1/batchOrders</code></p>
+</span></code></pre></div>
+<!-- ### Batch Orders
 
-<p><strong>Rate Limit: 50 times/2s Up to 10 orders in one batch order request</strong></p>
+`POST https://openapi.fameex.net/sapi/v1/batchOrders`
 
-<p><strong>Request Headers</strong></p>
+**Rate Limit: 50 times/2s Up to 10 orders in one batch order request**
 
-<table><thead>
-<tr>
-<th style="text-align: left">Parameter</th>
-<th style="text-align: left">Type</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">X-CH-SIGN<font color="red">*</font></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left">Signature</td>
-</tr>
-<tr>
-<td style="text-align: left">X-CH-APIKEY<font color="red">*</font></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left">User&#39;s API-key</td>
-</tr>
-<tr>
-<td style="text-align: left">X-CH-TS<font color="red">*</font></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left">Timestamp</td>
-</tr>
-</tbody></table>
+**Request Headers**
 
-<blockquote>
-<p>request example</p>
-</blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.fameex.net/sapi/v1/batchOrders
+| Parameter                              | Type    | Description    |
+| :--------------------------------------| :-------| :--------------|
+| X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
+| X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
+| X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
+
+> request example
+
+```http
+POST https://openapi.fameex.net/sapi/v1/batchOrders
 
 body
 {
@@ -2167,77 +2148,35 @@ body
         }
     ]
 }
-</span></code></pre></div>
-<p><strong>Request Parameters</strong></p>
+```
 
-<table><thead>
-<tr>
-<th style="text-align: left">Parameter</th>
-<th style="text-align: left">Type</th>
-<th style="text-align: left">Example</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">symbol</td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"><code>ETHUSDT</code></td>
-<td style="text-align: left"><code>Uppercase</code> symbol name</td>
-</tr>
-<tr>
-<td style="text-align: left">price</td>
-<td style="text-align: left">float</td>
-<td style="text-align: left"><code>2100.00</code></td>
-<td style="text-align: left">Order price</td>
-</tr>
-<tr>
-<td style="text-align: left">volume</td>
-<td style="text-align: left">float</td>
-<td style="text-align: left"><code>1.00</code></td>
-<td style="text-align: left">Order volume</td>
-</tr>
-<tr>
-<td style="text-align: left">side</td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"><code>BUY/SELL</code></td>
-<td style="text-align: left">Order side</td>
-</tr>
-<tr>
-<td style="text-align: left">batchType</td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"><code>LIMIT/MARKET</code></td>
-<td style="text-align: left">Order type</td>
-</tr>
-</tbody></table>
+**Request Parameters**
 
-<blockquote>
-<p>response example</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="mi">165964665990709251</span><span class="p">,</span><span class="w">
-        </span><span class="mi">165964665990709252</span><span class="p">,</span><span class="w">
-        </span><span class="mi">165964665990709253</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<p><strong>Response Parameters</strong></p>
+| Parameter | Type   | Example        | Description             |
+| :---------| :------| :--------------| :-----------------------|
+| symbol    | string | `ETHUSDT`      | `Uppercase` symbol name |
+| price     | float  | `2100.00`      | Order price             |
+| volume    | float  | `1.00`         | Order volume            |
+| side      | string | `BUY/SELL`     | Order side              |
+| batchType | string | `LIMIT/MARKET` | Order type              |
 
-<table><thead>
-<tr>
-<th style="text-align: left">Parameter</th>
-<th style="text-align: left">Type</th>
-<th style="text-align: left">Example</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">ids</td>
-<td style="text-align: left">array</td>
-<td style="text-align: left"></td>
-<td style="text-align: left">ids of Order List</td>
-</tr>
-</tbody></table>
+> response example
+
+```json
+{
+    "ids": [
+        165964665990709251,
+        165964665990709252,
+        165964665990709253
+    ]
+}
+```
+
+**Response Parameters**
+
+| Parameter | Type  | Example | Description       |
+| :---------| :-----| :-------| :-----------------|
+| ids       | array |         | ids of Order List | -->
 <h3 id='query-order'>Query Order</h3>
 <p><code>GET https://openapi.fameex.net/sapi/v1/order</code></p>
 

@@ -581,9 +581,6 @@
                             <a href="#623198186c" class="toc-h3 toc-link" data-title="创建测试订单">创建测试订单</a>
                           </li>
                           <li>
-                            <a href="#de93fae07b" class="toc-h3 toc-link" data-title="批量下单">批量下单</a>
-                          </li>
-                          <li>
                             <a href="#1285d91409" class="toc-h3 toc-link" data-title="订单查询">订单查询</a>
                           </li>
                           <li>
@@ -2113,41 +2110,25 @@ body
 <p>返回示例</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{}</span><span class="w">
-</span></code></pre></div><h3 id='de93fae07b'>批量下单</h3>
-<p><code>POST https://openapi.fameex.net/sapi/v1/batchOrders</code></p>
+</span></code></pre></div>
+<!-- ### 批量下单
 
-<p><strong>限速规则: 50次/2s 一个批量最多10个订单</strong></p>
+`POST https://openapi.fameex.net/sapi/v1/batchOrders`
 
-<p><strong>请求头</strong></p>
+**限速规则: 50次/2s 一个批量最多10个订单**
 
-<table><thead>
-<tr>
-<th style="text-align: left">参数名</th>
-<th style="text-align: left">类型</th>
-<th style="text-align: left">描述</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">X-CH-SIGN<font color="red">*</font></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left">签名</td>
-</tr>
-<tr>
-<td style="text-align: left">X-CH-APIKEY<font color="red">*</font></td>
-<td style="text-align: left">string</td>
-<td style="text-align: left">您的API-key</td>
-</tr>
-<tr>
-<td style="text-align: left">X-CH-TS<font color="red">*</font></td>
-<td style="text-align: left">integer</td>
-<td style="text-align: left">时间戳</td>
-</tr>
-</tbody></table>
+**请求头**
 
-<blockquote>
-<p>请求示例</p>
-</blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.fameex.net/sapi/v1/batchOrders
+| 参数名                                 | 类型    | 描述        |
+| :--------------------------------------| :-------| :-----------|
+| X-CH-SIGN<font color="red">\*</font>   | string  | 签名        |
+| X-CH-APIKEY<font color="red">\*</font> | string  | 您的API-key |
+| X-CH-TS<font color="red">\*</font>     | integer | 时间戳      |
+
+> 请求示例
+
+```http
+POST https://openapi.fameex.net/sapi/v1/batchOrders
 
 body
 {
@@ -2167,77 +2148,35 @@ body
         }
     ]
 }
-</span></code></pre></div>
-<p><strong>请求参数</strong></p>
+```
 
-<table><thead>
-<tr>
-<th style="text-align: left">参数名</th>
-<th style="text-align: left">类型</th>
-<th style="text-align: left">示例</th>
-<th style="text-align: left">描述</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">symbol</td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"><code>ETHUSDT</code></td>
-<td style="text-align: left">币对名称</td>
-</tr>
-<tr>
-<td style="text-align: left">price</td>
-<td style="text-align: left">float</td>
-<td style="text-align: left"><code>2100.00</code></td>
-<td style="text-align: left">价格</td>
-</tr>
-<tr>
-<td style="text-align: left">volume</td>
-<td style="text-align: left">float</td>
-<td style="text-align: left"><code>1.00</code></td>
-<td style="text-align: left">数量</td>
-</tr>
-<tr>
-<td style="text-align: left">side</td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"><code>BUY/SELL</code></td>
-<td style="text-align: left">方向</td>
-</tr>
-<tr>
-<td style="text-align: left">batchType</td>
-<td style="text-align: left">string</td>
-<td style="text-align: left"><code>LIMIT/MARKET</code></td>
-<td style="text-align: left">类型</td>
-</tr>
-</tbody></table>
+**请求参数**
 
-<blockquote>
-<p>返回示例</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="mi">165964665990709251</span><span class="p">,</span><span class="w">
-        </span><span class="mi">165964665990709252</span><span class="p">,</span><span class="w">
-        </span><span class="mi">165964665990709253</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<p><strong>返回参数</strong></p>
+| 参数名    | 类型   | 示例           | 描述     |
+| :---------| :------| :--------------| :--------|
+| symbol    | string | `ETHUSDT`      | 币对名称 |
+| price     | float  | `2100.00`      | 价格     |
+| volume    | float  | `1.00`         | 数量     |
+| side      | string | `BUY/SELL`     | 方向     |
+| batchType | string | `LIMIT/MARKET` | 类型     |
 
-<table><thead>
-<tr>
-<th style="text-align: left">参数名</th>
-<th style="text-align: left">类型</th>
-<th style="text-align: left">示例</th>
-<th style="text-align: left">描述</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">ids</td>
-<td style="text-align: left">array</td>
-<td style="text-align: left"></td>
-<td style="text-align: left">订单id数组</td>
-</tr>
-</tbody></table>
+> 返回示例
+
+```json
+{
+    "ids": [
+        165964665990709251,
+        165964665990709252,
+        165964665990709253
+    ]
+}
+```
+
+**返回参数**
+
+| 参数名 | 类型  | 示例 | 描述       |
+| :------| :-----| :----| :----------|
+| ids    | array |      | 订单id数组 | -->
 <h3 id='1285d91409'>订单查询</h3>
 <p><code>GET https://openapi.fameex.net/sapi/v1/order</code></p>
 
