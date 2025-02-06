@@ -1392,6 +1392,53 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 | free      | string | Available balance                 |
 | locked    | string | Frozen balance                    |
 
+### Account Information(Specific Coin)
+
+`GET https://openapi.fameex.net/sapi/v1/account/balance`
+
+**Rate Limit: 20 times/2s**
+
+**Request Headers**
+
+| Parameter                              | Type    | Description    |
+| :--------------------------------------| :-------| :--------------|
+| X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
+| X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
+| X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
+
+**Query Parameter**
+
+| Parameter                         | Type   | Description                      |
+| :---------------------------------| :------| :--------------------------------|
+| symbol<font color="red">\*</font> | string | `Uppercase` symbol name E.g `USDT` |
+
+> request example
+
+```http
+GET https://openapi.fameex.net/sapi/v1/account/balance?symbol=USDT
+```
+
+> response example
+
+```json
+{
+    "balances": {
+        "asset": "USDT",
+        "free": "10.00",
+        "locked": "20.00"
+    }
+}
+```
+
+**Response Parameters**
+
+| Parameter | Type   | Description       |
+| :---------| :------| :-----------------|
+| balances  | object | account balance   |
+| asset     | string | Symbol            |
+| free      | string | Available balance |
+| locked    | string | Frozen balance    |
+
 # Futures Trading API
 
 ## Public
@@ -1410,7 +1457,7 @@ This interface checks connectivity to the host.
 
 `GET https://futuresopenapi.fameex.net/fapi/v1/time`
 
-> return example
+> response example
 
 ```json
 {

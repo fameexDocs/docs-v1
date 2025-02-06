@@ -1392,6 +1392,53 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 | free     | string | 可用余额     |
 | locked   | string | 冻结余额     |
 
+### 账户信息（指定币种）
+
+`GET https://openapi.fameex.net/sapi/v1/account/balance`
+
+**限速规则: 20次/2s**
+
+**请求头**
+
+| 参数名                                 | 类型    | 描述        |
+| :--------------------------------------| :-------| :-----------|
+| X-CH-SIGN<font color="red">\*</font>   | string  | 签名        |
+| X-CH-APIKEY<font color="red">\*</font> | string  | 您的API-key |
+| X-CH-TS<font color="red">\*</font>     | integer | 时间戳      |
+
+**请求参数**
+
+| 参数名                            | 类型   | 描述                      |
+| :---------------------------------| :------| :-------------------------|
+| symbol<font color="red">\*</font> | string | 大写币种名称，例如：`BTC` |
+
+> 请求示例
+
+```http
+GET https://openapi.fameex.net/sapi/v1/account/balance?symbol=USDT
+```
+
+> 返回示例
+
+```json
+{
+    "balances": {
+        "asset": "USDT",
+        "free": "10.00",
+        "locked": "20.00"
+    }
+}
+```
+
+**返回参数**
+
+| 参数名   | 类型   | 描述     |
+| :--------| :------| :--------|
+| balances | object | 账户余额 |
+| asset    | string | 交易对   |
+| free     | string | 可用余额 |
+| locked   | string | 冻结余额 |
+
 # 合约交易
 
 ## 公共
