@@ -297,7 +297,7 @@
   </head>
   <header class="fixed-header">
     <span class="header-logo-wrapper">
-      <img src="../images/logo-0c76dc5a.png" alt="" />
+      <img src="../images/logo-068727b5.png" alt="" />
     </span>
     <span class="header-button-wrapper">
       <a href="/docs-v1/en/index.html" class="header-button">English</a>
@@ -605,6 +605,9 @@
                           </li>
                           <li>
                             <a href="#bd9157656f" class="toc-h3 toc-link" data-title="账户信息">账户信息</a>
+                          </li>
+                          <li>
+                            <a href="#e8d011f49a" class="toc-h3 toc-link" data-title="账户信息（指定币种）">账户信息（指定币种）</a>
                           </li>
                       </ul>
                   </li>
@@ -2931,6 +2934,99 @@ body
 <td style="text-align: left">balances</td>
 <td style="text-align: left">array</td>
 <td style="text-align: left">账户余额集合</td>
+</tr>
+<tr>
+<td style="text-align: left">asset</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">交易对</td>
+</tr>
+<tr>
+<td style="text-align: left">free</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">可用余额</td>
+</tr>
+<tr>
+<td style="text-align: left">locked</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">冻结余额</td>
+</tr>
+</tbody></table>
+<h3 id='e8d011f49a'>账户信息（指定币种）</h3>
+<p><code>GET https://openapi.fameex.net/sapi/v1/account/balance</code></p>
+
+<p><strong>限速规则: 20次/2s</strong></p>
+
+<p><strong>请求头</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">参数名</th>
+<th style="text-align: left">类型</th>
+<th style="text-align: left">描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">X-CH-SIGN<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">签名</td>
+</tr>
+<tr>
+<td style="text-align: left">X-CH-APIKEY<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">您的API-key</td>
+</tr>
+<tr>
+<td style="text-align: left">X-CH-TS<font color="red">*</font></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">时间戳</td>
+</tr>
+</tbody></table>
+
+<p><strong>请求参数</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">参数名</th>
+<th style="text-align: left">类型</th>
+<th style="text-align: left">描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">symbol<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">大写币种名称，例如：<code>BTC</code></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>请求示例</p>
+</blockquote>
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/account/balance?symbol=USDT
+</span></code></pre></div>
+<blockquote>
+<p>返回示例</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"balances"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"free"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.00"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"locked"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20.00"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>返回参数</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">参数名</th>
+<th style="text-align: left">类型</th>
+<th style="text-align: left">描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">balances</td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">账户余额</td>
 </tr>
 <tr>
 <td style="text-align: left">asset</td>

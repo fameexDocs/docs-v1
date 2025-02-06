@@ -297,7 +297,7 @@
   </head>
   <header class="fixed-header">
     <span class="header-logo-wrapper">
-      <img src="../images/logo-0c76dc5a.png" alt="" />
+      <img src="../images/logo-068727b5.png" alt="" />
     </span>
     <span class="header-button-wrapper">
       <a href="/docs-v1/zh/index.html" class="header-button">中文</a>
@@ -605,6 +605,9 @@
                           </li>
                           <li>
                             <a href="#account-information" class="toc-h3 toc-link" data-title="Account Information">Account Information</a>
+                          </li>
+                          <li>
+                            <a href="#account-information-specific-coin" class="toc-h3 toc-link" data-title="Account Information(Specific Coin)">Account Information(Specific Coin)</a>
                           </li>
                       </ul>
                   </li>
@@ -2948,6 +2951,99 @@ body
 <td style="text-align: left">Frozen balance</td>
 </tr>
 </tbody></table>
+<h3 id='account-information-specific-coin'>Account Information(Specific Coin)</h3>
+<p><code>GET https://openapi.fameex.net/sapi/v1/account/balance</code></p>
+
+<p><strong>Rate Limit: 20 times/2s</strong></p>
+
+<p><strong>Request Headers</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">X-CH-SIGN<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Signature</td>
+</tr>
+<tr>
+<td style="text-align: left">X-CH-APIKEY<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">User&#39;s API-key</td>
+</tr>
+<tr>
+<td style="text-align: left">X-CH-TS<font color="red">*</font></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">Timestamp</td>
+</tr>
+</tbody></table>
+
+<p><strong>Query Parameter</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">symbol<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>Uppercase</code> symbol name E.g <code>USDT</code></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/account/balance?symbol=USDT
+</span></code></pre></div>
+<blockquote>
+<p>response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"balances"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"free"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.00"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"locked"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20.00"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Response Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">balances</td>
+<td style="text-align: left">object</td>
+<td style="text-align: left">account balance</td>
+</tr>
+<tr>
+<td style="text-align: left">asset</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Symbol</td>
+</tr>
+<tr>
+<td style="text-align: left">free</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Available balance</td>
+</tr>
+<tr>
+<td style="text-align: left">locked</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Frozen balance</td>
+</tr>
+</tbody></table>
 <h1 id='futures-trading-api'>Futures Trading API</h1><h2 id='public-2'>Public</h2><h3 id='security-none-3'>Security: None</h3>
 <aside class="notice">Public section can be accessed freely without requiring any API-key or signatures.</aside>
 <h3 id='test-connectivity-2'>Test Connectivity</h3>
@@ -2958,7 +3054,7 @@ body
 <p><code>GET https://futuresopenapi.fameex.net/fapi/v1/time</code></p>
 
 <blockquote>
-<p>return example</p>
+<p>response example</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"timezone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"China Standard Time"</span><span class="p">,</span><span class="w">
