@@ -474,7 +474,7 @@ min -> 分钟；h -> 小时；day -> 天；week -> 周；month -> 月
 
 ### 测试连接
 
-`GET https://openapi.fameex.netsapi/v1/ping`
+`GET https://openapi.fameex.net/sapi/v1/ping`
 
 测试REST API的连通性
 
