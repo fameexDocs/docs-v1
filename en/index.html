@@ -607,7 +607,7 @@
                             <a href="#account-information" class="toc-h3 toc-link" data-title="Account Information">Account Information</a>
                           </li>
                           <li>
-                            <a href="#account-information-specific-coin" class="toc-h3 toc-link" data-title="Account Information(Specific Coin)">Account Information(Specific Coin)</a>
+                            <a href="#account-information-new" class="toc-h3 toc-link" data-title="Account Information(New)">Account Information(New)</a>
                           </li>
                       </ul>
                   </li>
@@ -2951,7 +2951,7 @@ body
 <td style="text-align: left">Frozen balance</td>
 </tr>
 </tbody></table>
-<h3 id='account-information-specific-coin'>Account Information(Specific Coin)</h3>
+<h3 id='account-information-new'>Account Information(New)</h3>
 <p><code>GET https://openapi.fameex.net/sapi/v1/account/balance</code></p>
 
 <p><strong>Rate Limit: 20 times/2s</strong></p>
@@ -2992,9 +2992,9 @@ body
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: left">symbol<font color="red">*</font></td>
+<td style="text-align: left">symbol</td>
 <td style="text-align: left">string</td>
-<td style="text-align: left"><code>Uppercase</code> symbol name E.g <code>USDT</code></td>
+<td style="text-align: left"><code>Uppercase</code> symbol name E.g.<code>BTC</code>, support multiple symbols, no more than 20, separated with comma. default query all symbol balance</td>
 </tr>
 </tbody></table>
 

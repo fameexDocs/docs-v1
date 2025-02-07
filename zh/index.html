@@ -607,7 +607,7 @@
                             <a href="#bd9157656f" class="toc-h3 toc-link" data-title="账户信息">账户信息</a>
                           </li>
                           <li>
-                            <a href="#e8d011f49a" class="toc-h3 toc-link" data-title="账户信息（指定币种）">账户信息（指定币种）</a>
+                            <a href="#3a7705bb94" class="toc-h3 toc-link" data-title="账户信息（新）">账户信息（新）</a>
                           </li>
                       </ul>
                   </li>
@@ -2951,7 +2951,7 @@ body
 <td style="text-align: left">冻结余额</td>
 </tr>
 </tbody></table>
-<h3 id='e8d011f49a'>账户信息（指定币种）</h3>
+<h3 id='3a7705bb94'>账户信息（新）</h3>
 <p><code>GET https://openapi.fameex.net/sapi/v1/account/balance</code></p>
 
 <p><strong>限速规则: 20次/2s</strong></p>
@@ -2992,9 +2992,9 @@ body
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: left">symbol<font color="red">*</font></td>
+<td style="text-align: left">symbol</td>
 <td style="text-align: left">string</td>
-<td style="text-align: left">大写币种名称，例如：<code>BTC</code></td>
+<td style="text-align: left">大写币种名称，例如：<code>BTC</code>，支持多币种查询，不超过20个，币种之间以<code>,</code>分隔；如不填写，默认查询所有币种的余额</td>
 </tr>
 </tbody></table>
 
