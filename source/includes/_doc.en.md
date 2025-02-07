@@ -1392,7 +1392,7 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 | free      | string | Available balance                 |
 | locked    | string | Frozen balance                    |
 
-### Account Information(Specific Coin)
+### Account Information(New)
 
 `GET https://openapi.fameex.net/sapi/v1/account/balance`
 
@@ -1408,25 +1408,32 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 
 **Query Parameter**
 
-| Parameter                         | Type   | Description                      |
-| :---------------------------------| :------| :--------------------------------|
-| symbol<font color="red">\*</font> | string | `Uppercase` symbol name E.g `USDT` |
+| Parameter | Type   | Description                                                                                                                          |
+| :---------| :------| :------------------------------------------------------------------------------------------------------------------------------------|
+| symbols   | string | `Uppercase` symbol name E.g.`BTC`, support multiple symbols, no more than 20, separated with comma. default query all symbol balance |
 
 > request example
 
 ```http
-GET https://openapi.fameex.net/sapi/v1/account/balance?symbol=USDT
+GET https://openapi.fameex.net/sapi/v1/account/balance?symbols=BTC,USDT
 ```
 
 > response example
 
 ```json
 {
-    "balances": {
-        "asset": "USDT",
-        "free": "10.00",
-        "locked": "20.00"
-    }
+    "balances": [
+        {
+            "asset": "BTC",
+            "free": "15.00",
+            "locked": "30.00"
+        },
+        {
+            "asset": "USDT",
+            "free": "10.00",
+            "locked": "20.00"
+        }
+    ]
 }
 ```
 
@@ -1434,7 +1441,7 @@ GET https://openapi.fameex.net/sapi/v1/account/balance?symbol=USDT
 
 | Parameter | Type   | Description       |
 | :---------| :------| :-----------------|
-| balances  | object | account balance   |
+| balances  | array  | account balance   |
 | asset     | string | Symbol            |
 | free      | string | Available balance |
 | locked    | string | Frozen balance    |

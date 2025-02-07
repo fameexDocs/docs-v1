@@ -1392,7 +1392,7 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 | free     | string | 可用余额     |
 | locked   | string | 冻结余额     |
 
-### 账户信息（指定币种）
+### 账户信息（新）
 
 `GET https://openapi.fameex.net/sapi/v1/account/balance`
 
@@ -1408,25 +1408,32 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 
 **请求参数**
 
-| 参数名                            | 类型   | 描述                      |
-| :---------------------------------| :------| :-------------------------|
-| symbol<font color="red">\*</font> | string | 大写币种名称，例如：`BTC` |
+| 参数名  | 类型   | 描述                                                                                                       |
+| :-------| :------| :----------------------------------------------------------------------------------------------------------|
+| symbols | string | 大写币种名称，例如：`BTC`，支持多币种查询，不超过20个，币种之间以`,`分隔；如不填写，默认查询所有币种的余额 |
 
 > 请求示例
 
 ```http
-GET https://openapi.fameex.net/sapi/v1/account/balance?symbol=USDT
+GET https://openapi.fameex.net/sapi/v1/account/balance?symbols=BTC,USDT
 ```
 
 > 返回示例
 
 ```json
 {
-    "balances": {
-        "asset": "USDT",
-        "free": "10.00",
-        "locked": "20.00"
-    }
+    "balances": [
+        {
+            "asset": "BTC",
+            "free": "15.00",
+            "locked": "30.00"
+        },
+        {
+            "asset": "USDT",
+            "free": "10.00",
+            "locked": "20.00"
+        }
+    ]
 }
 ```
 
@@ -1434,7 +1441,7 @@ GET https://openapi.fameex.net/sapi/v1/account/balance?symbol=USDT
 
 | 参数名   | 类型   | 描述     |
 | :--------| :------| :--------|
-| balances | object | 账户余额 |
+| balances | array  | 账户余额 |
 | asset    | string | 交易对   |
 | free     | string | 可用余额 |
 | locked   | string | 冻结余额 |
