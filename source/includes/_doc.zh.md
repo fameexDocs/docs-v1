@@ -1345,7 +1345,7 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 
 <aside class="notice">账户下方的接口都需要签名和API-key验证。</aside>
 
-### 账户信息
+### 账户信息（废弃）
 
 `GET https://openapi.fameex.net/sapi/v1/account`
 
@@ -1392,7 +1392,7 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 | free     | string | 可用余额     |
 | locked   | string | 冻结余额     |
 
-### 账户信息（新）
+### 账户信息（推荐）
 
 `GET https://openapi.fameex.net/sapi/v1/account/balance`
 
@@ -1408,14 +1408,18 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 
 **请求参数**
 
-| 参数名  | 类型   | 描述                                                                                                       |
-| :-------| :------| :----------------------------------------------------------------------------------------------------------|
-| symbols | string | 大写币种名称，例如：`BTC`，支持多币种查询，不超过20个，币种之间以`,`分隔；如不填写，默认查询所有币种的余额 |
+| 参数名  | 类型   | 描述                                                                     |
+| :-------| :------| :------------------------------------------------------------------------|
+| symbols | string | 大写币种名称，例如：`BTC`，支持多币种查询，不超过20个，币种之间以`,`分隔 |
 
 > 请求示例
 
 ```http
-GET https://openapi.fameex.net/sapi/v1/account/balance?symbols=BTC,USDT
+// 查询所有币种
+GET https://openapi.fameex.net/sapi/v1/account/balance
+
+// 查询USDT，BTC，ETH
+GET https://openapi.fameex.net/sapi/v1/account/balance?symbols=USDT,BTC,ETH
 ```
 
 > 返回示例
@@ -1424,14 +1428,19 @@ GET https://openapi.fameex.net/sapi/v1/account/balance?symbols=BTC,USDT
 {
     "balances": [
         {
-            "asset": "BTC",
+            "asset": "USDT",
             "free": "15.00",
             "locked": "30.00"
         },
         {
-            "asset": "USDT",
+            "asset": "BTC",
             "free": "10.00",
             "locked": "20.00"
+        },
+        {
+            "asset": "ETH",
+            "free": "100.00",
+            "locked": "70.00"
         }
     ]
 }

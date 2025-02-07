@@ -1345,7 +1345,7 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 
 <aside class="notice">The interface in Trade requires API-key and signature verification for access.</aside>
 
-### Account Information
+### Account Information(Deprecated)
 
 `GET https://openapi.fameex.net/sapi/v1/account`
 
@@ -1392,7 +1392,7 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 | free      | string | Available balance                 |
 | locked    | string | Frozen balance                    |
 
-### Account Information(New)
+### Account Information(Recommend)
 
 `GET https://openapi.fameex.net/sapi/v1/account/balance`
 
@@ -1408,14 +1408,18 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 
 **Query Parameter**
 
-| Parameter | Type   | Description                                                                                                                          |
-| :---------| :------| :------------------------------------------------------------------------------------------------------------------------------------|
-| symbols   | string | `Uppercase` symbol name E.g.`BTC`, support multiple symbols, no more than 20, separated with comma. default query all symbol balance |
+| Parameter | Type   | Description                                                                                        |
+| :---------| :------| :--------------------------------------------------------------------------------------------------|
+| symbols   | string | `Uppercase` symbol name E.g.`BTC`, support multiple symbols, no more than 20, separated with comma |
 
 > request example
 
 ```http
-GET https://openapi.fameex.net/sapi/v1/account/balance?symbols=BTC,USDT
+// query all currencies
+GET https://openapi.fameex.net/sapi/v1/account/balance
+
+// query USDT, BTC, ETH
+GET https://openapi.fameex.net/sapi/v1/account/balance?symbols=USDT,BTC,ETH
 ```
 
 > response example
@@ -1424,14 +1428,19 @@ GET https://openapi.fameex.net/sapi/v1/account/balance?symbols=BTC,USDT
 {
     "balances": [
         {
-            "asset": "BTC",
+            "asset": "USDT",
             "free": "15.00",
             "locked": "30.00"
         },
         {
-            "asset": "USDT",
+            "asset": "BTC",
             "free": "10.00",
             "locked": "20.00"
+        },
+        {
+            "asset": "ETH",
+            "free": "100.00",
+            "locked": "70.00"
         }
     ]
 }
