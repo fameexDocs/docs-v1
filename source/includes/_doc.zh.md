@@ -3145,11 +3145,303 @@ GET https://t(:open_url)/sapi/v1/account/balance?symbols=USDT,BTC,ETH
 
 `GET https://t(:futures_url)/fapi/v1/ping`
 
+> 请求示例
+
+```http
+GET https://t(:futures_url)/fapi/v1/ping
+
+// Headers 设定
+Content-Type:application/json
+```
+
+```shell
+curl -X GET "https://t(:futures_url)/fapi/v1/ping"
+```
+
+```java
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+
+public class Main {
+  public static void main(String[] args) {
+    try {
+      // 使用 URI 创建 URL
+      URI uri = new URI("https://t(:futures_url)/fapi/v1/ping");
+      HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+      conn.setRequestMethod("GET");
+      conn.setRequestProperty("User-Agent", "Java-Client");
+
+      // 读取响应
+      BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+      StringBuilder response = new StringBuilder();
+      String line;
+      while ((line = reader.readLine()) != null) {
+        response.append(line);
+      }
+      reader.close();
+
+      // 输出结果
+      System.out.println("Response: " + response.toString());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	url := "https://t(:futures_url)/fapi/v1/ping"
+
+	// 发送 GET 请求
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应体
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("读取响应失败:", err)
+		return
+	}
+
+	// 打印响应
+	fmt.Println("服务器返回:", string(body))
+}
+```
+
+```python
+import requests
+
+url = "https://t(:futures_url)/fapi/v1/ping"
+
+try:
+    response = requests.get(url)
+    response.raise_for_status()  # 检查请求是否成功
+    print("Response:", response.text)
+except requests.exceptions.RequestException as e:
+    print("请求错误:", e)
+```
+
+```php
+$url = "https://t(:futures_url)/fapi/v1/ping";
+
+// 初始化 cURL
+$ch = curl_init();
+
+// 设置 cURL 选项
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过 SSL 证书验证（如果 API 需要）
+
+// 执行请求
+$response = curl_exec($ch);
+
+// 检查是否有错误
+if (curl_errno($ch)) {
+    echo "cURL 错误：" . curl_error($ch);
+} else {
+    echo "Response: " . $response;
+}
+
+// 关闭 cURL
+curl_close($ch);
+```
+
+```javascript--node
+const https = require('https');
+
+const url = 'https://t(:futures_url)/fapi/v1/ping';
+
+https.get(url, (res) => {
+  let data = '';
+
+  // A chunk of data has been received.
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  // The whole response has been received.
+  res.on('end', () => {
+    console.log("Response:", data);
+  });
+
+}).on('error', (err) => {
+  console.log('请求错误:', err.message);
+});
+```
+
+> 返回示例
+
+```json
+{}
+```
+
+**返回参数**
+
+{}
+
 测试REST API的连通性
 
 ### 获取服务器时间
 
 `GET https://t(:futures_url)/fapi/v1/time`
+
+> 请求示例
+
+```http
+GET https://t(:futures_url)/fapi/v1/time
+
+// Headers 设定
+Content-Type:application/json
+```
+
+```shell
+curl -X GET "https://t(:futures_url)/fapi/v1/time"
+```
+
+```java
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+
+public class Main {
+  public static void main(String[] args) {
+    try {
+      // 使用 URI 创建 URL
+      URI uri = new URI("https://t(:futures_url)/fapi/v1/time");
+      HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+      conn.setRequestMethod("GET");
+      conn.setRequestProperty("User-Agent", "Java-Client");
+
+      // 读取响应
+      BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+      StringBuilder response = new StringBuilder();
+      String line;
+      while ((line = reader.readLine()) != null) {
+        response.append(line);
+      }
+      reader.close();
+
+      // 输出结果
+      System.out.println("Response: " + response.toString());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	url := "https://t(:futures_url)/fapi/v1/time"
+
+	// 发送 GET 请求
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应体
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("读取响应失败:", err)
+		return
+	}
+
+	// 打印响应
+	fmt.Println("服务器返回:", string(body))
+}
+```
+
+```python
+import requests
+
+url = "https://t(:futures_url)/fapi/v1/time"
+
+try:
+    response = requests.get(url)
+    response.raise_for_status()  # 检查请求是否成功
+    print("Response:", response.text)
+except requests.exceptions.RequestException as e:
+    print("请求错误:", e)
+```
+
+```php
+$url = "https://t(:futures_url)/fapi/v1/time";
+
+// 初始化 cURL
+$ch = curl_init();
+
+// 设置 cURL 选项
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过 SSL 证书验证（如果 API 需要）
+
+// 执行请求
+$response = curl_exec($ch);
+
+// 检查是否有错误
+if (curl_errno($ch)) {
+    echo "cURL 错误：" . curl_error($ch);
+} else {
+    echo "Response: " . $response;
+}
+
+// 关闭 cURL
+curl_close($ch);
+```
+
+```javascript--node
+const https = require('https');
+
+const url = 'https://t(:futures_url)/fapi/v1/time';
+
+https.get(url, (res) => {
+  let data = '';
+
+  // A chunk of data has been received.
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  // The whole response has been received.
+  res.on('end', () => {
+    console.log("Response:", data);
+  });
+
+}).on('error', (err) => {
+  console.log('请求错误:', err.message);
+});
+```
 
 > 返回示例
 
@@ -3175,6 +3467,141 @@ GET https://t(:open_url)/sapi/v1/account/balance?symbols=USDT,BTC,ETH
 
 ```http
 GET https://t(:futures_url)/fapi/v1/contracts
+
+// Headers 设定
+Content-Type:application/json
+```
+
+```shell
+curl -X GET "https://t(:futures_url)/fapi/v1/contracts"
+```
+
+```java
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+
+public class Main {
+  public static void main(String[] args) {
+    try {
+      // 使用 URI 创建 URL
+      URI uri = new URI("https://t(:futures_url)/fapi/v1/contracts");
+      HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+      conn.setRequestMethod("GET");
+      conn.setRequestProperty("User-Agent", "Java-Client");
+
+      // 读取响应
+      BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+      StringBuilder response = new StringBuilder();
+      String line;
+      while ((line = reader.readLine()) != null) {
+        response.append(line);
+      }
+      reader.close();
+
+      // 输出结果
+      System.out.println("Response: " + response.toString());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	url := "https://t(:futures_url)/fapi/v1/contracts"
+
+	// 发送 GET 请求
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应体
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("读取响应失败:", err)
+		return
+	}
+
+	// 打印响应
+	fmt.Println("服务器返回:", string(body))
+}
+```
+
+```python
+import requests
+
+url = "https://t(:futures_url)/fapi/v1/contracts"
+
+try:
+    response = requests.get(url)
+    response.raise_for_status()  # 检查请求是否成功
+    print("Response:", response.text)
+except requests.exceptions.RequestException as e:
+    print("请求错误:", e)
+```
+
+```php
+$url = "https://t(:futures_url)/fapi/v1/contracts";
+
+// 初始化 cURL
+$ch = curl_init();
+
+// 设置 cURL 选项
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过 SSL 证书验证（如果 API 需要）
+
+// 执行请求
+$response = curl_exec($ch);
+
+// 检查是否有错误
+if (curl_errno($ch)) {
+    echo "cURL 错误：" . curl_error($ch);
+} else {
+    echo "Response: " . $response;
+}
+
+// 关闭 cURL
+curl_close($ch);
+```
+
+```javascript--node
+const https = require('https');
+
+const url = 'https://t(:futures_url)/fapi/v1/contracts';
+
+https.get(url, (res) => {
+  let data = '';
+
+  // A chunk of data has been received.
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  // The whole response has been received.
+  res.on('end', () => {
+    console.log("Response:", data);
+  });
+
+}).on('error', (err) => {
+  console.log('请求错误:', err.message);
+});
 ```
 
 > 返回示例
@@ -3250,6 +3677,141 @@ GET https://t(:futures_url)/fapi/v1/contracts
 
 ```http
 GET https://t(:futures_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100
+
+// Headers 设定
+Content-Type:application/json
+```
+
+```shell
+curl -X GET "https://t(:futures_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100"
+```
+
+```java
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+
+public class Main {
+  public static void main(String[] args) {
+    try {
+      // 使用 URI 创建 URL
+      URI uri = new URI("https://t(:futures_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100");
+      HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+      conn.setRequestMethod("GET");
+      conn.setRequestProperty("User-Agent", "Java-Client");
+
+      // 读取响应
+      BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+      StringBuilder response = new StringBuilder();
+      String line;
+      while ((line = reader.readLine()) != null) {
+        response.append(line);
+      }
+      reader.close();
+
+      // 输出结果
+      System.out.println("Response: " + response.toString());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	url := "https://t(:futures_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100"
+
+	// 发送 GET 请求
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应体
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("读取响应失败:", err)
+		return
+	}
+
+	// 打印响应
+	fmt.Println("服务器返回:", string(body))
+}
+```
+
+```python
+import requests
+
+url = "https://t(:futures_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100"
+
+try:
+    response = requests.get(url)
+    response.raise_for_status()  # 检查请求是否成功
+    print("Response:", response.text)
+except requests.exceptions.RequestException as e:
+    print("请求错误:", e)
+```
+
+```php
+$url = "https://t(:futures_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100";
+
+// 初始化 cURL
+$ch = curl_init();
+
+// 设置 cURL 选项
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过 SSL 证书验证（如果 API 需要）
+
+// 执行请求
+$response = curl_exec($ch);
+
+// 检查是否有错误
+if (curl_errno($ch)) {
+    echo "cURL 错误：" . curl_error($ch);
+} else {
+    echo "Response: " . $response;
+}
+
+// 关闭 cURL
+curl_close($ch);
+```
+
+```javascript--node
+const https = require('https');
+
+const url = 'https://t(:futures_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100';
+
+https.get(url, (res) => {
+  let data = '';
+
+  // A chunk of data has been received.
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  // The whole response has been received.
+  res.on('end', () => {
+    console.log("Response:", data);
+  });
+
+}).on('error', (err) => {
+  console.log('请求错误:', err.message);
+});
 ```
 
 **请求参数**
@@ -3307,6 +3869,141 @@ bids和asks所对应的信息代表了订单薄的所有价格以及价格对应
 
 ```http
 GET https://t(:futures_url)/fapi/v1/ticker?contractName=E-BTC-USDT
+
+// Headers 设定
+Content-Type:application/json
+```
+
+```shell
+curl -X GET "https://t(:futures_url)/fapi/v1/ticker?contractName=E-BTC-USDT"
+```
+
+```java
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+
+public class Main {
+  public static void main(String[] args) {
+    try {
+      // 使用 URI 创建 URL
+      URI uri = new URI("https://t(:futures_url)/fapi/v1/ticker?contractName=E-BTC-USDT");
+      HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+      conn.setRequestMethod("GET");
+      conn.setRequestProperty("User-Agent", "Java-Client");
+
+      // 读取响应
+      BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+      StringBuilder response = new StringBuilder();
+      String line;
+      while ((line = reader.readLine()) != null) {
+        response.append(line);
+      }
+      reader.close();
+
+      // 输出结果
+      System.out.println("Response: " + response.toString());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	url := "https://t(:futures_url)/fapi/v1/ticker?contractName=E-BTC-USDT"
+
+	// 发送 GET 请求
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应体
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("读取响应失败:", err)
+		return
+	}
+
+	// 打印响应
+	fmt.Println("服务器返回:", string(body))
+}
+```
+
+```python
+import requests
+
+url = "https://t(:futures_url)/fapi/v1/ticker?contractName=E-BTC-USDT"
+
+try:
+    response = requests.get(url)
+    response.raise_for_status()  # 检查请求是否成功
+    print("Response:", response.text)
+except requests.exceptions.RequestException as e:
+    print("请求错误:", e)
+```
+
+```php
+$url = "https://t(:futures_url)/fapi/v1/ticker?contractName=E-BTC-USDT";
+
+// 初始化 cURL
+$ch = curl_init();
+
+// 设置 cURL 选项
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过 SSL 证书验证（如果 API 需要）
+
+// 执行请求
+$response = curl_exec($ch);
+
+// 检查是否有错误
+if (curl_errno($ch)) {
+    echo "cURL 错误：" . curl_error($ch);
+} else {
+    echo "Response: " . $response;
+}
+
+// 关闭 cURL
+curl_close($ch);
+```
+
+```javascript--node
+const https = require('https');
+
+const url = 'https://t(:futures_url)/fapi/v1/ticker?contractName=E-BTC-USDT';
+
+https.get(url, (res) => {
+  let data = '';
+
+  // A chunk of data has been received.
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  // The whole response has been received.
+  res.on('end', () => {
+    console.log("Response:", data);
+  });
+
+}).on('error', (err) => {
+  console.log('请求错误:', err.message);
+});
 ```
 
 **请求参数**
@@ -3351,7 +4048,142 @@ GET https://t(:futures_url)/fapi/v1/ticker?contractName=E-BTC-USDT
 > 请求示例
 
 ```http
-GET https://t(:futures_url)/fapi/v1/index?contractName=E-BTC-USDT
+GET https://t(:futures_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100
+
+// Headers 设定
+Content-Type:application/json
+```
+
+```shell
+curl -X GET "https://t(:futures_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100"
+```
+
+```java
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+
+public class Main {
+  public static void main(String[] args) {
+    try {
+      // 使用 URI 创建 URL
+      URI uri = new URI("https://t(:futures_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100");
+      HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+      conn.setRequestMethod("GET");
+      conn.setRequestProperty("User-Agent", "Java-Client");
+
+      // 读取响应
+      BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+      StringBuilder response = new StringBuilder();
+      String line;
+      while ((line = reader.readLine()) != null) {
+        response.append(line);
+      }
+      reader.close();
+
+      // 输出结果
+      System.out.println("Response: " + response.toString());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	url := "https://t(:futures_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100"
+
+	// 发送 GET 请求
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应体
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("读取响应失败:", err)
+		return
+	}
+
+	// 打印响应
+	fmt.Println("服务器返回:", string(body))
+}
+```
+
+```python
+import requests
+
+url = "https://t(:futures_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100"
+
+try:
+    response = requests.get(url)
+    response.raise_for_status()  # 检查请求是否成功
+    print("Response:", response.text)
+except requests.exceptions.RequestException as e:
+    print("请求错误:", e)
+```
+
+```php
+$url = "https://t(:futures_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100";
+
+// 初始化 cURL
+$ch = curl_init();
+
+// 设置 cURL 选项
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过 SSL 证书验证（如果 API 需要）
+
+// 执行请求
+$response = curl_exec($ch);
+
+// 检查是否有错误
+if (curl_errno($ch)) {
+    echo "cURL 错误：" . curl_error($ch);
+} else {
+    echo "Response: " . $response;
+}
+
+// 关闭 cURL
+curl_close($ch);
+```
+
+```javascript--node
+const https = require('https');
+
+const url = 'https://t(:futures_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100';
+
+https.get(url, (res) => {
+  let data = '';
+
+  // A chunk of data has been received.
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  // The whole response has been received.
+  res.on('end', () => {
+    console.log("Response:", data);
+  });
+
+}).on('error', (err) => {
+  console.log('请求错误:', err.message);
+});
 ```
 
 **请求参数**
@@ -3388,7 +4220,142 @@ GET https://t(:futures_url)/fapi/v1/index?contractName=E-BTC-USDT
 > 请求示例
 
 ```http
-GET https://t(:futures_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1111111100000&endTime=222222222000000
+GET https://t(:futures_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000
+
+// Headers 设定
+Content-Type:application/json
+```
+
+```shell
+curl -X GET "https://t(:futures_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000"
+```
+
+```java
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+
+public class Main {
+  public static void main(String[] args) {
+    try {
+      // 使用 URI 创建 URL
+      URI uri = new URI("https://t(:futures_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000");
+      HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+      conn.setRequestMethod("GET");
+      conn.setRequestProperty("User-Agent", "Java-Client");
+
+      // 读取响应
+      BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+      StringBuilder response = new StringBuilder();
+      String line;
+      while ((line = reader.readLine()) != null) {
+        response.append(line);
+      }
+      reader.close();
+
+      // 输出结果
+      System.out.println("Response: " + response.toString());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	url := "https://t(:futures_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000"
+
+	// 发送 GET 请求
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应体
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("读取响应失败:", err)
+		return
+	}
+
+	// 打印响应
+	fmt.Println("服务器返回:", string(body))
+}
+```
+
+```python
+import requests
+
+url = "https://t(:futures_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000"
+
+try:
+    response = requests.get(url)
+    response.raise_for_status()  # 检查请求是否成功
+    print("Response:", response.text)
+except requests.exceptions.RequestException as e:
+    print("请求错误:", e)
+```
+
+```php
+$url = "https://t(:futures_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000";
+
+// 初始化 cURL
+$ch = curl_init();
+
+// 设置 cURL 选项
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过 SSL 证书验证（如果 API 需要）
+
+// 执行请求
+$response = curl_exec($ch);
+
+// 检查是否有错误
+if (curl_errno($ch)) {
+    echo "cURL 错误：" . curl_error($ch);
+} else {
+    echo "Response: " . $response;
+}
+
+// 关闭 cURL
+curl_close($ch);
+```
+
+```javascript--node
+const https = require('https');
+
+const url = 'https://t(:futures_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000';
+
+https.get(url, (res) => {
+  let data = '';
+
+  // A chunk of data has been received.
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  // The whole response has been received.
+  res.on('end', () => {
+    console.log("Response:", data);
+  });
+
+}).on('error', (err) => {
+  console.log('请求错误:', err.message);
+});
 ```
 
 **请求参数**
