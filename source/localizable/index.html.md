@@ -4,6 +4,9 @@ title: t(:title)
 current: t(:current)
 next: t(:next)
 
+open_url: t(:open_url)
+futures_url: t(:futures_url)
+
 language_tabs: # must be one of https://github.com/rouge-ruby/rouge/wiki/List-of-supported-languages-and-lexers
   - http: HTTP
   - shell: SHELL
