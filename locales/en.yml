@@ -5,3 +5,5 @@ en:
     next: 中文
     open_url: openapi.fameex.net
     futures_url: futuresopenapi.fameex.net
+    ws_url: ws.fameex.net
+    futures_ws_url: futuresws.fameex.net

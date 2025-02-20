@@ -14212,8 +14212,8 @@ WebSocket是HTML5一种新的协议（Protocol）。它实现了客户端与服�
 
 ## 基本信息
 
-*   币币行情基础站点：<wss://ws.fameex.net/kline-api/ws>。
-*   合约行情基础站点：<wss://futuresws.fameex.net/kline-api/ws>。
+*   币币行情基础站点：<wss://t(:ws_url)/kline-api/ws>。
+*   合约行情基础站点：<wss://t(:futures_ws_url)/kline-api/ws>。
 *   返回数据除了心跳数据都会二进制压缩（用户需要通过Gzip算法进行解压）。
 
 ### 心跳
