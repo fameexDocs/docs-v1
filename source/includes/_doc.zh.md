@@ -4867,9 +4867,389 @@ sendOrder();
 POST https://t(:futures_url)/fapi/v1/conditionOrder
 
 body
-{
-    "contractName": "E-BTC-USDT"
+{"contractName":"E-BTC-USDT","price":"100.00","volume":"1.00","type":"LIMIT","side":"BUY","positionType":"1","open":"OPEN","triggerType":"1","triggerPrice":"455"}
+```
+
+```shell
+#!/bin/bash
+
+# API 相关信息
+api_key="您的API-KEY"
+api_secret="您的API-SECRET"
+
+# 请求信息
+timestamp=$(($(date +%s%N)/1000000))  # 毫秒级时间戳
+method="POST"
+request_path="/fapi/v1/conditionOrder"
+
+# 请求主体 (JSON 格式)
+body='{"contractName":"E-BTC-USDT","price":"100.00","volume":"1.00","type":"LIMIT","side":"BUY","positionType":"1","open":"OPEN","triggerType":"1","triggerPrice":"455"}'
+
+# 删除 body 中的空白字符，保证签名的一致性
+body=$(echo "$body" | jq -c)
+
+# 拼接签名字符串
+sign_str="${timestamp}${method}${request_path}${body}"
+echo "签名字符串: $sign_str"
+
+# 生成 HMAC SHA256 签名
+signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk '{print $2}')
+echo "签名 (X-CH-SIGN): $signature"
+
+# 发送 POST 请求
+response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+    -H "Content-Type: application/json" \
+    -H "X-CH-TS: $timestamp" \
+    -H "X-CH-APIKEY: $api_key" \
+    -H "X-CH-SIGN: $signature" \
+    -d "$body")
+
+# 输出响应结果
+echo "响应: $response"
+```
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
+
+public class SendOrder {
+
+    // API 相关信息
+    private static final String API_KEY = "您的API-KEY";
+    private static final String API_SECRET = "您的API-SECRET";
+    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String REQUEST_PATH = "/fapi/v1/conditionOrder";
+
+    public static void main(String[] args) {
+        try {
+            // 获取时间戳 (毫秒)
+            long timestamp = TimeUnit.MILLISECONDS.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+
+            // 请求方法
+            String method = "POST";
+
+            // 请求主体 (JSON 格式，注意使用紧凑格式)
+            String body = "{"contractName":"E-BTC-USDT","price":"100.00","volume":"1.00","type":"LIMIT","side":"BUY","positionType":"1","open":"OPEN","triggerType":"1","triggerPrice":"455"}";
+            System.out.println("请求主体 (body): " + body);
+
+            // 拼接签名字符串
+            String signStr = timestamp + method + REQUEST_PATH + body;
+            System.out.println("签名字符串: " + signStr);
+
+            // 生成 HMAC SHA256 签名
+            String signature = hmacSHA256(signStr, API_SECRET);
+            System.out.println("签名 (X-CH-SIGN): " + signature);
+
+            // 使用 URI 创建 URL
+            URI uri = new URI(BASE_URL + REQUEST_PATH);
+            HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("X-CH-TS", String.valueOf(timestamp));
+            conn.setRequestProperty("X-CH-APIKEY", API_KEY);
+            conn.setRequestProperty("X-CH-SIGN", signature);
+            conn.setRequestProperty("User-Agent", "Java-Client");
+            conn.setDoOutput(true);
+
+            // 发送请求主体
+            try (OutputStream os = conn.getOutputStream()) {
+                os.write(body.getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            }
+
+            // 读取响应
+            int responseCode = conn.getResponseCode();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    responseCode >= 200 && responseCode < 300 ? conn.getInputStream() : conn.getErrorStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            // 输出响应结果
+            System.out.println("响应 (" + responseCode + "): " + response.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 生成 HMAC SHA256 签名
+     *
+     * @param data   要签名的字符串
+     * @param secret 密钥
+     * @return HMAC SHA256 签名
+     */
+    public static String hmacSHA256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        mac.init(secretKeySpec);
+        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
 }
+```
+```go
+package main
+
+import (
+	"bytes"
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"time"
+)
+
+// API 相关信息
+const (
+	APIKey     = "您的API-KEY"
+	APISecret  = "您的API-SECRET"
+	BaseURL    = "https://t(:futures_url)"
+	RequestPath = "/fapi/v1/conditionOrder"
+)
+
+func main() {
+	// 获取毫秒级时间戳
+	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+
+	// 请求方法
+	method := "POST"
+
+	// 请求主体 (JSON 格式)
+	body := `{"contractName":"E-BTC-USDT","price":"100.00","volume":"1.00","type":"LIMIT","side":"BUY","positionType":"1","open":"OPEN","triggerType":"1","triggerPrice":"455"}`
+
+	// 拼接签名字符串
+	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+	fmt.Println("签名字符串:", signStr)
+
+	// 生成 HMAC SHA256 签名
+	signature := generateHMACSHA256(signStr, APISecret)
+	fmt.Println("签名 (X-CH-SIGN):", signature)
+
+	// 发送 POST 请求
+	url := BaseURL + RequestPath
+	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+	if err != nil {
+		fmt.Println("创建请求失败:", err)
+		return
+	}
+
+	// 设置请求头
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+	req.Header.Set("X-CH-APIKEY", APIKey)
+	req.Header.Set("X-CH-SIGN", signature)
+
+	// 执行请求
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("响应:", string(responseBody))
+}
+
+// 生成 HMAC SHA256 签名
+func generateHMACSHA256(data, secret string) string {
+	h := hmac.New(sha256.New, []byte(secret))
+	h.Write([]byte(data))
+	return hex.EncodeToString(h.Sum(nil))
+}
+```
+```python
+import time
+import hmac
+import hashlib
+import requests
+
+# API 相关信息
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
+BASE_URL = "https://t(:futures_url)"
+REQUEST_PATH = "/fapi/v1/conditionOrder"
+
+# 请求方法和请求主体
+method = "POST"
+body = {"contractName":"E-BTC-USDT","price":"100.00","volume":"1.00","type":"LIMIT","side":"BUY","positionType":"1","open":"OPEN","triggerType":"1","triggerPrice":"455"}
+
+
+# 获取时间戳 (毫秒级)
+timestamp = int(time.time() * 1000)
+
+# 将请求主体转换为紧凑的 JSON 字符串
+import json
+body_str = json.dumps(body, separators=(',', ':'))
+print("请求主体 (body):", body_str)
+
+# 拼接签名字符串
+sign_str = f"{timestamp}{method}{REQUEST_PATH}{body_str}"
+print("签名字符串:", sign_str)
+
+# 生成 HMAC SHA256 签名
+signature = hmac.new(API_SECRET.encode('utf-8'), sign_str.encode('utf-8'), hashlib.sha256).hexdigest()
+print("签名 (X-CH-SIGN):", signature)
+
+# 构建请求头
+headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": str(timestamp),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Python-Client"
+}
+
+# 发送 POST 请求
+url = BASE_URL + REQUEST_PATH
+response = requests.post(url, headers=headers, data=body_str)
+
+# 输出响应结果
+print("响应状态码:", response.status_code)
+print("响应内容:", response.text)
+```
+```php
+// API 相关信息
+$apiKey = "您的API-KEY";
+$apiSecret = "您的API-SECRET";
+$baseUrl = "https://t(:futures_url)";
+$requestPath = "/fapi/v1/conditionOrder";
+
+// 请求方法和请求主体
+$method = "POST";
+$body = json_encode([
+    "contractName" => "E-BTC-USDT",
+    "price" => 65000.00,
+    "volume" => 1.00,
+    "type" => "LIMIT",
+    "side" => "BUY",
+    "positionType" => 1,
+    "open" => "OPEN",
+    "triggerType" => "1",
+    "triggerPrice" => "455"
+], JSON_UNESCAPED_SLASHES);
+
+// 获取毫秒级时间戳
+$timestamp = round(microtime(true) * 1000);
+
+// 拼接签名字符串
+$signStr = $timestamp . $method . $requestPath . $body;
+echo "签名字符串: " . $signStr . PHP_EOL;
+
+// 生成 HMAC SHA256 签名
+$signature = hash_hmac('sha256', $signStr, $apiSecret);
+echo "签名 (X-CH-SIGN): " . $signature . PHP_EOL;
+
+// 构建请求头
+$headers = [
+    "Content-Type: application/json",
+    "X-CH-TS: $timestamp",
+    "X-CH-APIKEY: $apiKey",
+    "X-CH-SIGN: $signature",
+    "User-Agent: PHP-Client"
+];
+
+// 发送 POST 请求
+$url = $baseUrl . $requestPath;
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 仅在开发环境中使用，生产环境应启用 SSL 验证
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+if (curl_errno($ch)) {
+    echo "请求失败: " . curl_error($ch) . PHP_EOL;
+} else {
+    echo "响应状态码: $httpCode" . PHP_EOL;
+    echo "响应内容: $response" . PHP_EOL;
+}
+
+curl_close($ch);
+```
+```javascript--node
+const crypto = require('crypto');
+const axios = require('axios');
+
+// API 相关信息
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
+const BASE_URL = "https://t(:futures_url)";
+const REQUEST_PATH = "/fapi/v1/conditionOrder";
+
+// 请求方法和请求主体
+const method = "POST";
+const body = JSON.stringify({
+    contractName: "E-BTC-USDT",
+    price: "65000.00",
+    volume: "1.00",
+    type: "LIMIT",
+    side: "BUY",
+    positionType: "1",
+    open: "OPEN",
+    triggerType: "1",
+    triggerPrice: "455"
+});
+
+// 获取毫秒级时间戳
+const timestamp = Date.now();
+
+// 拼接签名字符串
+const signStr = `${timestamp}${method}${REQUEST_PATH}${body}`;
+console.log("签名字符串:", signStr);
+
+// 生成 HMAC SHA256 签名
+const signature = crypto.createHmac('sha256', API_SECRET).update(signStr).digest('hex');
+console.log("签名 (X-CH-SIGN):", signature);
+
+// 构建请求头
+const headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": timestamp.toString(),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Node.js-Client"
+};
+
+// 发送 POST 请求
+async function sendOrder() {
+    try {
+        const response = await axios.post(`${BASE_URL}${REQUEST_PATH}`, body, { headers });
+        console.log("响应状态码:", response.status);
+        console.log("响应内容:", response.data);
+    } catch (error) {
+        console.error("请求失败:", error.response ? error.response.data : error.message);
+    }
+}
+
+// 执行请求
+sendOrder();
+
 ```
 
 **请求参数**
@@ -4924,6 +5304,383 @@ body
 | X-CH-APIKEY<font color="red">\*</font> | string  | 您的API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | 时间戳      |
 
+> 请求示例
+
+```http
+POST https://t(:futures_url)/fapi/v1/cancel
+
+body
+{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}
+```
+
+```shell
+#!/bin/bash
+
+# API 相关信息
+api_key="您的API-KEY"
+api_secret="您的API-SECRET"
+
+# 请求信息
+timestamp=$(($(date +%s%N)/1000000))  # 毫秒级时间戳
+method="POST"
+request_path="/fapi/v1/cancel"
+
+# 请求主体 (JSON 格式)
+body='{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}'
+
+# 删除 body 中的空白字符，保证签名的一致性
+body=$(echo "$body" | jq -c)
+
+# 拼接签名字符串
+sign_str="${timestamp}${method}${request_path}${body}"
+echo "签名字符串: $sign_str"
+
+# 生成 HMAC SHA256 签名
+signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk '{print $2}')
+echo "签名 (X-CH-SIGN): $signature"
+
+# 发送 POST 请求
+response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+    -H "Content-Type: application/json" \
+    -H "X-CH-TS: $timestamp" \
+    -H "X-CH-APIKEY: $api_key" \
+    -H "X-CH-SIGN: $signature" \
+    -d "$body")
+
+# 输出响应结果
+echo "响应: $response"
+```
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
+
+public class SendOrder {
+
+    // API 相关信息
+    private static final String API_KEY = "您的API-KEY";
+    private static final String API_SECRET = "您的API-SECRET";
+    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String REQUEST_PATH = "/fapi/v1/cancel";
+
+    public static void main(String[] args) {
+        try {
+            // 获取时间戳 (毫秒)
+            long timestamp = TimeUnit.MILLISECONDS.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+
+            // 请求方法
+            String method = "POST";
+
+            // 请求主体 (JSON 格式，注意使用紧凑格式)
+            String body = "{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}";
+            System.out.println("请求主体 (body): " + body);
+
+            // 拼接签名字符串
+            String signStr = timestamp + method + REQUEST_PATH + body;
+            System.out.println("签名字符串: " + signStr);
+
+            // 生成 HMAC SHA256 签名
+            String signature = hmacSHA256(signStr, API_SECRET);
+            System.out.println("签名 (X-CH-SIGN): " + signature);
+
+            // 使用 URI 创建 URL
+            URI uri = new URI(BASE_URL + REQUEST_PATH);
+            HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("X-CH-TS", String.valueOf(timestamp));
+            conn.setRequestProperty("X-CH-APIKEY", API_KEY);
+            conn.setRequestProperty("X-CH-SIGN", signature);
+            conn.setRequestProperty("User-Agent", "Java-Client");
+            conn.setDoOutput(true);
+
+            // 发送请求主体
+            try (OutputStream os = conn.getOutputStream()) {
+                os.write(body.getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            }
+
+            // 读取响应
+            int responseCode = conn.getResponseCode();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    responseCode >= 200 && responseCode < 300 ? conn.getInputStream() : conn.getErrorStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            // 输出响应结果
+            System.out.println("响应 (" + responseCode + "): " + response.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 生成 HMAC SHA256 签名
+     *
+     * @param data   要签名的字符串
+     * @param secret 密钥
+     * @return HMAC SHA256 签名
+     */
+    public static String hmacSHA256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        mac.init(secretKeySpec);
+        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+}
+```
+```go
+package main
+
+import (
+	"bytes"
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"time"
+)
+
+// API 相关信息
+const (
+	APIKey     = "您的API-KEY"
+	APISecret  = "您的API-SECRET"
+	BaseURL    = "https://t(:futures_url)"
+	RequestPath = "/fapi/v1/cancel"
+)
+
+func main() {
+	// 获取毫秒级时间戳
+	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+
+	// 请求方法
+	method := "POST"
+
+	// 请求主体 (JSON 格式)
+	body := `{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}`
+
+	// 拼接签名字符串
+	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+	fmt.Println("签名字符串:", signStr)
+
+	// 生成 HMAC SHA256 签名
+	signature := generateHMACSHA256(signStr, APISecret)
+	fmt.Println("签名 (X-CH-SIGN):", signature)
+
+	// 发送 POST 请求
+	url := BaseURL + RequestPath
+	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+	if err != nil {
+		fmt.Println("创建请求失败:", err)
+		return
+	}
+
+	// 设置请求头
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+	req.Header.Set("X-CH-APIKEY", APIKey)
+	req.Header.Set("X-CH-SIGN", signature)
+
+	// 执行请求
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("响应:", string(responseBody))
+}
+
+// 生成 HMAC SHA256 签名
+func generateHMACSHA256(data, secret string) string {
+	h := hmac.New(sha256.New, []byte(secret))
+	h.Write([]byte(data))
+	return hex.EncodeToString(h.Sum(nil))
+}
+```
+```python
+import time
+import hmac
+import hashlib
+import requests
+
+# API 相关信息
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
+BASE_URL = "https://t(:futures_url)"
+REQUEST_PATH = "/fapi/v1/cancel"
+
+# 请求方法和请求主体
+method = "POST"
+body = {"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}
+
+
+# 获取时间戳 (毫秒级)
+timestamp = int(time.time() * 1000)
+
+# 将请求主体转换为紧凑的 JSON 字符串
+import json
+body_str = json.dumps(body, separators=(',', ':'))
+print("请求主体 (body):", body_str)
+
+# 拼接签名字符串
+sign_str = f"{timestamp}{method}{REQUEST_PATH}{body_str}"
+print("签名字符串:", sign_str)
+
+# 生成 HMAC SHA256 签名
+signature = hmac.new(API_SECRET.encode('utf-8'), sign_str.encode('utf-8'), hashlib.sha256).hexdigest()
+print("签名 (X-CH-SIGN):", signature)
+
+# 构建请求头
+headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": str(timestamp),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Python-Client"
+}
+
+# 发送 POST 请求
+url = BASE_URL + REQUEST_PATH
+response = requests.post(url, headers=headers, data=body_str)
+
+# 输出响应结果
+print("响应状态码:", response.status_code)
+print("响应内容:", response.text)
+```
+```php
+// API 相关信息
+$apiKey = "您的API-KEY";
+$apiSecret = "您的API-SECRET";
+$baseUrl = "https://t(:futures_url)";
+$requestPath = "/fapi/v1/cancel";
+
+// 请求方法和请求主体
+$method = "POST";
+$body = json_encode([
+    "contractName" => "E-BTC-USDT",
+    "orderId" => 2616833860188981826
+], JSON_UNESCAPED_SLASHES);
+
+// 获取毫秒级时间戳
+$timestamp = round(microtime(true) * 1000);
+
+// 拼接签名字符串
+$signStr = $timestamp . $method . $requestPath . $body;
+echo "签名字符串: " . $signStr . PHP_EOL;
+
+// 生成 HMAC SHA256 签名
+$signature = hash_hmac('sha256', $signStr, $apiSecret);
+echo "签名 (X-CH-SIGN): " . $signature . PHP_EOL;
+
+// 构建请求头
+$headers = [
+    "Content-Type: application/json",
+    "X-CH-TS: $timestamp",
+    "X-CH-APIKEY: $apiKey",
+    "X-CH-SIGN: $signature",
+    "User-Agent: PHP-Client"
+];
+
+// 发送 POST 请求
+$url = $baseUrl . $requestPath;
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 仅在开发环境中使用，生产环境应启用 SSL 验证
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+if (curl_errno($ch)) {
+    echo "请求失败: " . curl_error($ch) . PHP_EOL;
+} else {
+    echo "响应状态码: $httpCode" . PHP_EOL;
+    echo "响应内容: $response" . PHP_EOL;
+}
+
+curl_close($ch);
+```
+```javascript--node
+const crypto = require('crypto');
+const axios = require('axios');
+
+// API 相关信息
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
+const BASE_URL = "https://t(:futures_url)";
+const REQUEST_PATH = "/fapi/v1/cancel";
+
+// 请求方法和请求主体
+const method = "POST";
+const body = JSON.stringify({
+    contractName: "E-BTC-USDT",
+    orderId: "2616833860188981826"
+});
+
+// 获取毫秒级时间戳
+const timestamp = Date.now();
+
+// 拼接签名字符串
+const signStr = `${timestamp}${method}${REQUEST_PATH}${body}`;
+console.log("签名字符串:", signStr);
+
+// 生成 HMAC SHA256 签名
+const signature = crypto.createHmac('sha256', API_SECRET).update(signStr).digest('hex');
+console.log("签名 (X-CH-SIGN):", signature);
+
+// 构建请求头
+const headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": timestamp.toString(),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Node.js-Client"
+};
+
+// 发送 POST 请求
+async function sendOrder() {
+    try {
+        const response = await axios.post(`${BASE_URL}${REQUEST_PATH}`, body, { headers });
+        console.log("响应状态码:", response.status);
+        console.log("响应内容:", response.data);
+    } catch (error) {
+        console.error("请求失败:", error.response ? error.response.data : error.message);
+    }
+}
+
+// 执行请求
+sendOrder();
+
+```
+
 **请求参数**
 
 | 参数名                                  | 类型   | 描述                               |
@@ -4953,6 +5710,383 @@ body
 | X-CH-APIKEY<font color="red">\*</font> | string  | 您的API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | 时间戳      |
 
+> 请求示例
+
+```http
+POST https://t(:futures_url)/fapi/v1/cancel_trigger_order
+
+body
+{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}
+```
+
+```shell
+#!/bin/bash
+
+# API 相关信息
+api_key="您的API-KEY"
+api_secret="您的API-SECRET"
+
+# 请求信息
+timestamp=$(($(date +%s%N)/1000000))  # 毫秒级时间戳
+method="POST"
+request_path="/fapi/v1/cancel_trigger_order"
+
+# 请求主体 (JSON 格式)
+body='{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}'
+
+# 删除 body 中的空白字符，保证签名的一致性
+body=$(echo "$body" | jq -c)
+
+# 拼接签名字符串
+sign_str="${timestamp}${method}${request_path}${body}"
+echo "签名字符串: $sign_str"
+
+# 生成 HMAC SHA256 签名
+signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk '{print $2}')
+echo "签名 (X-CH-SIGN): $signature"
+
+# 发送 POST 请求
+response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+    -H "Content-Type: application/json" \
+    -H "X-CH-TS: $timestamp" \
+    -H "X-CH-APIKEY: $api_key" \
+    -H "X-CH-SIGN: $signature" \
+    -d "$body")
+
+# 输出响应结果
+echo "响应: $response"
+```
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
+
+public class SendOrder {
+
+    // API 相关信息
+    private static final String API_KEY = "您的API-KEY";
+    private static final String API_SECRET = "您的API-SECRET";
+    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String REQUEST_PATH = "/fapi/v1/cancel_trigger_order";
+
+    public static void main(String[] args) {
+        try {
+            // 获取时间戳 (毫秒)
+            long timestamp = TimeUnit.MILLISECONDS.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+
+            // 请求方法
+            String method = "POST";
+
+            // 请求主体 (JSON 格式，注意使用紧凑格式)
+            String body = "{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}";
+            System.out.println("请求主体 (body): " + body);
+
+            // 拼接签名字符串
+            String signStr = timestamp + method + REQUEST_PATH + body;
+            System.out.println("签名字符串: " + signStr);
+
+            // 生成 HMAC SHA256 签名
+            String signature = hmacSHA256(signStr, API_SECRET);
+            System.out.println("签名 (X-CH-SIGN): " + signature);
+
+            // 使用 URI 创建 URL
+            URI uri = new URI(BASE_URL + REQUEST_PATH);
+            HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("X-CH-TS", String.valueOf(timestamp));
+            conn.setRequestProperty("X-CH-APIKEY", API_KEY);
+            conn.setRequestProperty("X-CH-SIGN", signature);
+            conn.setRequestProperty("User-Agent", "Java-Client");
+            conn.setDoOutput(true);
+
+            // 发送请求主体
+            try (OutputStream os = conn.getOutputStream()) {
+                os.write(body.getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            }
+
+            // 读取响应
+            int responseCode = conn.getResponseCode();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    responseCode >= 200 && responseCode < 300 ? conn.getInputStream() : conn.getErrorStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            // 输出响应结果
+            System.out.println("响应 (" + responseCode + "): " + response.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 生成 HMAC SHA256 签名
+     *
+     * @param data   要签名的字符串
+     * @param secret 密钥
+     * @return HMAC SHA256 签名
+     */
+    public static String hmacSHA256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        mac.init(secretKeySpec);
+        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+}
+```
+```go
+package main
+
+import (
+	"bytes"
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"time"
+)
+
+// API 相关信息
+const (
+	APIKey     = "您的API-KEY"
+	APISecret  = "您的API-SECRET"
+	BaseURL    = "https://t(:futures_url)"
+	RequestPath = "/fapi/v1/cancel_trigger_order"
+)
+
+func main() {
+	// 获取毫秒级时间戳
+	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+
+	// 请求方法
+	method := "POST"
+
+	// 请求主体 (JSON 格式)
+	body := `{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}`
+
+	// 拼接签名字符串
+	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+	fmt.Println("签名字符串:", signStr)
+
+	// 生成 HMAC SHA256 签名
+	signature := generateHMACSHA256(signStr, APISecret)
+	fmt.Println("签名 (X-CH-SIGN):", signature)
+
+	// 发送 POST 请求
+	url := BaseURL + RequestPath
+	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+	if err != nil {
+		fmt.Println("创建请求失败:", err)
+		return
+	}
+
+	// 设置请求头
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+	req.Header.Set("X-CH-APIKEY", APIKey)
+	req.Header.Set("X-CH-SIGN", signature)
+
+	// 执行请求
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("响应:", string(responseBody))
+}
+
+// 生成 HMAC SHA256 签名
+func generateHMACSHA256(data, secret string) string {
+	h := hmac.New(sha256.New, []byte(secret))
+	h.Write([]byte(data))
+	return hex.EncodeToString(h.Sum(nil))
+}
+```
+```python
+import time
+import hmac
+import hashlib
+import requests
+
+# API 相关信息
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
+BASE_URL = "https://t(:futures_url)"
+REQUEST_PATH = "/fapi/v1/cancel_trigger_order"
+
+# 请求方法和请求主体
+method = "POST"
+body = {"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}
+
+
+# 获取时间戳 (毫秒级)
+timestamp = int(time.time() * 1000)
+
+# 将请求主体转换为紧凑的 JSON 字符串
+import json
+body_str = json.dumps(body, separators=(',', ':'))
+print("请求主体 (body):", body_str)
+
+# 拼接签名字符串
+sign_str = f"{timestamp}{method}{REQUEST_PATH}{body_str}"
+print("签名字符串:", sign_str)
+
+# 生成 HMAC SHA256 签名
+signature = hmac.new(API_SECRET.encode('utf-8'), sign_str.encode('utf-8'), hashlib.sha256).hexdigest()
+print("签名 (X-CH-SIGN):", signature)
+
+# 构建请求头
+headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": str(timestamp),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Python-Client"
+}
+
+# 发送 POST 请求
+url = BASE_URL + REQUEST_PATH
+response = requests.post(url, headers=headers, data=body_str)
+
+# 输出响应结果
+print("响应状态码:", response.status_code)
+print("响应内容:", response.text)
+```
+```php
+// API 相关信息
+$apiKey = "您的API-KEY";
+$apiSecret = "您的API-SECRET";
+$baseUrl = "https://t(:futures_url)";
+$requestPath = "/fapi/v1/cancel_trigger_order";
+
+// 请求方法和请求主体
+$method = "POST";
+$body = json_encode([
+    "contractName" => "E-BTC-USDT",
+    "orderId" => 2616833860188981826
+], JSON_UNESCAPED_SLASHES);
+
+// 获取毫秒级时间戳
+$timestamp = round(microtime(true) * 1000);
+
+// 拼接签名字符串
+$signStr = $timestamp . $method . $requestPath . $body;
+echo "签名字符串: " . $signStr . PHP_EOL;
+
+// 生成 HMAC SHA256 签名
+$signature = hash_hmac('sha256', $signStr, $apiSecret);
+echo "签名 (X-CH-SIGN): " . $signature . PHP_EOL;
+
+// 构建请求头
+$headers = [
+    "Content-Type: application/json",
+    "X-CH-TS: $timestamp",
+    "X-CH-APIKEY: $apiKey",
+    "X-CH-SIGN: $signature",
+    "User-Agent: PHP-Client"
+];
+
+// 发送 POST 请求
+$url = $baseUrl . $requestPath;
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 仅在开发环境中使用，生产环境应启用 SSL 验证
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+if (curl_errno($ch)) {
+    echo "请求失败: " . curl_error($ch) . PHP_EOL;
+} else {
+    echo "响应状态码: $httpCode" . PHP_EOL;
+    echo "响应内容: $response" . PHP_EOL;
+}
+
+curl_close($ch);
+```
+```javascript--node
+const crypto = require('crypto');
+const axios = require('axios');
+
+// API 相关信息
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
+const BASE_URL = "https://t(:futures_url)";
+const REQUEST_PATH = "/fapi/v1/cancel_trigger_order";
+
+// 请求方法和请求主体
+const method = "POST";
+const body = JSON.stringify({
+    contractName: "E-BTC-USDT",
+    orderId: "2616833860188981826"
+});
+
+// 获取毫秒级时间戳
+const timestamp = Date.now();
+
+// 拼接签名字符串
+const signStr = `${timestamp}${method}${REQUEST_PATH}${body}`;
+console.log("签名字符串:", signStr);
+
+// 生成 HMAC SHA256 签名
+const signature = crypto.createHmac('sha256', API_SECRET).update(signStr).digest('hex');
+console.log("签名 (X-CH-SIGN):", signature);
+
+// 构建请求头
+const headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": timestamp.toString(),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Node.js-Client"
+};
+
+// 发送 POST 请求
+async function sendOrder() {
+    try {
+        const response = await axios.post(`${BASE_URL}${REQUEST_PATH}`, body, { headers });
+        console.log("响应状态码:", response.status);
+        console.log("响应内容:", response.data);
+    } catch (error) {
+        console.error("请求失败:", error.response ? error.response.data : error.message);
+    }
+}
+
+// 执行请求
+sendOrder();
+
+```
+
 **请求参数**
 
 | 参数名                                  | 类型   | 描述                               |
@@ -4972,6 +6106,393 @@ body
 ### 订单详情
 
 `GET https://t(:futures_url)/fapi/v1/order`
+
+**限速规则: 20次/2s**
+
+**请求头**
+
+| 参数名                                 | 类型   | 描述        |
+| :--------------------------------------| :------| :-----------|
+| X-CH-SIGN<font color="red">\*</font>   | string | 签名        |
+| X-CH-APIKEY<font color="red">\*</font> | string | 您的API-key |
+| X-CH-TS<font color="red">\*</font>     | string | 时间戳      |
+
+> 请求示例
+
+```http
+POST https://t(:futures_url)/fapi/v1/order
+
+body
+{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}
+```
+
+```shell
+#!/bin/bash
+
+# API 相关信息
+api_key="您的API-KEY"
+api_secret="您的API-SECRET"
+
+# 请求信息
+timestamp=$(($(date +%s%N)/1000000))  # 毫秒级时间戳
+method="POST"
+request_path="/fapi/v1/order"
+
+# 请求主体 (JSON 格式)
+body='{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}'
+
+# 删除 body 中的空白字符，保证签名的一致性
+body=$(echo "$body" | jq -c)
+
+# 拼接签名字符串
+sign_str="${timestamp}${method}${request_path}${body}"
+echo "签名字符串: $sign_str"
+
+# 生成 HMAC SHA256 签名
+signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk '{print $2}')
+echo "签名 (X-CH-SIGN): $signature"
+
+# 发送 POST 请求
+response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+    -H "Content-Type: application/json" \
+    -H "X-CH-TS: $timestamp" \
+    -H "X-CH-APIKEY: $api_key" \
+    -H "X-CH-SIGN: $signature" \
+    -d "$body")
+
+# 输出响应结果
+echo "响应: $response"
+```
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
+
+public class SendOrder {
+
+    // API 相关信息
+    private static final String API_KEY = "您的API-KEY";
+    private static final String API_SECRET = "您的API-SECRET";
+    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String REQUEST_PATH = "/fapi/v1/order";
+
+    public static void main(String[] args) {
+        try {
+            // 获取时间戳 (毫秒)
+            long timestamp = TimeUnit.MILLISECONDS.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+
+            // 请求方法
+            String method = "POST";
+
+            // 请求主体 (JSON 格式，注意使用紧凑格式)
+            String body = "{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}";
+            System.out.println("请求主体 (body): " + body);
+
+            // 拼接签名字符串
+            String signStr = timestamp + method + REQUEST_PATH + body;
+            System.out.println("签名字符串: " + signStr);
+
+            // 生成 HMAC SHA256 签名
+            String signature = hmacSHA256(signStr, API_SECRET);
+            System.out.println("签名 (X-CH-SIGN): " + signature);
+
+            // 使用 URI 创建 URL
+            URI uri = new URI(BASE_URL + REQUEST_PATH);
+            HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("X-CH-TS", String.valueOf(timestamp));
+            conn.setRequestProperty("X-CH-APIKEY", API_KEY);
+            conn.setRequestProperty("X-CH-SIGN", signature);
+            conn.setRequestProperty("User-Agent", "Java-Client");
+            conn.setDoOutput(true);
+
+            // 发送请求主体
+            try (OutputStream os = conn.getOutputStream()) {
+                os.write(body.getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            }
+
+            // 读取响应
+            int responseCode = conn.getResponseCode();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    responseCode >= 200 && responseCode < 300 ? conn.getInputStream() : conn.getErrorStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            // 输出响应结果
+            System.out.println("响应 (" + responseCode + "): " + response.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 生成 HMAC SHA256 签名
+     *
+     * @param data   要签名的字符串
+     * @param secret 密钥
+     * @return HMAC SHA256 签名
+     */
+    public static String hmacSHA256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        mac.init(secretKeySpec);
+        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+}
+```
+```go
+package main
+
+import (
+	"bytes"
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"time"
+)
+
+// API 相关信息
+const (
+	APIKey     = "您的API-KEY"
+	APISecret  = "您的API-SECRET"
+	BaseURL    = "https://t(:futures_url)"
+	RequestPath = "/fapi/v1/order"
+)
+
+func main() {
+	// 获取毫秒级时间戳
+	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+
+	// 请求方法
+	method := "POST"
+
+	// 请求主体 (JSON 格式)
+	body := `{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}`
+
+	// 拼接签名字符串
+	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+	fmt.Println("签名字符串:", signStr)
+
+	// 生成 HMAC SHA256 签名
+	signature := generateHMACSHA256(signStr, APISecret)
+	fmt.Println("签名 (X-CH-SIGN):", signature)
+
+	// 发送 POST 请求
+	url := BaseURL + RequestPath
+	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+	if err != nil {
+		fmt.Println("创建请求失败:", err)
+		return
+	}
+
+	// 设置请求头
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+	req.Header.Set("X-CH-APIKEY", APIKey)
+	req.Header.Set("X-CH-SIGN", signature)
+
+	// 执行请求
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("响应:", string(responseBody))
+}
+
+// 生成 HMAC SHA256 签名
+func generateHMACSHA256(data, secret string) string {
+	h := hmac.New(sha256.New, []byte(secret))
+	h.Write([]byte(data))
+	return hex.EncodeToString(h.Sum(nil))
+}
+```
+```python
+import time
+import hmac
+import hashlib
+import requests
+
+# API 相关信息
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
+BASE_URL = "https://t(:futures_url)"
+REQUEST_PATH = "/fapi/v1/order"
+
+# 请求方法和请求主体
+method = "POST"
+body = {"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}
+
+
+# 获取时间戳 (毫秒级)
+timestamp = int(time.time() * 1000)
+
+# 将请求主体转换为紧凑的 JSON 字符串
+import json
+body_str = json.dumps(body, separators=(',', ':'))
+print("请求主体 (body):", body_str)
+
+# 拼接签名字符串
+sign_str = f"{timestamp}{method}{REQUEST_PATH}{body_str}"
+print("签名字符串:", sign_str)
+
+# 生成 HMAC SHA256 签名
+signature = hmac.new(API_SECRET.encode('utf-8'), sign_str.encode('utf-8'), hashlib.sha256).hexdigest()
+print("签名 (X-CH-SIGN):", signature)
+
+# 构建请求头
+headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": str(timestamp),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Python-Client"
+}
+
+# 发送 POST 请求
+url = BASE_URL + REQUEST_PATH
+response = requests.post(url, headers=headers, data=body_str)
+
+# 输出响应结果
+print("响应状态码:", response.status_code)
+print("响应内容:", response.text)
+```
+```php
+// API 相关信息
+$apiKey = "您的API-KEY";
+$apiSecret = "您的API-SECRET";
+$baseUrl = "https://t(:futures_url)";
+$requestPath = "/fapi/v1/order";
+
+// 请求方法和请求主体
+$method = "POST";
+$body = json_encode([
+    "contractName" => "E-BTC-USDT",
+    "orderId" => 2616833860188981826
+], JSON_UNESCAPED_SLASHES);
+
+// 获取毫秒级时间戳
+$timestamp = round(microtime(true) * 1000);
+
+// 拼接签名字符串
+$signStr = $timestamp . $method . $requestPath . $body;
+echo "签名字符串: " . $signStr . PHP_EOL;
+
+// 生成 HMAC SHA256 签名
+$signature = hash_hmac('sha256', $signStr, $apiSecret);
+echo "签名 (X-CH-SIGN): " . $signature . PHP_EOL;
+
+// 构建请求头
+$headers = [
+    "Content-Type: application/json",
+    "X-CH-TS: $timestamp",
+    "X-CH-APIKEY: $apiKey",
+    "X-CH-SIGN: $signature",
+    "User-Agent: PHP-Client"
+];
+
+// 发送 POST 请求
+$url = $baseUrl . $requestPath;
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 仅在开发环境中使用，生产环境应启用 SSL 验证
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+if (curl_errno($ch)) {
+    echo "请求失败: " . curl_error($ch) . PHP_EOL;
+} else {
+    echo "响应状态码: $httpCode" . PHP_EOL;
+    echo "响应内容: $response" . PHP_EOL;
+}
+
+curl_close($ch);
+```
+```javascript--node
+const crypto = require('crypto');
+const axios = require('axios');
+
+// API 相关信息
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
+const BASE_URL = "https://t(:futures_url)";
+const REQUEST_PATH = "/fapi/v1/order";
+
+// 请求方法和请求主体
+const method = "POST";
+const body = JSON.stringify({
+    contractName: "E-BTC-USDT",
+    orderId: "2616833860188981826"
+});
+
+// 获取毫秒级时间戳
+const timestamp = Date.now();
+
+// 拼接签名字符串
+const signStr = `${timestamp}${method}${REQUEST_PATH}${body}`;
+console.log("签名字符串:", signStr);
+
+// 生成 HMAC SHA256 签名
+const signature = crypto.createHmac('sha256', API_SECRET).update(signStr).digest('hex');
+console.log("签名 (X-CH-SIGN):", signature);
+
+// 构建请求头
+const headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": timestamp.toString(),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Node.js-Client"
+};
+
+// 发送 POST 请求
+async function sendOrder() {
+    try {
+        const response = await axios.post(`${BASE_URL}${REQUEST_PATH}`, body, { headers });
+        console.log("响应状态码:", response.status);
+        console.log("响应内容:", response.data);
+    } catch (error) {
+        console.error("请求失败:", error.response ? error.response.data : error.message);
+    }
+}
+
+// 执行请求
+sendOrder();
+
+```
 
 **请求参数**
 
@@ -5035,6 +6556,381 @@ body
 | X-CH-APIKEY<font color="red">\*</font> | string | 您的API-key |
 | X-CH-TS<font color="red">\*</font>     | string | 时间戳      |
 
+> 请求示例
+
+```http
+POST https://t(:futures_url)/fapi/v1/openOrders
+
+body
+{"contractName":"E-BTC-USDT"}
+```
+
+```shell
+#!/bin/bash
+
+# API 相关信息
+api_key="您的API-KEY"
+api_secret="您的API-SECRET"
+
+# 请求信息
+timestamp=$(($(date +%s%N)/1000000))  # 毫秒级时间戳
+method="POST"
+request_path="/fapi/v1/openOrders"
+
+# 请求主体 (JSON 格式)
+body='{"contractName":"E-BTC-USDT"}'
+
+# 删除 body 中的空白字符，保证签名的一致性
+body=$(echo "$body" | jq -c)
+
+# 拼接签名字符串
+sign_str="${timestamp}${method}${request_path}${body}"
+echo "签名字符串: $sign_str"
+
+# 生成 HMAC SHA256 签名
+signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk '{print $2}')
+echo "签名 (X-CH-SIGN): $signature"
+
+# 发送 POST 请求
+response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+    -H "Content-Type: application/json" \
+    -H "X-CH-TS: $timestamp" \
+    -H "X-CH-APIKEY: $api_key" \
+    -H "X-CH-SIGN: $signature" \
+    -d "$body")
+
+# 输出响应结果
+echo "响应: $response"
+```
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
+
+public class SendOrder {
+
+    // API 相关信息
+    private static final String API_KEY = "您的API-KEY";
+    private static final String API_SECRET = "您的API-SECRET";
+    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String REQUEST_PATH = "/fapi/v1/openOrders";
+
+    public static void main(String[] args) {
+        try {
+            // 获取时间戳 (毫秒)
+            long timestamp = TimeUnit.MILLISECONDS.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+
+            // 请求方法
+            String method = "POST";
+
+            // 请求主体 (JSON 格式，注意使用紧凑格式)
+            String body = "{"contractName":"E-BTC-USDT"}";
+            System.out.println("请求主体 (body): " + body);
+
+            // 拼接签名字符串
+            String signStr = timestamp + method + REQUEST_PATH + body;
+            System.out.println("签名字符串: " + signStr);
+
+            // 生成 HMAC SHA256 签名
+            String signature = hmacSHA256(signStr, API_SECRET);
+            System.out.println("签名 (X-CH-SIGN): " + signature);
+
+            // 使用 URI 创建 URL
+            URI uri = new URI(BASE_URL + REQUEST_PATH);
+            HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("X-CH-TS", String.valueOf(timestamp));
+            conn.setRequestProperty("X-CH-APIKEY", API_KEY);
+            conn.setRequestProperty("X-CH-SIGN", signature);
+            conn.setRequestProperty("User-Agent", "Java-Client");
+            conn.setDoOutput(true);
+
+            // 发送请求主体
+            try (OutputStream os = conn.getOutputStream()) {
+                os.write(body.getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            }
+
+            // 读取响应
+            int responseCode = conn.getResponseCode();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    responseCode >= 200 && responseCode < 300 ? conn.getInputStream() : conn.getErrorStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            // 输出响应结果
+            System.out.println("响应 (" + responseCode + "): " + response.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 生成 HMAC SHA256 签名
+     *
+     * @param data   要签名的字符串
+     * @param secret 密钥
+     * @return HMAC SHA256 签名
+     */
+    public static String hmacSHA256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        mac.init(secretKeySpec);
+        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+}
+```
+```go
+package main
+
+import (
+	"bytes"
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"time"
+)
+
+// API 相关信息
+const (
+	APIKey     = "您的API-KEY"
+	APISecret  = "您的API-SECRET"
+	BaseURL    = "https://t(:futures_url)"
+	RequestPath = "/fapi/v1/openOrders"
+)
+
+func main() {
+	// 获取毫秒级时间戳
+	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+
+	// 请求方法
+	method := "POST"
+
+	// 请求主体 (JSON 格式)
+	body := `{"contractName":"E-BTC-USDT"}`
+
+	// 拼接签名字符串
+	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+	fmt.Println("签名字符串:", signStr)
+
+	// 生成 HMAC SHA256 签名
+	signature := generateHMACSHA256(signStr, APISecret)
+	fmt.Println("签名 (X-CH-SIGN):", signature)
+
+	// 发送 POST 请求
+	url := BaseURL + RequestPath
+	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+	if err != nil {
+		fmt.Println("创建请求失败:", err)
+		return
+	}
+
+	// 设置请求头
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+	req.Header.Set("X-CH-APIKEY", APIKey)
+	req.Header.Set("X-CH-SIGN", signature)
+
+	// 执行请求
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("响应:", string(responseBody))
+}
+
+// 生成 HMAC SHA256 签名
+func generateHMACSHA256(data, secret string) string {
+	h := hmac.New(sha256.New, []byte(secret))
+	h.Write([]byte(data))
+	return hex.EncodeToString(h.Sum(nil))
+}
+```
+```python
+import time
+import hmac
+import hashlib
+import requests
+
+# API 相关信息
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
+BASE_URL = "https://t(:futures_url)"
+REQUEST_PATH = "/fapi/v1/openOrders"
+
+# 请求方法和请求主体
+method = "POST"
+body = {"contractName":"E-BTC-USDT"}
+
+
+# 获取时间戳 (毫秒级)
+timestamp = int(time.time() * 1000)
+
+# 将请求主体转换为紧凑的 JSON 字符串
+import json
+body_str = json.dumps(body, separators=(',', ':'))
+print("请求主体 (body):", body_str)
+
+# 拼接签名字符串
+sign_str = f"{timestamp}{method}{REQUEST_PATH}{body_str}"
+print("签名字符串:", sign_str)
+
+# 生成 HMAC SHA256 签名
+signature = hmac.new(API_SECRET.encode('utf-8'), sign_str.encode('utf-8'), hashlib.sha256).hexdigest()
+print("签名 (X-CH-SIGN):", signature)
+
+# 构建请求头
+headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": str(timestamp),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Python-Client"
+}
+
+# 发送 POST 请求
+url = BASE_URL + REQUEST_PATH
+response = requests.post(url, headers=headers, data=body_str)
+
+# 输出响应结果
+print("响应状态码:", response.status_code)
+print("响应内容:", response.text)
+```
+```php
+// API 相关信息
+$apiKey = "您的API-KEY";
+$apiSecret = "您的API-SECRET";
+$baseUrl = "https://t(:futures_url)";
+$requestPath = "/fapi/v1/openOrders";
+
+// 请求方法和请求主体
+$method = "POST";
+$body = json_encode([
+    "contractName" => "E-BTC-USDT"
+], JSON_UNESCAPED_SLASHES);
+
+// 获取毫秒级时间戳
+$timestamp = round(microtime(true) * 1000);
+
+// 拼接签名字符串
+$signStr = $timestamp . $method . $requestPath . $body;
+echo "签名字符串: " . $signStr . PHP_EOL;
+
+// 生成 HMAC SHA256 签名
+$signature = hash_hmac('sha256', $signStr, $apiSecret);
+echo "签名 (X-CH-SIGN): " . $signature . PHP_EOL;
+
+// 构建请求头
+$headers = [
+    "Content-Type: application/json",
+    "X-CH-TS: $timestamp",
+    "X-CH-APIKEY: $apiKey",
+    "X-CH-SIGN: $signature",
+    "User-Agent: PHP-Client"
+];
+
+// 发送 POST 请求
+$url = $baseUrl . $requestPath;
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 仅在开发环境中使用，生产环境应启用 SSL 验证
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+if (curl_errno($ch)) {
+    echo "请求失败: " . curl_error($ch) . PHP_EOL;
+} else {
+    echo "响应状态码: $httpCode" . PHP_EOL;
+    echo "响应内容: $response" . PHP_EOL;
+}
+
+curl_close($ch);
+```
+```javascript--node
+const crypto = require('crypto');
+const axios = require('axios');
+
+// API 相关信息
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
+const BASE_URL = "https://t(:futures_url)";
+const REQUEST_PATH = "/fapi/v1/openOrders";
+
+// 请求方法和请求主体
+const method = "POST";
+const body = JSON.stringify({
+    contractName: "E-BTC-USDT"
+});
+
+// 获取毫秒级时间戳
+const timestamp = Date.now();
+
+// 拼接签名字符串
+const signStr = `${timestamp}${method}${REQUEST_PATH}${body}`;
+console.log("签名字符串:", signStr);
+
+// 生成 HMAC SHA256 签名
+const signature = crypto.createHmac('sha256', API_SECRET).update(signStr).digest('hex');
+console.log("签名 (X-CH-SIGN):", signature);
+
+// 构建请求头
+const headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": timestamp.toString(),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Node.js-Client"
+};
+
+// 发送 POST 请求
+async function sendOrder() {
+    try {
+        const response = await axios.post(`${BASE_URL}${REQUEST_PATH}`, body, { headers });
+        console.log("响应状态码:", response.status);
+        console.log("响应内容:", response.data);
+    } catch (error) {
+        console.error("请求失败:", error.response ? error.response.data : error.message);
+    }
+}
+
+// 执行请求
+sendOrder();
+
+```
+
 **请求参数**
 
 | 参数名                                  | 类型   | 描述                               |
@@ -5088,6 +6984,381 @@ body
 | X-CH-SIGN<font color="red">\*</font>   | string | 签名        |
 | X-CH-APIKEY<font color="red">\*</font> | string | 您的API-key |
 | X-CH-TS<font color="red">\*</font>     | string | 时间戳      |
+
+> 请求示例
+
+```http
+POST https://t(:futures_url)/fapi/v1/orderHistorical
+
+body
+{"contractName":"E-BTC-USDT"}
+```
+
+```shell
+#!/bin/bash
+
+# API 相关信息
+api_key="您的API-KEY"
+api_secret="您的API-SECRET"
+
+# 请求信息
+timestamp=$(($(date +%s%N)/1000000))  # 毫秒级时间戳
+method="POST"
+request_path="/fapi/v1/orderHistorical"
+
+# 请求主体 (JSON 格式)
+body='{"contractName":"E-BTC-USDT"}'
+
+# 删除 body 中的空白字符，保证签名的一致性
+body=$(echo "$body" | jq -c)
+
+# 拼接签名字符串
+sign_str="${timestamp}${method}${request_path}${body}"
+echo "签名字符串: $sign_str"
+
+# 生成 HMAC SHA256 签名
+signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk '{print $2}')
+echo "签名 (X-CH-SIGN): $signature"
+
+# 发送 POST 请求
+response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+    -H "Content-Type: application/json" \
+    -H "X-CH-TS: $timestamp" \
+    -H "X-CH-APIKEY: $api_key" \
+    -H "X-CH-SIGN: $signature" \
+    -d "$body")
+
+# 输出响应结果
+echo "响应: $response"
+```
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
+
+public class SendOrder {
+
+    // API 相关信息
+    private static final String API_KEY = "您的API-KEY";
+    private static final String API_SECRET = "您的API-SECRET";
+    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String REQUEST_PATH = "/fapi/v1/orderHistorical";
+
+    public static void main(String[] args) {
+        try {
+            // 获取时间戳 (毫秒)
+            long timestamp = TimeUnit.MILLISECONDS.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+
+            // 请求方法
+            String method = "POST";
+
+            // 请求主体 (JSON 格式，注意使用紧凑格式)
+            String body = "{"contractName":"E-BTC-USDT"}";
+            System.out.println("请求主体 (body): " + body);
+
+            // 拼接签名字符串
+            String signStr = timestamp + method + REQUEST_PATH + body;
+            System.out.println("签名字符串: " + signStr);
+
+            // 生成 HMAC SHA256 签名
+            String signature = hmacSHA256(signStr, API_SECRET);
+            System.out.println("签名 (X-CH-SIGN): " + signature);
+
+            // 使用 URI 创建 URL
+            URI uri = new URI(BASE_URL + REQUEST_PATH);
+            HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("X-CH-TS", String.valueOf(timestamp));
+            conn.setRequestProperty("X-CH-APIKEY", API_KEY);
+            conn.setRequestProperty("X-CH-SIGN", signature);
+            conn.setRequestProperty("User-Agent", "Java-Client");
+            conn.setDoOutput(true);
+
+            // 发送请求主体
+            try (OutputStream os = conn.getOutputStream()) {
+                os.write(body.getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            }
+
+            // 读取响应
+            int responseCode = conn.getResponseCode();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    responseCode >= 200 && responseCode < 300 ? conn.getInputStream() : conn.getErrorStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            // 输出响应结果
+            System.out.println("响应 (" + responseCode + "): " + response.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 生成 HMAC SHA256 签名
+     *
+     * @param data   要签名的字符串
+     * @param secret 密钥
+     * @return HMAC SHA256 签名
+     */
+    public static String hmacSHA256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        mac.init(secretKeySpec);
+        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+}
+```
+```go
+package main
+
+import (
+	"bytes"
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"time"
+)
+
+// API 相关信息
+const (
+	APIKey     = "您的API-KEY"
+	APISecret  = "您的API-SECRET"
+	BaseURL    = "https://t(:futures_url)"
+	RequestPath = "/fapi/v1/orderHistorical"
+)
+
+func main() {
+	// 获取毫秒级时间戳
+	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+
+	// 请求方法
+	method := "POST"
+
+	// 请求主体 (JSON 格式)
+	body := `{"contractName":"E-BTC-USDT"}`
+
+	// 拼接签名字符串
+	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+	fmt.Println("签名字符串:", signStr)
+
+	// 生成 HMAC SHA256 签名
+	signature := generateHMACSHA256(signStr, APISecret)
+	fmt.Println("签名 (X-CH-SIGN):", signature)
+
+	// 发送 POST 请求
+	url := BaseURL + RequestPath
+	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+	if err != nil {
+		fmt.Println("创建请求失败:", err)
+		return
+	}
+
+	// 设置请求头
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+	req.Header.Set("X-CH-APIKEY", APIKey)
+	req.Header.Set("X-CH-SIGN", signature)
+
+	// 执行请求
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("响应:", string(responseBody))
+}
+
+// 生成 HMAC SHA256 签名
+func generateHMACSHA256(data, secret string) string {
+	h := hmac.New(sha256.New, []byte(secret))
+	h.Write([]byte(data))
+	return hex.EncodeToString(h.Sum(nil))
+}
+```
+```python
+import time
+import hmac
+import hashlib
+import requests
+
+# API 相关信息
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
+BASE_URL = "https://t(:futures_url)"
+REQUEST_PATH = "/fapi/v1/orderHistorical"
+
+# 请求方法和请求主体
+method = "POST"
+body = {"contractName":"E-BTC-USDT"}
+
+
+# 获取时间戳 (毫秒级)
+timestamp = int(time.time() * 1000)
+
+# 将请求主体转换为紧凑的 JSON 字符串
+import json
+body_str = json.dumps(body, separators=(',', ':'))
+print("请求主体 (body):", body_str)
+
+# 拼接签名字符串
+sign_str = f"{timestamp}{method}{REQUEST_PATH}{body_str}"
+print("签名字符串:", sign_str)
+
+# 生成 HMAC SHA256 签名
+signature = hmac.new(API_SECRET.encode('utf-8'), sign_str.encode('utf-8'), hashlib.sha256).hexdigest()
+print("签名 (X-CH-SIGN):", signature)
+
+# 构建请求头
+headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": str(timestamp),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Python-Client"
+}
+
+# 发送 POST 请求
+url = BASE_URL + REQUEST_PATH
+response = requests.post(url, headers=headers, data=body_str)
+
+# 输出响应结果
+print("响应状态码:", response.status_code)
+print("响应内容:", response.text)
+```
+```php
+// API 相关信息
+$apiKey = "您的API-KEY";
+$apiSecret = "您的API-SECRET";
+$baseUrl = "https://t(:futures_url)";
+$requestPath = "/fapi/v1/orderHistorical";
+
+// 请求方法和请求主体
+$method = "POST";
+$body = json_encode([
+    "contractName" => "E-BTC-USDT"
+], JSON_UNESCAPED_SLASHES);
+
+// 获取毫秒级时间戳
+$timestamp = round(microtime(true) * 1000);
+
+// 拼接签名字符串
+$signStr = $timestamp . $method . $requestPath . $body;
+echo "签名字符串: " . $signStr . PHP_EOL;
+
+// 生成 HMAC SHA256 签名
+$signature = hash_hmac('sha256', $signStr, $apiSecret);
+echo "签名 (X-CH-SIGN): " . $signature . PHP_EOL;
+
+// 构建请求头
+$headers = [
+    "Content-Type: application/json",
+    "X-CH-TS: $timestamp",
+    "X-CH-APIKEY: $apiKey",
+    "X-CH-SIGN: $signature",
+    "User-Agent: PHP-Client"
+];
+
+// 发送 POST 请求
+$url = $baseUrl . $requestPath;
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 仅在开发环境中使用，生产环境应启用 SSL 验证
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+if (curl_errno($ch)) {
+    echo "请求失败: " . curl_error($ch) . PHP_EOL;
+} else {
+    echo "响应状态码: $httpCode" . PHP_EOL;
+    echo "响应内容: $response" . PHP_EOL;
+}
+
+curl_close($ch);
+```
+```javascript--node
+const crypto = require('crypto');
+const axios = require('axios');
+
+// API 相关信息
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
+const BASE_URL = "https://t(:futures_url)";
+const REQUEST_PATH = "/fapi/v1/orderHistorical";
+
+// 请求方法和请求主体
+const method = "POST";
+const body = JSON.stringify({
+    contractName: "E-BTC-USDT"
+});
+
+// 获取毫秒级时间戳
+const timestamp = Date.now();
+
+// 拼接签名字符串
+const signStr = `${timestamp}${method}${REQUEST_PATH}${body}`;
+console.log("签名字符串:", signStr);
+
+// 生成 HMAC SHA256 签名
+const signature = crypto.createHmac('sha256', API_SECRET).update(signStr).digest('hex');
+console.log("签名 (X-CH-SIGN):", signature);
+
+// 构建请求头
+const headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": timestamp.toString(),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Node.js-Client"
+};
+
+// 发送 POST 请求
+async function sendOrder() {
+    try {
+        const response = await axios.post(`${BASE_URL}${REQUEST_PATH}`, body, { headers });
+        console.log("响应状态码:", response.status);
+        console.log("响应内容:", response.data);
+    } catch (error) {
+        console.error("请求失败:", error.response ? error.response.data : error.message);
+    }
+}
+
+// 执行请求
+sendOrder();
+
+```
 
 **请求参数**
 
@@ -5143,6 +7414,381 @@ body
 | X-CH-APIKEY<font color="red">\*</font> | string | 您的API-key |
 | X-CH-TS<font color="red">\*</font>     | string | 时间戳      |
 
+> 请求示例
+
+```http
+POST https://t(:futures_url)/fapi/v1/profitHistorical
+
+body
+{"contractName":"E-BTC-USDT"}
+```
+
+```shell
+#!/bin/bash
+
+# API 相关信息
+api_key="您的API-KEY"
+api_secret="您的API-SECRET"
+
+# 请求信息
+timestamp=$(($(date +%s%N)/1000000))  # 毫秒级时间戳
+method="POST"
+request_path="/fapi/v1/profitHistorical"
+
+# 请求主体 (JSON 格式)
+body='{"contractName":"E-BTC-USDT"}'
+
+# 删除 body 中的空白字符，保证签名的一致性
+body=$(echo "$body" | jq -c)
+
+# 拼接签名字符串
+sign_str="${timestamp}${method}${request_path}${body}"
+echo "签名字符串: $sign_str"
+
+# 生成 HMAC SHA256 签名
+signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk '{print $2}')
+echo "签名 (X-CH-SIGN): $signature"
+
+# 发送 POST 请求
+response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+    -H "Content-Type: application/json" \
+    -H "X-CH-TS: $timestamp" \
+    -H "X-CH-APIKEY: $api_key" \
+    -H "X-CH-SIGN: $signature" \
+    -d "$body")
+
+# 输出响应结果
+echo "响应: $response"
+```
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
+
+public class SendOrder {
+
+    // API 相关信息
+    private static final String API_KEY = "您的API-KEY";
+    private static final String API_SECRET = "您的API-SECRET";
+    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String REQUEST_PATH = "/fapi/v1/profitHistorical";
+
+    public static void main(String[] args) {
+        try {
+            // 获取时间戳 (毫秒)
+            long timestamp = TimeUnit.MILLISECONDS.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+
+            // 请求方法
+            String method = "POST";
+
+            // 请求主体 (JSON 格式，注意使用紧凑格式)
+            String body = "{"contractName":"E-BTC-USDT"}";
+            System.out.println("请求主体 (body): " + body);
+
+            // 拼接签名字符串
+            String signStr = timestamp + method + REQUEST_PATH + body;
+            System.out.println("签名字符串: " + signStr);
+
+            // 生成 HMAC SHA256 签名
+            String signature = hmacSHA256(signStr, API_SECRET);
+            System.out.println("签名 (X-CH-SIGN): " + signature);
+
+            // 使用 URI 创建 URL
+            URI uri = new URI(BASE_URL + REQUEST_PATH);
+            HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("X-CH-TS", String.valueOf(timestamp));
+            conn.setRequestProperty("X-CH-APIKEY", API_KEY);
+            conn.setRequestProperty("X-CH-SIGN", signature);
+            conn.setRequestProperty("User-Agent", "Java-Client");
+            conn.setDoOutput(true);
+
+            // 发送请求主体
+            try (OutputStream os = conn.getOutputStream()) {
+                os.write(body.getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            }
+
+            // 读取响应
+            int responseCode = conn.getResponseCode();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    responseCode >= 200 && responseCode < 300 ? conn.getInputStream() : conn.getErrorStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            // 输出响应结果
+            System.out.println("响应 (" + responseCode + "): " + response.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 生成 HMAC SHA256 签名
+     *
+     * @param data   要签名的字符串
+     * @param secret 密钥
+     * @return HMAC SHA256 签名
+     */
+    public static String hmacSHA256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        mac.init(secretKeySpec);
+        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+}
+```
+```go
+package main
+
+import (
+	"bytes"
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"time"
+)
+
+// API 相关信息
+const (
+	APIKey     = "您的API-KEY"
+	APISecret  = "您的API-SECRET"
+	BaseURL    = "https://t(:futures_url)"
+	RequestPath = "/fapi/v1/profitHistorical"
+)
+
+func main() {
+	// 获取毫秒级时间戳
+	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+
+	// 请求方法
+	method := "POST"
+
+	// 请求主体 (JSON 格式)
+	body := `{"contractName":"E-BTC-USDT"}`
+
+	// 拼接签名字符串
+	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+	fmt.Println("签名字符串:", signStr)
+
+	// 生成 HMAC SHA256 签名
+	signature := generateHMACSHA256(signStr, APISecret)
+	fmt.Println("签名 (X-CH-SIGN):", signature)
+
+	// 发送 POST 请求
+	url := BaseURL + RequestPath
+	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+	if err != nil {
+		fmt.Println("创建请求失败:", err)
+		return
+	}
+
+	// 设置请求头
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+	req.Header.Set("X-CH-APIKEY", APIKey)
+	req.Header.Set("X-CH-SIGN", signature)
+
+	// 执行请求
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("响应:", string(responseBody))
+}
+
+// 生成 HMAC SHA256 签名
+func generateHMACSHA256(data, secret string) string {
+	h := hmac.New(sha256.New, []byte(secret))
+	h.Write([]byte(data))
+	return hex.EncodeToString(h.Sum(nil))
+}
+```
+```python
+import time
+import hmac
+import hashlib
+import requests
+
+# API 相关信息
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
+BASE_URL = "https://t(:futures_url)"
+REQUEST_PATH = "/fapi/v1/profitHistorical"
+
+# 请求方法和请求主体
+method = "POST"
+body = {"contractName":"E-BTC-USDT"}
+
+
+# 获取时间戳 (毫秒级)
+timestamp = int(time.time() * 1000)
+
+# 将请求主体转换为紧凑的 JSON 字符串
+import json
+body_str = json.dumps(body, separators=(',', ':'))
+print("请求主体 (body):", body_str)
+
+# 拼接签名字符串
+sign_str = f"{timestamp}{method}{REQUEST_PATH}{body_str}"
+print("签名字符串:", sign_str)
+
+# 生成 HMAC SHA256 签名
+signature = hmac.new(API_SECRET.encode('utf-8'), sign_str.encode('utf-8'), hashlib.sha256).hexdigest()
+print("签名 (X-CH-SIGN):", signature)
+
+# 构建请求头
+headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": str(timestamp),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Python-Client"
+}
+
+# 发送 POST 请求
+url = BASE_URL + REQUEST_PATH
+response = requests.post(url, headers=headers, data=body_str)
+
+# 输出响应结果
+print("响应状态码:", response.status_code)
+print("响应内容:", response.text)
+```
+```php
+// API 相关信息
+$apiKey = "您的API-KEY";
+$apiSecret = "您的API-SECRET";
+$baseUrl = "https://t(:futures_url)";
+$requestPath = "/fapi/v1/profitHistorical";
+
+// 请求方法和请求主体
+$method = "POST";
+$body = json_encode([
+    "contractName" => "E-BTC-USDT"
+], JSON_UNESCAPED_SLASHES);
+
+// 获取毫秒级时间戳
+$timestamp = round(microtime(true) * 1000);
+
+// 拼接签名字符串
+$signStr = $timestamp . $method . $requestPath . $body;
+echo "签名字符串: " . $signStr . PHP_EOL;
+
+// 生成 HMAC SHA256 签名
+$signature = hash_hmac('sha256', $signStr, $apiSecret);
+echo "签名 (X-CH-SIGN): " . $signature . PHP_EOL;
+
+// 构建请求头
+$headers = [
+    "Content-Type: application/json",
+    "X-CH-TS: $timestamp",
+    "X-CH-APIKEY: $apiKey",
+    "X-CH-SIGN: $signature",
+    "User-Agent: PHP-Client"
+];
+
+// 发送 POST 请求
+$url = $baseUrl . $requestPath;
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 仅在开发环境中使用，生产环境应启用 SSL 验证
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+if (curl_errno($ch)) {
+    echo "请求失败: " . curl_error($ch) . PHP_EOL;
+} else {
+    echo "响应状态码: $httpCode" . PHP_EOL;
+    echo "响应内容: $response" . PHP_EOL;
+}
+
+curl_close($ch);
+```
+```javascript--node
+const crypto = require('crypto');
+const axios = require('axios');
+
+// API 相关信息
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
+const BASE_URL = "https://t(:futures_url)";
+const REQUEST_PATH = "/fapi/v1/profitHistorical";
+
+// 请求方法和请求主体
+const method = "POST";
+const body = JSON.stringify({
+    contractName: "E-BTC-USDT"
+});
+
+// 获取毫秒级时间戳
+const timestamp = Date.now();
+
+// 拼接签名字符串
+const signStr = `${timestamp}${method}${REQUEST_PATH}${body}`;
+console.log("签名字符串:", signStr);
+
+// 生成 HMAC SHA256 签名
+const signature = crypto.createHmac('sha256', API_SECRET).update(signStr).digest('hex');
+console.log("签名 (X-CH-SIGN):", signature);
+
+// 构建请求头
+const headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": timestamp.toString(),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Node.js-Client"
+};
+
+// 发送 POST 请求
+async function sendOrder() {
+    try {
+        const response = await axios.post(`${BASE_URL}${REQUEST_PATH}`, body, { headers });
+        console.log("响应状态码:", response.status);
+        console.log("响应内容:", response.data);
+    } catch (error) {
+        console.error("请求失败:", error.response ? error.response.data : error.message);
+    }
+}
+
+// 执行请求
+sendOrder();
+
+```
+
 **请求参数**
 
 | 参数名                                  | 类型   | 描述                               |
@@ -5192,6 +7838,381 @@ body
 | X-CH-SIGN<font color="red">\*</font>   | string  | 签名        |
 | X-CH-APIKEY<font color="red">\*</font> | string  | 您的API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | 时间戳      |
+
+> 请求示例
+
+```http
+POST https://t(:futures_url)/fapi/v1/myTrades
+
+body
+{"contractName":"E-BTC-USDT"}
+```
+
+```shell
+#!/bin/bash
+
+# API 相关信息
+api_key="您的API-KEY"
+api_secret="您的API-SECRET"
+
+# 请求信息
+timestamp=$(($(date +%s%N)/1000000))  # 毫秒级时间戳
+method="POST"
+request_path="/fapi/v1/myTrades"
+
+# 请求主体 (JSON 格式)
+body='{"contractName":"E-BTC-USDT"}'
+
+# 删除 body 中的空白字符，保证签名的一致性
+body=$(echo "$body" | jq -c)
+
+# 拼接签名字符串
+sign_str="${timestamp}${method}${request_path}${body}"
+echo "签名字符串: $sign_str"
+
+# 生成 HMAC SHA256 签名
+signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk '{print $2}')
+echo "签名 (X-CH-SIGN): $signature"
+
+# 发送 POST 请求
+response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+    -H "Content-Type: application/json" \
+    -H "X-CH-TS: $timestamp" \
+    -H "X-CH-APIKEY: $api_key" \
+    -H "X-CH-SIGN: $signature" \
+    -d "$body")
+
+# 输出响应结果
+echo "响应: $response"
+```
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
+
+public class SendOrder {
+
+    // API 相关信息
+    private static final String API_KEY = "您的API-KEY";
+    private static final String API_SECRET = "您的API-SECRET";
+    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String REQUEST_PATH = "/fapi/v1/myTrades";
+
+    public static void main(String[] args) {
+        try {
+            // 获取时间戳 (毫秒)
+            long timestamp = TimeUnit.MILLISECONDS.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+
+            // 请求方法
+            String method = "POST";
+
+            // 请求主体 (JSON 格式，注意使用紧凑格式)
+            String body = "{"contractName":"E-BTC-USDT"}";
+            System.out.println("请求主体 (body): " + body);
+
+            // 拼接签名字符串
+            String signStr = timestamp + method + REQUEST_PATH + body;
+            System.out.println("签名字符串: " + signStr);
+
+            // 生成 HMAC SHA256 签名
+            String signature = hmacSHA256(signStr, API_SECRET);
+            System.out.println("签名 (X-CH-SIGN): " + signature);
+
+            // 使用 URI 创建 URL
+            URI uri = new URI(BASE_URL + REQUEST_PATH);
+            HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("X-CH-TS", String.valueOf(timestamp));
+            conn.setRequestProperty("X-CH-APIKEY", API_KEY);
+            conn.setRequestProperty("X-CH-SIGN", signature);
+            conn.setRequestProperty("User-Agent", "Java-Client");
+            conn.setDoOutput(true);
+
+            // 发送请求主体
+            try (OutputStream os = conn.getOutputStream()) {
+                os.write(body.getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            }
+
+            // 读取响应
+            int responseCode = conn.getResponseCode();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    responseCode >= 200 && responseCode < 300 ? conn.getInputStream() : conn.getErrorStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            // 输出响应结果
+            System.out.println("响应 (" + responseCode + "): " + response.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 生成 HMAC SHA256 签名
+     *
+     * @param data   要签名的字符串
+     * @param secret 密钥
+     * @return HMAC SHA256 签名
+     */
+    public static String hmacSHA256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        mac.init(secretKeySpec);
+        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+}
+```
+```go
+package main
+
+import (
+	"bytes"
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"time"
+)
+
+// API 相关信息
+const (
+	APIKey     = "您的API-KEY"
+	APISecret  = "您的API-SECRET"
+	BaseURL    = "https://t(:futures_url)"
+	RequestPath = "/fapi/v1/myTrades"
+)
+
+func main() {
+	// 获取毫秒级时间戳
+	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+
+	// 请求方法
+	method := "POST"
+
+	// 请求主体 (JSON 格式)
+	body := `{"contractName":"E-BTC-USDT"}`
+
+	// 拼接签名字符串
+	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+	fmt.Println("签名字符串:", signStr)
+
+	// 生成 HMAC SHA256 签名
+	signature := generateHMACSHA256(signStr, APISecret)
+	fmt.Println("签名 (X-CH-SIGN):", signature)
+
+	// 发送 POST 请求
+	url := BaseURL + RequestPath
+	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+	if err != nil {
+		fmt.Println("创建请求失败:", err)
+		return
+	}
+
+	// 设置请求头
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+	req.Header.Set("X-CH-APIKEY", APIKey)
+	req.Header.Set("X-CH-SIGN", signature)
+
+	// 执行请求
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("响应:", string(responseBody))
+}
+
+// 生成 HMAC SHA256 签名
+func generateHMACSHA256(data, secret string) string {
+	h := hmac.New(sha256.New, []byte(secret))
+	h.Write([]byte(data))
+	return hex.EncodeToString(h.Sum(nil))
+}
+```
+```python
+import time
+import hmac
+import hashlib
+import requests
+
+# API 相关信息
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
+BASE_URL = "https://t(:futures_url)"
+REQUEST_PATH = "/fapi/v1/myTrades"
+
+# 请求方法和请求主体
+method = "POST"
+body = {"contractName":"E-BTC-USDT"}
+
+
+# 获取时间戳 (毫秒级)
+timestamp = int(time.time() * 1000)
+
+# 将请求主体转换为紧凑的 JSON 字符串
+import json
+body_str = json.dumps(body, separators=(',', ':'))
+print("请求主体 (body):", body_str)
+
+# 拼接签名字符串
+sign_str = f"{timestamp}{method}{REQUEST_PATH}{body_str}"
+print("签名字符串:", sign_str)
+
+# 生成 HMAC SHA256 签名
+signature = hmac.new(API_SECRET.encode('utf-8'), sign_str.encode('utf-8'), hashlib.sha256).hexdigest()
+print("签名 (X-CH-SIGN):", signature)
+
+# 构建请求头
+headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": str(timestamp),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Python-Client"
+}
+
+# 发送 POST 请求
+url = BASE_URL + REQUEST_PATH
+response = requests.post(url, headers=headers, data=body_str)
+
+# 输出响应结果
+print("响应状态码:", response.status_code)
+print("响应内容:", response.text)
+```
+```php
+// API 相关信息
+$apiKey = "您的API-KEY";
+$apiSecret = "您的API-SECRET";
+$baseUrl = "https://t(:futures_url)";
+$requestPath = "/fapi/v1/myTrades";
+
+// 请求方法和请求主体
+$method = "POST";
+$body = json_encode([
+    "contractName" => "E-BTC-USDT"
+], JSON_UNESCAPED_SLASHES);
+
+// 获取毫秒级时间戳
+$timestamp = round(microtime(true) * 1000);
+
+// 拼接签名字符串
+$signStr = $timestamp . $method . $requestPath . $body;
+echo "签名字符串: " . $signStr . PHP_EOL;
+
+// 生成 HMAC SHA256 签名
+$signature = hash_hmac('sha256', $signStr, $apiSecret);
+echo "签名 (X-CH-SIGN): " . $signature . PHP_EOL;
+
+// 构建请求头
+$headers = [
+    "Content-Type: application/json",
+    "X-CH-TS: $timestamp",
+    "X-CH-APIKEY: $apiKey",
+    "X-CH-SIGN: $signature",
+    "User-Agent: PHP-Client"
+];
+
+// 发送 POST 请求
+$url = $baseUrl . $requestPath;
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 仅在开发环境中使用，生产环境应启用 SSL 验证
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+if (curl_errno($ch)) {
+    echo "请求失败: " . curl_error($ch) . PHP_EOL;
+} else {
+    echo "响应状态码: $httpCode" . PHP_EOL;
+    echo "响应内容: $response" . PHP_EOL;
+}
+
+curl_close($ch);
+```
+```javascript--node
+const crypto = require('crypto');
+const axios = require('axios');
+
+// API 相关信息
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
+const BASE_URL = "https://t(:futures_url)";
+const REQUEST_PATH = "/fapi/v1/myTrades";
+
+// 请求方法和请求主体
+const method = "POST";
+const body = JSON.stringify({
+    contractName: "E-BTC-USDT"
+});
+
+// 获取毫秒级时间戳
+const timestamp = Date.now();
+
+// 拼接签名字符串
+const signStr = `${timestamp}${method}${REQUEST_PATH}${body}`;
+console.log("签名字符串:", signStr);
+
+// 生成 HMAC SHA256 签名
+const signature = crypto.createHmac('sha256', API_SECRET).update(signStr).digest('hex');
+console.log("签名 (X-CH-SIGN):", signature);
+
+// 构建请求头
+const headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": timestamp.toString(),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Node.js-Client"
+};
+
+// 发送 POST 请求
+async function sendOrder() {
+    try {
+        const response = await axios.post(`${BASE_URL}${REQUEST_PATH}`, body, { headers });
+        console.log("响应状态码:", response.status);
+        console.log("响应内容:", response.data);
+    } catch (error) {
+        console.error("请求失败:", error.response ? error.response.data : error.message);
+    }
+}
+
+// 执行请求
+sendOrder();
+
+```
 
 **请求参数**
 
@@ -5271,6 +8292,383 @@ body
 | X-CH-APIKEY<font color="red">\*</font> | string  | 您的API-key |
 | X-CH-SIGN<font color="red">\*</font>   | string  | 签名        |
 
+> 请求示例
+
+```http
+POST https://t(:futures_url)/fapi/v1/edit_user_position_model
+
+body
+{"contractName":"E-BTC-USDT","positionModel":"1"}
+```
+
+```shell
+#!/bin/bash
+
+# API 相关信息
+api_key="您的API-KEY"
+api_secret="您的API-SECRET"
+
+# 请求信息
+timestamp=$(($(date +%s%N)/1000000))  # 毫秒级时间戳
+method="POST"
+request_path="/fapi/v1/edit_user_position_model"
+
+# 请求主体 (JSON 格式)
+body='{"contractName":"E-BTC-USDT","positionModel":"1"}'
+
+# 删除 body 中的空白字符，保证签名的一致性
+body=$(echo "$body" | jq -c)
+
+# 拼接签名字符串
+sign_str="${timestamp}${method}${request_path}${body}"
+echo "签名字符串: $sign_str"
+
+# 生成 HMAC SHA256 签名
+signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk '{print $2}')
+echo "签名 (X-CH-SIGN): $signature"
+
+# 发送 POST 请求
+response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+    -H "Content-Type: application/json" \
+    -H "X-CH-TS: $timestamp" \
+    -H "X-CH-APIKEY: $api_key" \
+    -H "X-CH-SIGN: $signature" \
+    -d "$body")
+
+# 输出响应结果
+echo "响应: $response"
+```
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
+
+public class SendOrder {
+
+    // API 相关信息
+    private static final String API_KEY = "您的API-KEY";
+    private static final String API_SECRET = "您的API-SECRET";
+    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String REQUEST_PATH = "/fapi/v1/edit_user_position_model";
+
+    public static void main(String[] args) {
+        try {
+            // 获取时间戳 (毫秒)
+            long timestamp = TimeUnit.MILLISECONDS.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+
+            // 请求方法
+            String method = "POST";
+
+            // 请求主体 (JSON 格式，注意使用紧凑格式)
+            String body = "{"contractName":"E-BTC-USDT","positionModel":"1"}";
+            System.out.println("请求主体 (body): " + body);
+
+            // 拼接签名字符串
+            String signStr = timestamp + method + REQUEST_PATH + body;
+            System.out.println("签名字符串: " + signStr);
+
+            // 生成 HMAC SHA256 签名
+            String signature = hmacSHA256(signStr, API_SECRET);
+            System.out.println("签名 (X-CH-SIGN): " + signature);
+
+            // 使用 URI 创建 URL
+            URI uri = new URI(BASE_URL + REQUEST_PATH);
+            HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("X-CH-TS", String.valueOf(timestamp));
+            conn.setRequestProperty("X-CH-APIKEY", API_KEY);
+            conn.setRequestProperty("X-CH-SIGN", signature);
+            conn.setRequestProperty("User-Agent", "Java-Client");
+            conn.setDoOutput(true);
+
+            // 发送请求主体
+            try (OutputStream os = conn.getOutputStream()) {
+                os.write(body.getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            }
+
+            // 读取响应
+            int responseCode = conn.getResponseCode();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    responseCode >= 200 && responseCode < 300 ? conn.getInputStream() : conn.getErrorStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            // 输出响应结果
+            System.out.println("响应 (" + responseCode + "): " + response.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 生成 HMAC SHA256 签名
+     *
+     * @param data   要签名的字符串
+     * @param secret 密钥
+     * @return HMAC SHA256 签名
+     */
+    public static String hmacSHA256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        mac.init(secretKeySpec);
+        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+}
+```
+```go
+package main
+
+import (
+	"bytes"
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"time"
+)
+
+// API 相关信息
+const (
+	APIKey     = "您的API-KEY"
+	APISecret  = "您的API-SECRET"
+	BaseURL    = "https://t(:futures_url)"
+	RequestPath = "/fapi/v1/edit_user_position_model"
+)
+
+func main() {
+	// 获取毫秒级时间戳
+	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+
+	// 请求方法
+	method := "POST"
+
+	// 请求主体 (JSON 格式)
+	body := `{"contractName":"E-BTC-USDT","positionModel":"1"}`
+
+	// 拼接签名字符串
+	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+	fmt.Println("签名字符串:", signStr)
+
+	// 生成 HMAC SHA256 签名
+	signature := generateHMACSHA256(signStr, APISecret)
+	fmt.Println("签名 (X-CH-SIGN):", signature)
+
+	// 发送 POST 请求
+	url := BaseURL + RequestPath
+	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+	if err != nil {
+		fmt.Println("创建请求失败:", err)
+		return
+	}
+
+	// 设置请求头
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+	req.Header.Set("X-CH-APIKEY", APIKey)
+	req.Header.Set("X-CH-SIGN", signature)
+
+	// 执行请求
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("响应:", string(responseBody))
+}
+
+// 生成 HMAC SHA256 签名
+func generateHMACSHA256(data, secret string) string {
+	h := hmac.New(sha256.New, []byte(secret))
+	h.Write([]byte(data))
+	return hex.EncodeToString(h.Sum(nil))
+}
+```
+```python
+import time
+import hmac
+import hashlib
+import requests
+
+# API 相关信息
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
+BASE_URL = "https://t(:futures_url)"
+REQUEST_PATH = "/fapi/v1/edit_user_position_model"
+
+# 请求方法和请求主体
+method = "POST"
+body = {"contractName":"E-BTC-USDT","positionModel":"1"}
+
+
+# 获取时间戳 (毫秒级)
+timestamp = int(time.time() * 1000)
+
+# 将请求主体转换为紧凑的 JSON 字符串
+import json
+body_str = json.dumps(body, separators=(',', ':'))
+print("请求主体 (body):", body_str)
+
+# 拼接签名字符串
+sign_str = f"{timestamp}{method}{REQUEST_PATH}{body_str}"
+print("签名字符串:", sign_str)
+
+# 生成 HMAC SHA256 签名
+signature = hmac.new(API_SECRET.encode('utf-8'), sign_str.encode('utf-8'), hashlib.sha256).hexdigest()
+print("签名 (X-CH-SIGN):", signature)
+
+# 构建请求头
+headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": str(timestamp),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Python-Client"
+}
+
+# 发送 POST 请求
+url = BASE_URL + REQUEST_PATH
+response = requests.post(url, headers=headers, data=body_str)
+
+# 输出响应结果
+print("响应状态码:", response.status_code)
+print("响应内容:", response.text)
+```
+```php
+// API 相关信息
+$apiKey = "您的API-KEY";
+$apiSecret = "您的API-SECRET";
+$baseUrl = "https://t(:futures_url)";
+$requestPath = "/fapi/v1/edit_user_position_model";
+
+// 请求方法和请求主体
+$method = "POST";
+$body = json_encode([
+    "contractName"  => "E-BTC-USDT",
+    "positionModel" => "1"
+], JSON_UNESCAPED_SLASHES);
+
+// 获取毫秒级时间戳
+$timestamp = round(microtime(true) * 1000);
+
+// 拼接签名字符串
+$signStr = $timestamp . $method . $requestPath . $body;
+echo "签名字符串: " . $signStr . PHP_EOL;
+
+// 生成 HMAC SHA256 签名
+$signature = hash_hmac('sha256', $signStr, $apiSecret);
+echo "签名 (X-CH-SIGN): " . $signature . PHP_EOL;
+
+// 构建请求头
+$headers = [
+    "Content-Type: application/json",
+    "X-CH-TS: $timestamp",
+    "X-CH-APIKEY: $apiKey",
+    "X-CH-SIGN: $signature",
+    "User-Agent: PHP-Client"
+];
+
+// 发送 POST 请求
+$url = $baseUrl . $requestPath;
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 仅在开发环境中使用，生产环境应启用 SSL 验证
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+if (curl_errno($ch)) {
+    echo "请求失败: " . curl_error($ch) . PHP_EOL;
+} else {
+    echo "响应状态码: $httpCode" . PHP_EOL;
+    echo "响应内容: $response" . PHP_EOL;
+}
+
+curl_close($ch);
+```
+```javascript--node
+const crypto = require('crypto');
+const axios = require('axios');
+
+// API 相关信息
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
+const BASE_URL = "https://t(:futures_url)";
+const REQUEST_PATH = "/fapi/v1/edit_user_position_model";
+
+// 请求方法和请求主体
+const method = "POST";
+const body = JSON.stringify({
+    contractName: "E-BTC-USDT",
+    positionModel: "1"
+});
+
+// 获取毫秒级时间戳
+const timestamp = Date.now();
+
+// 拼接签名字符串
+const signStr = `${timestamp}${method}${REQUEST_PATH}${body}`;
+console.log("签名字符串:", signStr);
+
+// 生成 HMAC SHA256 签名
+const signature = crypto.createHmac('sha256', API_SECRET).update(signStr).digest('hex');
+console.log("签名 (X-CH-SIGN):", signature);
+
+// 构建请求头
+const headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": timestamp.toString(),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Node.js-Client"
+};
+
+// 发送 POST 请求
+async function sendOrder() {
+    try {
+        const response = await axios.post(`${BASE_URL}${REQUEST_PATH}`, body, { headers });
+        console.log("响应状态码:", response.status);
+        console.log("响应内容:", response.data);
+    } catch (error) {
+        console.error("请求失败:", error.response ? error.response.data : error.message);
+    }
+}
+
+// 执行请求
+sendOrder();
+
+```
+
 **请求参数**
 
 | 参数名                                   | 类型    | 描述                                 |
@@ -5300,6 +8698,383 @@ body
 | X-CH-APIKEY<font color="red">\*</font> | string  | 您的API-key |
 | X-CH-SIGN<font color="red">\*</font>   | string  | 签名        |
 
+> 请求示例
+
+```http
+POST https://t(:futures_url)/fapi/v1/edit_user_margin_model
+
+body
+{"contractName":"E-BTC-USDT","marginModel":"1"}
+```
+
+```shell
+#!/bin/bash
+
+# API 相关信息
+api_key="您的API-KEY"
+api_secret="您的API-SECRET"
+
+# 请求信息
+timestamp=$(($(date +%s%N)/1000000))  # 毫秒级时间戳
+method="POST"
+request_path="/fapi/v1/edit_user_margin_model"
+
+# 请求主体 (JSON 格式)
+body='{"contractName":"E-BTC-USDT","marginModel":"1"}'
+
+# 删除 body 中的空白字符，保证签名的一致性
+body=$(echo "$body" | jq -c)
+
+# 拼接签名字符串
+sign_str="${timestamp}${method}${request_path}${body}"
+echo "签名字符串: $sign_str"
+
+# 生成 HMAC SHA256 签名
+signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk '{print $2}')
+echo "签名 (X-CH-SIGN): $signature"
+
+# 发送 POST 请求
+response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+    -H "Content-Type: application/json" \
+    -H "X-CH-TS: $timestamp" \
+    -H "X-CH-APIKEY: $api_key" \
+    -H "X-CH-SIGN: $signature" \
+    -d "$body")
+
+# 输出响应结果
+echo "响应: $response"
+```
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
+
+public class SendOrder {
+
+    // API 相关信息
+    private static final String API_KEY = "您的API-KEY";
+    private static final String API_SECRET = "您的API-SECRET";
+    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String REQUEST_PATH = "/fapi/v1/edit_user_margin_model";
+
+    public static void main(String[] args) {
+        try {
+            // 获取时间戳 (毫秒)
+            long timestamp = TimeUnit.MILLISECONDS.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+
+            // 请求方法
+            String method = "POST";
+
+            // 请求主体 (JSON 格式，注意使用紧凑格式)
+            String body = "{"contractName":"E-BTC-USDT","marginModel":"1"}";
+            System.out.println("请求主体 (body): " + body);
+
+            // 拼接签名字符串
+            String signStr = timestamp + method + REQUEST_PATH + body;
+            System.out.println("签名字符串: " + signStr);
+
+            // 生成 HMAC SHA256 签名
+            String signature = hmacSHA256(signStr, API_SECRET);
+            System.out.println("签名 (X-CH-SIGN): " + signature);
+
+            // 使用 URI 创建 URL
+            URI uri = new URI(BASE_URL + REQUEST_PATH);
+            HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("X-CH-TS", String.valueOf(timestamp));
+            conn.setRequestProperty("X-CH-APIKEY", API_KEY);
+            conn.setRequestProperty("X-CH-SIGN", signature);
+            conn.setRequestProperty("User-Agent", "Java-Client");
+            conn.setDoOutput(true);
+
+            // 发送请求主体
+            try (OutputStream os = conn.getOutputStream()) {
+                os.write(body.getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            }
+
+            // 读取响应
+            int responseCode = conn.getResponseCode();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    responseCode >= 200 && responseCode < 300 ? conn.getInputStream() : conn.getErrorStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            // 输出响应结果
+            System.out.println("响应 (" + responseCode + "): " + response.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 生成 HMAC SHA256 签名
+     *
+     * @param data   要签名的字符串
+     * @param secret 密钥
+     * @return HMAC SHA256 签名
+     */
+    public static String hmacSHA256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        mac.init(secretKeySpec);
+        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+}
+```
+```go
+package main
+
+import (
+	"bytes"
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"time"
+)
+
+// API 相关信息
+const (
+	APIKey     = "您的API-KEY"
+	APISecret  = "您的API-SECRET"
+	BaseURL    = "https://t(:futures_url)"
+	RequestPath = "/fapi/v1/edit_user_margin_model"
+)
+
+func main() {
+	// 获取毫秒级时间戳
+	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+
+	// 请求方法
+	method := "POST"
+
+	// 请求主体 (JSON 格式)
+	body := `{"contractName":"E-BTC-USDT","marginModel":"1"}`
+
+	// 拼接签名字符串
+	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+	fmt.Println("签名字符串:", signStr)
+
+	// 生成 HMAC SHA256 签名
+	signature := generateHMACSHA256(signStr, APISecret)
+	fmt.Println("签名 (X-CH-SIGN):", signature)
+
+	// 发送 POST 请求
+	url := BaseURL + RequestPath
+	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+	if err != nil {
+		fmt.Println("创建请求失败:", err)
+		return
+	}
+
+	// 设置请求头
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+	req.Header.Set("X-CH-APIKEY", APIKey)
+	req.Header.Set("X-CH-SIGN", signature)
+
+	// 执行请求
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("响应:", string(responseBody))
+}
+
+// 生成 HMAC SHA256 签名
+func generateHMACSHA256(data, secret string) string {
+	h := hmac.New(sha256.New, []byte(secret))
+	h.Write([]byte(data))
+	return hex.EncodeToString(h.Sum(nil))
+}
+```
+```python
+import time
+import hmac
+import hashlib
+import requests
+
+# API 相关信息
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
+BASE_URL = "https://t(:futures_url)"
+REQUEST_PATH = "/fapi/v1/edit_user_margin_model"
+
+# 请求方法和请求主体
+method = "POST"
+body = {"contractName":"E-BTC-USDT","marginModel":"1"}
+
+
+# 获取时间戳 (毫秒级)
+timestamp = int(time.time() * 1000)
+
+# 将请求主体转换为紧凑的 JSON 字符串
+import json
+body_str = json.dumps(body, separators=(',', ':'))
+print("请求主体 (body):", body_str)
+
+# 拼接签名字符串
+sign_str = f"{timestamp}{method}{REQUEST_PATH}{body_str}"
+print("签名字符串:", sign_str)
+
+# 生成 HMAC SHA256 签名
+signature = hmac.new(API_SECRET.encode('utf-8'), sign_str.encode('utf-8'), hashlib.sha256).hexdigest()
+print("签名 (X-CH-SIGN):", signature)
+
+# 构建请求头
+headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": str(timestamp),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Python-Client"
+}
+
+# 发送 POST 请求
+url = BASE_URL + REQUEST_PATH
+response = requests.post(url, headers=headers, data=body_str)
+
+# 输出响应结果
+print("响应状态码:", response.status_code)
+print("响应内容:", response.text)
+```
+```php
+// API 相关信息
+$apiKey = "您的API-KEY";
+$apiSecret = "您的API-SECRET";
+$baseUrl = "https://t(:futures_url)";
+$requestPath = "/fapi/v1/edit_user_margin_model";
+
+// 请求方法和请求主体
+$method = "POST";
+$body = json_encode([
+    "contractName"  => "E-BTC-USDT",
+    "marginModel" => "1"
+], JSON_UNESCAPED_SLASHES);
+
+// 获取毫秒级时间戳
+$timestamp = round(microtime(true) * 1000);
+
+// 拼接签名字符串
+$signStr = $timestamp . $method . $requestPath . $body;
+echo "签名字符串: " . $signStr . PHP_EOL;
+
+// 生成 HMAC SHA256 签名
+$signature = hash_hmac('sha256', $signStr, $apiSecret);
+echo "签名 (X-CH-SIGN): " . $signature . PHP_EOL;
+
+// 构建请求头
+$headers = [
+    "Content-Type: application/json",
+    "X-CH-TS: $timestamp",
+    "X-CH-APIKEY: $apiKey",
+    "X-CH-SIGN: $signature",
+    "User-Agent: PHP-Client"
+];
+
+// 发送 POST 请求
+$url = $baseUrl . $requestPath;
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 仅在开发环境中使用，生产环境应启用 SSL 验证
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+if (curl_errno($ch)) {
+    echo "请求失败: " . curl_error($ch) . PHP_EOL;
+} else {
+    echo "响应状态码: $httpCode" . PHP_EOL;
+    echo "响应内容: $response" . PHP_EOL;
+}
+
+curl_close($ch);
+```
+```javascript--node
+const crypto = require('crypto');
+const axios = require('axios');
+
+// API 相关信息
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
+const BASE_URL = "https://t(:futures_url)";
+const REQUEST_PATH = "/fapi/v1/edit_user_margin_model";
+
+// 请求方法和请求主体
+const method = "POST";
+const body = JSON.stringify({
+    contractName: "E-BTC-USDT",
+    marginModel: "1"
+});
+
+// 获取毫秒级时间戳
+const timestamp = Date.now();
+
+// 拼接签名字符串
+const signStr = `${timestamp}${method}${REQUEST_PATH}${body}`;
+console.log("签名字符串:", signStr);
+
+// 生成 HMAC SHA256 签名
+const signature = crypto.createHmac('sha256', API_SECRET).update(signStr).digest('hex');
+console.log("签名 (X-CH-SIGN):", signature);
+
+// 构建请求头
+const headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": timestamp.toString(),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Node.js-Client"
+};
+
+// 发送 POST 请求
+async function sendOrder() {
+    try {
+        const response = await axios.post(`${BASE_URL}${REQUEST_PATH}`, body, { headers });
+        console.log("响应状态码:", response.status);
+        console.log("响应内容:", response.data);
+    } catch (error) {
+        console.error("请求失败:", error.response ? error.response.data : error.message);
+    }
+}
+
+// 执行请求
+sendOrder();
+
+```
+
 **请求参数**
 
 | 参数名                                  | 类型    | 描述                                 |
@@ -5328,6 +9103,400 @@ body
 | X-CH-TS<font color="red">\*</font>     | integer | 时间戳      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | 您的API-key |
 | X-CH-SIGN<font color="red">\*</font>   | string  | 签名        |
+
+> 请求示例
+
+```http
+POST https://t(:futures_url)/fapi/v1/edit_lever
+
+body
+{"contractName":"E-BTC-USDT","newLever":"1"}
+```
+
+```shell
+#!/bin/bash
+
+# API 相关信息
+api_key="您的API-KEY"
+api_secret="您的API-SECRET"
+
+# 请求信息
+timestamp=$(($(date +%s%N)/1000000))  # 毫秒级时间戳
+method="POST"
+request_path="/fapi/v1/edit_lever"
+
+# 请求主体 (JSON 格式)
+body='{"contractName":"E-BTC-USDT","newLever":"1"}'
+
+# 删除 body 中的空白字符，保证签名的一致性
+body=$(echo "$body" | jq -c)
+
+# 拼接签名字符串
+sign_str="${timestamp}${method}${request_path}${body}"
+echo "签名字符串: $sign_str"
+
+# 生成 HMAC SHA256 签名
+signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk '{print $2}')
+echo "签名 (X-CH-SIGN): $signature"
+
+# 发送 POST 请求
+response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+    -H "Content-Type: application/json" \
+    -H "X-CH-TS: $timestamp" \
+    -H "X-CH-APIKEY: $api_key" \
+    -H "X-CH-SIGN: $signature" \
+    -d "$body")
+
+# 输出响应结果
+echo "响应: $response"
+```
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
+
+public class SendOrder {
+
+    // API 相关信息
+    private static final String API_KEY = "您的API-KEY";
+    private static final String API_SECRET = "您的API-SECRET";
+    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String REQUEST_PATH = "/fapi/v1/edit_lever";
+
+    public static void main(String[] args) {
+        try {
+            // 获取时间戳 (毫秒)
+            long timestamp = TimeUnit.MILLISECONDS.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+
+            // 请求方法
+            String method = "POST";
+
+            // 请求主体 (JSON 格式，注意使用紧凑格式)
+            String body = "{"contractName":"E-BTC-USDT","newLever":"1"}";
+            System.out.println("请求主体 (body): " + body);
+
+            // 拼接签名字符串
+            String signStr = timestamp + method + REQUEST_PATH + body;
+            System.out.println("签名字符串: " + signStr);
+
+            // 生成 HMAC SHA256 签名
+            String signature = hmacSHA256(signStr, API_SECRET);
+            System.out.println("签名 (X-CH-SIGN): " + signature);
+
+            // 使用 URI 创建 URL
+            URI uri = new URI(BASE_URL + REQUEST_PATH);
+            HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("X-CH-TS", String.valueOf(timestamp));
+            conn.setRequestProperty("X-CH-APIKEY", API_KEY);
+            conn.setRequestProperty("X-CH-SIGN", signature);
+            conn.setRequestProperty("User-Agent", "Java-Client");
+            conn.setDoOutput(true);
+
+            // 发送请求主体
+            try (OutputStream os = conn.getOutputStream()) {
+                os.write(body.getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            }
+
+            // 读取响应
+            int responseCode = conn.getResponseCode();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    responseCode >= 200 && responseCode < 300 ? conn.getInputStream() : conn.getErrorStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            // 输出响应结果
+            System.out.println("响应 (" + responseCode + "): " + response.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 生成 HMAC SHA256 签名
+     *
+     * @param data   要签名的字符串
+     * @param secret 密钥
+     * @return HMAC SHA256 签名
+     */
+    public static String hmacSHA256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        mac.init(secretKeySpec);
+        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+}
+```
+```go
+package main
+
+import (
+	"bytes"
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"time"
+)
+
+// API 相关信息
+const (
+	APIKey     = "您的API-KEY"
+	APISecret  = "您的API-SECRET"
+	BaseURL    = "https://t(:futures_url)"
+	RequestPath = "/fapi/v1/edit_lever"
+)
+
+func main() {
+	// 获取毫秒级时间戳
+	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+
+	// 请求方法
+	method := "POST"
+
+	// 请求主体 (JSON 格式)
+	body := `{"contractName":"E-BTC-USDT","newLever":"1"}`
+
+	// 拼接签名字符串
+	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+	fmt.Println("签名字符串:", signStr)
+
+	// 生成 HMAC SHA256 签名
+	signature := generateHMACSHA256(signStr, APISecret)
+	fmt.Println("签名 (X-CH-SIGN):", signature)
+
+	// 发送 POST 请求
+	url := BaseURL + RequestPath
+	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+	if err != nil {
+		fmt.Println("创建请求失败:", err)
+		return
+	}
+
+	// 设置请求头
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+	req.Header.Set("X-CH-APIKEY", APIKey)
+	req.Header.Set("X-CH-SIGN", signature)
+
+	// 执行请求
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("响应:", string(responseBody))
+}
+
+// 生成 HMAC SHA256 签名
+func generateHMACSHA256(data, secret string) string {
+	h := hmac.New(sha256.New, []byte(secret))
+	h.Write([]byte(data))
+	return hex.EncodeToString(h.Sum(nil))
+}
+```
+```python
+import time
+import hmac
+import hashlib
+import requests
+
+# API 相关信息
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
+BASE_URL = "https://t(:futures_url)"
+REQUEST_PATH = "/fapi/v1/edit_lever"
+
+# 请求方法和请求主体
+method = "POST"
+body = {"contractName":"E-BTC-USDT","newLever":"1"}
+
+
+# 获取时间戳 (毫秒级)
+timestamp = int(time.time() * 1000)
+
+# 将请求主体转换为紧凑的 JSON 字符串
+import json
+body_str = json.dumps(body, separators=(',', ':'))
+print("请求主体 (body):", body_str)
+
+# 拼接签名字符串
+sign_str = f"{timestamp}{method}{REQUEST_PATH}{body_str}"
+print("签名字符串:", sign_str)
+
+# 生成 HMAC SHA256 签名
+signature = hmac.new(API_SECRET.encode('utf-8'), sign_str.encode('utf-8'), hashlib.sha256).hexdigest()
+print("签名 (X-CH-SIGN):", signature)
+
+# 构建请求头
+headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": str(timestamp),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Python-Client"
+}
+
+# 发送 POST 请求
+url = BASE_URL + REQUEST_PATH
+response = requests.post(url, headers=headers, data=body_str)
+
+# 输出响应结果
+print("响应状态码:", response.status_code)
+print("响应内容:", response.text)
+```
+```php
+// API 相关信息
+$apiKey = "您的API-KEY";
+$apiSecret = "您的API-SECRET";
+$baseUrl = "https://t(:futures_url)";
+$requestPath = "/fapi/v1/edit_lever";
+
+// 请求方法和请求主体
+$method = "POST";
+$body = json_encode([
+    "contractName"  => "E-BTC-USDT",
+    "newLever" => "1"
+], JSON_UNESCAPED_SLASHES);
+
+// 获取毫秒级时间戳
+$timestamp = round(microtime(true) * 1000);
+
+// 拼接签名字符串
+$signStr = $timestamp . $method . $requestPath . $body;
+echo "签名字符串: " . $signStr . PHP_EOL;
+
+// 生成 HMAC SHA256 签名
+$signature = hash_hmac('sha256', $signStr, $apiSecret);
+echo "签名 (X-CH-SIGN): " . $signature . PHP_EOL;
+
+// 构建请求头
+$headers = [
+    "Content-Type: application/json",
+    "X-CH-TS: $timestamp",
+    "X-CH-APIKEY: $apiKey",
+    "X-CH-SIGN: $signature",
+    "User-Agent: PHP-Client"
+];
+
+// 发送 POST 请求
+$url = $baseUrl . $requestPath;
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 仅在开发环境中使用，生产环境应启用 SSL 验证
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+if (curl_errno($ch)) {
+    echo "请求失败: " . curl_error($ch) . PHP_EOL;
+} else {
+    echo "响应状态码: $httpCode" . PHP_EOL;
+    echo "响应内容: $response" . PHP_EOL;
+}
+
+curl_close($ch);
+```
+```javascript--node
+const crypto = require('crypto');
+const axios = require('axios');
+
+// API 相关信息
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
+const BASE_URL = "https://t(:futures_url)";
+const REQUEST_PATH = "/fapi/v1/edit_lever";
+
+// 请求方法和请求主体
+const method = "POST";
+const body = JSON.stringify({
+    contractName: "E-BTC-USDT",
+    newLever: "1"
+});
+
+// 获取毫秒级时间戳
+const timestamp = Date.now();
+
+// 拼接签名字符串
+const signStr = `${timestamp}${method}${REQUEST_PATH}${body}`;
+console.log("签名字符串:", signStr);
+
+// 生成 HMAC SHA256 签名
+const signature = crypto.createHmac('sha256', API_SECRET).update(signStr).digest('hex');
+console.log("签名 (X-CH-SIGN):", signature);
+
+// 构建请求头
+const headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": timestamp.toString(),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Node.js-Client"
+};
+
+// 发送 POST 请求
+async function sendOrder() {
+    try {
+        const response = await axios.post(`${BASE_URL}${REQUEST_PATH}`, body, { headers });
+        console.log("响应状态码:", response.status);
+        console.log("响应内容:", response.data);
+    } catch (error) {
+        console.error("请求失败:", error.response ? error.response.data : error.message);
+    }
+}
+
+// 执行请求
+sendOrder();
+
+```
+
+**请求参数**
+
+| 参数名                                     | 类型    | 描述                   |
+|:----------------------------------------| :-------|:---------------------|
+| contractName<font color="red">\*</font> | string  | 合约名称，例如：`E-BTC-USDT` |
+| newLever<font color="red">\*</font>     | integer | 调整杠杆倍数               |
+
+> 返回示例
+
+```json
+{ 
+    "code": "0", 
+    "msg": "成功", 
+    "data": null 
+}
+```
 
 # Websocket
 
