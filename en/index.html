@@ -578,19 +578,31 @@
                             <a href="#create-new-order" class="toc-h3 toc-link" data-title="Create New Order">Create New Order</a>
                           </li>
                           <li>
+                            <a href="#create-new-order-v2" class="toc-h3 toc-link" data-title="Create New Order-V2">Create New Order-V2</a>
+                          </li>
+                          <li>
                             <a href="#test-new-order" class="toc-h3 toc-link" data-title="Test New Order">Test New Order</a>
                           </li>
                           <li>
                             <a href="#query-order" class="toc-h3 toc-link" data-title="Query Order">Query Order</a>
                           </li>
                           <li>
+                            <a href="#query-order-v2" class="toc-h3 toc-link" data-title="Query Order-V2">Query Order-V2</a>
+                          </li>
+                          <li>
                             <a href="#cancel-order" class="toc-h3 toc-link" data-title="Cancel Order">Cancel Order</a>
+                          </li>
+                          <li>
+                            <a href="#cancel-order-v2" class="toc-h3 toc-link" data-title="Cancel Order-V2">Cancel Order-V2</a>
                           </li>
                           <li>
                             <a href="#batch-order-cancellation" class="toc-h3 toc-link" data-title="Batch Order Cancellation">Batch Order Cancellation</a>
                           </li>
                           <li>
                             <a href="#current-open-orders" class="toc-h3 toc-link" data-title="Current Open Orders">Current Open Orders</a>
+                          </li>
+                          <li>
+                            <a href="#current-open-orders-v2" class="toc-h3 toc-link" data-title="Current Open Orders-V2">Current Open Orders-V2</a>
                           </li>
                           <li>
                             <a href="#trading-records" class="toc-h3 toc-link" data-title="Trading Records">Trading Records</a>
@@ -2022,6 +2034,182 @@ body
 <td style="text-align: left">Order status: New Order (new order, no execution), Partially Filled (partial execution), Filled (fully executed)</td>
 </tr>
 </tbody></table>
+<h3 id='create-new-order-v2'>Create New Order-V2</h3>
+<p><code>POST https://openapi.fameex.net/sapi/v2/order</code></p>
+
+<p><strong>Rate Limit: 100 times/2s</strong></p>
+
+<p><strong>Request Headers</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">X-CH-SIGN<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Signature</td>
+</tr>
+<tr>
+<td style="text-align: left">X-CH-APIKEY<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">User&#39;s API-key</td>
+</tr>
+<tr>
+<td style="text-align: left">X-CH-TS<font color="red">*</font></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">Timestamp</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.fameex.net/sapi/v2/order
+
+body
+{
+    "symbol": "BTCUSDT",
+    "volume": 1.00,
+    "side": "BUY",
+    "type": "LIMIT",
+    "price": 65000.00,
+    "newClientOrderId": "111000000111"
+}
+</span></code></pre></div>
+<p><strong>Request Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">symbol<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>Uppercase</code> symbol name E.g. <code>BTCUSDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">volume<font color="red">*</font></td>
+<td style="text-align: left">number</td>
+<td style="text-align: left">Order quantity, there is a precision limit, which is configured by the administrator.</td>
+</tr>
+<tr>
+<td style="text-align: left">side<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Order side, <code>BUY/SELL</code></td>
+</tr>
+<tr>
+<td style="text-align: left">type<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Order type, <code>LIMIT/MARKET</code></td>
+</tr>
+<tr>
+<td style="text-align: left">price</td>
+<td style="text-align: left">number</td>
+<td style="text-align: left">Order price, fo <code>LIMIT</code> orders must be sent, there is a precision limit, which is configured by the administrator.</td>
+</tr>
+<tr>
+<td style="text-align: left">newClientOrderId</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Client order ID</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETHUSDT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"2012274607240433332"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">47651.29</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"213443"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"transactTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1704959985403</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MARKET"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Response Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Example</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">orderId</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>2012274607240433332</code></td>
+<td style="text-align: left">Order ID(system generated)</td>
+</tr>
+<tr>
+<td style="text-align: left">clientOrderId</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>213443</code></td>
+<td style="text-align: left">Order ID(user generated)</td>
+</tr>
+<tr>
+<td style="text-align: left">symbol</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>BTCUSDT</code></td>
+<td style="text-align: left"><code>Uppercase</code> symbol name</td>
+</tr>
+<tr>
+<td style="text-align: left">transactTime</td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left"><code>1704959985403</code></td>
+<td style="text-align: left">The time of order placed</td>
+</tr>
+<tr>
+<td style="text-align: left">price</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>47651.29</code></td>
+<td style="text-align: left">Order price</td>
+</tr>
+<tr>
+<td style="text-align: left">origQty</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>0.01</code></td>
+<td style="text-align: left">Order volume</td>
+</tr>
+<tr>
+<td style="text-align: left">executedQty</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>0</code></td>
+<td style="text-align: left">The number of orders already executed</td>
+</tr>
+<tr>
+<td style="text-align: left">type</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>LIMIT</code></td>
+<td style="text-align: left">Type of the order: <code>LIMIT/MARKET</code></td>
+</tr>
+<tr>
+<td style="text-align: left">side</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>BUY</code></td>
+<td style="text-align: left">Side of the order: <code>BUY/ SELL</code></td>
+</tr>
+<tr>
+<td style="text-align: left">status</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>NEW</code></td>
+<td style="text-align: left">Order status: New Order (new order, no execution), Partially Filled (partial execution), Filled (fully executed)</td>
+</tr>
+</tbody></table>
 <h3 id='test-new-order'>Test New Order</h3>
 <p><code>POST https://openapi.fameex.net/sapi/v1/order/test</code></p>
 
@@ -2330,6 +2518,156 @@ body
 <td style="text-align: left">Order status: New Order (new order, no execution), Partially Filled (partial execution), Filled (fully executed)</td>
 </tr>
 </tbody></table>
+<h3 id='query-order-v2'>Query Order-V2</h3>
+<p><code>GET https://openapi.fameex.net/sapi/v2/order</code></p>
+
+<p><strong>Rate Limit: 20 times/2s</strong></p>
+
+<p><strong>Request Headers</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">X-CH-SIGN<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Signature</td>
+</tr>
+<tr>
+<td style="text-align: left">X-CH-APIKEY<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">User&#39;s API-key</td>
+</tr>
+<tr>
+<td style="text-align: left">X-CH-TS<font color="red">*</font></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">Timestamp</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v2/order?symbol=ethusdt&amp;orderID=111000111
+</span></code></pre></div>
+<p><strong>Request Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">orderId<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Order id</td>
+</tr>
+<tr>
+<td style="text-align: left">symbol<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>Lowercase</code> symbol name E.g. <code>ethusdt</code></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethusdt"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"150695552109032492"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">4765.29</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.01</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"avgPrice"</span><span class="p">:</span><span class="w"> </span><span class="mf">4754.24</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"transactTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1672274311107</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LIMIT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New Order"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Response Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Example</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">orderId</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>150695552109032492</code></td>
+<td style="text-align: left">Order ID (system generated)</td>
+</tr>
+<tr>
+<td style="text-align: left">clientOrderId</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>213443</code></td>
+<td style="text-align: left">Order ID (user generated)</td>
+</tr>
+<tr>
+<td style="text-align: left">symbol</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>ethusdt</code></td>
+<td style="text-align: left"><code>Lowercase</code> symbol name</td>
+</tr>
+<tr>
+<td style="text-align: left">price</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>4765.29</code></td>
+<td style="text-align: left">Order price</td>
+</tr>
+<tr>
+<td style="text-align: left">origQty</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>1.01</code></td>
+<td style="text-align: left">Order volume</td>
+</tr>
+<tr>
+<td style="text-align: left">executedQty</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>0</code></td>
+<td style="text-align: left">The number of orders already executed</td>
+</tr>
+<tr>
+<td style="text-align: left">avgPrice</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>4754.24</code></td>
+<td style="text-align: left">The average price of executed orders</td>
+</tr>
+<tr>
+<td style="text-align: left">type</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>LIMIT</code></td>
+<td style="text-align: left">Order type:<code>LIMIT</code>/<code>MARKET</code></td>
+</tr>
+<tr>
+<td style="text-align: left">transactTime</td>
+<td style="text-align: left">long</td>
+<td style="text-align: left"><code>1672274311107</code></td>
+<td style="text-align: left">Timestamp</td>
+</tr>
+<tr>
+<td style="text-align: left">side</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>BUY</code></td>
+<td style="text-align: left">Order side: <code>BUY</code>/<code>SELL</code></td>
+</tr>
+<tr>
+<td style="text-align: left">status</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>New Order</code></td>
+<td style="text-align: left">Order status: New Order (new order, no execution), Partially Filled (partial execution), Filled (fully executed)</td>
+</tr>
+</tbody></table>
 <h3 id='cancel-order'>Cancel Order</h3>
 <p><code>POST https://openapi.fameex.net/sapi/v1/cancel</code></p>
 
@@ -2417,6 +2755,109 @@ body
 <tr>
 <td style="text-align: left">orderId</td>
 <td style="text-align: left">long</td>
+<td style="text-align: left"><code>1938321163093079425</code></td>
+<td style="text-align: left">Order ID (system generated)</td>
+</tr>
+<tr>
+<td style="text-align: left">symbol</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>ethusdt</code></td>
+<td style="text-align: left"><code>Lowercase</code> symbol name</td>
+</tr>
+<tr>
+<td style="text-align: left">status</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>To be Cancelled</code></td>
+<td style="text-align: left">Order Status: <code>To be Cancelled</code></td>
+</tr>
+</tbody></table>
+<h3 id='cancel-order-v2'>Cancel Order-V2</h3>
+<p><code>POST https://openapi.fameex.net/sapi/v2/cancel</code></p>
+
+<p><strong>Rate Limit: 100 times/2s</strong></p>
+
+<p><strong>Request Headers</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">X-CH-SIGN<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Signature</td>
+</tr>
+<tr>
+<td style="text-align: left">X-CH-APIKEY<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">User&#39;s API-key</td>
+</tr>
+<tr>
+<td style="text-align: left">X-CH-TS<font color="red">*</font></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">Timestamp</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.fameex.net/sapi/v2/cancel
+
+body
+{
+    "symbol": "ethusdt",
+    "orderId": "111000111"
+}
+</span></code></pre></div>
+<p><strong>Request Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">orderId<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Order id</td>
+</tr>
+<tr>
+<td style="text-align: left">symbol<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>Lowercase</code> symbol name E.g. <code>ethusdt</code></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethusdt"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"1938321163093079425"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PENDING_CANCEL"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Response Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Example</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">orderId</td>
+<td style="text-align: left">string</td>
 <td style="text-align: left"><code>1938321163093079425</code></td>
 <td style="text-align: left">Order ID (system generated)</td>
 </tr>
@@ -2609,6 +3050,159 @@ body
 <tr>
 <td style="text-align: left">orderId</td>
 <td style="text-align: left">long</td>
+<td style="text-align: left"><code>150695552109032492</code></td>
+<td style="text-align: left">Order ID (system generated)</td>
+</tr>
+<tr>
+<td style="text-align: left">symbol</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>ETHUSDT</code></td>
+<td style="text-align: left"><code>Uppercase</code> symbol name</td>
+</tr>
+<tr>
+<td style="text-align: left">price</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>4765.29</code></td>
+<td style="text-align: left">Order price</td>
+</tr>
+<tr>
+<td style="text-align: left">origQty</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>1.01</code></td>
+<td style="text-align: left">Order volume</td>
+</tr>
+<tr>
+<td style="text-align: left">executedQty</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>1.01</code></td>
+<td style="text-align: left">The number of orders already executed</td>
+</tr>
+<tr>
+<td style="text-align: left">avgPrice</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>4754.24</code></td>
+<td style="text-align: left">The average price of executed orders</td>
+</tr>
+<tr>
+<td style="text-align: left">type</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>LIMIT</code></td>
+<td style="text-align: left">Order type:<code>LIMIT</code>/<code>MARKET</code></td>
+</tr>
+<tr>
+<td style="text-align: left">time</td>
+<td style="text-align: left">long</td>
+<td style="text-align: left"><code>1701243281850</code></td>
+<td style="text-align: left">Timestamp</td>
+</tr>
+<tr>
+<td style="text-align: left">side</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>BUY</code></td>
+<td style="text-align: left">Order side: <code>BUY</code>/<code>SELL</code></td>
+</tr>
+<tr>
+<td style="text-align: left">status</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>New Order</code></td>
+<td style="text-align: left">Order status: <code>New Order</code> (new order, no execution), <code>Partially Filled</code> (partial execution), <code>Filled</code> (fully executed)</td>
+</tr>
+</tbody></table>
+<h3 id='current-open-orders-v2'>Current Open Orders-V2</h3>
+<p><code>GET https://openapi.fameex.net/sapi/v1/openOrders</code></p>
+
+<p><strong>Rate Limit: 20 times/2s</strong></p>
+
+<p><strong>Request Headers</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">X-CH-SIGN<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Signature</td>
+</tr>
+<tr>
+<td style="text-align: left">X-CH-APIKEY<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">User&#39;s API-key</td>
+</tr>
+<tr>
+<td style="text-align: left">X-CH-TS<font color="red">*</font></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">Timestamp</td>
+</tr>
+</tbody></table>
+
+<p><strong>Request Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">symbol<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>Lowercase</code> symbol name E.g. <code>ethusdt</code></td>
+</tr>
+<tr>
+<td style="text-align: left">limit<font color="red">*</font></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">Maximum: 1000</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETHUSDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1938321163093077686"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.10"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"avgPrice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1701240367864</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MARKET"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW_"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETHUSDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1938321163093078022"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"avgPrice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1701243281850</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MARKET"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW_"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p><strong>Response Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Example</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">orderId</td>
+<td style="text-align: left">string</td>
 <td style="text-align: left"><code>150695552109032492</code></td>
 <td style="text-align: left">Order ID (system generated)</td>
 </tr>
