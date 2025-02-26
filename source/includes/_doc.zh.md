@@ -4047,6 +4047,82 @@ axios
 | side          | string  | `BUY`                 | 订单方向。可能出现的值只能为：`BUY`（买入做多）和`SELL`（卖出做空）                                           |
 | status        | string  | `NEW`                 | 订单状态。可能出现的值为：`New Order`（新订单，无成交）、`Partially Filled`（部分成交）、`Filled`（全部成交） |
 
+### 创建新订单-V2
+
+`POST https://t(:open_url)/sapi/v2/order`
+
+**限速规则: 100次/2s**
+
+**请求头**
+
+| 参数名                                 | 类型    | 描述        |
+| :--------------------------------------| :-------| :-----------|
+| X-CH-SIGN<font color="red">\*</font>   | string  | 签名        |
+| X-CH-APIKEY<font color="red">\*</font> | string  | 您的API-key |
+| X-CH-TS<font color="red">\*</font>     | integer | 时间戳      |
+
+> 请求示例
+
+```http
+POST https://t(:open_url)/sapi/v2/order
+
+body
+{
+    "symbol": "BTCUSDT",
+    "volume": 1.00,
+    "side": "BUY",
+    "type": "LIMIT",
+    "price": 65000.00,
+    "newClientOrderId": "111000000111"
+}
+```
+
+**请求参数**
+
+| 参数名                            | 类型   | 描述                                                            |
+| :---------------------------------| :------| :---------------------------------------------------------------|
+| symbol<font color="red">\*</font> | string | `大写`币对名称，例如：`BTCUSDT`                                 |
+| volume<font color="red">\*</font> | number | 订单数量，有精度限制，精度由管理员配置                          |
+| side<font color="red">\*</font>   | string | 订单方向，`BUY/SELL`                                            |
+| type<font color="red">\*</font>   | string | 订单类型，`LIMIT/MARKET`                                        |
+| price                             | number | 订单价格，对于`LIMIT`订单必须发送，有精度限制，精度由管理员配置 |
+| newClientOrderId                  | string | 客户端订单标识                                                  |
+
+> 返回示例
+
+```json
+{
+    "symbol": "ETHUSDT",
+    "side": "BUY",
+    "executedQty": 0,
+    "orderId": [
+        "2012274607240433332"
+    ],
+    "price": 47651.29,
+    "origQty": 0.01,
+    "clientOrderId": "213443",
+    "transactTime": 1704959985403,
+    "type": "MARKET",
+    "status": "NEW"
+}
+```
+
+**返回参数**
+
+| 参数名        | 类型    | 示例                  | 描述                                                                                                          |
+| :-------------| :-------| :---------------------| :-------------------------------------------------------------------------------------------------------------|
+| orderId       | string  | `2012274607240433332` | 订单ID（系统生成）                                                                                            |
+| clientOrderId | string  | `213443`              | 订单ID（用户生成）                                                                                            |
+| symbol        | string  | `BTCUSDT`             | `大写`币对名称                                                                                                |
+| transactTime  | integer | `1704959985403`       | 订单创建时间戳                                                                                                |
+| price         | float   | `47651.29`            | 订单价格                                                                                                      |
+| origQty       | float   | `0.01`                | 订单数量                                                                                                      |
+| executedQty   | float   | `0`                   | 已经成交订单数量                                                                                              |
+| type          | string  | `LIMIT`               | 订单类型。可能出现的值只能为：`LIMIT`(限价)和`MARKET`（市价）                                                 |
+| side          | string  | `BUY`                 | 订单方向。可能出现的值只能为：`BUY`（买入做多）和`SELL`（卖出做空）                                           |
+| status        | string  | `NEW`                 | 订单状态。可能出现的值为：`New Order`（新订单，无成交）、`Partially Filled`（部分成交）、`Filled`（全部成交） |
+
+
 ### 创建测试订单
 
 `POST https://t(:open_url)/sapi/v1/order/test`
@@ -5044,6 +5120,67 @@ axios
 | side          | string | `BUY`                | 订单方向。可能出现的值只能为：`BUY`（买入做多）和`SELL`（卖出做空）                                         |
 | status        | string | `New Order`          | 订单状态。可能出现的值为：`New Order`(新订单，无成交)、`Partially Filled`（部分成交）、`Filled`（全部成交） |
 
+### 订单查询-V2
+
+`GET https://t(:open_url)/sapi/v2/order`
+
+**限速规则: 20次/2s**
+
+**请求头**
+
+| 参数名                                 | 类型    | 描述        |
+| :--------------------------------------| :-------| :-----------|
+| X-CH-SIGN<font color="red">\*</font>   | string  | 签名        |
+| X-CH-APIKEY<font color="red">\*</font> | string  | 您的API-key |
+| X-CH-TS<font color="red">\*</font>     | integer | 时间戳      |
+
+> 请求示例
+
+```http
+GET https://t(:open_url)/sapi/v2/order?symbol=ethusdt&orderID=111000111
+```
+
+**请求参数**
+
+| 参数名                             | 类型   | 描述                            |
+| :----------------------------------| :------| :-------------------------------|
+| orderId<font color="red">\*</font> | string | 订单id                          |
+| symbol<font color="red">\*</font>  | string | `小写`币对名称，例如：`ethusdt` |
+
+> 返回示例
+
+```json
+{
+    "symbol": "ethusdt",
+    "side": "BUY",
+    "executedQty": 0,
+    "orderId": "150695552109032492",
+    "price": 4765.29,
+    "origQty": 1.01,
+    "avgPrice": 4754.24,
+    "transactTime": 1672274311107,
+    "type": "LIMIT",
+    "status": "New Order"
+}
+```
+
+**返回参数**
+
+| 参数名        | 类型   | 示例                 | 描述                                                                                                        |
+| :-------------| :------| :--------------------| :-----------------------------------------------------------------------------------------------------------|
+| orderId       | string | `150695552109032492` | 订单ID（系统生成）                                                                                          |
+| clientOrderId | string | `213443`             | 订单ID（用户生成）                                                                                          |
+| symbol        | string | `ethusdt`            | `小写`币对名称                                                                                              |
+| price         | float  | `4765.29`            | 订单价格                                                                                                    |
+| origQty       | float  | `1.01`               | 订单数量                                                                                                    |
+| executedQty   | float  | `0`                  | 已经成交订单数量                                                                                            |
+| avgPrice      | float  | `4754.24`            | 订单已经成交的平均价格                                                                                      |
+| type          | string | `LIMIT`              | 订单类型。可能出现的值只能为：`LIMIT`(限价)和`MARKET`（市价）                                               |
+| transactTime  | long   | `1672274311107`      | 时间戳                                                                                                      |
+| side          | string | `BUY`                | 订单方向。可能出现的值只能为：`BUY`（买入做多）和`SELL`（卖出做空）                                         |
+| status        | string | `New Order`          | 订单状态。可能出现的值为：`New Order`(新订单，无成交)、`Partially Filled`（部分成交）、`Filled`（全部成交） |
+
+
 ### 撤销订单
 
 `POST https://t(:open_url)/sapi/v1/cancel`
@@ -5505,6 +5642,60 @@ axios
 | orderId | long   | `1938321163093079425` | 订单ID（系统生成）         |
 | symbol  | string | `ethusdt`             | 币对名称                   |
 | status  | string | `PENDING_CANCEL`      | 订单状态：`PENDING_CANCEL` |
+
+### 撤销订单-V2
+
+`POST https://t(:open_url)/sapi/v2/cancel`
+
+**限速规则: 100次/2s**
+
+**请求头**
+
+| 参数名                                 | 类型    | 描述        |
+| :--------------------------------------| :-------| :-----------|
+| X-CH-SIGN<font color="red">\*</font>   | string  | 签名        |
+| X-CH-APIKEY<font color="red">\*</font> | string  | 您的API-key |
+| X-CH-TS<font color="red">\*</font>     | integer | 时间戳      |
+
+> 请求示例
+
+```http
+POST https://t(:open_url)/sapi/v2/cancel
+
+body
+{
+    "symbol": "ethusdt",
+    "orderId": "111000111"
+}
+```
+
+**请求参数**
+
+| 参数名                             | 类型   | 描述                          |
+| :----------------------------------| :------| :-----------------------------|
+| orderId<font color="red">\*</font> | string | 订单id                        |
+| symbol<font color="red">\*</font>  | string | `小写`币对名称，例如：`ethusdt` |
+
+> 返回示例
+
+```json
+{
+    "symbol": "ethusdt",
+    "orderId": [
+        "1938321163093079425"
+    ],
+    "status": "PENDING_CANCEL"
+}
+```
+
+**返回参数**
+
+| 参数名  | 类型   | 示例                  | 描述                       |
+| :-------| :------| :---------------------| :--------------------------|
+| orderId | string | `1938321163093079425` | 订单ID（系统生成）         |
+| symbol  | string | `ethusdt`             | 币对名称                   |
+| status  | string | `PENDING_CANCEL`      | 订单状态：`PENDING_CANCEL` |
+
 
 ### 批量撤销订单
 
@@ -6392,6 +6583,74 @@ axios
 | time        | long   | `1701243281850`      | 时间戳                                                                                                      |
 | side        | string | `BUY`                | 订单方向。可能出现的值只能为：`BUY`（买入做多）和`SELL`（卖出做空）                                         |
 | status      | string | `New Order`          | 订单状态。可能出现的值为：`New Order`(新订单，无成交)、`Partially Filled`（部分成交）、`Filled`（全部成交） |
+
+### 当前订单-V2
+
+`GET https://t(:open_url)/sapi/v2/openOrders`
+
+**限速规则: 20次/2s**
+
+**请求头**
+
+| 参数名                                 | 类型    | 描述        |
+| :--------------------------------------| :-------| :-----------|
+| X-CH-SIGN<font color="red">\*</font>   | string  | 签名        |
+| X-CH-APIKEY<font color="red">\*</font> | string  | 您的API-key |
+| X-CH-TS<font color="red">\*</font>     | integer | 时间戳      |
+
+**请求参数**
+
+| 参数名                            | 类型    | 描述                            |
+| :---------------------------------| :-------| :-------------------------------|
+| symbol<font color="red">\*</font> | string  | `小写`币对名称，例如：`ethusdt` |
+| limit<font color="red">\*</font>  | integer | 最大1000                        |
+
+> 返回示例
+
+```json
+[
+    {
+        "symbol": "ETHUSDT",
+        "side": "BUY",
+        "executedQty": "0",
+        "orderId": "1938321163093077686",
+        "price": "0",
+        "origQty": "0.10",
+        "avgPrice": "0",
+        "time": 1701240367864,
+        "type": "MARKET",
+        "status": "NEW_"
+    },
+    {
+        "symbol": "ETHUSDT",
+        "side": "BUY",
+        "executedQty": "0",
+        "orderId": "1938321163093078022",
+        "price": "0",
+        "origQty": "0.01",
+        "avgPrice": "0",
+        "time": 1701243281850,
+        "type": "MARKET",
+        "status": "NEW_"
+    }
+]
+```
+
+**返回参数**
+
+| 参数名      | 类型   | 示例                 | 描述                                                                                                        |
+| :-----------| :------| :--------------------| :-----------------------------------------------------------------------------------------------------------|
+| orderId     | string | `150695552109032492` | 订单ID（系统生成）                                                                                          |
+| symbol      | string | `ETHUSDT`            | 币对名称                                                                                                    |
+| price       | float  | `4765.29`            | 订单价格                                                                                                    |
+| origQty     | float  | `1.01`               | 订单数量                                                                                                    |
+| executedQty | float  | `1.01`               | 已经成交订单数量                                                                                            |
+| avgPrice    | float  | `4754.24`            | 订单已经成交的平均价格                                                                                      |
+| type        | string | `LIMIT`              | 订单类型。可能出现的值只能为：`LIMIT`(限价)和`MARKET`（市价）                                               |
+| time        | long   | `1701243281850`      | 时间戳                                                                                                      |
+| side        | string | `BUY`                | 订单方向。可能出现的值只能为：`BUY`（买入做多）和`SELL`（卖出做空）                                         |
+| status      | string | `New Order`          | 订单状态。可能出现的值为：`New Order`(新订单，无成交)、`Partially Filled`（部分成交）、`Filled`（全部成交） |
+
 
 ### 交易记录
 

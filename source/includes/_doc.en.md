@@ -1036,6 +1036,82 @@ body
 | side          | string  | `BUY`                 | Side of the order: `BUY/ SELL`                                                                                   |
 | status        | string  | `NEW`                 | Order status: New Order (new order, no execution), Partially Filled (partial execution), Filled (fully executed) |
 
+### Create New Order-V2
+
+`POST https://openapi.fameex.net/sapi/v2/order`
+
+**Rate Limit: 100 times/2s**
+
+**Request Headers**
+
+| Parameter                              | Type    | Description    |
+| :--------------------------------------| :-------| :--------------|
+| X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
+| X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
+| X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
+
+> request example
+
+```http
+POST https://openapi.fameex.net/sapi/v2/order
+
+body
+{
+    "symbol": "BTCUSDT",
+    "volume": 1.00,
+    "side": "BUY",
+    "type": "LIMIT",
+    "price": 65000.00,
+    "newClientOrderId": "111000000111"
+}
+```
+
+**Request Parameters**
+
+| Parameter                         | Type   | Description                                                                                                        |
+| :---------------------------------| :------| :------------------------------------------------------------------------------------------------------------------|
+| symbol<font color="red">\*</font> | string | `Uppercase` symbol name E.g. `BTCUSDT`                                                                             |
+| volume<font color="red">\*</font> | number | Order quantity, there is a precision limit, which is configured by the administrator.                              |
+| side<font color="red">\*</font>   | string | Order side, `BUY/SELL`                                                                                             |
+| type<font color="red">\*</font>   | string | Order type, `LIMIT/MARKET`                                                                                         |
+| price                             | number | Order price, fo `LIMIT` orders must be sent, there is a precision limit, which is configured by the administrator. |
+| newClientOrderId                  | string | Client order ID                                                                                                    |
+
+> response example
+
+```json
+{
+    "symbol": "ETHUSDT",
+    "side": "BUY",
+    "executedQty": 0,
+    "orderId": [
+        "2012274607240433332"
+    ],
+    "price": 47651.29,
+    "origQty": 0.01,
+    "clientOrderId": "213443",
+    "transactTime": 1704959985403,
+    "type": "MARKET",
+    "status": "NEW"
+}
+```
+
+**Response Parameters**
+
+| Parameter     | Type    | Example               | Description                                                                                                      |
+| :-------------| :-------| :---------------------| :----------------------------------------------------------------------------------------------------------------|
+| orderId       | string  | `2012274607240433332` | Order ID(system generated)                                                                                       |
+| clientOrderId | string  | `213443`              | Order ID(user generated)                                                                                         |
+| symbol        | string  | `BTCUSDT`             | `Uppercase` symbol name                                                                                          |
+| transactTime  | integer | `1704959985403`       | The time of order placed                                                                                         |
+| price         | float   | `47651.29`            | Order price                                                                                                      |
+| origQty       | float   | `0.01`                | Order volume                                                                                                     |
+| executedQty   | float   | `0`                   | The number of orders already executed                                                                            |
+| type          | string  | `LIMIT`               | Type of the order: `LIMIT/MARKET`                                                                                |
+| side          | string  | `BUY`                 | Side of the order: `BUY/ SELL`                                                                                   |
+| status        | string  | `NEW`                 | Order status: New Order (new order, no execution), Partially Filled (partial execution), Filled (fully executed) |
+
+
 ### Test New Order
 
 `POST https://openapi.fameex.net/sapi/v1/order/test`
@@ -1209,6 +1285,66 @@ GET https://openapi.fameex.net/sapi/v1/order?symbol=ethusdt&orderID=111000111
 | side          | string | `BUY`                | Order side: `BUY`/`SELL`                                                                                         |
 | status        | string | `New Order`          | Order status: New Order (new order, no execution), Partially Filled (partial execution), Filled (fully executed) |
 
+### Query Order-V2
+
+`GET https://openapi.fameex.net/sapi/v2/order`
+
+**Rate Limit: 20 times/2s**
+
+**Request Headers**
+
+| Parameter                              | Type    | Description    |
+| :--------------------------------------| :-------| :--------------|
+| X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
+| X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
+| X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
+
+> request example
+
+```http
+GET https://openapi.fameex.net/sapi/v2/order?symbol=ethusdt&orderID=111000111
+```
+
+**Request Parameters**
+
+| Parameter                          | Type   | Description                            |
+| :----------------------------------| :------| :--------------------------------------|
+| orderId<font color="red">\*</font> | string | Order id                               |
+| symbol<font color="red">\*</font>  | string | `Lowercase` symbol name E.g. `ethusdt` |
+
+> response example
+
+```json
+{
+    "symbol": "ethusdt",
+    "side": "BUY",
+    "executedQty": 0,
+    "orderId": "150695552109032492",
+    "price": 4765.29,
+    "origQty": 1.01,
+    "avgPrice": 4754.24,
+    "transactTime": 1672274311107,
+    "type": "LIMIT",
+    "status": "New Order"
+}
+```
+
+**Response Parameters**
+
+| Parameter     | Type   | Example              | Description                                                                                                      |
+| :-------------| :------| :--------------------| :----------------------------------------------------------------------------------------------------------------|
+| orderId       | string | `150695552109032492` | Order ID (system generated)                                                                                      |
+| clientOrderId | string | `213443`             | Order ID (user generated)                                                                                        |
+| symbol        | string | `ethusdt`            | `Lowercase` symbol name                                                                                          |
+| price         | float  | `4765.29`            | Order price                                                                                                      |
+| origQty       | float  | `1.01`               | Order volume                                                                                                     |
+| executedQty   | float  | `0`                  | The number of orders already executed                                                                            |
+| avgPrice      | float  | `4754.24`            | The average price of executed orders                                                                             |
+| type          | string | `LIMIT`              | Order type:`LIMIT`/`MARKET`                                                                                      |
+| transactTime  | long   | `1672274311107`      | Timestamp                                                                                                        |
+| side          | string | `BUY`                | Order side: `BUY`/`SELL`                                                                                         |
+| status        | string | `New Order`          | Order status: New Order (new order, no execution), Partially Filled (partial execution), Filled (fully executed) |
+
 ### Cancel Order
 
 `POST https://openapi.fameex.net/sapi/v1/cancel`
@@ -1259,6 +1395,59 @@ body
 | Parameter | Type   | Example               | Description                     |
 | :---------| :------| :---------------------| :-------------------------------|
 | orderId   | long   | `1938321163093079425` | Order ID (system generated)     |
+| symbol    | string | `ethusdt`             | `Lowercase` symbol name         |
+| status    | string | `To be Cancelled`     | Order Status: `To be Cancelled` |
+
+### Cancel Order-V2
+
+`POST https://openapi.fameex.net/sapi/v2/cancel`
+
+**Rate Limit: 100 times/2s**
+
+**Request Headers**
+
+| Parameter                              | Type    | Description    |
+| :--------------------------------------| :-------| :--------------|
+| X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
+| X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
+| X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
+
+> request example
+
+```http
+POST https://openapi.fameex.net/sapi/v2/cancel
+
+body
+{
+    "symbol": "ethusdt",
+    "orderId": "111000111"
+}
+```
+
+**Request Parameters**
+
+| Parameter                          | Type   | Description                            |
+| :----------------------------------| :------| :--------------------------------------|
+| orderId<font color="red">\*</font> | string | Order id                               |
+| symbol<font color="red">\*</font>  | string | `Lowercase` symbol name E.g. `ethusdt` |
+
+> response example
+
+```json
+{
+    "symbol": "ethusdt",
+    "orderId": [
+        "1938321163093079425"
+    ],
+    "status": "PENDING_CANCEL"
+}
+```
+
+**Response Parameters**
+
+| Parameter | Type   | Example               | Description                     |
+| :---------| :------| :---------------------| :-------------------------------|
+| orderId   | string | `1938321163093079425` | Order ID (system generated)     |
 | symbol    | string | `ethusdt`             | `Lowercase` symbol name         |
 | status    | string | `To be Cancelled`     | Order Status: `To be Cancelled` |
 
@@ -1373,6 +1562,73 @@ body
 | Parameter   | Type   | Example              | Description                                                                                                            |
 | :-----------| :------| :--------------------| :----------------------------------------------------------------------------------------------------------------------|
 | orderId     | long   | `150695552109032492` | Order ID (system generated)                                                                                            |
+| symbol      | string | `ETHUSDT`            | `Uppercase` symbol name                                                                                                |
+| price       | float  | `4765.29`            | Order price                                                                                                            |
+| origQty     | float  | `1.01`               | Order volume                                                                                                           |
+| executedQty | float  | `1.01`               | The number of orders already executed                                                                                  |
+| avgPrice    | float  | `4754.24`            | The average price of executed orders                                                                                   |
+| type        | string | `LIMIT`              | Order type:`LIMIT`/`MARKET`                                                                                            |
+| time        | long   | `1701243281850`      | Timestamp                                                                                                              |
+| side        | string | `BUY`                | Order side: `BUY`/`SELL`                                                                                               |
+| status      | string | `New Order`          | Order status: `New Order` (new order, no execution), `Partially Filled` (partial execution), `Filled` (fully executed) |
+
+### Current Open Orders-V2
+
+`GET https://openapi.fameex.net/sapi/v1/openOrders`
+
+**Rate Limit: 20 times/2s**
+
+**Request Headers**
+
+| Parameter                              | Type    | Description    |
+| :--------------------------------------| :-------| :--------------|
+| X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
+| X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
+| X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
+
+**Request Parameters**
+
+| Parameter                         | Type    | Description                            |
+| :---------------------------------| :-------| :--------------------------------------|
+| symbol<font color="red">\*</font> | string  | `Lowercase` symbol name E.g. `ethusdt` |
+| limit<font color="red">\*</font>  | integer | Maximum: 1000                          |
+
+> response example
+
+```json
+[
+    {
+        "symbol": "ETHUSDT",
+        "side": "BUY",
+        "executedQty": "0",
+        "orderId": "1938321163093077686",
+        "price": "0",
+        "origQty": "0.10",
+        "avgPrice": "0",
+        "time": 1701240367864,
+        "type": "MARKET",
+        "status": "NEW_"
+    },
+    {
+        "symbol": "ETHUSDT",
+        "side": "BUY",
+        "executedQty": "0",
+        "orderId": "1938321163093078022",
+        "price": "0",
+        "origQty": "0.01",
+        "avgPrice": "0",
+        "time": 1701243281850,
+        "type": "MARKET",
+        "status": "NEW_"
+    }
+]
+```
+
+**Response Parameters**
+
+| Parameter   | Type   | Example              | Description                                                                                                            |
+| :-----------| :------| :--------------------| :----------------------------------------------------------------------------------------------------------------------|
+| orderId     | string | `150695552109032492` | Order ID (system generated)                                                                                            |
 | symbol      | string | `ETHUSDT`            | `Uppercase` symbol name                                                                                                |
 | price       | float  | `4765.29`            | Order price                                                                                                            |
 | origQty     | float  | `1.01`               | Order volume                                                                                                           |
