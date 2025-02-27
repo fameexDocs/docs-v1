@@ -3,3 +3,7 @@ zh:
     title: FameEX OpenAPI文档
     current: Chinese
     next: English
+    open_url: openapi.fameex.net
+    futures_url: futuresopenapi.fameex.net
+    ws_url: ws.fameex.net
+    futures_ws_url: futuresws.fameex.net

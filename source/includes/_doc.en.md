@@ -16,6 +16,139 @@ Check Server Time
 GET https://openapi.fameex.net/sapi/v1/time
 ```
 
+
+```shell
+curl https://openapi.fameex.net/sapi/v1/time
+```
+
+```java
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+
+public class Main {
+  public static void main(String[] args) {
+    try {
+      // Create URL using URI
+      URI uri = new URI("https://openapi.fameex.net/sapi/v1/time");
+      HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+      conn.setRequestMethod("GET");
+      conn.setRequestProperty("User-Agent", "Java-Client");
+
+      // Read the response
+      BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+      StringBuilder response = new StringBuilder();
+      String line;
+      while ((line = reader.readLine()) != null) {
+        response.append(line);
+      }
+      reader.close();
+
+      // Print the result
+      System.out.println("Response: " + response.toString());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	url := "https://openapi.fameex.net/sapi/v1/time"
+
+	// Send GET request
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println("Request failed:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// Read the response body
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("Failed to read the response:", err)
+		return
+	}
+
+	// Print the response
+	fmt.Println("Server response:", string(body))
+}
+```
+
+```python
+import requests
+
+url = "https://openapi.fameex.net/sapi/v1/time"
+
+try:
+    response = requests.get(url)
+    response.raise_for_status()  # Check if the request was successful
+    print("Response:", response.text)
+except requests.exceptions.RequestException as e:
+    print("Request error:", e)
+```
+
+```php
+$url = "https://openapi.fameex.net/sapi/v1/time";
+
+// Initialize cURL
+$ch = curl_init();
+
+// Set cURL options
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Skip SSL certificate verification (if needed by the API)
+
+// Execute the request
+$response = curl_exec($ch);
+
+// Check for errors
+if (curl_errno($ch)) {
+    echo "cURL error: " . curl_error($ch);
+} else {
+    echo "Response: " . $response;
+}
+
+// Close cURL
+curl_close($ch);
+```
+
+```javascript
+const https = require('https');
+
+const url = 'https://openapi.fameex.net/sapi/v1/time';
+
+https.get(url, (res) => {
+  let data = '';
+
+  // A chunk of data has been received.
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  // The whole response has been received.
+  res.on('end', () => {
+    console.log("Response:", data);
+  });
+
+}).on('error', (err) => {
+  console.log('Request error:', err.message);
+});
+```
+
 > response example
 
 ```json
