@@ -566,6 +566,9 @@
                             <a href="#ticker" class="toc-h3 toc-link" data-title="行情Ticker">行情Ticker</a>
                           </li>
                           <li>
+                            <a href="#ticker-v2" class="toc-h3 toc-link" data-title="行情Ticker-V2">行情Ticker-V2</a>
+                          </li>
+                          <li>
                             <a href="#fceaf3d0b6" class="toc-h3 toc-link" data-title="最近成交">最近成交</a>
                           </li>
                           <li>
@@ -661,6 +664,9 @@
                           </li>
                           <li>
                             <a href="#ticker-2" class="toc-h3 toc-link" data-title="行情Ticker">行情Ticker</a>
+                          </li>
+                          <li>
+                            <a href="#ticker-v2-2" class="toc-h3 toc-link" data-title="行情Ticker-V2">行情Ticker-V2</a>
                           </li>
                           <li>
                             <a href="#c3474f0c9f" class="toc-h3 toc-link" data-title="获取指数/标记价格">获取指数/标记价格</a>
@@ -4193,7 +4199,6 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
     </span><span class="nl">"buy"</span><span class="p">:</span><span class="w"> </span><span class="mf">9210.0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"sell"</span><span class="p">:</span><span class="w"> </span><span class="mf">9213.0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"rose"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+0.05"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"quote_volume"</span><span class="p">:</span><span class="w"> </span><span class="mf">3049025.662482</span><span class="p">,</span><span class="w">
     </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1595563624731</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -4261,11 +4266,123 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <td style="text-align: left"><code>+0.05</code></td>
 <td style="text-align: left">涨跌幅，<code>+</code>为涨，<code>-</code>为跌，<code>+0.05</code>为涨<code>5%</code></td>
 </tr>
+</tbody></table>
+<h3 id='ticker-v2'>行情Ticker-V2</h3>
+<p><code>GET https://openapi.fameex.net/v2/public/ticker</code></p>
+
+<p>获取24小时价格变化数据</p>
+
+<blockquote>
+<p>请求示例</p>
+</blockquote>
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/v2/public/ticker
+
+// request headers
+Content-Type: application/json
+</span></code></pre></div>
+<blockquote>
+<p>返回示例</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Succeed"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"MNT_USDT"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"base_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MNT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quote_volume"</span><span class="p">:</span><span class="w"> </span><span class="mf">3049025.662482</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quote_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"base_volume"</span><span class="p">:</span><span class="w"> </span><span class="mf">4123162.07</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"isFrozen"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"last_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.7491</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"PEPE_USDT"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"base_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PEPE"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quote_volume"</span><span class="p">:</span><span class="w"> </span><span class="mf">19215044.55550406</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quote_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"base_volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">2733395751472</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"isFrozen"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"last_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00000731</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"message"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"succ"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>返回参数</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">参数名</th>
+<th style="text-align: left">类型</th>
+<th style="text-align: left">示例</th>
+<th style="text-align: left">描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>0</code></td>
+<td style="text-align: left">返回码</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>Succeed</code></td>
+<td style="text-align: left">返回信息</td>
+</tr>
+<tr>
+<td style="text-align: left">message</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>null</code></td>
+<td style="text-align: left">错误信息</td>
+</tr>
+<tr>
+<td style="text-align: left">succ</td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left">true</td>
+<td style="text-align: left">操作标识</td>
+</tr>
+<tr>
+<td style="text-align: left">data</td>
+<td style="text-align: left">object</td>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">base_id</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>MNT</code></td>
+<td style="text-align: left">交易币种</td>
+</tr>
+<tr>
+<td style="text-align: left">quote_id</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>USDT</code></td>
+<td style="text-align: left">计价币种</td>
+</tr>
+<tr>
+<td style="text-align: left">base_volume</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>4123162.07</code></td>
+<td style="text-align: left">交易量</td>
+</tr>
 <tr>
 <td style="text-align: left">quote_volume</td>
 <td style="text-align: left">float</td>
 <td style="text-align: left"><code>3049025.662482</code></td>
-<td style="text-align: left">24小时交易额</td>
+<td style="text-align: left">交易额</td>
+</tr>
+<tr>
+<td style="text-align: left">last_price</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>0.7491</code></td>
+<td style="text-align: left">最新成交价</td>
+</tr>
+<tr>
+<td style="text-align: left">isFrozen</td>
+<td style="text-align: left">number</td>
+<td style="text-align: left"><code>1</code></td>
+<td style="text-align: left">冻结标识</td>
 </tr>
 </tbody></table>
 
@@ -12635,7 +12752,6 @@ Content-Type:application/json
     </span><span class="nl">"buy"</span><span class="p">:</span><span class="w"> </span><span class="mf">55988.10</span><span class="p">,</span><span class="w">
     </span><span class="nl">"sell"</span><span class="p">:</span><span class="w"> </span><span class="mf">55990.10</span><span class="p">,</span><span class="w">
     </span><span class="nl">"rose"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+0.05"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"quote_volume"</span><span class="p">:</span><span class="w"> </span><span class="mf">3049025.662482</span><span class="p">,</span><span class="w">
     </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1704966225000</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -12697,11 +12813,156 @@ Content-Type:application/json
 <td style="text-align: left"><code>55990.10</code></td>
 <td style="text-align: left">卖一价格</td>
 </tr>
+</tbody></table>
+<h3 id='ticker-v2-2'>行情Ticker-V2</h3>
+<p><code>GET https://futuresopenapi.fameex.net/swap-api/v2/tickers</code></p>
+
+<p>24小时价格变化数据</p>
+
+<blockquote>
+<p>请求示例</p>
+</blockquote>
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.fameex.net/swap-api/v2/tickers
+
+// request headers
+Content-Type:application/json
+</span></code></pre></div>
+<blockquote>
+<p>返回示例</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"base_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"open_interest_usd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3158506.047"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"quote_volume"</span><span class="p">:</span><span class="w"> </span><span class="s2">"475254656162"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"base_volume"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2135453.51"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"open_interest"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1372.13"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"index_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2302.705"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"basis"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0003"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"quote_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ticker_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH-USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"funding_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0000632068687814"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2318.84"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"product_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Perpetual"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2160.71"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ask"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2301.96"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"next_funding_rate_timestam"</span><span class="p">:</span><span class="w"> </span><span class="mi">1741248000000</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"bid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2301.8"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"last_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2301.9"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p><strong>返回参数</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">参数名</th>
+<th style="text-align: left">类型</th>
+<th style="text-align: left">示例</th>
+<th style="text-align: left">描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ticker_id</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>ETH-USDT</code></td>
+<td style="text-align: left">交易对</td>
+</tr>
+<tr>
+<td style="text-align: left">product_type</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>Perpetual</code></td>
+<td style="text-align: left">合约类型</td>
+</tr>
+<tr>
+<td style="text-align: left">base_currency</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>ETH</code></td>
+<td style="text-align: left">交易币种</td>
+</tr>
+<tr>
+<td style="text-align: left">quote_currency</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>USDT</code></td>
+<td style="text-align: left">计价币种</td>
+</tr>
+<tr>
+<td style="text-align: left">last_price</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2301.9</code></td>
+<td style="text-align: left">最新成交价</td>
+</tr>
+<tr>
+<td style="text-align: left">index_price</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2302.705</code></td>
+<td style="text-align: left">指数价格</td>
+</tr>
+<tr>
+<td style="text-align: left">base_volume</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2135453.51</code></td>
+<td style="text-align: left">交易量</td>
+</tr>
 <tr>
 <td style="text-align: left">quote_volume</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>475254656162</code></td>
+<td style="text-align: left">交易额</td>
+</tr>
+<tr>
+<td style="text-align: left">bid</td>
 <td style="text-align: left">float</td>
-<td style="text-align: left"><code>3049025.662482</code></td>
-<td style="text-align: left">24小时交易额</td>
+<td style="text-align: left"><code>2301.8</code></td>
+<td style="text-align: left">买一价格</td>
+</tr>
+<tr>
+<td style="text-align: left">ask</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2301.96</code></td>
+<td style="text-align: left">卖一价格</td>
+</tr>
+<tr>
+<td style="text-align: left">high</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2318.84</code></td>
+<td style="text-align: left">最高价格</td>
+</tr>
+<tr>
+<td style="text-align: left">low</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2160.71</code></td>
+<td style="text-align: left">最低价格</td>
+</tr>
+<tr>
+<td style="text-align: left">open_interest</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>1372.13</code></td>
+<td style="text-align: left">开仓数量</td>
+</tr>
+<tr>
+<td style="text-align: left">open_interest_usd</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>3158506.047</code></td>
+<td style="text-align: left">开仓金额</td>
+</tr>
+<tr>
+<td style="text-align: left">basis</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>0.0003</code></td>
+<td style="text-align: left">基差</td>
+</tr>
+<tr>
+<td style="text-align: left">funding_rate</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>0.0000632068687814</code></td>
+<td style="text-align: left">资金费率</td>
+</tr>
+<tr>
+<td style="text-align: left">next_funding_rate_timestam</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>1741248000000</code></td>
+<td style="text-align: left">下一期资金费率时间</td>
 </tr>
 </tbody></table>
 <h3 id='c3474f0c9f'>获取指数/标记价格</h3>
@@ -12857,9 +13118,7 @@ Content-Type:application/json
     </span><span class="nl">"currentFundRate"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.0037500000000000</span><span class="p">,</span><span class="w">
     </span><span class="nl">"indexPrice"</span><span class="p">:</span><span class="w"> </span><span class="mf">27905.9800000000000000</span><span class="p">,</span><span class="w">
     </span><span class="nl">"tagPrice"</span><span class="p">:</span><span class="w"> </span><span class="mf">27824.4422146875000000</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"nextFundRate"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.0037500000000000</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"open_interest"</span><span class="p">:</span><span class="w"> </span><span class="mf">1372.13</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"basis"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0003</span><span class="w">
+    </span><span class="nl">"nextFundRate"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.0037500000000000</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>返回参数</strong></p>
@@ -12895,18 +13154,6 @@ Content-Type:application/json
 <td style="text-align: left">float</td>
 <td style="text-align: left"><code>-0.0037500000000000</code></td>
 <td style="text-align: left">上期资金费率（用于本期结算）</td>
-</tr>
-<tr>
-<td style="text-align: left">open_interest</td>
-<td style="text-align: left">float</td>
-<td style="text-align: left"><code>1372.13</code></td>
-<td style="text-align: left">未平仓数量</td>
-</tr>
-<tr>
-<td style="text-align: left">basis</td>
-<td style="text-align: left">float</td>
-<td style="text-align: left"><code>0.0003</code></td>
-<td style="text-align: left">基差</td>
 </tr>
 </tbody></table>
 <h3 id='k-3'>K线/蜡烛图数据</h3>

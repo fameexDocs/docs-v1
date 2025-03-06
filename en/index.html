@@ -561,6 +561,9 @@
                             <a href="#24hrs-ticker" class="toc-h3 toc-link" data-title="24HRS Ticker">24HRS Ticker</a>
                           </li>
                           <li>
+                            <a href="#24hrs-ticker-v2" class="toc-h3 toc-link" data-title="24HRS Ticker-V2">24HRS Ticker-V2</a>
+                          </li>
+                          <li>
                             <a href="#recent-trade-list" class="toc-h3 toc-link" data-title="Recent Trade List">Recent Trade List</a>
                           </li>
                           <li>
@@ -656,6 +659,9 @@
                           </li>
                           <li>
                             <a href="#24hrs-ticker-2" class="toc-h3 toc-link" data-title="24hrs Ticker">24hrs Ticker</a>
+                          </li>
+                          <li>
+                            <a href="#24hrs-ticker-v2-2" class="toc-h3 toc-link" data-title="24hrs Ticker-V2">24hrs Ticker-V2</a>
                           </li>
                           <li>
                             <a href="#obtain-index-mark-price" class="toc-h3 toc-link" data-title="Obtain Index/Mark Price">Obtain Index/Mark Price</a>
@@ -1705,7 +1711,6 @@
     </span><span class="nl">"buy"</span><span class="p">:</span><span class="w"> </span><span class="mf">9210.0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"sell"</span><span class="p">:</span><span class="w"> </span><span class="mf">9213.0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"rose"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+0.05"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"quote_volume"</span><span class="p">:</span><span class="w"> </span><span class="mf">3049025.662482</span><span class="p">,</span><span class="w">
     </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1595563624731</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -1773,11 +1778,123 @@
 <td style="text-align: left"><code>+0.05</code></td>
 <td style="text-align: left">Range of increase and decrease, <code>+</code> is increase, <code>-</code> is decrease, <code>+0.05</code> means increase by <code>5%</code></td>
 </tr>
+</tbody></table>
+<h3 id='24hrs-ticker-v2'>24HRS Ticker-V2</h3>
+<p><code>GET https://openapi.fameex.net/v2/public/ticker</code></p>
+
+<p>24-hour price change data</p>
+
+<blockquote>
+<p>request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/v2/public/ticker
+
+// request headers
+Content-Type: application/json
+</span></code></pre></div>
+<blockquote>
+<p>response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Succeed"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"MNT_USDT"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"base_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MNT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quote_volume"</span><span class="p">:</span><span class="w"> </span><span class="mf">3049025.662482</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quote_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"base_volume"</span><span class="p">:</span><span class="w"> </span><span class="mf">4123162.07</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"isFrozen"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"last_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.7491</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"PEPE_USDT"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"base_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PEPE"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quote_volume"</span><span class="p">:</span><span class="w"> </span><span class="mf">19215044.55550406</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quote_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"base_volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">2733395751472</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"isFrozen"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"last_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00000731</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"message"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"succ"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Response Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Example</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>0</code></td>
+<td style="text-align: left">Response code</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>Succeed</code></td>
+<td style="text-align: left">Response message</td>
+</tr>
+<tr>
+<td style="text-align: left">message</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>null</code></td>
+<td style="text-align: left">Error message</td>
+</tr>
+<tr>
+<td style="text-align: left">succ</td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left">true</td>
+<td style="text-align: left">Operate flag</td>
+</tr>
+<tr>
+<td style="text-align: left">data</td>
+<td style="text-align: left">object</td>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">base_id</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>MNT</code></td>
+<td style="text-align: left">Base symbol</td>
+</tr>
+<tr>
+<td style="text-align: left">quote_id</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>USDT</code></td>
+<td style="text-align: left">Quote symbol</td>
+</tr>
+<tr>
+<td style="text-align: left">base_volume</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>4123162.07</code></td>
+<td style="text-align: left">Trade volume</td>
+</tr>
 <tr>
 <td style="text-align: left">quote_volume</td>
 <td style="text-align: left">float</td>
 <td style="text-align: left"><code>3049025.662482</code></td>
-<td style="text-align: left">24 hours trade volume</td>
+<td style="text-align: left">Trading amount</td>
+</tr>
+<tr>
+<td style="text-align: left">last_price</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>0.7491</code></td>
+<td style="text-align: left">Latest trade price</td>
+</tr>
+<tr>
+<td style="text-align: left">isFrozen</td>
+<td style="text-align: left">number</td>
+<td style="text-align: left"><code>1</code></td>
+<td style="text-align: left">Frozen flag</td>
 </tr>
 </tbody></table>
 <h3 id='recent-trade-list'>Recent Trade List</h3>
@@ -4082,7 +4199,6 @@ GET https://openapi.fameex.net/sapi/v1/account/balance?symbols=USDT,BTC,ETH
     </span><span class="nl">"buy"</span><span class="p">:</span><span class="w"> </span><span class="mf">55988.10</span><span class="p">,</span><span class="w">
     </span><span class="nl">"sell"</span><span class="p">:</span><span class="w"> </span><span class="mf">55990.10</span><span class="p">,</span><span class="w">
     </span><span class="nl">"rose"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+0.05"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"quote_volume"</span><span class="p">:</span><span class="w"> </span><span class="mf">3049025.662482</span><span class="p">,</span><span class="w">
     </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1704966225000</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -4144,11 +4260,156 @@ GET https://openapi.fameex.net/sapi/v1/account/balance?symbols=USDT,BTC,ETH
 <td style="text-align: left"><code>55990.10</code></td>
 <td style="text-align: left">Best ask price</td>
 </tr>
+</tbody></table>
+<h3 id='24hrs-ticker-v2-2'>24hrs Ticker-V2</h3>
+<p><code>GET https://futuresopenapi.fameex.net/swap-api/v2/tickers</code></p>
+
+<p>24-hour price change data</p>
+
+<blockquote>
+<p>request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.fameex.net/swap-api/v2/tickers
+
+// request headers
+Content-Type:application/json
+</span></code></pre></div>
+<blockquote>
+<p>response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"base_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"open_interest_usd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3158506.047"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"quote_volume"</span><span class="p">:</span><span class="w"> </span><span class="s2">"475254656162"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"base_volume"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2135453.51"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"open_interest"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1372.13"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"index_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2302.705"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"basis"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0003"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"quote_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ticker_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH-USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"funding_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0000632068687814"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2318.84"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"product_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Perpetual"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2160.71"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ask"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2301.96"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"next_funding_rate_timestam"</span><span class="p">:</span><span class="w"> </span><span class="mi">1741248000000</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"bid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2301.8"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"last_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2301.9"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p><strong>Response Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Example</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ticker_id</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>ETH-USDT</code></td>
+<td style="text-align: left">Symbol pair</td>
+</tr>
+<tr>
+<td style="text-align: left">product_type</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>Perpetual</code></td>
+<td style="text-align: left">Contract type</td>
+</tr>
+<tr>
+<td style="text-align: left">base_currency</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>ETH</code></td>
+<td style="text-align: left">Base symbol</td>
+</tr>
+<tr>
+<td style="text-align: left">quote_currency</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>USDT</code></td>
+<td style="text-align: left">Quote symbol</td>
+</tr>
+<tr>
+<td style="text-align: left">last_price</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2301.9</code></td>
+<td style="text-align: left">Latest price</td>
+</tr>
+<tr>
+<td style="text-align: left">index_price</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2302.705</code></td>
+<td style="text-align: left">Index price</td>
+</tr>
+<tr>
+<td style="text-align: left">base_volume</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2135453.51</code></td>
+<td style="text-align: left">Trade volume</td>
+</tr>
 <tr>
 <td style="text-align: left">quote_volume</td>
 <td style="text-align: left">float</td>
-<td style="text-align: left"><code>3049025.662482</code></td>
-<td style="text-align: left">24 hours trade volume</td>
+<td style="text-align: left"><code>475254656162</code></td>
+<td style="text-align: left">Trade amount</td>
+</tr>
+<tr>
+<td style="text-align: left">bid</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2301.8</code></td>
+<td style="text-align: left">Best bid price</td>
+</tr>
+<tr>
+<td style="text-align: left">ask</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2301.96</code></td>
+<td style="text-align: left">Best ask price</td>
+</tr>
+<tr>
+<td style="text-align: left">high</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2318.84</code></td>
+<td style="text-align: left">High price</td>
+</tr>
+<tr>
+<td style="text-align: left">low</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2160.71</code></td>
+<td style="text-align: left">Low price</td>
+</tr>
+<tr>
+<td style="text-align: left">open_interest</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>1372.13</code></td>
+<td style="text-align: left">Open interest</td>
+</tr>
+<tr>
+<td style="text-align: left">open_interest_usd</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>3158506.047</code></td>
+<td style="text-align: left">Open interest in USDT</td>
+</tr>
+<tr>
+<td style="text-align: left">basis</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>0.0003</code></td>
+<td style="text-align: left">Basis</td>
+</tr>
+<tr>
+<td style="text-align: left">funding_rate</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>0.0000632068687814</code></td>
+<td style="text-align: left">Funding rate</td>
+</tr>
+<tr>
+<td style="text-align: left">next_funding_rate_timestam</td>
+<td style="text-align: left">number</td>
+<td style="text-align: left"><code>1741248000000</code></td>
+<td style="text-align: left">Next funding rate timestamp</td>
 </tr>
 </tbody></table>
 <h3 id='obtain-index-mark-price'>Obtain Index/Mark Price</h3>
@@ -4187,9 +4448,7 @@ GET https://openapi.fameex.net/sapi/v1/account/balance?symbols=USDT,BTC,ETH
     </span><span class="nl">"indexPrice"</span><span class="p">:</span><span class="w"> </span><span class="mf">27905.9800000000000000</span><span class="p">,</span><span class="w">
     </span><span class="nl">"tagPrice"</span><span class="p">:</span><span class="w"> </span><span class="mf">27824.4422146875000000</span><span class="p">,</span><span class="w">
     </span><span class="nl">"currentFundRate"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.0037500000000000</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"nextFundRate"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.0037500000000000</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"open_interest"</span><span class="p">:</span><span class="w"> </span><span class="mf">1372.13</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"basis"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0003</span><span class="w">
+    </span><span class="nl">"nextFundRate"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.0037500000000000</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Response Parameters</strong></p>
@@ -4225,18 +4484,6 @@ GET https://openapi.fameex.net/sapi/v1/account/balance?symbols=USDT,BTC,ETH
 <td style="text-align: left">float</td>
 <td style="text-align: left"><code>-0.0037500000000000</code></td>
 <td style="text-align: left">Funding rate price</td>
-</tr>
-<tr>
-<td style="text-align: left">open_interest</td>
-<td style="text-align: left">float</td>
-<td style="text-align: left"><code>1372.13</code></td>
-<td style="text-align: left">Hold position volume</td>
-</tr>
-<tr>
-<td style="text-align: left">basis</td>
-<td style="text-align: left">float</td>
-<td style="text-align: left"><code>0.0003</code></td>
-<td style="text-align: left">Basis</td>
 </tr>
 </tbody></table>
 <h3 id='k-line-candlestick-data-2'>K-Line/Candlestick Data</h3>
