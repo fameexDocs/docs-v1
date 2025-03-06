@@ -161,7 +161,7 @@ https.get(url, (res) => {
 **Response Parameter**
 
 | Parameter  | Type   | Example               | Description      |
-| :----------| :------| :---------------------| :----------------|
+|:-----------|:-------|:----------------------|:-----------------|
 | timezone   | string | `China Standard Time` | Server time zone |
 | serverTime | long   | `1705039779880`       | Server timestamp |
 
@@ -232,7 +232,7 @@ HTTP Error Codes
 *   In the web user center, the permissions associated with the API key can be modified, such as for reading account information, sending trade instructions, or initiating withdrawal requests.
 
 | Security Type | Description                                              |
-| :-------------| :--------------------------------------------------------|
+|:--------------|:---------------------------------------------------------|
 | NONE          | Endpoint can be accessed freely.                         |
 | TRADE         | Endpoint requires sending a valid API-Key and signature. |
 | USER\_DATA    | Endpoint requires sending a valid API-Key and signature. |
@@ -271,12 +271,12 @@ if (timestamp < (serverTime + 1000) && (serverTime - timestamp) <= recvWindow) {
 Here is a step-by-step example of how to send a valid signed payload from the Linux command line using echo, openssl, and curl.
 
 | Key       | Value                            |
-| :---------| :--------------------------------|
+|:----------|:---------------------------------|
 | apiKey    | vmPUZE6mv9SD5V5e14y7Ju91duEh8A   |
 | secretKey | 902ae3cb34ecee2779aa4d3e1d226686 |
 
 | Parameter | Value   |
-| :---------| :-------|
+|:----------|:--------|
 | symbol    | BTCUSDT |
 | side      | BUY     |
 | type      | LIMIT   |
@@ -641,7 +641,7 @@ GET https://openapi.fameex.net/sapi/v1/time
 **Response Parameters**
 
 | Parameter  | Type   | Example               | Description      |
-| :----------| :------| :---------------------| :----------------|
+|:-----------|:-------|:----------------------|:-----------------|
 | timezone   | string | `China Standard Time` | Server time zone |
 | serverTime | long   | `1705039779880`       | Server timestamp |
 
@@ -724,7 +724,7 @@ GET https://openapi.fameex.net/sapi/v1/symbols
 **Response Parameters**
 
 | Parameter         | Type       | Example   | Description                                |
-| :-----------------| :----------| :---------| :------------------------------------------|
+|:------------------|:-----------|:----------|:-------------------------------------------|
 | symbol            | string     | `btcusdt` | `Lowercase` symbol name                    |
 | baseAsset         | string     | `BTC`     | `Base` asset for the symbol                |
 | quoteAsset        | string     | `USDT`    | `Quote` asset for the symbol               |
@@ -756,7 +756,7 @@ GET https://openapi.fameex.net/sapi/v1/depth?symbol=BTCUSDT&limit=100
 **Request Parameters**
 
 | Parameter                         | Type    | Description                            |
-| :---------------------------------| :-------| :--------------------------------------|
+|:----------------------------------|:--------|:---------------------------------------|
 | symbol<font color="red">\*</font> | string  | `Uppercase` symbol name E.g. `BTCUSDT` |
 | limit<font color="red">\*</font>  | integer | default: 100; maximum: 100             |
 
@@ -791,14 +791,14 @@ GET https://openapi.fameex.net/sapi/v1/depth?symbol=BTCUSDT&limit=100
 **Response Parameters**
 
 | Paramter | Type  | Example                   | Description                                                                                                                                                                        |
-| :--------| :-----| :-------------------------| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|:---------|:------|:--------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | time     | long  | `1595563624731`           | Timestamp                                                                                                                                                                          |
 | bids     | array | `[[3.9,43.1],[4.0,19.2]]` | Order book buying information, the array length is 2, subscript one is the price, type is float; subscript two is the quantity corresponding to the current price, type is float.  |
 | asks     | array | `[[4.0,12.0],[5.1,28.0]]` | Order book selling information, the array length is 2, subscript one is the price, type is float; subscript two is the quantity corresponding to the current price, type is float. |
 
 The bid and ask information represents all the prices in the order book along with the corresponding quantities, listed from the best price to the rest in descending order.
 
-### 24hrs Ticker
+### 24HRS Ticker
 
 `GET https://openapi.fameex.net/sapi/v1/ticker`
 
@@ -813,7 +813,7 @@ GET https://openapi.fameex.net/sapi/v1/ticker?symbol=BTCUSDT
 **Request Parameters**
 
 | Parameter                         | Type   | Description                            |
-| :---------------------------------| :------| :--------------------------------------|
+|:----------------------------------|:-------|:---------------------------------------|
 | symbol<font color="red">\*</font> | string | `Uppercase` symbol name E.g. `BTCUSDT` |
 
 > response example
@@ -834,17 +834,77 @@ GET https://openapi.fameex.net/sapi/v1/ticker?symbol=BTCUSDT
 
 **Response Parameters**
 
-| Parameter | Type   | Example         | Description                                                                                      |
-| :---------| :------| :---------------| :------------------------------------------------------------------------------------------------|
-| time      | long   | `1595563624731` | Timestamp                                                                                        |
-| high      | float  | `9900.51`       | Highest price                                                                                    |
-| low       | float  | `9100.34`       | Lowest price                                                                                     |
-| last      | float  | `9211.60`       | Latest trade price                                                                               |
-| vol       | float  | `4691.0`        | Trading volume                                                                                   |
-| amount    | float  | `22400.0`       | Trading amount                                                                                   |
-| buy       | float  | `9210.0`        | Best bid price                                                                                   |
-| sell      | float  | `9213.0`        | Best ask price                                                                                   |
-| rose      | string | `+0.05`         | Range of increase and decrease, `+` is increase, `-` is decrease, `+0.05` means increase by `5%` |
+| Parameter    | Type   | Example          | Description                                                                                      |
+|:-------------|:-------|:-----------------|:-------------------------------------------------------------------------------------------------|
+| time         | long   | `1595563624731`  | Timestamp                                                                                        |
+| high         | float  | `9900.51`        | Highest price                                                                                    |
+| low          | float  | `9100.34`        | Lowest price                                                                                     |
+| last         | float  | `9211.60`        | Latest trade price                                                                               |
+| vol          | float  | `4691.0`         | Trading volume                                                                                   |
+| amount       | float  | `22400.0`        | Trading amount                                                                                   |
+| buy          | float  | `9210.0`         | Best bid price                                                                                   |
+| sell         | float  | `9213.0`         | Best ask price                                                                                   |
+| rose         | string | `+0.05`          | Range of increase and decrease, `+` is increase, `-` is decrease, `+0.05` means increase by `5%` |
+
+### 24HRS Ticker-V2
+
+`GET https://t(:open_url)/v2/public/ticker`
+
+24-hour price change data
+
+> request example
+
+```http
+GET https://t(:open_url)/v2/public/ticker
+
+// request headers
+Content-Type: application/json
+```
+
+> response example
+
+```json
+{
+    "code": "0",
+    "msg": "Succeed",
+    "data": {
+        "MNT_USDT": {
+            "base_id": "MNT",
+            "quote_volume": 3049025.662482,
+            "quote_id": "USDT",
+            "base_volume": 4123162.07,
+            "isFrozen": 1,
+            "last_price": 0.7491
+        },
+        "PEPE_USDT": {
+            "base_id": "PEPE",
+            "quote_volume": 19215044.55550406,
+            "quote_id": "USDT",
+            "base_volume": 2733395751472,
+            "isFrozen": 1,
+            "last_price": 0.00000731
+        }
+    },
+    "message": null,
+    "succ": true
+}
+```
+
+**Response Parameters**
+
+| Parameter    | Type    | Example          | Description        |
+|:-------------|:--------|:-----------------|:-------------------|
+| code         | string  | `0`              | Response code      |
+| msg          | string  | `Succeed`        | Response message   |
+| message      | string  | `null`           | Error message      |
+| succ         | boolean | true             | Operate flag       |
+| data         | object  |                  |                    |
+| base_id      | string  | `MNT`            | Base symbol        |
+| quote_id     | string  | `USDT`           | Quote symbol       |
+| base_volume  | float   | `4123162.07`     | Trade volume       |
+| quote_volume | float   | `3049025.662482` | Trading amount     |
+| last_price   | float   | `0.7491`         | Latest trade price |
+| isFrozen     | number  | `1`              | Frozen flag        |
 
 ### Recent Trade List
 
@@ -861,7 +921,7 @@ GET https://openapi.fameex.net/sapi/v1/trades?symbol=BTCUSDT&limit=100
 **Request Parameters**
 
 | Parameter                         | Type   | Description                            |
-| :---------------------------------| :------| :--------------------------------------|
+|:----------------------------------|:-------|:---------------------------------------|
 | symbol<font color="red">\*</font> | string | `Uppercase` symbol name E.g. `BTCUSDT` |
 | limit<font color="red">\*</font>  | string | default: 100; maximum: 1000            |
 
@@ -887,7 +947,7 @@ GET https://openapi.fameex.net/sapi/v1/trades?symbol=BTCUSDT&limit=100
 **Response Parameters**
 
 | Parameter | Type   | Example                | Description         |
-| :---------| :------| :----------------------| :-------------------|
+|:----------|:-------|:-----------------------|:--------------------|
 | price     | float  | `131.0000000000000000` | Trade price         |
 | time      | long   | `1704788645416`        | Timestamp           |
 | qty       | float  | `0.1000000000000000`   | The quantity traded |
@@ -908,7 +968,7 @@ GET https://openapi.fameex.net/sapi/v1/klines?symbol=BTCUSDT&interval=1min&limit
 **Request Parameters**
 
 | Parameter                           | Type    | Description                                                                                                           |
-| :-----------------------------------| :-------| :---------------------------------------------------------------------------------------------------------------------|
+|:------------------------------------|:--------|:----------------------------------------------------------------------------------------------------------------------|
 | symbol<font color="red">\*</font>   | string  | `Uppercase` symbol name E.g. `BTCUSDT`                                                                                |
 | interval<font color="red">\*</font> | string  | Interval of the candlesticks. Possible values include:  `1min`,`5min`,`15min`,`30min`,`60min`,`1day`,`1week`,`1month` |
 | limit                               | integer | default: 100; maximum: 300                                                                                            |
@@ -947,7 +1007,7 @@ GET https://openapi.fameex.net/sapi/v1/klines?symbol=BTCUSDT&interval=1min&limit
 **Response Parameters**
 
 | Parameter | Type  | Example         | Description     |
-| :---------| :-----| :---------------| :---------------|
+|:----------|:------|:----------------|:----------------|
 | idx       | long  | `1538728740000` | Start timestamp |
 | open      | float | `6129.41`       | Open price      |
 | close     | float | `6225.63`       | Close price     |
@@ -970,7 +1030,7 @@ GET https://openapi.fameex.net/sapi/v1/klines?symbol=BTCUSDT&interval=1min&limit
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -994,7 +1054,7 @@ body
 **Request Parameters**
 
 | Parameter                         | Type   | Description                                                                                                        |
-| :---------------------------------| :------| :------------------------------------------------------------------------------------------------------------------|
+|:----------------------------------|:-------|:-------------------------------------------------------------------------------------------------------------------|
 | symbol<font color="red">\*</font> | string | `Uppercase` symbol name E.g. `BTCUSDT`                                                                             |
 | volume<font color="red">\*</font> | number | Order quantity, there is a precision limit, which is configured by the administrator.                              |
 | side<font color="red">\*</font>   | string | Order side, `BUY/SELL`                                                                                             |
@@ -1024,7 +1084,7 @@ body
 **Response Parameters**
 
 | Parameter     | Type    | Example               | Description                                                                                                      |
-| :-------------| :-------| :---------------------| :----------------------------------------------------------------------------------------------------------------|
+|:--------------|:--------|:----------------------|:-----------------------------------------------------------------------------------------------------------------|
 | orderId       | long    | `2012274607240433332` | Order ID(system generated)                                                                                       |
 | clientOrderId | string  | `213443`              | Order ID(user generated)                                                                                         |
 | symbol        | string  | `BTCUSDT`             | `Uppercase` symbol name                                                                                          |
@@ -1045,7 +1105,7 @@ body
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -1069,7 +1129,7 @@ body
 **Request Parameters**
 
 | Parameter                         | Type   | Description                                                                                                        |
-| :---------------------------------| :------| :------------------------------------------------------------------------------------------------------------------|
+|:----------------------------------|:-------|:-------------------------------------------------------------------------------------------------------------------|
 | symbol<font color="red">\*</font> | string | `Uppercase` symbol name E.g. `BTCUSDT`                                                                             |
 | volume<font color="red">\*</font> | number | Order quantity, there is a precision limit, which is configured by the administrator.                              |
 | side<font color="red">\*</font>   | string | Order side, `BUY/SELL`                                                                                             |
@@ -1099,7 +1159,7 @@ body
 **Response Parameters**
 
 | Parameter     | Type    | Example               | Description                                                                                                      |
-| :-------------| :-------| :---------------------| :----------------------------------------------------------------------------------------------------------------|
+|:--------------|:--------|:----------------------|:-----------------------------------------------------------------------------------------------------------------|
 | orderId       | string  | `2012274607240433332` | Order ID(system generated)                                                                                       |
 | clientOrderId | string  | `213443`              | Order ID(user generated)                                                                                         |
 | symbol        | string  | `BTCUSDT`             | `Uppercase` symbol name                                                                                          |
@@ -1120,7 +1180,7 @@ Create and validate a new order but do not send the order into the matching engi
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -1143,7 +1203,7 @@ body
 **Request Parameters**
 
 | Parameter                         | Type   | Description                                                                                               |
-| :---------------------------------| :------| :---------------------------------------------------------------------------------------------------------|
+|:----------------------------------|:-------|:----------------------------------------------------------------------------------------------------------|
 | symbol<font color="red">\*</font> | string | `Uppercase` symbol name E.g. `BTCUSDT`                                                                    |
 | volume<font color="red">\*</font> | number | Order quantity, with precision limits, configured by the administrator                                    |
 | side<font color="red">\*</font>   | string | Order side, `BUY/SELL`                                                                                    |
@@ -1157,7 +1217,9 @@ body
 {}
 ```
 
-<!-- ### Batch Orders
+<!--
+
+### Batch Orders
 
 `POST https://openapi.fameex.net/sapi/v1/batchOrders`
 
@@ -1166,7 +1228,7 @@ body
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -1199,7 +1261,7 @@ body
 **Request Parameters**
 
 | Parameter | Type   | Example        | Description             |
-| :---------| :------| :--------------| :-----------------------|
+|:----------|:-------|:---------------|:------------------------|
 | symbol    | string | `ETHUSDT`      | `Uppercase` symbol name |
 | price     | float  | `2100.00`      | Order price             |
 | volume    | float  | `1.00`         | Order volume            |
@@ -1221,8 +1283,10 @@ body
 **Response Parameters**
 
 | Parameter | Type  | Example | Description       |
-| :---------| :-----| :-------| :-----------------|
-| ids       | array |         | ids of Order List | -->
+|:----------|:------|:--------|:------------------|
+| ids       | array |         | ids of Order List |
+
+-->
 
 ### Query Order
 
@@ -1233,7 +1297,7 @@ body
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -1247,7 +1311,7 @@ GET https://openapi.fameex.net/sapi/v1/order?symbol=ethusdt&orderID=111000111
 **Request Parameters**
 
 | Parameter                          | Type   | Description                            |
-| :----------------------------------| :------| :--------------------------------------|
+|:-----------------------------------|:-------|:---------------------------------------|
 | orderId<font color="red">\*</font> | string | Order id                               |
 | symbol<font color="red">\*</font>  | string | `Lowercase` symbol name E.g. `ethusdt` |
 
@@ -1271,7 +1335,7 @@ GET https://openapi.fameex.net/sapi/v1/order?symbol=ethusdt&orderID=111000111
 **Response Parameters**
 
 | Parameter     | Type   | Example              | Description                                                                                                      |
-| :-------------| :------| :--------------------| :----------------------------------------------------------------------------------------------------------------|
+|:--------------|:-------|:---------------------|:-----------------------------------------------------------------------------------------------------------------|
 | orderId       | long   | `150695552109032492` | Order ID (system generated)                                                                                      |
 | clientOrderId | string | `213443`             | Order ID (user generated)                                                                                        |
 | symbol        | string | `ethusdt`            | `Lowercase` symbol name                                                                                          |
@@ -1293,7 +1357,7 @@ GET https://openapi.fameex.net/sapi/v1/order?symbol=ethusdt&orderID=111000111
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -1307,7 +1371,7 @@ GET https://openapi.fameex.net/sapi/v2/order?symbol=ethusdt&orderID=111000111
 **Request Parameters**
 
 | Parameter                          | Type   | Description                            |
-| :----------------------------------| :------| :--------------------------------------|
+|:-----------------------------------|:-------|:---------------------------------------|
 | orderId<font color="red">\*</font> | string | Order id                               |
 | symbol<font color="red">\*</font>  | string | `Lowercase` symbol name E.g. `ethusdt` |
 
@@ -1331,7 +1395,7 @@ GET https://openapi.fameex.net/sapi/v2/order?symbol=ethusdt&orderID=111000111
 **Response Parameters**
 
 | Parameter     | Type   | Example              | Description                                                                                                      |
-| :-------------| :------| :--------------------| :----------------------------------------------------------------------------------------------------------------|
+|:--------------|:-------|:---------------------|:-----------------------------------------------------------------------------------------------------------------|
 | orderId       | string | `150695552109032492` | Order ID (system generated)                                                                                      |
 | clientOrderId | string | `213443`             | Order ID (user generated)                                                                                        |
 | symbol        | string | `ethusdt`            | `Lowercase` symbol name                                                                                          |
@@ -1353,7 +1417,7 @@ GET https://openapi.fameex.net/sapi/v2/order?symbol=ethusdt&orderID=111000111
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -1373,7 +1437,7 @@ body
 **Request Parameters**
 
 | Parameter                          | Type   | Description                            |
-| :----------------------------------| :------| :--------------------------------------|
+|:-----------------------------------|:-------|:---------------------------------------|
 | orderId<font color="red">\*</font> | string | Order id                               |
 | symbol<font color="red">\*</font>  | string | `Lowercase` symbol name E.g. `ethusdt` |
 
@@ -1392,7 +1456,7 @@ body
 **Response Parameters**
 
 | Parameter | Type   | Example               | Description                     |
-| :---------| :------| :---------------------| :-------------------------------|
+|:----------|:-------|:----------------------|:--------------------------------|
 | orderId   | long   | `1938321163093079425` | Order ID (system generated)     |
 | symbol    | string | `ethusdt`             | `Lowercase` symbol name         |
 | status    | string | `To be Cancelled`     | Order Status: `To be Cancelled` |
@@ -1406,7 +1470,7 @@ body
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -1426,7 +1490,7 @@ body
 **Request Parameters**
 
 | Parameter                          | Type   | Description                            |
-| :----------------------------------| :------| :--------------------------------------|
+|:-----------------------------------|:-------|:---------------------------------------|
 | orderId<font color="red">\*</font> | string | Order id                               |
 | symbol<font color="red">\*</font>  | string | `Lowercase` symbol name E.g. `ethusdt` |
 
@@ -1445,7 +1509,7 @@ body
 **Response Parameters**
 
 | Parameter | Type   | Example               | Description                     |
-| :---------| :------| :---------------------| :-------------------------------|
+|:----------|:-------|:----------------------|:--------------------------------|
 | orderId   | string | `1938321163093079425` | Order ID (system generated)     |
 | symbol    | string | `ethusdt`             | `Lowercase` symbol name         |
 | status    | string | `To be Cancelled`     | Order Status: `To be Cancelled` |
@@ -1459,7 +1523,7 @@ body
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -1479,7 +1543,7 @@ body
 **Request Parameters**
 
 | Parameter                           | Type   | Description                                                                                                            |
-| :-----------------------------------| :------| :----------------------------------------------------------------------------------------------------------------------|
+|:------------------------------------|:-------|:-----------------------------------------------------------------------------------------------------------------------|
 | symbol<font color="red">\*</font>   | string | `Uppercase` symbol name E.g. `BTCUSDT`                                                                                 |
 | orderIds<font color="red">\*</font> | array  | Collection of order IDs to be canceled. The order id must be of numeric type rather than String type. E.g. `[123,456]` |
 
@@ -1513,7 +1577,7 @@ body
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -1521,7 +1585,7 @@ body
 **Request Parameters**
 
 | Parameter                         | Type    | Description                            |
-| :---------------------------------| :-------| :--------------------------------------|
+|:----------------------------------|:--------|:---------------------------------------|
 | symbol<font color="red">\*</font> | string  | `Lowercase` symbol name E.g. `ethusdt` |
 | limit<font color="red">\*</font>  | integer | Maximum: 1000                          |
 
@@ -1559,7 +1623,7 @@ body
 **Response Parameters**
 
 | Parameter   | Type   | Example              | Description                                                                                                            |
-| :-----------| :------| :--------------------| :----------------------------------------------------------------------------------------------------------------------|
+|:------------|:-------|:---------------------|:-----------------------------------------------------------------------------------------------------------------------|
 | orderId     | long   | `150695552109032492` | Order ID (system generated)                                                                                            |
 | symbol      | string | `ETHUSDT`            | `Uppercase` symbol name                                                                                                |
 | price       | float  | `4765.29`            | Order price                                                                                                            |
@@ -1580,7 +1644,7 @@ body
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -1588,7 +1652,7 @@ body
 **Request Parameters**
 
 | Parameter                         | Type    | Description                            |
-| :---------------------------------| :-------| :--------------------------------------|
+|:----------------------------------|:--------|:---------------------------------------|
 | symbol<font color="red">\*</font> | string  | `Lowercase` symbol name E.g. `ethusdt` |
 | limit<font color="red">\*</font>  | integer | Maximum: 1000                          |
 
@@ -1626,7 +1690,7 @@ body
 **Response Parameters**
 
 | Parameter   | Type   | Example              | Description                                                                                                            |
-| :-----------| :------| :--------------------| :----------------------------------------------------------------------------------------------------------------------|
+|:------------|:-------|:---------------------|:-----------------------------------------------------------------------------------------------------------------------|
 | orderId     | string | `150695552109032492` | Order ID (system generated)                                                                                            |
 | symbol      | string | `ETHUSDT`            | `Uppercase` symbol name                                                                                                |
 | price       | float  | `4765.29`            | Order price                                                                                                            |
@@ -1647,7 +1711,7 @@ body
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -1662,7 +1726,7 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 **Request Parameters**
 
 | Parameter                         | Type   | Description                            |
-| :---------------------------------| :------| :--------------------------------------|
+|:----------------------------------|:-------|:---------------------------------------|
 | symbol<font color="red">\*</font> | string | `Uppercase` symbol name E.g. `BTCUSDT` |
 | limit<font color="red">\*</font>  | string | default: 100; maximum: 1000            |
 
@@ -1710,7 +1774,7 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 **Response Parameters**
 
 | Parameter | Type    | Example               | Description                                                     |
-| :---------| :-------| :---------------------| :---------------------------------------------------------------|
+|:----------|:--------|:----------------------|:----------------------------------------------------------------|
 | symbol    | string  | `ETHBTC`              | `Uppercase` symbol name                                         |
 | id        | integer | `159`                 | Trade ID                                                        |
 | bidId     | long    | `1954603951049381893` | Buy side order ID                                               |
@@ -1742,7 +1806,7 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -1774,7 +1838,7 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 **Response Parameters**
 
 | Parameter | Type   | Description                       |
-| :---------| :------| :---------------------------------|
+|:----------|:-------|:----------------------------------|
 | balances  | array  | The collection of account balance |
 | asset     | string | Symbol                            |
 | free      | string | Available balance                 |
@@ -1789,7 +1853,7 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -1797,7 +1861,7 @@ GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 **Query Parameter**
 
 | Parameter | Type   | Description                                                                                        |
-| :---------| :------| :--------------------------------------------------------------------------------------------------|
+|:----------|:-------|:---------------------------------------------------------------------------------------------------|
 | symbols   | string | `Uppercase` symbol name E.g.`BTC`, support multiple symbols, no more than 20, separated with comma |
 
 > request example
@@ -1837,7 +1901,7 @@ GET https://openapi.fameex.net/sapi/v1/account/balance?symbols=USDT,BTC,ETH
 **Response Parameters**
 
 | Parameter | Type   | Description       |
-| :---------| :------| :-----------------|
+|:----------|:-------|:------------------|
 | balances  | array  | account balance   |
 | asset     | string | Symbol            |
 | free      | string | Available balance |
@@ -1873,7 +1937,7 @@ This interface checks connectivity to the host.
 **Request Parameter**
 
 | Parameter  | Type   | Example               | Description      |
-| :----------| :------| :---------------------| :----------------|
+|:-----------|:-------|:----------------------|:-----------------|
 | timezone   | string | `China Standard Time` | Server time zone |
 | serverTime | long   | `1607702400000`       | Server timestamp |
 
@@ -1929,7 +1993,7 @@ GET https://futuresopenapi.fameex.net/fapi/v1/contracts
 **Response Parameter**
 
 | Parameter       | Type   | Example                   | Description                                                                                   |
-| :---------------| :------| :-------------------------| :---------------------------------------------------------------------------------------------|
+|:----------------|:-------|:--------------------------|:----------------------------------------------------------------------------------------------|
 | symbol          | string | `E-BTC-USDT`              | `Uppercase` Contract name                                                                     |
 | pricePrecision  | number | `3`                       | Price accuracy                                                                                |
 | status          | number | `1`                       | Contract status(0:`not tradable`, 1:`tradable`)                                               |
@@ -1965,7 +2029,7 @@ GET https://futuresopenapi.fameex.net/fapi/v1/depth?contractName=E-BTC-USDT&limi
 **Request Parameters**
 
 | Parameter    | Type    | Description                                 |
-| :------------| :-------| :-------------------------------------------|
+|:-------------|:--------|:--------------------------------------------|
 | contractName | string  | `Uppercase` contract name E.g. `E-BTC-USDT` |
 | limit        | integer | default: 100; maximum: 100                  |
 
@@ -2000,7 +2064,7 @@ GET https://futuresopenapi.fameex.net/fapi/v1/depth?contractName=E-BTC-USDT&limi
 **Response Parameters**
 
 | Parameter | Type | Example                          | Description                                                                                                                                                                       |
-| :---------| :----| :--------------------------------| :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|:----------|:-----|:---------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | time      | long | `1595563624731`                  | Current time                                                                                                                                                                      |
 | bids      | list | `[[3.9,16.1],[4.0,29.3]]`        | Order book buying information, the array length is 2, subscript one is the price, type is float; subscript two is the quantity corresponding to the current price, type is float  |
 | asks      | list | `[[4.00000200,12.0],[5.1,28.0]]` | Order book selling information, the array length is 2, subscript one is the price, type is float; subscript two is the quantity corresponding to the current price, type is float |
@@ -2022,7 +2086,7 @@ GET https://futuresopenapi.fameex.net/fapi/v1/ticker?contractName=E-BTC-USDT
 **Request Parameters**
 
 | Parameter                               | Type   | Description                                 |
-| :---------------------------------------| :------| :-------------------------------------------|
+|:----------------------------------------|:-------|:--------------------------------------------|
 | contractName<font color="red">\*</font> | string | `Uppercase` contract name E.g. `E-BTC-USDT` |
 
 
@@ -2043,16 +2107,79 @@ GET https://futuresopenapi.fameex.net/fapi/v1/ticker?contractName=E-BTC-USDT
 
 **Response Parameters**
 
-| Parameter | Type   | Example         | Description                                                                                      |
-| :---------| :------| :---------------| :------------------------------------------------------------------------------------------------|
-| time      | long   | `1595563624731` | Timestamp                                                                                        |
-| high      | float  | `56120.22`      | Highest price                                                                                    |
-| low       | float  | `55982.24`      | Lowest price                                                                                     |
-| last      | float  | `55989.93`      | Last price                                                                                       |
-| vol       | float  | `51.21`         | Trade volume                                                                                     |
-| rose      | string | `+0.05`         | Range of increase and decrease, `+` is increase, `-` is decrease, `+0.05` means increase by `5%` |
-| buy       | float  | `55988.10`      | Best bid price                                                                                   |
-| sell      | float  | `55990.10`      | Best ask price                                                                                   |
+| Parameter    | Type   | Example          | Description                                                                                      |
+|:-------------|:-------|:-----------------|:-------------------------------------------------------------------------------------------------|
+| time         | long   | `1595563624731`  | Timestamp                                                                                        |
+| high         | float  | `56120.22`       | Highest price                                                                                    |
+| low          | float  | `55982.24`       | Lowest price                                                                                     |
+| last         | float  | `55989.93`       | Last price                                                                                       |
+| vol          | float  | `51.21`          | Trade volume                                                                                     |
+| rose         | string | `+0.05`          | Range of increase and decrease, `+` is increase, `-` is decrease, `+0.05` means increase by `5%` |
+| buy          | float  | `55988.10`       | Best bid price                                                                                   |
+| sell         | float  | `55990.10`       | Best ask price                                                                                   |
+
+### 24hrs Ticker-V2
+
+`GET https://t(:futures_url)/swap-api/v2/tickers`
+
+24-hour price change data
+
+> request example
+
+```http
+GET https://t(:futures_url)/swap-api/v2/tickers
+
+// request headers
+Content-Type:application/json
+```
+
+> response example
+
+```json
+[
+    {
+        "base_currency": "ETH",
+        "open_interest_usd": "3158506.047",
+        "quote_volume": "475254656162",
+        "base_volume": "2135453.51",
+        "open_interest": "1372.13",
+        "index_price": "2302.705",
+        "basis": "0.0003",
+        "quote_currency": "USDT",
+        "ticker_id": "ETH-USDT",
+        "funding_rate": "0.0000632068687814",
+        "high": "2318.84",
+        "product_type": "Perpetual",
+        "low": "2160.71",
+        "ask": "2301.96",
+        "next_funding_rate_timestam": 1741248000000,
+        "bid": "2301.8",
+        "last_price": "2301.9"
+    }
+]
+```
+
+**Response Parameters**
+
+| Parameter                  | Type   | Example              | Description                 |
+|:---------------------------|:-------|:---------------------|:----------------------------|
+| ticker_id                  | string | `ETH-USDT`           | Symbol pair                 |
+| product_type               | string | `Perpetual`          | Contract type               |
+| base_currency              | string | `ETH`                | Base symbol                 |
+| quote_currency             | string | `USDT`               | Quote symbol                |
+| last_price                 | float  | `2301.9`             | Latest price                |
+| index_price                | float  | `2302.705`           | Index price                 |
+| base_volume                | float  | `2135453.51`         | Trade volume                |
+| quote_volume               | float  | `475254656162`       | Trade amount                |
+| bid                        | float  | `2301.8`             | Best bid price              |
+| ask                        | float  | `2301.96`            | Best ask price              |
+| high                       | float  | `2318.84`            | High price                  |
+| low                        | float  | `2160.71`            | Low price                   |
+| open_interest              | float  | `1372.13`            | Open interest               |
+| open_interest_usd          | float  | `3158506.047`        | Open interest in USDT       |
+| basis                      | float  | `0.0003`             | Basis                       |
+| funding_rate               | float  | `0.0000632068687814` | Funding rate                |
+| next_funding_rate_timestam | number | `1741248000000`      | Next funding rate timestamp |
 
 ### Obtain Index/Mark Price
 
@@ -2067,7 +2194,7 @@ GET https://futuresopenapi.fameex.net/fapi/v1/index?contractName=E-BTC-USDT
 **Request Parameters**
 
 | Name                                    | Type   | Description                                 |
-| :---------------------------------------| :------| :-------------------------------------------|
+|:----------------------------------------|:-------|:--------------------------------------------|
 | contractName<font color="red">\*</font> | string | `Uppercase` contract name E.g. `E-BTC-USDT` |
 | limit                                   | string | Default 100; maximum 1000                   |
 
@@ -2085,7 +2212,7 @@ GET https://futuresopenapi.fameex.net/fapi/v1/index?contractName=E-BTC-USDT
 **Response Parameters**
 
 | Parameter       | Type  | Example                  | Description                                                                     |
-| :---------------| :-----| :------------------------| :-------------------------------------------------------------------------------|
+|:----------------|:------|:-------------------------|:--------------------------------------------------------------------------------|
 | indexPrice      | float | `27905.9800000000000000` | Index price                                                                     |
 | tagPrice        | float | `27824.4422146875000000` | Mark price                                                                      |
 | currentFundRate | float | `-0.0037500000000000`    | Funding rate price for the previous period (used for settlement in this period) |
@@ -2104,7 +2231,7 @@ GET https://futuresopenapi.fameex.net/fapi/v1/klines?contractName=E-BTC-USDT&int
 **Request Parameter**
 
 | Parameter                               | Type    | Description                                                                                                           |
-| :---------------------------------------| :-------| :---------------------------------------------------------------------------------------------------------------------|
+|:----------------------------------------|:--------|:----------------------------------------------------------------------------------------------------------------------|
 | contractName<font color="red">\*</font> | string  | `Uppercase` contract name E.g. `E-BTC-USDT`                                                                           |
 | interval<font color="red">\*</font>     | string  | Interval of the candlesticks. Possible values include:  `1min`,`5min`,`15min`,`30min`,`60min`,`1day`,`1week`,`1month` |
 | limit                                   | integer | default: 100; maximum: 300                                                                                            |
@@ -2145,7 +2272,7 @@ GET https://futuresopenapi.fameex.net/fapi/v1/klines?contractName=E-BTC-USDT&int
 **Response Parameter**
 
 | Parameter | Type  | Example          | Description     |
-| :---------| :-----| :----------------| :---------------|
+|:----------|:------|:-----------------|:----------------|
 | idx       | long  | `15946403400000` | Start timestamp |
 | open      | float | `6195.80`        | Open price      |
 | close     | float | `6210.51`        | Close price     |
@@ -2168,7 +2295,7 @@ Create a new single order.
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -2195,7 +2322,7 @@ body
 **Request Parameter**
 
 | Parameter                               | Type   | Description                                                                                                                                                    |
-| :---------------------------------------| :------| :--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|:----------------------------------------|:-------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | contractName<font color="red">\*</font> | string | `Uppercase` contract name E.g. `E-BTC-USDT`                                                                                                                    |
 | price                                   | number | The number of orders placed has a precision limit. The precision is set by the administrator. When opening a position at market price, the unit here is value. |
 | volume<font color="red">\*</font>       | number | Order price. This field is required for limit orders. There is a precision limit. The precision is set by the administrator.                                   |
@@ -2217,7 +2344,7 @@ body
 **Response Parameter**
 
 | Parameter | Type   | Example              | Description |
-| :---------| :------| :--------------------| :-----------|
+|:----------|:-------|:---------------------|:------------|
 | orderId   | string | `256609229205684228` | Order ID    |
 
 ### Create Conditional Order
@@ -2227,7 +2354,7 @@ body
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -2246,7 +2373,7 @@ body
 **Request Parameter**
 
 | Parameter     | Type   | Description                                                                                                                                                 |
-| :-------------| :------| :-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+|:--------------|:-------|:------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | triggerType   | string | Type of conditions, 1: `stop loss`, 2: `take profit`, 3: `chase the rise`, 4: `kill the fall`                                                               |
 | triggerPrice  | string | Trigger price                                                                                                                                               |
 | clientOrderId | string | Client order identification, a string less than 32 characters in length                                                                                     |
@@ -2290,7 +2417,7 @@ If this interface (/fapi/v1/conditionOrder) return does not meet expectations, p
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -2298,7 +2425,7 @@ If this interface (/fapi/v1/conditionOrder) return does not meet expectations, p
 **Request Parameter**
 
 | Parameter                               | Type   | Description                                 |
-| :---------------------------------------| :------| :-------------------------------------------|
+|:----------------------------------------|:-------|:--------------------------------------------|
 | contractName<font color="red">\*</font> | string | `Uppercase` contract name E.g. `E-BTC-USDT` |
 | orderId<font color="red">\*</font>      | string | Order ID                                    |
 
@@ -2319,7 +2446,7 @@ If this interface (/fapi/v1/conditionOrder) return does not meet expectations, p
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -2327,7 +2454,7 @@ If this interface (/fapi/v1/conditionOrder) return does not meet expectations, p
 **Request Parameter**
 
 | Parameter                               | Type   | Description                                 |
-| :---------------------------------------| :------| :-------------------------------------------|
+|:----------------------------------------|:-------|:--------------------------------------------|
 | contractName<font color="red">\*</font> | string | `Uppercase` contract name E.g. `E-BTC-USDT` |
 | orderId<font color="red">\*</font>      | string | Order ID                                    |
 | clientOrderId                           | string | Client unique identifier, default is 0      |
@@ -2347,7 +2474,7 @@ If this interface (/fapi/v1/conditionOrder) return does not meet expectations, p
 **Request Parameter**
 
 | Parameter                                | Type   | Description                                 |
-| :----------------------------------------| :------| :-------------------------------------------|
+|:-----------------------------------------|:-------|:--------------------------------------------|
 | contractName<font color="red">\*</font>  | string | `Uppercase` contract name E.g. `E-BTC-USDT` |
 | orderId<font color="red">\*</font>       | string | Order ID                                    |
 | clientOrderId<font color="red">\*</font> | string | Client unique identifier, default is 0      |
@@ -2377,7 +2504,7 @@ If this interface (/fapi/v1/conditionOrder) return does not meet expectations, p
 **Response Parameter**
 
 | Parameter    | Type    | Example                  | Description                                                                                                                                                                                 |
-| :------------| :-------| :------------------------| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|:-------------|:--------|:-------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | orderId      | long    | `2006628907041292645`    | Order ID (system generated)                                                                                                                                                                 |
 | contractName | string  | `E-BTC-USDT`             | `Uppercase` contract name E.g. `E-BTC-USDT`                                                                                                                                                 |
 | price        | float   | `67000.0000000000000000` | Order price                                                                                                                                                                                 |
@@ -2401,7 +2528,7 @@ If this interface (/fapi/v1/conditionOrder) return does not meet expectations, p
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -2409,7 +2536,7 @@ If this interface (/fapi/v1/conditionOrder) return does not meet expectations, p
 **Request Parameter**
 
 | Parameter                               | Type   | Description                                 |
-| :---------------------------------------| :------| :-------------------------------------------|
+|:----------------------------------------|:-------|:--------------------------------------------|
 | contractName<font color="red">\*</font> | string | `Uppercase` contract name E.g. `E-BTC-USDT` |
 
 > response example
@@ -2434,19 +2561,19 @@ If this interface (/fapi/v1/conditionOrder) return does not meet expectations, p
 
 Response Parameter
 
-| Parameter       | Type   | Example                     | Description                                                                                                                                                   |
-| :------------| :------| :------------------------| :------------------------------------------------------------------------------------------------------------------------------------------------------|
-| orderId      | long   | `259396989397942275`     | Order ID(system generated)                                                                                                                                     |
-| contractName | string | `E-BTC-USDT`             | `Uppercase` contract name E.g. `E-BTC-USDT`                                                                                                                                         |
-| price        | float  | `72000.0000000000000000` | Order price                                                                                                                                               |
-| origQty      | float  | `1.0000000000000000`     | Order volume                                                                                                                                               |
-| executedQty  | float  | `0.5`                    | The number of orders already executed                                                                                                                                       |
-| avgPrice     | float  | `71990.0`                | The average price of executed orders                                                                                                                                 |
-| type         | string | `LIMIT`                  | Order type: `LIMIT` and `MARKET`                                                                                           |
-| side         | string | `BUY`                    | Order side: `BUY` and `SELL`                                                                                  |
+| Parameter    | Type   | Example                  | Description                                                                                                                                                                                 |
+|:-------------|:-------|:-------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| orderId      | long   | `259396989397942275`     | Order ID(system generated)                                                                                                                                                                  |
+| contractName | string | `E-BTC-USDT`             | `Uppercase` contract name E.g. `E-BTC-USDT`                                                                                                                                                 |
+| price        | float  | `72000.0000000000000000` | Order price                                                                                                                                                                                 |
+| origQty      | float  | `1.0000000000000000`     | Order volume                                                                                                                                                                                |
+| executedQty  | float  | `0.5`                    | The number of orders already executed                                                                                                                                                       |
+| avgPrice     | float  | `71990.0`                | The average price of executed orders                                                                                                                                                        |
+| type         | string | `LIMIT`                  | Order type: `LIMIT` and `MARKET`                                                                                                                                                            |
+| side         | string | `BUY`                    | Order side: `BUY` and `SELL`                                                                                                                                                                |
 | status       | string | `NEW`                    | Order status. Possible values are`NEW` (new order, no execution), `PARTIALLY_FILLED` (partial execution), `FILLED` (fully executed), `CANCELED` (canceled), and `REJECTED` (order rejected) |
-| action       | string | `OPEN`                   | `OPEN/CLOSE`                                                                                                                                           |
-| transactTime | long   | `1607702400000`          | Order creation time                                                                                                                                         |
+| action       | string | `OPEN`                   | `OPEN/CLOSE`                                                                                                                                                                                |
+| transactTime | long   | `1607702400000`          | Order creation time                                                                                                                                                                         |
 
 ### Historical Order Records
 
@@ -2455,7 +2582,7 @@ Response Parameter
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -2463,7 +2590,7 @@ Response Parameter
 **Request Parameter**
 
 | Parameter                               | Type   | Description                               |
-| :---------------------------------------| :------| :-----------------------------------------|
+|:----------------------------------------|:-------|:------------------------------------------|
 | contractName<font color="red">\*</font> | string | Uppercase contract name E.g. `E-BTC-USDT` |
 | limit                                   | string | default: 100; maximum: 100                |
 | fromId                                  | long   | Start searching from this record          |
@@ -2507,7 +2634,7 @@ If this interface (/fapi/v1/orderHistorical) return does not meet expectations, 
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -2515,7 +2642,7 @@ If this interface (/fapi/v1/orderHistorical) return does not meet expectations, 
 **Request Parameter**
 
 | Parameter                               | Type   | Description                               |
-| :---------------------------------------| :------| :-----------------------------------------|
+|:----------------------------------------|:-------|:------------------------------------------|
 | contractName<font color="red">\*</font> | string | Uppercase contract name E.g. `E-BTC-USDT` |
 | limit                                   | string | default: 100; maximum: 100                |
 | fromId                                  | long   | Start searching from this record          |
@@ -2557,7 +2684,7 @@ If this interface (/fapi/v1/orderHistorical) return does not meet expectations, 
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -2565,7 +2692,7 @@ If this interface (/fapi/v1/orderHistorical) return does not meet expectations, 
 **Request Parameter**
 
 | Parameter                               | Type   | Description                                 |
-| :---------------------------------------| :------| :-------------------------------------------|
+|:----------------------------------------|:-------|:--------------------------------------------|
 | contractName<font color="red">\*</font> | string | `Uppercase` contract name E.g. `E-BTC-USDT` |
 | limit                                   | string | default: 100; maximum: 100                  |
 | fromId                                  | long   | Start retrieval from this tradeId           |
@@ -2612,7 +2739,7 @@ If this interface (/fapi/v1/orderHistorical) return does not meet expectations, 
 **Response Parameter**
 
 | Parameter    | Type    | Example               | Description                                     |
-| :------------| :-------| :---------------------| :-----------------------------------------------|
+|:-------------|:--------|:----------------------|:------------------------------------------------|
 | tradeId      | number  | `1528`                | Trade ID                                        |
 | bidId        | long    | `1874564572563538130` | Buy side order ID                               |
 | askId        | long    | `1954072405852309104` | Sell side order ID                              |
@@ -2635,7 +2762,7 @@ If this interface (/fapi/v1/orderHistorical) return does not meet expectations, 
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -2643,7 +2770,7 @@ If this interface (/fapi/v1/orderHistorical) return does not meet expectations, 
 **Request Parameter**
 
 | Parameter                                | Type    | Description                                                   |
-| :----------------------------------------| :-------| :-------------------------------------------------------------|
+|:-----------------------------------------|:--------|:--------------------------------------------------------------|
 | contractName<font color="red">\*</font>  | string  | `Uppercase` contract name E.g. `E-BTC-USDT`                   |
 | positionModel<font color="red">\*</font> | integer | The model of position(1: `Net position`, 2: `Hedge position`) |
 
@@ -2664,7 +2791,7 @@ If this interface (/fapi/v1/orderHistorical) return does not meet expectations, 
 **Request Headers**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -2672,7 +2799,7 @@ If this interface (/fapi/v1/orderHistorical) return does not meet expectations, 
 **Request Parameter**
 
 | Parameter                                | Type    | Description                                                   |
-| :----------------------------------------| :-------| :-------------------------------------------------------------|
+|:-----------------------------------------|:--------|:--------------------------------------------------------------|
 | contractName<font color="red">\*</font>  | string  | `Uppercase` contract name E.g. `E-BTC-USDT`                   |
 | positionModel<font color="red">\*</font> | integer | The model of position(1: `Net position`, 2: `Hedge position`) |
 
@@ -2693,7 +2820,7 @@ If this interface (/fapi/v1/orderHistorical) return does not meet expectations, 
 **Request Header**
 
 | Parameter                              | Type    | Description    |
-| :--------------------------------------| :-------| :--------------|
+|:---------------------------------------|:--------|:---------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | Signature      |
 | X-CH-APIKEY<font color="red">\*</font> | string  | User's API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | Timestamp      |
@@ -2743,7 +2870,7 @@ To maintain a valid and stable connection, it is recommended to perform the foll
 ## Command Format
 
 | event   | channel                       | description                                |
-| :-------| :-----------------------------| :------------------------------------------|
+|:--------|:------------------------------|:-------------------------------------------|
 | `sub`   | `market_$symbol_depth_step0`  | `Subscribe to depth`                       |
 | `unsub` | `market_$symbol_depth_step0`  | `Unsubscribe from depth`                   |
 | `sub`   | `market_$symbol_trade_ticker` | `Subscribe to real-time trade`             |
