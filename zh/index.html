@@ -566,6 +566,9 @@
                             <a href="#ticker" class="toc-h3 toc-link" data-title="行情Ticker">行情Ticker</a>
                           </li>
                           <li>
+                            <a href="#ticker-v2" class="toc-h3 toc-link" data-title="行情Ticker-V2">行情Ticker-V2</a>
+                          </li>
+                          <li>
                             <a href="#fceaf3d0b6" class="toc-h3 toc-link" data-title="最近成交">最近成交</a>
                           </li>
                           <li>
@@ -661,6 +664,9 @@
                           </li>
                           <li>
                             <a href="#ticker-2" class="toc-h3 toc-link" data-title="行情Ticker">行情Ticker</a>
+                          </li>
+                          <li>
+                            <a href="#ticker-v2-2" class="toc-h3 toc-link" data-title="行情Ticker-V2">行情Ticker-V2</a>
                           </li>
                           <li>
                             <a href="#c3474f0c9f" class="toc-h3 toc-link" data-title="获取指数/标记价格">获取指数/标记价格</a>
@@ -952,7 +958,7 @@
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/time
 
-// Headers 设定
+// request headers
 Content-Type:application/json
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="s2">"https://openapi.fameex.net/sapi/v1/time"</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
@@ -1180,7 +1186,7 @@ Content-Type:application/json
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/order?orderId=12&amp;symbol=ethusdt
 
-// Headers 设定
+// request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
 X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
@@ -1574,8 +1580,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <blockquote>
 <p>HMAC-SHA256 签名示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">// 切换 Node.js 查看 『JavaScript 代码（归类在 HTTP 下）』
-</span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># 生成签名 (X-CH-SIGN) - GET 请求没有 body</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># 生成签名 (X-CH-SIGN) - GET 请求没有 body</span>
 <span class="nv">SIGN_PAYLOAD</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">timestamp</span><span class="k">}${</span><span class="nv">METHOD</span><span class="k">}${</span><span class="nv">REQUEST_PATH</span><span class="k">}</span><span class="s2">"</span>
 <span class="nv">SIGNATURE</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"</span><span class="nv">$SIGN_PAYLOAD</span><span class="s2">"</span> | openssl dgst <span class="nt">-sha256</span> <span class="nt">-hmac</span> <span class="s2">"</span><span class="nv">$API_SECRET</span><span class="s2">"</span> | <span class="nb">awk</span> <span class="s1">'{print $2}'</span><span class="si">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="c1">// HMAC-SHA256 签名计算</span>
@@ -1737,7 +1742,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.fameex.net/sapi/v1/order/test
 
-// Headers 设定
+// request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
 X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
@@ -2145,8 +2150,7 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 <blockquote>
 <p>HMAC-SHA256 签名示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">// 切换 Node.js 查看 『JavaScript 代码（归类在 HTTP 下）』
-</span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># 生成 X-CH-SIGN 签名指令</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># 生成 X-CH-SIGN 签名指令</span>
 <span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"1739520816000POST/sapi/v1/order/test{</span><span class="se">\"</span><span class="s2">symbol</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">BTCUSDT</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">price</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">9300</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">volume</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">1</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">side</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">BUY</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">type</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">LIMIT</span><span class="se">\"</span><span class="s2">}"</span> | openssl dgst <span class="nt">-sha256</span> <span class="nt">-hmac</span> <span class="s2">"709f1e13068f5e51123252d1e6851117"</span>
 
 <span class="c"># 生成 X-CH-SIGN 签名数据</span>
@@ -3043,7 +3047,7 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/ping
 
-// Headers 设定
+// request headers
 Content-Type:application/json
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="s2">"https://openapi.fameex.net/sapi/v1/ping"</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
@@ -3175,7 +3179,7 @@ Content-Type:application/json
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/time
 
-// Headers 设定
+// request headers
 Content-Type:application/json
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="s2">"https://openapi.fameex.net/sapi/v1/time"</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
@@ -3336,7 +3340,7 @@ Content-Type:application/json
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/symbols
 
-// Headers 设定
+// request headers
 Content-Type:application/json
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="s2">"https://openapi.fameex.net/sapi/v1/symbols"</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
@@ -3615,7 +3619,7 @@ Content-Type:application/json
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/depth?symbol=BTCUSDT&amp;limit=100
 
-// Headers 设定
+// request headers
 Content-Type: application/json
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
@@ -3926,7 +3930,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/ticker?symbol=BTCUSDT
 
-// Headers 设定
+// request headers
 Content-Type: application/json
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
@@ -4263,6 +4267,124 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <td style="text-align: left">涨跌幅，<code>+</code>为涨，<code>-</code>为跌，<code>+0.05</code>为涨<code>5%</code></td>
 </tr>
 </tbody></table>
+<h3 id='ticker-v2'>行情Ticker-V2</h3>
+<p><code>GET https://openapi.fameex.net/v2/public/ticker</code></p>
+
+<p>获取24小时价格变化数据</p>
+
+<blockquote>
+<p>请求示例</p>
+</blockquote>
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/v2/public/ticker
+
+// request headers
+Content-Type: application/json
+</span></code></pre></div>
+<blockquote>
+<p>返回示例</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Succeed"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"MNT_USDT"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"base_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MNT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quote_volume"</span><span class="p">:</span><span class="w"> </span><span class="mf">3049025.662482</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quote_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"base_volume"</span><span class="p">:</span><span class="w"> </span><span class="mf">4123162.07</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"isFrozen"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"last_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.7491</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"PEPE_USDT"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"base_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PEPE"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quote_volume"</span><span class="p">:</span><span class="w"> </span><span class="mf">19215044.55550406</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quote_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"base_volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">2733395751472</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"isFrozen"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"last_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00000731</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"message"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"succ"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>返回参数</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">参数名</th>
+<th style="text-align: left">类型</th>
+<th style="text-align: left">示例</th>
+<th style="text-align: left">描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>0</code></td>
+<td style="text-align: left">返回码</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>Succeed</code></td>
+<td style="text-align: left">返回信息</td>
+</tr>
+<tr>
+<td style="text-align: left">message</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>null</code></td>
+<td style="text-align: left">错误信息</td>
+</tr>
+<tr>
+<td style="text-align: left">succ</td>
+<td style="text-align: left">boolean</td>
+<td style="text-align: left">true</td>
+<td style="text-align: left">操作标识</td>
+</tr>
+<tr>
+<td style="text-align: left">data</td>
+<td style="text-align: left">object</td>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: left">base_id</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>PEPE</code></td>
+<td style="text-align: left">交易币种</td>
+</tr>
+<tr>
+<td style="text-align: left">quote_id</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>USDT</code></td>
+<td style="text-align: left">计价币种</td>
+</tr>
+<tr>
+<td style="text-align: left">base_volume</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2733395751472</code></td>
+<td style="text-align: left">交易额</td>
+</tr>
+<tr>
+<td style="text-align: left">quote_volume</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>19215044.55550406</code></td>
+<td style="text-align: left">交易量</td>
+</tr>
+<tr>
+<td style="text-align: left">last_price</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>0.00000731</code></td>
+<td style="text-align: left">最新成交价</td>
+</tr>
+<tr>
+<td style="text-align: left">isFrozen</td>
+<td style="text-align: left">number</td>
+<td style="text-align: left"><code>1</code></td>
+<td style="text-align: left">冻结标识</td>
+</tr>
+</tbody></table>
 
 <p><a name="现货交易-行情-最近成交"></a></p>
 <h3 id='fceaf3d0b6'>最近成交</h3>
@@ -4275,7 +4397,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/trades?symbol=BTCUSDT&amp;limit=10
 
-// Headers 设定
+// request headers
 Content-Type: application/json
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
@@ -4600,7 +4722,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/klines?symbol=BTCUSDT&amp;interval=1min&amp;limit=5
 
-// Headers 设定
+// request headers
 Content-Type: application/json
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
@@ -4982,7 +5104,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.fameex.net/sapi/v1/order
 
-// Headers 设定
+// request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
 X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
@@ -6087,7 +6209,7 @@ body
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.fameex.net/sapi/v1/order/test
 
-// Headers 设定
+// request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
 X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
@@ -6538,7 +6660,9 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{}</span><span class="w">
 </span></code></pre></div>
-<!-- ### 批量下单
+<!--
+
+### 批量下单
 
 `POST https://openapi.fameex.net/sapi/v1/batchOrders`
 
@@ -6547,7 +6671,7 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 **请求头**
 
 | 参数名                                 | 类型    | 描述        |
-| :--------------------------------------| :-------| :-----------|
+|:---------------------------------------|:--------|:------------|
 | X-CH-SIGN<font color="red">\*</font>   | string  | 签名        |
 | X-CH-APIKEY<font color="red">\*</font> | string  | 您的API-key |
 | X-CH-TS<font color="red">\*</font>     | integer | 时间戳      |
@@ -6580,7 +6704,7 @@ body
 **请求参数**
 
 | 参数名    | 类型   | 示例           | 描述     |
-| :---------| :------| :--------------| :--------|
+|:----------|:-------|:---------------|:---------|
 | symbol    | string | `ETHUSDT`      | 币对名称 |
 | price     | float  | `2100.00`      | 价格     |
 | volume    | float  | `1.00`         | 数量     |
@@ -6602,8 +6726,10 @@ body
 **返回参数**
 
 | 参数名 | 类型  | 示例 | 描述       |
-| :------| :-----| :----| :----------|
-| ids    | array |      | 订单id数组 | -->
+|:-------|:------|:-----|:-----------|
+| ids    | array |      | 订单id数组 |
+
+-->
 <h3 id='1285d91409'>订单查询</h3>
 <p><code>GET https://openapi.fameex.net/sapi/v1/order</code></p>
 
@@ -6640,7 +6766,7 @@ body
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/order?orderId=2618039663715064005&amp;symbol=btcusdt
 
-// Headers 设定
+// request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
 X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
@@ -7181,7 +7307,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v2/order?orderId=2618039663715064005&amp;symbol=btcusdt
 
-// Headers 设定
+// request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
 X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
@@ -7722,7 +7848,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.fameex.net/sapi/v1/cancel
 
-// Headers 设定
+// request headers
 Content-Type: application/json
 X-CH-TS: 1739945835000
 X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
@@ -8670,7 +8796,7 @@ body
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://openapi.fameex.net/sapi/v1/batchCancel
 
-// Headers 设定
+// request headers
 Content-Type: application/json
 X-CH-TS: 1739945835000
 X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
@@ -9086,7 +9212,7 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/openOrders?symbol=btcusdt&amp;limit=10
 
-// Headers 设定
+// request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
 X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
@@ -9635,7 +9761,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v2/openOrders?symbol=btcusdt&amp;limit=10
 
-// Headers 设定
+// request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
 X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
@@ -10184,7 +10310,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/myTrades?symbol=BTCUSDT&amp;limit=100
 
-// Headers 设定
+// request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
 X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
@@ -10775,7 +10901,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://openapi.fameex.net/sapi/v1/account
 
-// Headers 设定
+// request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
 X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
@@ -11259,7 +11385,7 @@ GET https://openapi.fameex.net/sapi/v1/account/balance
 // 查询USDT，BTC，ETH
 GET https://openapi.fameex.net/sapi/v1/account/balance?symbols=USDT,BTC,ETH
 
-// Headers 设定
+// request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
 X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
@@ -11729,7 +11855,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.fameex.net/fapi/v1/ping
 
-// Headers 设定
+// request headers
 Content-Type:application/json
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="s2">"https://futuresopenapi.fameex.net/fapi/v1/ping"</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
@@ -11864,7 +11990,7 @@ Content-Type:application/json
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.fameex.net/fapi/v1/time
 
-// Headers 设定
+// request headers
 Content-Type:application/json
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="s2">"https://futuresopenapi.fameex.net/fapi/v1/time"</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
@@ -12020,7 +12146,7 @@ Content-Type:application/json
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.fameex.net/fapi/v1/contracts
 
-// Headers 设定
+// request headers
 Content-Type:application/json
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="s2">"https://futuresopenapi.fameex.net/fapi/v1/contracts"</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
@@ -12276,7 +12402,7 @@ Content-Type:application/json
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.fameex.net/fapi/v1/depth?contractName=E-BTC-USDT&amp;limit=100
 
-// Headers 设定
+// request headers
 Content-Type:application/json
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="s2">"https://futuresopenapi.fameex.net/fapi/v1/depth?contractName=E-BTC-USDT&amp;limit=100"</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
@@ -12482,7 +12608,7 @@ Content-Type:application/json
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.fameex.net/fapi/v1/ticker?contractName=E-BTC-USDT
 
-// Headers 设定
+// request headers
 Content-Type:application/json
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="s2">"https://futuresopenapi.fameex.net/fapi/v1/ticker?contractName=E-BTC-USDT"</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
@@ -12688,6 +12814,157 @@ Content-Type:application/json
 <td style="text-align: left">卖一价格</td>
 </tr>
 </tbody></table>
+<h3 id='ticker-v2-2'>行情Ticker-V2</h3>
+<p><code>GET https://futuresopenapi.fameex.net/swap-api/v2/tickers</code></p>
+
+<p>24小时价格变化数据</p>
+
+<blockquote>
+<p>请求示例</p>
+</blockquote>
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.fameex.net/swap-api/v2/tickers
+
+// request headers
+Content-Type:application/json
+</span></code></pre></div>
+<blockquote>
+<p>返回示例</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"base_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"open_interest_usd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3158506.047"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"quote_volume"</span><span class="p">:</span><span class="w"> </span><span class="s2">"475254656162"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"base_volume"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2135453.51"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"open_interest"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1372.13"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"index_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2302.705"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"basis"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0003"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"quote_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ticker_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH-USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"funding_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0000632068687814"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2318.84"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"product_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Perpetual"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2160.71"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ask"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2301.96"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"next_funding_rate_timestam"</span><span class="p">:</span><span class="w"> </span><span class="mi">1741248000000</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"bid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2301.8"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"last_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2301.9"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p><strong>返回参数</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">参数名</th>
+<th style="text-align: left">类型</th>
+<th style="text-align: left">示例</th>
+<th style="text-align: left">描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ticker_id</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>ETH-USDT</code></td>
+<td style="text-align: left">交易对</td>
+</tr>
+<tr>
+<td style="text-align: left">product_type</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>Perpetual</code></td>
+<td style="text-align: left">合约类型</td>
+</tr>
+<tr>
+<td style="text-align: left">base_currency</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>ETH</code></td>
+<td style="text-align: left">交易币种</td>
+</tr>
+<tr>
+<td style="text-align: left">quote_currency</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>USDT</code></td>
+<td style="text-align: left">计价币种</td>
+</tr>
+<tr>
+<td style="text-align: left">last_price</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2301.9</code></td>
+<td style="text-align: left">最新成交价</td>
+</tr>
+<tr>
+<td style="text-align: left">index_price</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2302.705</code></td>
+<td style="text-align: left">指数价格</td>
+</tr>
+<tr>
+<td style="text-align: left">base_volume</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2135453.51</code></td>
+<td style="text-align: left">交易量</td>
+</tr>
+<tr>
+<td style="text-align: left">quote_volume</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left"><code>475254656162</code></td>
+<td style="text-align: left">交易额</td>
+</tr>
+<tr>
+<td style="text-align: left">bid</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2301.8</code></td>
+<td style="text-align: left">买一价格</td>
+</tr>
+<tr>
+<td style="text-align: left">ask</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2301.96</code></td>
+<td style="text-align: left">卖一价格</td>
+</tr>
+<tr>
+<td style="text-align: left">high</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2318.84</code></td>
+<td style="text-align: left">最高价格</td>
+</tr>
+<tr>
+<td style="text-align: left">low</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2160.71</code></td>
+<td style="text-align: left">最低价格</td>
+</tr>
+<tr>
+<td style="text-align: left">open_interest</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>2160.71</code></td>
+<td style="text-align: left">开仓数量</td>
+</tr>
+<tr>
+<td style="text-align: left">open_interest_usd</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>55990.10</code></td>
+<td style="text-align: left">开仓金额</td>
+</tr>
+<tr>
+<td style="text-align: left">basis</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>55990.10</code></td>
+<td style="text-align: left">基差</td>
+</tr>
+<tr>
+<td style="text-align: left">funding_rate</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>55990.10</code></td>
+<td style="text-align: left">资金费率</td>
+</tr>
+<tr>
+<td style="text-align: left">next_funding_rate_timestam</td>
+<td style="text-align: left">float</td>
+<td style="text-align: left"><code>55990.10</code></td>
+<td style="text-align: left">下一期资金费率时间</td>
+</tr>
+</tbody></table>
 <h3 id='c3474f0c9f'>获取指数/标记价格</h3>
 <p><code>GET</code> <code>https://futuresopenapi.fameex.net/fapi/v1/index</code></p>
 
@@ -12696,7 +12973,7 @@ Content-Type:application/json
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.fameex.net/fapi/v1/index?contractName=E-BTC-USDT&amp;limit=100
 
-// Headers 设定
+// request headers
 Content-Type:application/json
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="s2">"https://futuresopenapi.fameex.net/fapi/v1/index?contractName=E-BTC-USDT&amp;limit=100"</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
@@ -12887,7 +13164,7 @@ Content-Type:application/json
 </blockquote>
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">GET https://futuresopenapi.fameex.net/fapi/v1/klines?contractName=E-BTC-USDT&amp;interval=1min&amp;limit=100&amp;startTime=1739116800000&amp;endTime=1739852318000
 
-// Headers 设定
+// request headers
 Content-Type:application/json
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="s2">"https://futuresopenapi.fameex.net/fapi/v1/klines?contractName=E-BTC-USDT&amp;interval=1min&amp;limit=100&amp;startTime=1739116800000&amp;endTime=1739852318000"</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
