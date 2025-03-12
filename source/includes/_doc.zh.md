@@ -279,8 +279,8 @@ https.get(url, (res) => {
 
 | Key         | Value                            |
 |:------------|:---------------------------------|
-| `apiKey`    | vmPUZE6mv9SD5V5e14y7Ju91duEh8A   |
-| `secretKey` | 902ae3cb34ecee2779aa4d3e1d226686 |
+| `apiKey`    | 您的API-KEY   |
+| `secretKey` | 您的API-SECRET |
 
 以下是在 linux bash 环境下使用 echo，openssl 和 curl 工具实现的一个调用接口下单的示例。<font color="red">（其中以上的 `apikey`、`secretKey` 仅供示范，请将其替换为您的真实 `apiKey` 和 `secretKey`）</font>
 
@@ -292,7 +292,7 @@ GET https://t(:open_url)/sapi/v1/order?orderId=12&symbol=ethusdt
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 ```
 
@@ -309,8 +309,8 @@ REQUEST_PATH="${REQUEST_URL}${QUERY_STRING}"
 FULL_URL="${API_URL}${REQUEST_PATH}"
 
 # API 认证信息
-API_KEY="vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET="902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY="您的API-KEY"
+API_SECRET="您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp=$(date +%s | awk '{print $1 * 1000}')
@@ -361,8 +361,8 @@ public class FameexApiRequest {
             String fullUrl = apiUrl + requestPath;
 
             // API 认证信息
-            String apiKey = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-            String apiSecret = "902ae3cb34ecee2779aa4d3e1d226686";
+            String apiKey = "您的API-KEY";
+            String apiSecret = "您的API-SECRET";
 
             // 生成当前毫秒级时间戳
             String timestamp = String.valueOf(Instant.now().toEpochMilli());
@@ -464,8 +464,8 @@ func main() {
 	fullURL := apiURL + requestPath
 
 	// API 认证信息
-	apiKey := "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-	apiSecret := "902ae3cb34ecee2779aa4d3e1d226686"
+	apiKey := "您的API-KEY"
+	apiSecret := "您的API-SECRET"
 
 	// 生成当前毫秒级时间戳
 	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
@@ -545,8 +545,8 @@ REQUEST_PATH = REQUEST_URL + QUERY_STRING
 FULL_URL = API_URL + REQUEST_PATH
 
 # API 认证信息
-API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp = str(int(time.time() * 1000))
@@ -595,8 +595,8 @@ $REQUEST_PATH = $REQUEST_URL . $QUERY_STRING;
 $FULL_URL = $API_URL . $REQUEST_PATH;
 
 // API 认证信息
-$API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-$API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+$API_KEY = "您的API-KEY";
+$API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 $timestamp = round(microtime(true) * 1000);
@@ -656,8 +656,8 @@ const REQUEST_PATH = REQUEST_URL + QUERY_STRING;
 const FULL_URL = API_URL + REQUEST_PATH;
 
 // API 认证信息
-const API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-const API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 const timestamp = Date.now().toString();
@@ -700,6 +700,10 @@ axios
 ```
 
 > HMAC-SHA256 签名示例
+
+```http
+// 切换 Node.js 查看 『JavaScript 代码（归类在 HTTP 下）』
+```
 
 ```shell
 # 生成签名 (X-CH-SIGN) - GET 请求没有 body
@@ -828,8 +832,8 @@ pm.variables.set('xChSign', signature);
 
 | Key         | Value                            |
 |:------------|:---------------------------------|
-| `apiKey`    | vmPUZE6mv9SD5V5e14y7Ju91duEh8A   |
-| `secretKey` | 902ae3cb34ecee2779aa4d3e1d226686 |
+| `apiKey`    | 您的API-KEY   |
+| `secretKey` | 您的API-SECRET |
 
 以下是在 linux bash 环境下使用 echo，openssl 和 curl 工具实现的一个调用接口下单的示例。<font color="red">（其中以上的 `apikey`、`secretKey` 仅供示范，请将其替换为您的真实 `apiKey` 和 `secretKey`）</font>
 
@@ -841,7 +845,7 @@ POST https://t(:open_url)/sapi/v1/order/test
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 ```
 
@@ -852,8 +856,8 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 URL="https://t(:open_url)"
 REQUEST_PATH="/sapi/v1/order/test"
 API_URL="${URL}${REQUEST_PATH}"
-API_KEY="vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET="902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY="您的API-KEY"
+API_SECRET="您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp=$(date +%s | awk '{print $1 * 1000}')
@@ -903,8 +907,8 @@ public class FameexApiRequest {
             String url = "https://t(:open_url)";
             String requestPath = "/sapi/v1/order/test";
             String apiUrl = url + requestPath;\
-            String apiKey = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-            String apiSecret = "902ae3cb34ecee2779aa4d3e1d226686";
+            String apiKey = "您的API-KEY";
+            String apiSecret = "您的API-SECRET";
 
             // 获取当前毫秒级时间戳
             String timestamp = String.valueOf(Instant.now().toEpochMilli());
@@ -1008,8 +1012,8 @@ func main() {
     url := "https://t(:open_url)"
     requestPath := "/sapi/v1/order/test"
 	apiURL := url + requestPath
-	apiKey := "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-	apiSecret := "902ae3cb34ecee2779aa4d3e1d226686"
+	apiKey := "您的API-KEY"
+	apiSecret := "您的API-SECRET"
 
 	// 生成当前毫秒级时间戳
 	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
@@ -1085,8 +1089,8 @@ import json
 URL = "https://t(:open_url)"
 REQUEST_PATH = "/sapi/v1/order/test"
 API_URL = URL + REQUEST_PATH
-API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp = str(int(time.time() * 1000))
@@ -1139,8 +1143,8 @@ print("Response Body:", response.text)
 $url = "https://t(:open_url)";
 $request_path = "/sapi/v1/order/test";
 $api_url = $url . $request_path;
-$api_key = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-$api_secret = "902ae3cb34ecee2779aa4d3e1d226686";
+$api_key = "您的API-KEY";
+$api_secret = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 $timestamp = round(microtime(true) * 1000);
@@ -1204,8 +1208,8 @@ const crypto = require("crypto");
 const URL = "https://t(:open_url)";
 const REQUEST_PATH = "/sapi/v1/order/test";
 const API_URL = URL + REQUEST_PATH;
-const API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-const API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 const timestamp = Date.now().toString();
@@ -2928,6 +2932,256 @@ GET https://t(:open_url)/v2/public/ticker
 Content-Type: application/json
 ```
 
+```shell
+#!/bin/bash
+
+# 设置 API 相关信息
+API_URL="https://t(:open_url)"
+REQUEST_URL="/v2/public/ticker"
+
+# 计算完整的请求路径
+REQUEST_PATH="${REQUEST_URL}"
+FULL_URL="${API_URL}${REQUEST_PATH}"
+
+# 定义请求方法
+METHOD="GET"
+
+# **打印调试信息**
+echo "==== 请求信息 ===="
+echo "Request URL: ${FULL_URL}"
+echo "=================="
+
+# 发送 GET 请求
+curl -X GET "$FULL_URL" \
+    -H "Content-Type: application/json"
+```
+
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.time.Instant;
+import java.util.Scanner;
+
+public class FameexApiRequest {
+    public static void main(String[] args) {
+        try {
+            // API 相关信息
+            String apiUrl = "https://t(:open_url)";
+            String requestUrl = "/v2/public/ticker";
+
+            // 计算完整的请求路径
+            String requestPath = requestUrl;
+            String fullUrl = apiUrl + requestPath;
+
+            // 请求方法
+            String method = "GET";
+
+            // **打印调试信息**
+            System.out.println("==== 请求信息 ====");
+            System.out.println("Request URL: " + fullUrl);
+            System.out.println("==================");
+
+            // 发送 GET 请求
+            sendGetRequest(fullUrl);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 发送 HTTP GET 请求
+    public static void sendGetRequest(String fullUrl) {
+        try {
+            URL url = new URL(fullUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+
+            // 设置请求头
+            conn.setRequestProperty("Content-Type", "application/json");
+
+            // 发送请求并获取响应
+            int responseCode = conn.getResponseCode();
+            System.out.println("Response Code: " + responseCode);
+
+            Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name());
+            while (scanner.hasNextLine()) {
+                System.out.println(scanner.nextLine());
+            }
+            scanner.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	// API 相关信息
+	apiURL := "https://t(:open_url)"
+	requestURL := "/v2/public/ticker"
+
+	// 计算完整的请求路径
+	requestPath := requestURL
+	fullURL := apiURL + requestPath
+
+	// 请求方法
+	method := "GET"
+
+	// **打印调试信息**
+	fmt.Println("==== 请求信息 ====")
+	fmt.Println("Request URL:", fullURL)
+	fmt.Println("==================")
+
+	// 发送 GET 请求
+	sendGetRequest(fullURL, method)
+}
+
+// 发送 HTTP GET 请求
+func sendGetRequest(fullURL, method string) {
+	client := &http.Client{}
+
+	// 创建请求
+	req, err := http.NewRequest(method, fullURL, nil)
+	if err != nil {
+		fmt.Println("Error creating request:", err)
+		return
+	}
+
+	// 设置 Headers
+	req.Header.Set("Content-Type", "application/json")
+
+	// 发送请求
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error sending request:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应
+	body, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("Response Code:", resp.StatusCode)
+	fmt.Println("Response Body:", string(body))
+}
+```
+
+```python
+import time
+import hmac
+import hashlib
+import requests
+
+# API 相关信息
+API_URL = "https://t(:open_url)"
+REQUEST_URL = "/v2/public/ticker"
+
+# 计算完整的请求路径
+REQUEST_PATH = REQUEST_URL
+FULL_URL = API_URL + REQUEST_PATH
+
+# **打印调试信息**
+print("==== 请求信息 ====")
+print("Request URL:", FULL_URL)
+print("==================")
+
+# 发送 GET 请求
+headers = {
+    "Content-Type": "application/json"
+}
+
+response = requests.get(FULL_URL, headers=headers)
+
+# 打印响应
+print("Response Code:", response.status_code)
+print("Response Body:", response.text)
+
+```
+
+```php
+<?
+
+// API 相关信息
+$API_URL = "https://t(:open_url)";
+$REQUEST_URL = "/v2/public/ticker";
+
+// 计算完整的请求路径
+$REQUEST_PATH = $REQUEST_URL;
+$FULL_URL = $API_URL . $REQUEST_PATH;
+
+// **打印调试信息**
+echo "==== 请求信息 ====\n";
+echo "Request URL: " . $FULL_URL . "\n";
+echo "==================\n";
+
+// 发送 GET 请求
+$headers = [
+    "Content-Type: application/json",
+];
+
+// 使用 cURL 发送 GET 请求
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $FULL_URL);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+// 执行请求并获取响应
+$response = curl_exec($ch);
+$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+
+// 打印响应
+echo "Response Code: $http_code\n";
+echo "Response Body: $response\n";
+
+?>
+```
+
+```javascript--node
+const axios = require("axios");
+const crypto = require("crypto");
+
+// API 相关信息
+const API_URL = "https://t(:open_url)";
+const REQUEST_URL = "/v2/public/ticker";
+
+// 计算完整的请求路径
+const REQUEST_PATH = REQUEST_URL;
+const FULL_URL = API_URL + REQUEST_PATH;
+
+// **打印调试信息**
+console.log("==== 请求信息 ====");
+console.log("Request URL:", FULL_URL);
+console.log("==================");
+
+// 发送 GET 请求
+const headers = {
+  "Content-Type": "application/json",
+};
+
+axios
+  .get(FULL_URL, { headers })
+  .then((response) => {
+    console.log("Response Code:", response.status);
+    console.log("Response Body:", response.data);
+  })
+  .catch((error) => {
+    console.error("Error:", error.response ? error.response.data : error.message);
+  });
+```
+
 > 返回示例
 
 ```json
@@ -3631,7 +3885,7 @@ POST https://t(:open_url)/sapi/v1/order
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 ```
 
@@ -3642,8 +3896,8 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 URL="https://t(:open_url)"
 REQUEST_PATH="/sapi/v1/order"
 API_URL="${URL}${REQUEST_PATH}"
-API_KEY="vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET="902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY="您的API-KEY"
+API_SECRET="您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp=$(date +%s | awk '{print $1 * 1000}')
@@ -3693,8 +3947,8 @@ public class FameexApiRequest {
             String url = "https://t(:open_url)";
             String requestPath = "/sapi/v1/order";
             String apiUrl = url + requestPath;
-            String apiKey = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-            String apiSecret = "902ae3cb34ecee2779aa4d3e1d226686";
+            String apiKey = "您的API-KEY";
+            String apiSecret = "您的API-SECRET";
 
             // 获取当前毫秒级时间戳
             String timestamp = String.valueOf(Instant.now().toEpochMilli());
@@ -3798,8 +4052,8 @@ func main() {
     url := "https://t(:open_url)"
     requestPath := "/sapi/v1/order"
 	apiURL := url + requestPath
-	apiKey := "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-	apiSecret := "902ae3cb34ecee2779aa4d3e1d226686"
+	apiKey := "您的API-KEY"
+	apiSecret := "您的API-SECRET"
 
 	// 生成当前毫秒级时间戳
 	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
@@ -3875,8 +4129,8 @@ import json
 URL = "https://t(:open_url)"
 REQUEST_PATH = "/sapi/v1/order"
 API_URL = URL + REQUEST_PATH
-API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp = str(int(time.time() * 1000))
@@ -3931,8 +4185,8 @@ print("Response Body:", response.text)
 $url = "https://t(:open_url)";
 $request_path = "/sapi/v1/order";
 $api_url = $url . $request_path;
-$api_key = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-$api_secret = "902ae3cb34ecee2779aa4d3e1d226686";
+$api_key = "您的API-KEY";
+$api_secret = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 $timestamp = round(microtime(true) * 1000);
@@ -3996,8 +4250,8 @@ const crypto = require("crypto");
 const URL = "https://t(:open_url)";
 const REQUEST_PATH = "/sapi/v1/order";
 const API_URL = URL + REQUEST_PATH;
-const API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-const API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 const timestamp = Date.now().toString();
@@ -4566,7 +4820,7 @@ POST https://t(:open_url)/sapi/v1/order/test
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 ```
 
@@ -4577,8 +4831,8 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 URL="https://t(:open_url)"
 REQUEST_PATH="/sapi/v1/order/test"
 API_URL="${URL}${REQUEST_PATH}"
-API_KEY="vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET="902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY="您的API-KEY"
+API_SECRET="您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp=$(date +%s | awk '{print $1 * 1000}')
@@ -4628,8 +4882,8 @@ public class FameexApiRequest {
             String url = "https://t(:open_url)";
             String requestPath = "/sapi/v1/order/test";
             String apiUrl = url + requestPath;
-            String apiKey = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-            String apiSecret = "902ae3cb34ecee2779aa4d3e1d226686";
+            String apiKey = "您的API-KEY";
+            String apiSecret = "您的API-SECRET";
 
             // 获取当前毫秒级时间戳
             String timestamp = String.valueOf(Instant.now().toEpochMilli());
@@ -4733,8 +4987,8 @@ func main() {
     url := "https://t(:open_url)"
     requestPath := "/sapi/v1/order/test"
 	apiURL := url + requestPath
-	apiKey := "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-	apiSecret := "902ae3cb34ecee2779aa4d3e1d226686"
+	apiKey := "您的API-KEY"
+	apiSecret := "您的API-SECRET"
 
 	// 生成当前毫秒级时间戳
 	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
@@ -4810,8 +5064,8 @@ import json
 URL = "https://t(:open_url)"
 REQUEST_PATH = "/sapi/v1/order/test"
 API_URL = URL + REQUEST_PATH
-API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp = str(int(time.time() * 1000))
@@ -4864,8 +5118,8 @@ print("Response Body:", response.text)
 $url = "https://t(:open_url)";
 $request_path = "/sapi/v1/order/test";
 $api_url = $url . $request_path;
-$api_key = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-$api_secret = "902ae3cb34ecee2779aa4d3e1d226686";
+$api_key = "您的API-KEY";
+$api_secret = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 $timestamp = round(microtime(true) * 1000);
@@ -4929,8 +5183,8 @@ const crypto = require("crypto");
 const URL = "https://t(:open_url)";
 const REQUEST_PATH = "/sapi/v1/order/test";
 const API_URL = URL + REQUEST_PATH;
-const API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-const API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 const timestamp = Date.now().toString();
@@ -5098,7 +5352,7 @@ GET https://t(:open_url)/sapi/v1/order?orderId=2618039663715064005&symbol=btcusd
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 ```
 
@@ -5115,8 +5369,8 @@ REQUEST_PATH="${REQUEST_URL}${QUERY_STRING}"
 FULL_URL="${API_URL}${REQUEST_PATH}"
 
 # API 认证信息
-API_KEY="vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET="902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY="您的API-KEY"
+API_SECRET="您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp=$(date +%s | awk '{print $1 * 1000}')
@@ -5167,8 +5421,8 @@ public class FameexApiRequest {
             String fullUrl = apiUrl + requestPath;
 
             // API 认证信息
-            String apiKey = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-            String apiSecret = "902ae3cb34ecee2779aa4d3e1d226686";
+            String apiKey = "您的API-KEY";
+            String apiSecret = "您的API-SECRET";
 
             // 生成当前毫秒级时间戳
             String timestamp = String.valueOf(Instant.now().toEpochMilli());
@@ -5270,8 +5524,8 @@ func main() {
 	fullURL := apiURL + requestPath
 
 	// API 认证信息
-	apiKey := "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-	apiSecret := "902ae3cb34ecee2779aa4d3e1d226686"
+	apiKey := "您的API-KEY"
+	apiSecret := "您的API-SECRET"
 
 	// 生成当前毫秒级时间戳
 	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
@@ -5351,8 +5605,8 @@ REQUEST_PATH = REQUEST_URL + QUERY_STRING
 FULL_URL = API_URL + REQUEST_PATH
 
 # API 认证信息
-API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp = str(int(time.time() * 1000))
@@ -5401,8 +5655,8 @@ $REQUEST_PATH = $REQUEST_URL . $QUERY_STRING;
 $FULL_URL = $API_URL . $REQUEST_PATH;
 
 // API 认证信息
-$API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-$API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+$API_KEY = "您的API-KEY";
+$API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 $timestamp = round(microtime(true) * 1000);
@@ -5462,8 +5716,8 @@ const REQUEST_PATH = REQUEST_URL + QUERY_STRING;
 const FULL_URL = API_URL + REQUEST_PATH;
 
 // API 认证信息
-const API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-const API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 const timestamp = Date.now().toString();
@@ -5562,12 +5816,12 @@ axios
 > 请求示例
 
 ```http
-GET https://openapi.fameex.net/sapi/v2/order?orderId=2618039663715064005&symbol=btcusdt
+GET https://t(:open_url)/sapi/v2/order?orderId=2618039663715064005&symbol=btcusdt
 
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 ```
 
@@ -5575,7 +5829,7 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 #!/bin/bash
 
 # 设置 API 相关信息
-API_URL="https://openapi.fameex.net"
+API_URL="https://t(:open_url)"
 REQUEST_URL="/sapi/v2/order"
 QUERY_STRING="?orderId=2618039663715064005&symbol=btcusdt"
 
@@ -5584,8 +5838,8 @@ REQUEST_PATH="${REQUEST_URL}${QUERY_STRING}"
 FULL_URL="${API_URL}${REQUEST_PATH}"
 
 # API 认证信息
-API_KEY="vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET="902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY="您的API-KEY"
+API_SECRET="您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp=$(date +%s | awk '{print $1 * 1000}')
@@ -5627,7 +5881,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API 相关信息
-            String apiUrl = "https://openapi.fameex.net";
+            String apiUrl = "https://t(:open_url)";
             String requestUrl = "/sapi/v2/order";
             String queryString = "?orderId=2618039663715064005&symbol=btcusdt";
 
@@ -5636,8 +5890,8 @@ public class FameexApiRequest {
             String fullUrl = apiUrl + requestPath;
 
             // API 认证信息
-            String apiKey = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-            String apiSecret = "902ae3cb34ecee2779aa4d3e1d226686";
+            String apiKey = "您的API-KEY";
+            String apiSecret = "您的API-SECRET";
 
             // 生成当前毫秒级时间戳
             String timestamp = String.valueOf(Instant.now().toEpochMilli());
@@ -5730,7 +5984,7 @@ import (
 
 func main() {
 	// API 相关信息
-	apiURL := "https://openapi.fameex.net"
+	apiURL := "https://t(:open_url)"
 	requestURL := "/sapi/v2/order"
 	queryString := "?orderId=2618039663715064005&symbol=btcusdt"
 
@@ -5739,8 +5993,8 @@ func main() {
 	fullURL := apiURL + requestPath
 
 	// API 认证信息
-	apiKey := "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-	apiSecret := "902ae3cb34ecee2779aa4d3e1d226686"
+	apiKey := "您的API-KEY"
+	apiSecret := "您的API-SECRET"
 
 	// 生成当前毫秒级时间戳
 	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
@@ -5811,7 +6065,7 @@ import hashlib
 import requests
 
 # API 相关信息
-API_URL = "https://openapi.fameex.net"
+API_URL = "https://t(:open_url)"
 REQUEST_URL = "/sapi/v2/order"
 QUERY_STRING = "?orderId=2618039663715064005&symbol=btcusdt"
 
@@ -5820,8 +6074,8 @@ REQUEST_PATH = REQUEST_URL + QUERY_STRING
 FULL_URL = API_URL + REQUEST_PATH
 
 # API 认证信息
-API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp = str(int(time.time() * 1000))
@@ -5861,7 +6115,7 @@ print("Response Body:", response.text)
 <?
 
 // API 相关信息
-$API_URL = "https://openapi.fameex.net";
+$API_URL = "https://t(:open_url)";
 $REQUEST_URL = "/sapi/v2/order";
 $QUERY_STRING = "?orderId=2618039663715064005&symbol=btcusdt";
 
@@ -5870,8 +6124,8 @@ $REQUEST_PATH = $REQUEST_URL . $QUERY_STRING;
 $FULL_URL = $API_URL . $REQUEST_PATH;
 
 // API 认证信息
-$API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-$API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+$API_KEY = "您的API-KEY";
+$API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 $timestamp = round(microtime(true) * 1000);
@@ -5922,7 +6176,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API 相关信息
-const API_URL = "https://openapi.fameex.net";
+const API_URL = "https://t(:open_url)";
 const REQUEST_URL = "/sapi/v2/order";
 const QUERY_STRING = "?orderId=2618039663715064005&symbol=btcusdt";
 
@@ -5931,8 +6185,8 @@ const REQUEST_PATH = REQUEST_URL + QUERY_STRING;
 const FULL_URL = API_URL + REQUEST_PATH;
 
 // API 认证信息
-const API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-const API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 const timestamp = Date.now().toString();
@@ -6036,7 +6290,7 @@ POST https://t(:open_url)/sapi/v1/cancel
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739945835000
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 3c22ee3d2940df5e9dc5b7b862ba3d75e805e97a242f52f12fec9d16bc73e1c7
 ```
 
@@ -6047,8 +6301,8 @@ X-CH-SIGN: 3c22ee3d2940df5e9dc5b7b862ba3d75e805e97a242f52f12fec9d16bc73e1c7
 URL="https://t(:open_url)"
 REQUEST_PATH="/sapi/v1/cancel"
 API_URL="${URL}${REQUEST_PATH}"
-API_KEY="vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET="902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY="您的API-KEY"
+API_SECRET="您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp=$(date +%s | awk '{print $1 * 1000}')
@@ -6098,8 +6352,8 @@ public class FameexApiRequest {
             String url = "https://t(:open_url)";
             String requestPath = "/sapi/v1/cancel";
             String apiUrl = url + requestPath;
-            String apiKey = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-            String apiSecret = "902ae3cb34ecee2779aa4d3e1d226686";
+            String apiKey = "您的API-KEY";
+            String apiSecret = "您的API-SECRET";
 
             // 获取当前毫秒级时间戳
             String timestamp = String.valueOf(Instant.now().toEpochMilli());
@@ -6203,8 +6457,8 @@ func main() {
     url := "https://t(:open_url)"
     requestPath := "/sapi/v1/cancel"
 	apiURL := url + requestPath
-	apiKey := "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-	apiSecret := "902ae3cb34ecee2779aa4d3e1d226686"
+	apiKey := "您的API-KEY"
+	apiSecret := "您的API-SECRET"
 
 	// 生成当前毫秒级时间戳
 	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
@@ -6280,8 +6534,8 @@ import json
 URL = "https://t(:open_url)"
 REQUEST_PATH = "/sapi/v1/cancel"
 API_URL = URL + REQUEST_PATH
-API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp = str(int(time.time() * 1000))
@@ -6331,8 +6585,8 @@ print("Response Body:", response.text)
 $url = "https://t(:open_url)";
 $request_path = "/sapi/v1/cancel";
 $api_url = $url . $request_path;
-$api_key = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-$api_secret = "902ae3cb34ecee2779aa4d3e1d226686";
+$api_key = "您的API-KEY";
+$api_secret = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 $timestamp = round(microtime(true) * 1000);
@@ -6393,8 +6647,8 @@ const crypto = require("crypto");
 const URL = "https://t(:open_url)";
 const REQUEST_PATH = "/sapi/v1/cancel";
 const API_URL = URL + REQUEST_PATH;
-const API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-const API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 const timestamp = Date.now().toString();
@@ -6916,7 +7170,7 @@ POST https://t(:open_url)/sapi/v1/batchCancel
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739945835000
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 3c22ee3d2940df5e9dc5b7b862ba3d75e805e97a242f52f12fec9d16bc73e1c7
 ```
 
@@ -6927,8 +7181,8 @@ X-CH-SIGN: 3c22ee3d2940df5e9dc5b7b862ba3d75e805e97a242f52f12fec9d16bc73e1c7
 URL="https://t(:open_url)"
 REQUEST_PATH="/sapi/v1/batchCancel"
 API_URL="${URL}${REQUEST_PATH}"
-API_KEY="vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET="902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY="您的API-KEY"
+API_SECRET="您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp=$(date +%s | awk '{print $1 * 1000}')
@@ -6978,8 +7232,8 @@ public class FameexApiRequest {
             String url = "https://t(:open_url)";
             String requestPath = "/sapi/v1/batchCancel";
             String apiUrl = url + requestPath;
-            String apiKey = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-            String apiSecret = "902ae3cb34ecee2779aa4d3e1d226686";
+            String apiKey = "您的API-KEY";
+            String apiSecret = "您的API-SECRET";
 
             // 获取当前毫秒级时间戳
             String timestamp = String.valueOf(Instant.now().toEpochMilli());
@@ -7083,8 +7337,8 @@ func main() {
     url := "https://t(:open_url)"
     requestPath := "/sapi/v1/batchCancel"
 	apiURL := url + requestPath
-	apiKey := "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-	apiSecret := "902ae3cb34ecee2779aa4d3e1d226686"
+	apiKey := "您的API-KEY"
+	apiSecret := "您的API-SECRET"
 
 	// 生成当前毫秒级时间戳
 	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
@@ -7160,8 +7414,8 @@ import json
 URL = "https://t(:open_url)"
 REQUEST_PATH = "/sapi/v1/batchCancel"
 API_URL = URL + REQUEST_PATH
-API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp = str(int(time.time() * 1000))
@@ -7215,8 +7469,8 @@ const crypto = require("crypto");
 const URL = "https://t(:open_url)";
 const REQUEST_PATH = "/sapi/v1/batchCancel";
 const API_URL = URL + REQUEST_PATH;
-const API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-const API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 const timestamp = Date.now().toString();
@@ -7321,7 +7575,7 @@ GET https://t(:open_url)/sapi/v1/openOrders?symbol=btcusdt&limit=10
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 ```
 
@@ -7338,8 +7592,8 @@ REQUEST_PATH="${REQUEST_URL}${QUERY_STRING}"
 FULL_URL="${API_URL}${REQUEST_PATH}"
 
 # API 认证信息
-API_KEY="vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET="902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY="您的API-KEY"
+API_SECRET="您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp=$(date +%s | awk '{print $1 * 1000}')
@@ -7390,8 +7644,8 @@ public class FameexApiRequest {
             String fullUrl = apiUrl + requestPath;
 
             // API 认证信息
-            String apiKey = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-            String apiSecret = "902ae3cb34ecee2779aa4d3e1d226686";
+            String apiKey = "您的API-KEY";
+            String apiSecret = "您的API-SECRET";
 
             // 生成当前毫秒级时间戳
             String timestamp = String.valueOf(Instant.now().toEpochMilli());
@@ -7493,8 +7747,8 @@ func main() {
 	fullURL := apiURL + requestPath
 
 	// API 认证信息
-	apiKey := "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-	apiSecret := "902ae3cb34ecee2779aa4d3e1d226686"
+	apiKey := "您的API-KEY"
+	apiSecret := "您的API-SECRET"
 
 	// 生成当前毫秒级时间戳
 	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
@@ -7574,8 +7828,8 @@ REQUEST_PATH = REQUEST_URL + QUERY_STRING
 FULL_URL = API_URL + REQUEST_PATH
 
 # API 认证信息
-API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp = str(int(time.time() * 1000))
@@ -7624,8 +7878,8 @@ $REQUEST_PATH = $REQUEST_URL . $QUERY_STRING;
 $FULL_URL = $API_URL . $REQUEST_PATH;
 
 // API 认证信息
-$API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-$API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+$API_KEY = "您的API-KEY";
+$API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 $timestamp = round(microtime(true) * 1000);
@@ -7685,8 +7939,8 @@ const REQUEST_PATH = REQUEST_URL + QUERY_STRING;
 const FULL_URL = API_URL + REQUEST_PATH;
 
 // API 认证信息
-const API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-const API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 const timestamp = Date.now().toString();
@@ -7803,7 +8057,7 @@ GET https://t(:open_url)/sapi/v2/openOrders?symbol=btcusdt&limit=10
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 ```
 
@@ -7820,8 +8074,8 @@ REQUEST_PATH="${REQUEST_URL}${QUERY_STRING}"
 FULL_URL="${API_URL}${REQUEST_PATH}"
 
 # API 认证信息
-API_KEY="vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET="902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY="您的API-KEY"
+API_SECRET="您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp=$(date +%s | awk '{print $1 * 1000}')
@@ -7872,8 +8126,8 @@ public class FameexApiRequest {
             String fullUrl = apiUrl + requestPath;
 
             // API 认证信息
-            String apiKey = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-            String apiSecret = "902ae3cb34ecee2779aa4d3e1d226686";
+            String apiKey = "您的API-KEY";
+            String apiSecret = "您的API-SECRET";
 
             // 生成当前毫秒级时间戳
             String timestamp = String.valueOf(Instant.now().toEpochMilli());
@@ -7975,8 +8229,8 @@ func main() {
 	fullURL := apiURL + requestPath
 
 	// API 认证信息
-	apiKey := "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-	apiSecret := "902ae3cb34ecee2779aa4d3e1d226686"
+	apiKey := "您的API-KEY"
+	apiSecret := "您的API-SECRET"
 
 	// 生成当前毫秒级时间戳
 	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
@@ -8056,8 +8310,8 @@ REQUEST_PATH = REQUEST_URL + QUERY_STRING
 FULL_URL = API_URL + REQUEST_PATH
 
 # API 认证信息
-API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp = str(int(time.time() * 1000))
@@ -8106,8 +8360,8 @@ $REQUEST_PATH = $REQUEST_URL . $QUERY_STRING;
 $FULL_URL = $API_URL . $REQUEST_PATH;
 
 // API 认证信息
-$API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-$API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+$API_KEY = "您的API-KEY";
+$API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 $timestamp = round(microtime(true) * 1000);
@@ -8167,8 +8421,8 @@ const REQUEST_PATH = REQUEST_URL + QUERY_STRING;
 const FULL_URL = API_URL + REQUEST_PATH;
 
 // API 认证信息
-const API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-const API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 const timestamp = Date.now().toString();
@@ -8285,7 +8539,7 @@ GET https://t(:open_url)/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 ```
 
@@ -8302,8 +8556,8 @@ REQUEST_PATH="${REQUEST_URL}${QUERY_STRING}"
 FULL_URL="${API_URL}${REQUEST_PATH}"
 
 # API 认证信息
-API_KEY="vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET="902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY="您的API-KEY"
+API_SECRET="您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp=$(date +%s | awk '{print $1 * 1000}')
@@ -8354,8 +8608,8 @@ public class FameexApiRequest {
             String fullUrl = apiUrl + requestPath;
 
             // API 认证信息
-            String apiKey = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-            String apiSecret = "902ae3cb34ecee2779aa4d3e1d226686";
+            String apiKey = "您的API-KEY";
+            String apiSecret = "您的API-SECRET";
 
             // 生成当前毫秒级时间戳
             String timestamp = String.valueOf(Instant.now().toEpochMilli());
@@ -8457,8 +8711,8 @@ func main() {
 	fullURL := apiURL + requestPath
 
 	// API 认证信息
-	apiKey := "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-	apiSecret := "902ae3cb34ecee2779aa4d3e1d226686"
+	apiKey := "您的API-KEY"
+	apiSecret := "您的API-SECRET"
 
 	// 生成当前毫秒级时间戳
 	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
@@ -8538,8 +8792,8 @@ REQUEST_PATH = REQUEST_URL + QUERY_STRING
 FULL_URL = API_URL + REQUEST_PATH
 
 # API 认证信息
-API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp = str(int(time.time() * 1000))
@@ -8588,8 +8842,8 @@ $REQUEST_PATH = $REQUEST_URL . $QUERY_STRING;
 $FULL_URL = $API_URL . $REQUEST_PATH;
 
 // API 认证信息
-$API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-$API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+$API_KEY = "您的API-KEY";
+$API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 $timestamp = round(microtime(true) * 1000);
@@ -8649,8 +8903,8 @@ const REQUEST_PATH = REQUEST_URL + QUERY_STRING;
 const FULL_URL = API_URL + REQUEST_PATH;
 
 // API 认证信息
-const API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-const API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 const timestamp = Date.now().toString();
@@ -8789,7 +9043,7 @@ GET https://t(:open_url)/sapi/v1/account
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 ```
 
@@ -8806,8 +9060,8 @@ REQUEST_PATH="${REQUEST_URL}${QUERY_STRING}"
 FULL_URL="${API_URL}${REQUEST_PATH}"
 
 # API 认证信息
-API_KEY="vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET="902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY="您的API-KEY"
+API_SECRET="您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp=$(date +%s | awk '{print $1 * 1000}')
@@ -8858,8 +9112,8 @@ public class FameexApiRequest {
             String fullUrl = apiUrl + requestPath;
 
             // API 认证信息
-            String apiKey = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-            String apiSecret = "902ae3cb34ecee2779aa4d3e1d226686";
+            String apiKey = "您的API-KEY";
+            String apiSecret = "您的API-SECRET";
 
             // 生成当前毫秒级时间戳
             String timestamp = String.valueOf(Instant.now().toEpochMilli());
@@ -8961,8 +9215,8 @@ func main() {
 	fullURL := apiURL + requestPath
 
 	// API 认证信息
-	apiKey := "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-	apiSecret := "902ae3cb34ecee2779aa4d3e1d226686"
+	apiKey := "您的API-KEY"
+	apiSecret := "您的API-SECRET"
 
 	// 生成当前毫秒级时间戳
 	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
@@ -9042,8 +9296,8 @@ REQUEST_PATH = REQUEST_URL + QUERY_STRING
 FULL_URL = API_URL + REQUEST_PATH
 
 # API 认证信息
-API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp = str(int(time.time() * 1000))
@@ -9092,8 +9346,8 @@ $REQUEST_PATH = $REQUEST_URL . $QUERY_STRING;
 $FULL_URL = $API_URL . $REQUEST_PATH;
 
 // API 认证信息
-$API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-$API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+$API_KEY = "您的API-KEY";
+$API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 $timestamp = round(microtime(true) * 1000);
@@ -9153,8 +9407,8 @@ const REQUEST_PATH = REQUEST_URL + QUERY_STRING;
 const FULL_URL = API_URL + REQUEST_PATH;
 
 // API 认证信息
-const API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-const API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 const timestamp = Date.now().toString();
@@ -9255,7 +9509,7 @@ GET https://t(:open_url)/sapi/v1/account/balance?symbols=USDT,BTC,ETH
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 ```
 
@@ -9272,8 +9526,8 @@ REQUEST_PATH="${REQUEST_URL}${QUERY_STRING}"
 FULL_URL="${API_URL}${REQUEST_PATH}"
 
 # API 认证信息
-API_KEY="vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET="902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY="您的API-KEY"
+API_SECRET="您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp=$(date +%s | awk '{print $1 * 1000}')
@@ -9324,8 +9578,8 @@ public class FameexApiRequest {
             String fullUrl = apiUrl + requestPath;
 
             // API 认证信息
-            String apiKey = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-            String apiSecret = "902ae3cb34ecee2779aa4d3e1d226686";
+            String apiKey = "您的API-KEY";
+            String apiSecret = "您的API-SECRET";
 
             // 生成当前毫秒级时间戳
             String timestamp = String.valueOf(Instant.now().toEpochMilli());
@@ -9427,8 +9681,8 @@ func main() {
 	fullURL := apiURL + requestPath
 
 	// API 认证信息
-	apiKey := "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-	apiSecret := "902ae3cb34ecee2779aa4d3e1d226686"
+	apiKey := "您的API-KEY"
+	apiSecret := "您的API-SECRET"
 
 	// 生成当前毫秒级时间戳
 	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
@@ -9508,8 +9762,8 @@ REQUEST_PATH = REQUEST_URL + QUERY_STRING
 FULL_URL = API_URL + REQUEST_PATH
 
 # API 认证信息
-API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A"
-API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686"
+API_KEY = "您的API-KEY"
+API_SECRET = "您的API-SECRET"
 
 # 生成当前毫秒级时间戳
 timestamp = str(int(time.time() * 1000))
@@ -9558,8 +9812,8 @@ $REQUEST_PATH = $REQUEST_URL . $QUERY_STRING;
 $FULL_URL = $API_URL . $REQUEST_PATH;
 
 // API 认证信息
-$API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-$API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+$API_KEY = "您的API-KEY";
+$API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 $timestamp = round(microtime(true) * 1000);
@@ -9619,8 +9873,8 @@ const REQUEST_PATH = REQUEST_URL + QUERY_STRING;
 const FULL_URL = API_URL + REQUEST_PATH;
 
 // API 认证信息
-const API_KEY = "vmPUZE6mv9SD5V5e14y7Ju91duEh8A";
-const API_SECRET = "902ae3cb34ecee2779aa4d3e1d226686";
+const API_KEY = "您的API-KEY";
+const API_SECRET = "您的API-SECRET";
 
 // 生成当前毫秒级时间戳
 const timestamp = Date.now().toString();
