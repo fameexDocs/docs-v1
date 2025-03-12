@@ -1171,11 +1171,11 @@ Content-Type:application/json
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code>apiKey</code></td>
-<td style="text-align: left">vmPUZE6mv9SD5V5e14y7Ju91duEh8A</td>
+<td style="text-align: left">您的API-KEY</td>
 </tr>
 <tr>
 <td style="text-align: left"><code>secretKey</code></td>
-<td style="text-align: left">902ae3cb34ecee2779aa4d3e1d226686</td>
+<td style="text-align: left">您的API-SECRET</td>
 </tr>
 </tbody></table>
 
@@ -1189,7 +1189,7 @@ Content-Type:application/json
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
@@ -1203,8 +1203,8 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 <span class="nv">FULL_URL</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">API_URL</span><span class="k">}${</span><span class="nv">REQUEST_PATH</span><span class="k">}</span><span class="s2">"</span>
 
 <span class="c"># API 认证信息</span>
-<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"您的API-KEY"</span>
+<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"您的API-SECRET"</span>
 
 <span class="c"># 生成当前毫秒级时间戳</span>
 <span class="nv">timestamp</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> +%s | <span class="nb">awk</span> <span class="s1">'{print $1 * 1000}'</span><span class="si">)</span>
@@ -1252,8 +1252,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
             <span class="nc">String</span> <span class="n">fullUrl</span> <span class="o">=</span> <span class="n">apiUrl</span> <span class="o">+</span> <span class="n">requestPath</span><span class="o">;</span>
 
             <span class="c1">// API 认证信息</span>
-            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="o">;</span>
-            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span><span class="o">;</span>
 
             <span class="c1">// 生成当前毫秒级时间戳</span>
             <span class="nc">String</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">().</span><span class="na">toEpochMilli</span><span class="o">());</span>
@@ -1352,8 +1352,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
     <span class="n">fullURL</span> <span class="o">:=</span> <span class="n">apiURL</span> <span class="o">+</span> <span class="n">requestPath</span>
 
     <span class="c">// API 认证信息</span>
-    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"您的API-KEY"</span>
+    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"您的API-SECRET"</span>
 
     <span class="c">// 生成当前毫秒级时间戳</span>
     <span class="n">timestamp</span> <span class="o">:=</span> <span class="n">strconv</span><span class="o">.</span><span class="n">FormatInt</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">UnixNano</span><span class="p">()</span><span class="o">/</span><span class="kt">int64</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">),</span> <span class="m">10</span><span class="p">)</span>
@@ -1430,8 +1430,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="n">FULL_URL</span> <span class="o">=</span> <span class="n">API_URL</span> <span class="o">+</span> <span class="n">REQUEST_PATH</span>
 
 <span class="c1"># API 认证信息
-</span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+</span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span>
+<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span>
 
 <span class="c1"># 生成当前毫秒级时间戳
 </span><span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
@@ -1477,8 +1477,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="nv">$FULL_URL</span> <span class="o">=</span> <span class="nv">$API_URL</span> <span class="mf">.</span> <span class="nv">$REQUEST_PATH</span><span class="p">;</span>
 
 <span class="c1">// API 认证信息</span>
-<span class="nv">$API_KEY</span> <span class="o">=</span> <span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="p">;</span>
-<span class="nv">$API_SECRET</span> <span class="o">=</span> <span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="p">;</span>
+<span class="nv">$API_KEY</span> <span class="o">=</span> <span class="s2">"您的API-KEY"</span><span class="p">;</span>
+<span class="nv">$API_SECRET</span> <span class="o">=</span> <span class="s2">"您的API-SECRET"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="nv">$timestamp</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">microtime</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
@@ -1535,8 +1535,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="kd">const</span> <span class="nx">FULL_URL</span> <span class="o">=</span> <span class="nx">API_URL</span> <span class="o">+</span> <span class="nx">REQUEST_PATH</span><span class="p">;</span>
 
 <span class="c1">// API 认证信息</span>
-<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">vmPUZE6mv9SD5V5e14y7Ju91duEh8A</span><span class="dl">"</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">902ae3cb34ecee2779aa4d3e1d226686</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-KEY</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-SECRET</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="kd">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">().</span><span class="nx">toString</span><span class="p">();</span>
@@ -1580,7 +1580,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <blockquote>
 <p>HMAC-SHA256 签名示例</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># 生成签名 (X-CH-SIGN) - GET 请求没有 body</span>
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">// 切换 Node.js 查看 『JavaScript 代码（归类在 HTTP 下）』
+</span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># 生成签名 (X-CH-SIGN) - GET 请求没有 body</span>
 <span class="nv">SIGN_PAYLOAD</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">timestamp</span><span class="k">}${</span><span class="nv">METHOD</span><span class="k">}${</span><span class="nv">REQUEST_PATH</span><span class="k">}</span><span class="s2">"</span>
 <span class="nv">SIGNATURE</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"</span><span class="nv">$SIGN_PAYLOAD</span><span class="s2">"</span> | openssl dgst <span class="nt">-sha256</span> <span class="nt">-hmac</span> <span class="s2">"</span><span class="nv">$API_SECRET</span><span class="s2">"</span> | <span class="nb">awk</span> <span class="s1">'{print $2}'</span><span class="si">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="c1">// HMAC-SHA256 签名计算</span>
@@ -1727,11 +1728,11 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 </thead><tbody>
 <tr>
 <td style="text-align: left"><code>apiKey</code></td>
-<td style="text-align: left">vmPUZE6mv9SD5V5e14y7Ju91duEh8A</td>
+<td style="text-align: left">您的API-KEY</td>
 </tr>
 <tr>
 <td style="text-align: left"><code>secretKey</code></td>
-<td style="text-align: left">902ae3cb34ecee2779aa4d3e1d226686</td>
+<td style="text-align: left">您的API-SECRET</td>
 </tr>
 </tbody></table>
 
@@ -1745,7 +1746,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
@@ -1753,8 +1754,8 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 <span class="nv">URL</span><span class="o">=</span><span class="s2">"https://openapi.fameex.net"</span>
 <span class="nv">REQUEST_PATH</span><span class="o">=</span><span class="s2">"/sapi/v1/order/test"</span>
 <span class="nv">API_URL</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">URL</span><span class="k">}${</span><span class="nv">REQUEST_PATH</span><span class="k">}</span><span class="s2">"</span>
-<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"您的API-KEY"</span>
+<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"您的API-SECRET"</span>
 
 <span class="c"># 生成当前毫秒级时间戳</span>
 <span class="nv">timestamp</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> +%s | <span class="nb">awk</span> <span class="s1">'{print $1 * 1000}'</span><span class="si">)</span>
@@ -1801,8 +1802,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
             <span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"https://openapi.fameex.net"</span><span class="o">;</span>
             <span class="nc">String</span> <span class="n">requestPath</span> <span class="o">=</span> <span class="s">"/sapi/v1/order/test"</span><span class="o">;</span>
             <span class="nc">String</span> <span class="n">apiUrl</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">requestPath</span><span class="o">;</span><span class="err">\</span>
-            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="o">;</span>
-            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span><span class="o">;</span>
 
             <span class="c1">// 获取当前毫秒级时间戳</span>
             <span class="nc">String</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">().</span><span class="na">toEpochMilli</span><span class="o">());</span>
@@ -1903,8 +1904,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
     <span class="n">url</span> <span class="o">:=</span> <span class="s">"https://openapi.fameex.net"</span>
     <span class="n">requestPath</span> <span class="o">:=</span> <span class="s">"/sapi/v1/order/test"</span>
     <span class="n">apiURL</span> <span class="o">:=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">requestPath</span>
-    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"您的API-KEY"</span>
+    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"您的API-SECRET"</span>
 
     <span class="c">// 生成当前毫秒级时间戳</span>
     <span class="n">timestamp</span> <span class="o">:=</span> <span class="n">strconv</span><span class="o">.</span><span class="n">FormatInt</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">UnixNano</span><span class="p">()</span><span class="o">/</span><span class="kt">int64</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">),</span> <span class="m">10</span><span class="p">)</span>
@@ -1977,8 +1978,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 </span><span class="n">URL</span> <span class="o">=</span> <span class="s">"https://openapi.fameex.net"</span>
 <span class="n">REQUEST_PATH</span> <span class="o">=</span> <span class="s">"/sapi/v1/order/test"</span>
 <span class="n">API_URL</span> <span class="o">=</span> <span class="n">URL</span> <span class="o">+</span> <span class="n">REQUEST_PATH</span>
-<span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span>
+<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span>
 
 <span class="c1"># 生成当前毫秒级时间戳
 </span><span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
@@ -2028,8 +2029,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 <span class="nv">$url</span> <span class="o">=</span> <span class="s2">"https://openapi.fameex.net"</span><span class="p">;</span>
 <span class="nv">$request_path</span> <span class="o">=</span> <span class="s2">"/sapi/v1/order/test"</span><span class="p">;</span>
 <span class="nv">$api_url</span> <span class="o">=</span> <span class="nv">$url</span> <span class="mf">.</span> <span class="nv">$request_path</span><span class="p">;</span>
-<span class="nv">$api_key</span> <span class="o">=</span> <span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="p">;</span>
-<span class="nv">$api_secret</span> <span class="o">=</span> <span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="p">;</span>
+<span class="nv">$api_key</span> <span class="o">=</span> <span class="s2">"您的API-KEY"</span><span class="p">;</span>
+<span class="nv">$api_secret</span> <span class="o">=</span> <span class="s2">"您的API-SECRET"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="nv">$timestamp</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">microtime</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
@@ -2090,8 +2091,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 <span class="kd">const</span> <span class="nx">URL</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">https://openapi.fameex.net</span><span class="dl">"</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">REQUEST_PATH</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">/sapi/v1/order/test</span><span class="dl">"</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">API_URL</span> <span class="o">=</span> <span class="nx">URL</span> <span class="o">+</span> <span class="nx">REQUEST_PATH</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">vmPUZE6mv9SD5V5e14y7Ju91duEh8A</span><span class="dl">"</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">902ae3cb34ecee2779aa4d3e1d226686</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-KEY</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-SECRET</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="kd">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">().</span><span class="nx">toString</span><span class="p">();</span>
@@ -4279,7 +4280,239 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 
 // request headers
 Content-Type: application/json
-</span></code></pre></div>
+</span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
+
+<span class="c"># 设置 API 相关信息</span>
+<span class="nv">API_URL</span><span class="o">=</span><span class="s2">"https://openapi.fameex.net"</span>
+<span class="nv">REQUEST_URL</span><span class="o">=</span><span class="s2">"/v2/public/ticker"</span>
+
+<span class="c"># 计算完整的请求路径</span>
+<span class="nv">REQUEST_PATH</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">REQUEST_URL</span><span class="k">}</span><span class="s2">"</span>
+<span class="nv">FULL_URL</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">API_URL</span><span class="k">}${</span><span class="nv">REQUEST_PATH</span><span class="k">}</span><span class="s2">"</span>
+
+<span class="c"># 定义请求方法</span>
+<span class="nv">METHOD</span><span class="o">=</span><span class="s2">"GET"</span>
+
+<span class="c"># **打印调试信息**</span>
+<span class="nb">echo</span> <span class="s2">"==== 请求信息 ===="</span>
+<span class="nb">echo</span> <span class="s2">"Request URL: </span><span class="k">${</span><span class="nv">FULL_URL</span><span class="k">}</span><span class="s2">"</span>
+<span class="nb">echo</span> <span class="s2">"=================="</span>
+
+<span class="c"># 发送 GET 请求</span>
+curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$FULL_URL</span><span class="s2">"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">javax.crypto.Mac</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.crypto.spec.SecretKeySpec</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.HttpURLConnection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.URL</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.charset.StandardCharsets</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.time.Instant</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Scanner</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FameexApiRequest</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">// API 相关信息</span>
+            <span class="nc">String</span> <span class="n">apiUrl</span> <span class="o">=</span> <span class="s">"https://openapi.fameex.net"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">requestUrl</span> <span class="o">=</span> <span class="s">"/v2/public/ticker"</span><span class="o">;</span>
+
+            <span class="c1">// 计算完整的请求路径</span>
+            <span class="nc">String</span> <span class="n">requestPath</span> <span class="o">=</span> <span class="n">requestUrl</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">fullUrl</span> <span class="o">=</span> <span class="n">apiUrl</span> <span class="o">+</span> <span class="n">requestPath</span><span class="o">;</span>
+
+            <span class="c1">// 请求方法</span>
+            <span class="nc">String</span> <span class="n">method</span> <span class="o">=</span> <span class="s">"GET"</span><span class="o">;</span>
+
+            <span class="c1">// **打印调试信息**</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"==== 请求信息 ===="</span><span class="o">);</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Request URL: "</span> <span class="o">+</span> <span class="n">fullUrl</span><span class="o">);</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"=================="</span><span class="o">);</span>
+
+            <span class="c1">// 发送 GET 请求</span>
+            <span class="n">sendGetRequest</span><span class="o">(</span><span class="n">fullUrl</span><span class="o">);</span>
+
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 发送 HTTP GET 请求</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sendGetRequest</span><span class="o">(</span><span class="nc">String</span> <span class="n">fullUrl</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="no">URL</span> <span class="n">url</span> <span class="o">=</span> <span class="k">new</span> <span class="no">URL</span><span class="o">(</span><span class="n">fullUrl</span><span class="o">);</span>
+            <span class="nc">HttpURLConnection</span> <span class="n">conn</span> <span class="o">=</span> <span class="o">(</span><span class="nc">HttpURLConnection</span><span class="o">)</span> <span class="n">url</span><span class="o">.</span><span class="na">openConnection</span><span class="o">();</span>
+            <span class="n">conn</span><span class="o">.</span><span class="na">setRequestMethod</span><span class="o">(</span><span class="s">"GET"</span><span class="o">);</span>
+
+            <span class="c1">// 设置请求头</span>
+            <span class="n">conn</span><span class="o">.</span><span class="na">setRequestProperty</span><span class="o">(</span><span class="s">"Content-Type"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">);</span>
+
+            <span class="c1">// 发送请求并获取响应</span>
+            <span class="kt">int</span> <span class="n">responseCode</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">getResponseCode</span><span class="o">();</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Response Code: "</span> <span class="o">+</span> <span class="n">responseCode</span><span class="o">);</span>
+
+            <span class="nc">Scanner</span> <span class="n">scanner</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Scanner</span><span class="o">(</span><span class="n">conn</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">(),</span> <span class="nc">StandardCharsets</span><span class="o">.</span><span class="na">UTF_8</span><span class="o">.</span><span class="na">name</span><span class="o">());</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">scanner</span><span class="o">.</span><span class="na">hasNextLine</span><span class="o">())</span> <span class="o">{</span>
+                <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">scanner</span><span class="o">.</span><span class="na">nextLine</span><span class="o">());</span>
+            <span class="o">}</span>
+            <span class="n">scanner</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight go tab-go"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"io/ioutil"</span>
+    <span class="s">"net/http"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c">// API 相关信息</span>
+    <span class="n">apiURL</span> <span class="o">:=</span> <span class="s">"https://openapi.fameex.net"</span>
+    <span class="n">requestURL</span> <span class="o">:=</span> <span class="s">"/v2/public/ticker"</span>
+
+    <span class="c">// 计算完整的请求路径</span>
+    <span class="n">requestPath</span> <span class="o">:=</span> <span class="n">requestURL</span>
+    <span class="n">fullURL</span> <span class="o">:=</span> <span class="n">apiURL</span> <span class="o">+</span> <span class="n">requestPath</span>
+
+    <span class="c">// 请求方法</span>
+    <span class="n">method</span> <span class="o">:=</span> <span class="s">"GET"</span>
+
+    <span class="c">// **打印调试信息**</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"==== 请求信息 ===="</span><span class="p">)</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Request URL:"</span><span class="p">,</span> <span class="n">fullURL</span><span class="p">)</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"=================="</span><span class="p">)</span>
+
+    <span class="c">// 发送 GET 请求</span>
+    <span class="n">sendGetRequest</span><span class="p">(</span><span class="n">fullURL</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c">// 发送 HTTP GET 请求</span>
+<span class="k">func</span> <span class="n">sendGetRequest</span><span class="p">(</span><span class="n">fullURL</span><span class="p">,</span> <span class="n">method</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">client</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="n">http</span><span class="o">.</span><span class="n">Client</span><span class="p">{}</span>
+
+    <span class="c">// 创建请求</span>
+    <span class="n">req</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">NewRequest</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">fullURL</span><span class="p">,</span> <span class="no">nil</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Error creating request:"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="c">// 设置 Headers</span>
+    <span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Content-Type"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
+
+    <span class="c">// 发送请求</span>
+    <span class="n">resp</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">client</span><span class="o">.</span><span class="n">Do</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Error sending request:"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="n">resp</span><span class="o">.</span><span class="n">Body</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+
+    <span class="c">// 读取响应</span>
+    <span class="n">body</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">ioutil</span><span class="o">.</span><span class="n">ReadAll</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">Body</span><span class="p">)</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Response Code:"</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">StatusCode</span><span class="p">)</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Response Body:"</span><span class="p">,</span> <span class="kt">string</span><span class="p">(</span><span class="n">body</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">hmac</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="c1"># API 相关信息
+</span><span class="n">API_URL</span> <span class="o">=</span> <span class="s">"https://openapi.fameex.net"</span>
+<span class="n">REQUEST_URL</span> <span class="o">=</span> <span class="s">"/v2/public/ticker"</span>
+
+<span class="c1"># 计算完整的请求路径
+</span><span class="n">REQUEST_PATH</span> <span class="o">=</span> <span class="n">REQUEST_URL</span>
+<span class="n">FULL_URL</span> <span class="o">=</span> <span class="n">API_URL</span> <span class="o">+</span> <span class="n">REQUEST_PATH</span>
+
+<span class="c1"># **打印调试信息**
+</span><span class="k">print</span><span class="p">(</span><span class="s">"==== 请求信息 ===="</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Request URL:"</span><span class="p">,</span> <span class="n">FULL_URL</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"=================="</span><span class="p">)</span>
+
+<span class="c1"># 发送 GET 请求
+</span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span>
+<span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">FULL_URL</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="c1"># 打印响应
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Response Code:"</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Response Body:"</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="cp">&lt;?</span>
+
+<span class="c1">// API 相关信息</span>
+<span class="nv">$API_URL</span> <span class="o">=</span> <span class="s2">"https://openapi.fameex.net"</span><span class="p">;</span>
+<span class="nv">$REQUEST_URL</span> <span class="o">=</span> <span class="s2">"/v2/public/ticker"</span><span class="p">;</span>
+
+<span class="c1">// 计算完整的请求路径</span>
+<span class="nv">$REQUEST_PATH</span> <span class="o">=</span> <span class="nv">$REQUEST_URL</span><span class="p">;</span>
+<span class="nv">$FULL_URL</span> <span class="o">=</span> <span class="nv">$API_URL</span> <span class="mf">.</span> <span class="nv">$REQUEST_PATH</span><span class="p">;</span>
+
+<span class="c1">// **打印调试信息**</span>
+<span class="k">echo</span> <span class="s2">"==== 请求信息 ====</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="k">echo</span> <span class="s2">"Request URL: "</span> <span class="mf">.</span> <span class="nv">$FULL_URL</span> <span class="mf">.</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="k">echo</span> <span class="s2">"==================</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+
+<span class="c1">// 发送 GET 请求</span>
+<span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"Content-Type: application/json"</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="c1">// 使用 cURL 发送 GET 请求</span>
+<span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="no">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$FULL_URL</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="no">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$headers</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="no">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="c1">// 执行请求并获取响应</span>
+<span class="nv">$response</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+<span class="nv">$http_code</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="no">CURLINFO_HTTP_CODE</span><span class="p">);</span>
+<span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+
+<span class="c1">// 打印响应</span>
+<span class="k">echo</span> <span class="s2">"Response Code: </span><span class="nv">$http_code</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="k">echo</span> <span class="s2">"Response Body: </span><span class="nv">$response</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+
+<span class="cp">?&gt;</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript--node"><code><span class="kd">const</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">axios</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">crypto</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// API 相关信息</span>
+<span class="kd">const</span> <span class="nx">API_URL</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">https://openapi.fameex.net</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">REQUEST_URL</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">/v2/public/ticker</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="c1">// 计算完整的请求路径</span>
+<span class="kd">const</span> <span class="nx">REQUEST_PATH</span> <span class="o">=</span> <span class="nx">REQUEST_URL</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">FULL_URL</span> <span class="o">=</span> <span class="nx">API_URL</span> <span class="o">+</span> <span class="nx">REQUEST_PATH</span><span class="p">;</span>
+
+<span class="c1">// **打印调试信息**</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">==== 请求信息 ====</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Request URL:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">FULL_URL</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">==================</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// 发送 GET 请求</span>
+<span class="kd">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">axios</span>
+  <span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">FULL_URL</span><span class="p">,</span> <span class="p">{</span> <span class="nx">headers</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Response Code:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Response Body:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">"</span><span class="s2">Error:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">.</span><span class="nx">response</span> <span class="p">?</span> <span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span> <span class="p">:</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre></div>
 <blockquote>
 <p>返回示例</p>
 </blockquote>
@@ -5107,7 +5340,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
@@ -5115,8 +5348,8 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 <span class="nv">URL</span><span class="o">=</span><span class="s2">"https://openapi.fameex.net"</span>
 <span class="nv">REQUEST_PATH</span><span class="o">=</span><span class="s2">"/sapi/v1/order"</span>
 <span class="nv">API_URL</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">URL</span><span class="k">}${</span><span class="nv">REQUEST_PATH</span><span class="k">}</span><span class="s2">"</span>
-<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"您的API-KEY"</span>
+<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"您的API-SECRET"</span>
 
 <span class="c"># 生成当前毫秒级时间戳</span>
 <span class="nv">timestamp</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> +%s | <span class="nb">awk</span> <span class="s1">'{print $1 * 1000}'</span><span class="si">)</span>
@@ -5163,8 +5396,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
             <span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"https://openapi.fameex.net"</span><span class="o">;</span>
             <span class="nc">String</span> <span class="n">requestPath</span> <span class="o">=</span> <span class="s">"/sapi/v1/order"</span><span class="o">;</span>
             <span class="nc">String</span> <span class="n">apiUrl</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">requestPath</span><span class="o">;</span>
-            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="o">;</span>
-            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span><span class="o">;</span>
 
             <span class="c1">// 获取当前毫秒级时间戳</span>
             <span class="nc">String</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">().</span><span class="na">toEpochMilli</span><span class="o">());</span>
@@ -5265,8 +5498,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
     <span class="n">url</span> <span class="o">:=</span> <span class="s">"https://openapi.fameex.net"</span>
     <span class="n">requestPath</span> <span class="o">:=</span> <span class="s">"/sapi/v1/order"</span>
     <span class="n">apiURL</span> <span class="o">:=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">requestPath</span>
-    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"您的API-KEY"</span>
+    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"您的API-SECRET"</span>
 
     <span class="c">// 生成当前毫秒级时间戳</span>
     <span class="n">timestamp</span> <span class="o">:=</span> <span class="n">strconv</span><span class="o">.</span><span class="n">FormatInt</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">UnixNano</span><span class="p">()</span><span class="o">/</span><span class="kt">int64</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">),</span> <span class="m">10</span><span class="p">)</span>
@@ -5339,8 +5572,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 </span><span class="n">URL</span> <span class="o">=</span> <span class="s">"https://openapi.fameex.net"</span>
 <span class="n">REQUEST_PATH</span> <span class="o">=</span> <span class="s">"/sapi/v1/order"</span>
 <span class="n">API_URL</span> <span class="o">=</span> <span class="n">URL</span> <span class="o">+</span> <span class="n">REQUEST_PATH</span>
-<span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span>
+<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span>
 
 <span class="c1"># 生成当前毫秒级时间戳
 </span><span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
@@ -5392,8 +5625,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 <span class="nv">$url</span> <span class="o">=</span> <span class="s2">"https://openapi.fameex.net"</span><span class="p">;</span>
 <span class="nv">$request_path</span> <span class="o">=</span> <span class="s2">"/sapi/v1/order"</span><span class="p">;</span>
 <span class="nv">$api_url</span> <span class="o">=</span> <span class="nv">$url</span> <span class="mf">.</span> <span class="nv">$request_path</span><span class="p">;</span>
-<span class="nv">$api_key</span> <span class="o">=</span> <span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="p">;</span>
-<span class="nv">$api_secret</span> <span class="o">=</span> <span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="p">;</span>
+<span class="nv">$api_key</span> <span class="o">=</span> <span class="s2">"您的API-KEY"</span><span class="p">;</span>
+<span class="nv">$api_secret</span> <span class="o">=</span> <span class="s2">"您的API-SECRET"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="nv">$timestamp</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">microtime</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
@@ -5454,8 +5687,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 <span class="kd">const</span> <span class="nx">URL</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">https://openapi.fameex.net</span><span class="dl">"</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">REQUEST_PATH</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">/sapi/v1/order</span><span class="dl">"</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">API_URL</span> <span class="o">=</span> <span class="nx">URL</span> <span class="o">+</span> <span class="nx">REQUEST_PATH</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">vmPUZE6mv9SD5V5e14y7Ju91duEh8A</span><span class="dl">"</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">902ae3cb34ecee2779aa4d3e1d226686</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-KEY</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-SECRET</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="kd">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">().</span><span class="nx">toString</span><span class="p">();</span>
@@ -6212,7 +6445,7 @@ body
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
@@ -6220,8 +6453,8 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 <span class="nv">URL</span><span class="o">=</span><span class="s2">"https://openapi.fameex.net"</span>
 <span class="nv">REQUEST_PATH</span><span class="o">=</span><span class="s2">"/sapi/v1/order/test"</span>
 <span class="nv">API_URL</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">URL</span><span class="k">}${</span><span class="nv">REQUEST_PATH</span><span class="k">}</span><span class="s2">"</span>
-<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"您的API-KEY"</span>
+<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"您的API-SECRET"</span>
 
 <span class="c"># 生成当前毫秒级时间戳</span>
 <span class="nv">timestamp</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> +%s | <span class="nb">awk</span> <span class="s1">'{print $1 * 1000}'</span><span class="si">)</span>
@@ -6268,8 +6501,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
             <span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"https://openapi.fameex.net"</span><span class="o">;</span>
             <span class="nc">String</span> <span class="n">requestPath</span> <span class="o">=</span> <span class="s">"/sapi/v1/order/test"</span><span class="o">;</span>
             <span class="nc">String</span> <span class="n">apiUrl</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">requestPath</span><span class="o">;</span>
-            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="o">;</span>
-            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span><span class="o">;</span>
 
             <span class="c1">// 获取当前毫秒级时间戳</span>
             <span class="nc">String</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">().</span><span class="na">toEpochMilli</span><span class="o">());</span>
@@ -6370,8 +6603,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
     <span class="n">url</span> <span class="o">:=</span> <span class="s">"https://openapi.fameex.net"</span>
     <span class="n">requestPath</span> <span class="o">:=</span> <span class="s">"/sapi/v1/order/test"</span>
     <span class="n">apiURL</span> <span class="o">:=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">requestPath</span>
-    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"您的API-KEY"</span>
+    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"您的API-SECRET"</span>
 
     <span class="c">// 生成当前毫秒级时间戳</span>
     <span class="n">timestamp</span> <span class="o">:=</span> <span class="n">strconv</span><span class="o">.</span><span class="n">FormatInt</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">UnixNano</span><span class="p">()</span><span class="o">/</span><span class="kt">int64</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">),</span> <span class="m">10</span><span class="p">)</span>
@@ -6444,8 +6677,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 </span><span class="n">URL</span> <span class="o">=</span> <span class="s">"https://openapi.fameex.net"</span>
 <span class="n">REQUEST_PATH</span> <span class="o">=</span> <span class="s">"/sapi/v1/order/test"</span>
 <span class="n">API_URL</span> <span class="o">=</span> <span class="n">URL</span> <span class="o">+</span> <span class="n">REQUEST_PATH</span>
-<span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span>
+<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span>
 
 <span class="c1"># 生成当前毫秒级时间戳
 </span><span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
@@ -6495,8 +6728,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 <span class="nv">$url</span> <span class="o">=</span> <span class="s2">"https://openapi.fameex.net"</span><span class="p">;</span>
 <span class="nv">$request_path</span> <span class="o">=</span> <span class="s2">"/sapi/v1/order/test"</span><span class="p">;</span>
 <span class="nv">$api_url</span> <span class="o">=</span> <span class="nv">$url</span> <span class="mf">.</span> <span class="nv">$request_path</span><span class="p">;</span>
-<span class="nv">$api_key</span> <span class="o">=</span> <span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="p">;</span>
-<span class="nv">$api_secret</span> <span class="o">=</span> <span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="p">;</span>
+<span class="nv">$api_key</span> <span class="o">=</span> <span class="s2">"您的API-KEY"</span><span class="p">;</span>
+<span class="nv">$api_secret</span> <span class="o">=</span> <span class="s2">"您的API-SECRET"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="nv">$timestamp</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">microtime</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
@@ -6557,8 +6790,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 <span class="kd">const</span> <span class="nx">URL</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">https://openapi.fameex.net</span><span class="dl">"</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">REQUEST_PATH</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">/sapi/v1/order/test</span><span class="dl">"</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">API_URL</span> <span class="o">=</span> <span class="nx">URL</span> <span class="o">+</span> <span class="nx">REQUEST_PATH</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">vmPUZE6mv9SD5V5e14y7Ju91duEh8A</span><span class="dl">"</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">902ae3cb34ecee2779aa4d3e1d226686</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-KEY</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-SECRET</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="kd">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">().</span><span class="nx">toString</span><span class="p">();</span>
@@ -6769,7 +7002,7 @@ body
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
@@ -6783,8 +7016,8 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 <span class="nv">FULL_URL</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">API_URL</span><span class="k">}${</span><span class="nv">REQUEST_PATH</span><span class="k">}</span><span class="s2">"</span>
 
 <span class="c"># API 认证信息</span>
-<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"您的API-KEY"</span>
+<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"您的API-SECRET"</span>
 
 <span class="c"># 生成当前毫秒级时间戳</span>
 <span class="nv">timestamp</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> +%s | <span class="nb">awk</span> <span class="s1">'{print $1 * 1000}'</span><span class="si">)</span>
@@ -6832,8 +7065,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
             <span class="nc">String</span> <span class="n">fullUrl</span> <span class="o">=</span> <span class="n">apiUrl</span> <span class="o">+</span> <span class="n">requestPath</span><span class="o">;</span>
 
             <span class="c1">// API 认证信息</span>
-            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="o">;</span>
-            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span><span class="o">;</span>
 
             <span class="c1">// 生成当前毫秒级时间戳</span>
             <span class="nc">String</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">().</span><span class="na">toEpochMilli</span><span class="o">());</span>
@@ -6932,8 +7165,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
     <span class="n">fullURL</span> <span class="o">:=</span> <span class="n">apiURL</span> <span class="o">+</span> <span class="n">requestPath</span>
 
     <span class="c">// API 认证信息</span>
-    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"您的API-KEY"</span>
+    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"您的API-SECRET"</span>
 
     <span class="c">// 生成当前毫秒级时间戳</span>
     <span class="n">timestamp</span> <span class="o">:=</span> <span class="n">strconv</span><span class="o">.</span><span class="n">FormatInt</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">UnixNano</span><span class="p">()</span><span class="o">/</span><span class="kt">int64</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">),</span> <span class="m">10</span><span class="p">)</span>
@@ -7010,8 +7243,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="n">FULL_URL</span> <span class="o">=</span> <span class="n">API_URL</span> <span class="o">+</span> <span class="n">REQUEST_PATH</span>
 
 <span class="c1"># API 认证信息
-</span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+</span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span>
+<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span>
 
 <span class="c1"># 生成当前毫秒级时间戳
 </span><span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
@@ -7057,8 +7290,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="nv">$FULL_URL</span> <span class="o">=</span> <span class="nv">$API_URL</span> <span class="mf">.</span> <span class="nv">$REQUEST_PATH</span><span class="p">;</span>
 
 <span class="c1">// API 认证信息</span>
-<span class="nv">$API_KEY</span> <span class="o">=</span> <span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="p">;</span>
-<span class="nv">$API_SECRET</span> <span class="o">=</span> <span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="p">;</span>
+<span class="nv">$API_KEY</span> <span class="o">=</span> <span class="s2">"您的API-KEY"</span><span class="p">;</span>
+<span class="nv">$API_SECRET</span> <span class="o">=</span> <span class="s2">"您的API-SECRET"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="nv">$timestamp</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">microtime</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
@@ -7115,8 +7348,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="kd">const</span> <span class="nx">FULL_URL</span> <span class="o">=</span> <span class="nx">API_URL</span> <span class="o">+</span> <span class="nx">REQUEST_PATH</span><span class="p">;</span>
 
 <span class="c1">// API 认证信息</span>
-<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">vmPUZE6mv9SD5V5e14y7Ju91duEh8A</span><span class="dl">"</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">902ae3cb34ecee2779aa4d3e1d226686</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-KEY</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-SECRET</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="kd">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">().</span><span class="nx">toString</span><span class="p">();</span>
@@ -7310,7 +7543,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
@@ -7324,8 +7557,8 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 <span class="nv">FULL_URL</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">API_URL</span><span class="k">}${</span><span class="nv">REQUEST_PATH</span><span class="k">}</span><span class="s2">"</span>
 
 <span class="c"># API 认证信息</span>
-<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"您的API-KEY"</span>
+<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"您的API-SECRET"</span>
 
 <span class="c"># 生成当前毫秒级时间戳</span>
 <span class="nv">timestamp</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> +%s | <span class="nb">awk</span> <span class="s1">'{print $1 * 1000}'</span><span class="si">)</span>
@@ -7373,8 +7606,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
             <span class="nc">String</span> <span class="n">fullUrl</span> <span class="o">=</span> <span class="n">apiUrl</span> <span class="o">+</span> <span class="n">requestPath</span><span class="o">;</span>
 
             <span class="c1">// API 认证信息</span>
-            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="o">;</span>
-            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span><span class="o">;</span>
 
             <span class="c1">// 生成当前毫秒级时间戳</span>
             <span class="nc">String</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">().</span><span class="na">toEpochMilli</span><span class="o">());</span>
@@ -7473,8 +7706,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
     <span class="n">fullURL</span> <span class="o">:=</span> <span class="n">apiURL</span> <span class="o">+</span> <span class="n">requestPath</span>
 
     <span class="c">// API 认证信息</span>
-    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"您的API-KEY"</span>
+    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"您的API-SECRET"</span>
 
     <span class="c">// 生成当前毫秒级时间戳</span>
     <span class="n">timestamp</span> <span class="o">:=</span> <span class="n">strconv</span><span class="o">.</span><span class="n">FormatInt</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">UnixNano</span><span class="p">()</span><span class="o">/</span><span class="kt">int64</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">),</span> <span class="m">10</span><span class="p">)</span>
@@ -7551,8 +7784,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="n">FULL_URL</span> <span class="o">=</span> <span class="n">API_URL</span> <span class="o">+</span> <span class="n">REQUEST_PATH</span>
 
 <span class="c1"># API 认证信息
-</span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+</span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span>
+<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span>
 
 <span class="c1"># 生成当前毫秒级时间戳
 </span><span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
@@ -7598,8 +7831,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="nv">$FULL_URL</span> <span class="o">=</span> <span class="nv">$API_URL</span> <span class="mf">.</span> <span class="nv">$REQUEST_PATH</span><span class="p">;</span>
 
 <span class="c1">// API 认证信息</span>
-<span class="nv">$API_KEY</span> <span class="o">=</span> <span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="p">;</span>
-<span class="nv">$API_SECRET</span> <span class="o">=</span> <span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="p">;</span>
+<span class="nv">$API_KEY</span> <span class="o">=</span> <span class="s2">"您的API-KEY"</span><span class="p">;</span>
+<span class="nv">$API_SECRET</span> <span class="o">=</span> <span class="s2">"您的API-SECRET"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="nv">$timestamp</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">microtime</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
@@ -7656,8 +7889,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="kd">const</span> <span class="nx">FULL_URL</span> <span class="o">=</span> <span class="nx">API_URL</span> <span class="o">+</span> <span class="nx">REQUEST_PATH</span><span class="p">;</span>
 
 <span class="c1">// API 认证信息</span>
-<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">vmPUZE6mv9SD5V5e14y7Ju91duEh8A</span><span class="dl">"</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">902ae3cb34ecee2779aa4d3e1d226686</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-KEY</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-SECRET</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="kd">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">().</span><span class="nx">toString</span><span class="p">();</span>
@@ -7851,7 +8084,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739945835000
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 3c22ee3d2940df5e9dc5b7b862ba3d75e805e97a242f52f12fec9d16bc73e1c7
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
@@ -7859,8 +8092,8 @@ X-CH-SIGN: 3c22ee3d2940df5e9dc5b7b862ba3d75e805e97a242f52f12fec9d16bc73e1c7
 <span class="nv">URL</span><span class="o">=</span><span class="s2">"https://openapi.fameex.net"</span>
 <span class="nv">REQUEST_PATH</span><span class="o">=</span><span class="s2">"/sapi/v1/cancel"</span>
 <span class="nv">API_URL</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">URL</span><span class="k">}${</span><span class="nv">REQUEST_PATH</span><span class="k">}</span><span class="s2">"</span>
-<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"您的API-KEY"</span>
+<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"您的API-SECRET"</span>
 
 <span class="c"># 生成当前毫秒级时间戳</span>
 <span class="nv">timestamp</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> +%s | <span class="nb">awk</span> <span class="s1">'{print $1 * 1000}'</span><span class="si">)</span>
@@ -7907,8 +8140,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
             <span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"https://openapi.fameex.net"</span><span class="o">;</span>
             <span class="nc">String</span> <span class="n">requestPath</span> <span class="o">=</span> <span class="s">"/sapi/v1/cancel"</span><span class="o">;</span>
             <span class="nc">String</span> <span class="n">apiUrl</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">requestPath</span><span class="o">;</span>
-            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="o">;</span>
-            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span><span class="o">;</span>
 
             <span class="c1">// 获取当前毫秒级时间戳</span>
             <span class="nc">String</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">().</span><span class="na">toEpochMilli</span><span class="o">());</span>
@@ -8009,8 +8242,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
     <span class="n">url</span> <span class="o">:=</span> <span class="s">"https://openapi.fameex.net"</span>
     <span class="n">requestPath</span> <span class="o">:=</span> <span class="s">"/sapi/v1/cancel"</span>
     <span class="n">apiURL</span> <span class="o">:=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">requestPath</span>
-    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"您的API-KEY"</span>
+    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"您的API-SECRET"</span>
 
     <span class="c">// 生成当前毫秒级时间戳</span>
     <span class="n">timestamp</span> <span class="o">:=</span> <span class="n">strconv</span><span class="o">.</span><span class="n">FormatInt</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">UnixNano</span><span class="p">()</span><span class="o">/</span><span class="kt">int64</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">),</span> <span class="m">10</span><span class="p">)</span>
@@ -8083,8 +8316,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 </span><span class="n">URL</span> <span class="o">=</span> <span class="s">"https://openapi.fameex.net"</span>
 <span class="n">REQUEST_PATH</span> <span class="o">=</span> <span class="s">"/sapi/v1/cancel"</span>
 <span class="n">API_URL</span> <span class="o">=</span> <span class="n">URL</span> <span class="o">+</span> <span class="n">REQUEST_PATH</span>
-<span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span>
+<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span>
 
 <span class="c1"># 生成当前毫秒级时间戳
 </span><span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
@@ -8131,8 +8364,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 <span class="nv">$url</span> <span class="o">=</span> <span class="s2">"https://openapi.fameex.net"</span><span class="p">;</span>
 <span class="nv">$request_path</span> <span class="o">=</span> <span class="s2">"/sapi/v1/cancel"</span><span class="p">;</span>
 <span class="nv">$api_url</span> <span class="o">=</span> <span class="nv">$url</span> <span class="mf">.</span> <span class="nv">$request_path</span><span class="p">;</span>
-<span class="nv">$api_key</span> <span class="o">=</span> <span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="p">;</span>
-<span class="nv">$api_secret</span> <span class="o">=</span> <span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="p">;</span>
+<span class="nv">$api_key</span> <span class="o">=</span> <span class="s2">"您的API-KEY"</span><span class="p">;</span>
+<span class="nv">$api_secret</span> <span class="o">=</span> <span class="s2">"您的API-SECRET"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="nv">$timestamp</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">microtime</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
@@ -8190,8 +8423,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 <span class="kd">const</span> <span class="nx">URL</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">https://openapi.fameex.net</span><span class="dl">"</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">REQUEST_PATH</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">/sapi/v1/cancel</span><span class="dl">"</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">API_URL</span> <span class="o">=</span> <span class="nx">URL</span> <span class="o">+</span> <span class="nx">REQUEST_PATH</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">vmPUZE6mv9SD5V5e14y7Ju91duEh8A</span><span class="dl">"</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">902ae3cb34ecee2779aa4d3e1d226686</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-KEY</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-SECRET</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="kd">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">().</span><span class="nx">toString</span><span class="p">();</span>
@@ -8799,7 +9032,7 @@ body
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739945835000
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 3c22ee3d2940df5e9dc5b7b862ba3d75e805e97a242f52f12fec9d16bc73e1c7
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
@@ -8807,8 +9040,8 @@ X-CH-SIGN: 3c22ee3d2940df5e9dc5b7b862ba3d75e805e97a242f52f12fec9d16bc73e1c7
 <span class="nv">URL</span><span class="o">=</span><span class="s2">"https://openapi.fameex.net"</span>
 <span class="nv">REQUEST_PATH</span><span class="o">=</span><span class="s2">"/sapi/v1/batchCancel"</span>
 <span class="nv">API_URL</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">URL</span><span class="k">}${</span><span class="nv">REQUEST_PATH</span><span class="k">}</span><span class="s2">"</span>
-<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"您的API-KEY"</span>
+<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"您的API-SECRET"</span>
 
 <span class="c"># 生成当前毫秒级时间戳</span>
 <span class="nv">timestamp</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> +%s | <span class="nb">awk</span> <span class="s1">'{print $1 * 1000}'</span><span class="si">)</span>
@@ -8855,8 +9088,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
             <span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"https://openapi.fameex.net"</span><span class="o">;</span>
             <span class="nc">String</span> <span class="n">requestPath</span> <span class="o">=</span> <span class="s">"/sapi/v1/batchCancel"</span><span class="o">;</span>
             <span class="nc">String</span> <span class="n">apiUrl</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">requestPath</span><span class="o">;</span>
-            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="o">;</span>
-            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span><span class="o">;</span>
 
             <span class="c1">// 获取当前毫秒级时间戳</span>
             <span class="nc">String</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">().</span><span class="na">toEpochMilli</span><span class="o">());</span>
@@ -8957,8 +9190,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
     <span class="n">url</span> <span class="o">:=</span> <span class="s">"https://openapi.fameex.net"</span>
     <span class="n">requestPath</span> <span class="o">:=</span> <span class="s">"/sapi/v1/batchCancel"</span>
     <span class="n">apiURL</span> <span class="o">:=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">requestPath</span>
-    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"您的API-KEY"</span>
+    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"您的API-SECRET"</span>
 
     <span class="c">// 生成当前毫秒级时间戳</span>
     <span class="n">timestamp</span> <span class="o">:=</span> <span class="n">strconv</span><span class="o">.</span><span class="n">FormatInt</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">UnixNano</span><span class="p">()</span><span class="o">/</span><span class="kt">int64</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">),</span> <span class="m">10</span><span class="p">)</span>
@@ -9031,8 +9264,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 </span><span class="n">URL</span> <span class="o">=</span> <span class="s">"https://openapi.fameex.net"</span>
 <span class="n">REQUEST_PATH</span> <span class="o">=</span> <span class="s">"/sapi/v1/batchCancel"</span>
 <span class="n">API_URL</span> <span class="o">=</span> <span class="n">URL</span> <span class="o">+</span> <span class="n">REQUEST_PATH</span>
-<span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span>
+<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span>
 
 <span class="c1"># 生成当前毫秒级时间戳
 </span><span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
@@ -9083,8 +9316,8 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 <span class="kd">const</span> <span class="nx">URL</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">https://openapi.fameex.net</span><span class="dl">"</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">REQUEST_PATH</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">/sapi/v1/batchCancel</span><span class="dl">"</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">API_URL</span> <span class="o">=</span> <span class="nx">URL</span> <span class="o">+</span> <span class="nx">REQUEST_PATH</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">vmPUZE6mv9SD5V5e14y7Ju91duEh8A</span><span class="dl">"</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">902ae3cb34ecee2779aa4d3e1d226686</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-KEY</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-SECRET</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="kd">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">().</span><span class="nx">toString</span><span class="p">();</span>
@@ -9215,7 +9448,7 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
@@ -9229,8 +9462,8 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 <span class="nv">FULL_URL</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">API_URL</span><span class="k">}${</span><span class="nv">REQUEST_PATH</span><span class="k">}</span><span class="s2">"</span>
 
 <span class="c"># API 认证信息</span>
-<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"您的API-KEY"</span>
+<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"您的API-SECRET"</span>
 
 <span class="c"># 生成当前毫秒级时间戳</span>
 <span class="nv">timestamp</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> +%s | <span class="nb">awk</span> <span class="s1">'{print $1 * 1000}'</span><span class="si">)</span>
@@ -9278,8 +9511,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
             <span class="nc">String</span> <span class="n">fullUrl</span> <span class="o">=</span> <span class="n">apiUrl</span> <span class="o">+</span> <span class="n">requestPath</span><span class="o">;</span>
 
             <span class="c1">// API 认证信息</span>
-            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="o">;</span>
-            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span><span class="o">;</span>
 
             <span class="c1">// 生成当前毫秒级时间戳</span>
             <span class="nc">String</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">().</span><span class="na">toEpochMilli</span><span class="o">());</span>
@@ -9378,8 +9611,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
     <span class="n">fullURL</span> <span class="o">:=</span> <span class="n">apiURL</span> <span class="o">+</span> <span class="n">requestPath</span>
 
     <span class="c">// API 认证信息</span>
-    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"您的API-KEY"</span>
+    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"您的API-SECRET"</span>
 
     <span class="c">// 生成当前毫秒级时间戳</span>
     <span class="n">timestamp</span> <span class="o">:=</span> <span class="n">strconv</span><span class="o">.</span><span class="n">FormatInt</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">UnixNano</span><span class="p">()</span><span class="o">/</span><span class="kt">int64</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">),</span> <span class="m">10</span><span class="p">)</span>
@@ -9456,8 +9689,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="n">FULL_URL</span> <span class="o">=</span> <span class="n">API_URL</span> <span class="o">+</span> <span class="n">REQUEST_PATH</span>
 
 <span class="c1"># API 认证信息
-</span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+</span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span>
+<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span>
 
 <span class="c1"># 生成当前毫秒级时间戳
 </span><span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
@@ -9503,8 +9736,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="nv">$FULL_URL</span> <span class="o">=</span> <span class="nv">$API_URL</span> <span class="mf">.</span> <span class="nv">$REQUEST_PATH</span><span class="p">;</span>
 
 <span class="c1">// API 认证信息</span>
-<span class="nv">$API_KEY</span> <span class="o">=</span> <span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="p">;</span>
-<span class="nv">$API_SECRET</span> <span class="o">=</span> <span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="p">;</span>
+<span class="nv">$API_KEY</span> <span class="o">=</span> <span class="s2">"您的API-KEY"</span><span class="p">;</span>
+<span class="nv">$API_SECRET</span> <span class="o">=</span> <span class="s2">"您的API-SECRET"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="nv">$timestamp</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">microtime</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
@@ -9561,8 +9794,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="kd">const</span> <span class="nx">FULL_URL</span> <span class="o">=</span> <span class="nx">API_URL</span> <span class="o">+</span> <span class="nx">REQUEST_PATH</span><span class="p">;</span>
 
 <span class="c1">// API 认证信息</span>
-<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">vmPUZE6mv9SD5V5e14y7Ju91duEh8A</span><span class="dl">"</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">902ae3cb34ecee2779aa4d3e1d226686</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-KEY</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-SECRET</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="kd">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">().</span><span class="nx">toString</span><span class="p">();</span>
@@ -9764,7 +9997,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
@@ -9778,8 +10011,8 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 <span class="nv">FULL_URL</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">API_URL</span><span class="k">}${</span><span class="nv">REQUEST_PATH</span><span class="k">}</span><span class="s2">"</span>
 
 <span class="c"># API 认证信息</span>
-<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"您的API-KEY"</span>
+<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"您的API-SECRET"</span>
 
 <span class="c"># 生成当前毫秒级时间戳</span>
 <span class="nv">timestamp</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> +%s | <span class="nb">awk</span> <span class="s1">'{print $1 * 1000}'</span><span class="si">)</span>
@@ -9827,8 +10060,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
             <span class="nc">String</span> <span class="n">fullUrl</span> <span class="o">=</span> <span class="n">apiUrl</span> <span class="o">+</span> <span class="n">requestPath</span><span class="o">;</span>
 
             <span class="c1">// API 认证信息</span>
-            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="o">;</span>
-            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span><span class="o">;</span>
 
             <span class="c1">// 生成当前毫秒级时间戳</span>
             <span class="nc">String</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">().</span><span class="na">toEpochMilli</span><span class="o">());</span>
@@ -9927,8 +10160,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
     <span class="n">fullURL</span> <span class="o">:=</span> <span class="n">apiURL</span> <span class="o">+</span> <span class="n">requestPath</span>
 
     <span class="c">// API 认证信息</span>
-    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"您的API-KEY"</span>
+    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"您的API-SECRET"</span>
 
     <span class="c">// 生成当前毫秒级时间戳</span>
     <span class="n">timestamp</span> <span class="o">:=</span> <span class="n">strconv</span><span class="o">.</span><span class="n">FormatInt</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">UnixNano</span><span class="p">()</span><span class="o">/</span><span class="kt">int64</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">),</span> <span class="m">10</span><span class="p">)</span>
@@ -10005,8 +10238,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="n">FULL_URL</span> <span class="o">=</span> <span class="n">API_URL</span> <span class="o">+</span> <span class="n">REQUEST_PATH</span>
 
 <span class="c1"># API 认证信息
-</span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+</span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span>
+<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span>
 
 <span class="c1"># 生成当前毫秒级时间戳
 </span><span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
@@ -10052,8 +10285,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="nv">$FULL_URL</span> <span class="o">=</span> <span class="nv">$API_URL</span> <span class="mf">.</span> <span class="nv">$REQUEST_PATH</span><span class="p">;</span>
 
 <span class="c1">// API 认证信息</span>
-<span class="nv">$API_KEY</span> <span class="o">=</span> <span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="p">;</span>
-<span class="nv">$API_SECRET</span> <span class="o">=</span> <span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="p">;</span>
+<span class="nv">$API_KEY</span> <span class="o">=</span> <span class="s2">"您的API-KEY"</span><span class="p">;</span>
+<span class="nv">$API_SECRET</span> <span class="o">=</span> <span class="s2">"您的API-SECRET"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="nv">$timestamp</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">microtime</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
@@ -10110,8 +10343,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="kd">const</span> <span class="nx">FULL_URL</span> <span class="o">=</span> <span class="nx">API_URL</span> <span class="o">+</span> <span class="nx">REQUEST_PATH</span><span class="p">;</span>
 
 <span class="c1">// API 认证信息</span>
-<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">vmPUZE6mv9SD5V5e14y7Ju91duEh8A</span><span class="dl">"</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">902ae3cb34ecee2779aa4d3e1d226686</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-KEY</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-SECRET</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="kd">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">().</span><span class="nx">toString</span><span class="p">();</span>
@@ -10313,7 +10546,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
@@ -10327,8 +10560,8 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 <span class="nv">FULL_URL</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">API_URL</span><span class="k">}${</span><span class="nv">REQUEST_PATH</span><span class="k">}</span><span class="s2">"</span>
 
 <span class="c"># API 认证信息</span>
-<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"您的API-KEY"</span>
+<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"您的API-SECRET"</span>
 
 <span class="c"># 生成当前毫秒级时间戳</span>
 <span class="nv">timestamp</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> +%s | <span class="nb">awk</span> <span class="s1">'{print $1 * 1000}'</span><span class="si">)</span>
@@ -10376,8 +10609,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
             <span class="nc">String</span> <span class="n">fullUrl</span> <span class="o">=</span> <span class="n">apiUrl</span> <span class="o">+</span> <span class="n">requestPath</span><span class="o">;</span>
 
             <span class="c1">// API 认证信息</span>
-            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="o">;</span>
-            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span><span class="o">;</span>
 
             <span class="c1">// 生成当前毫秒级时间戳</span>
             <span class="nc">String</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">().</span><span class="na">toEpochMilli</span><span class="o">());</span>
@@ -10476,8 +10709,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
     <span class="n">fullURL</span> <span class="o">:=</span> <span class="n">apiURL</span> <span class="o">+</span> <span class="n">requestPath</span>
 
     <span class="c">// API 认证信息</span>
-    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"您的API-KEY"</span>
+    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"您的API-SECRET"</span>
 
     <span class="c">// 生成当前毫秒级时间戳</span>
     <span class="n">timestamp</span> <span class="o">:=</span> <span class="n">strconv</span><span class="o">.</span><span class="n">FormatInt</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">UnixNano</span><span class="p">()</span><span class="o">/</span><span class="kt">int64</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">),</span> <span class="m">10</span><span class="p">)</span>
@@ -10554,8 +10787,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="n">FULL_URL</span> <span class="o">=</span> <span class="n">API_URL</span> <span class="o">+</span> <span class="n">REQUEST_PATH</span>
 
 <span class="c1"># API 认证信息
-</span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+</span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span>
+<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span>
 
 <span class="c1"># 生成当前毫秒级时间戳
 </span><span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
@@ -10601,8 +10834,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="nv">$FULL_URL</span> <span class="o">=</span> <span class="nv">$API_URL</span> <span class="mf">.</span> <span class="nv">$REQUEST_PATH</span><span class="p">;</span>
 
 <span class="c1">// API 认证信息</span>
-<span class="nv">$API_KEY</span> <span class="o">=</span> <span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="p">;</span>
-<span class="nv">$API_SECRET</span> <span class="o">=</span> <span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="p">;</span>
+<span class="nv">$API_KEY</span> <span class="o">=</span> <span class="s2">"您的API-KEY"</span><span class="p">;</span>
+<span class="nv">$API_SECRET</span> <span class="o">=</span> <span class="s2">"您的API-SECRET"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="nv">$timestamp</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">microtime</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
@@ -10659,8 +10892,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="kd">const</span> <span class="nx">FULL_URL</span> <span class="o">=</span> <span class="nx">API_URL</span> <span class="o">+</span> <span class="nx">REQUEST_PATH</span><span class="p">;</span>
 
 <span class="c1">// API 认证信息</span>
-<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">vmPUZE6mv9SD5V5e14y7Ju91duEh8A</span><span class="dl">"</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">902ae3cb34ecee2779aa4d3e1d226686</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-KEY</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-SECRET</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="kd">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">().</span><span class="nx">toString</span><span class="p">();</span>
@@ -10904,7 +11137,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
@@ -10918,8 +11151,8 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 <span class="nv">FULL_URL</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">API_URL</span><span class="k">}${</span><span class="nv">REQUEST_PATH</span><span class="k">}</span><span class="s2">"</span>
 
 <span class="c"># API 认证信息</span>
-<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"您的API-KEY"</span>
+<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"您的API-SECRET"</span>
 
 <span class="c"># 生成当前毫秒级时间戳</span>
 <span class="nv">timestamp</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> +%s | <span class="nb">awk</span> <span class="s1">'{print $1 * 1000}'</span><span class="si">)</span>
@@ -10967,8 +11200,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
             <span class="nc">String</span> <span class="n">fullUrl</span> <span class="o">=</span> <span class="n">apiUrl</span> <span class="o">+</span> <span class="n">requestPath</span><span class="o">;</span>
 
             <span class="c1">// API 认证信息</span>
-            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="o">;</span>
-            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span><span class="o">;</span>
 
             <span class="c1">// 生成当前毫秒级时间戳</span>
             <span class="nc">String</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">().</span><span class="na">toEpochMilli</span><span class="o">());</span>
@@ -11067,8 +11300,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
     <span class="n">fullURL</span> <span class="o">:=</span> <span class="n">apiURL</span> <span class="o">+</span> <span class="n">requestPath</span>
 
     <span class="c">// API 认证信息</span>
-    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"您的API-KEY"</span>
+    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"您的API-SECRET"</span>
 
     <span class="c">// 生成当前毫秒级时间戳</span>
     <span class="n">timestamp</span> <span class="o">:=</span> <span class="n">strconv</span><span class="o">.</span><span class="n">FormatInt</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">UnixNano</span><span class="p">()</span><span class="o">/</span><span class="kt">int64</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">),</span> <span class="m">10</span><span class="p">)</span>
@@ -11145,8 +11378,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="n">FULL_URL</span> <span class="o">=</span> <span class="n">API_URL</span> <span class="o">+</span> <span class="n">REQUEST_PATH</span>
 
 <span class="c1"># API 认证信息
-</span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+</span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span>
+<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span>
 
 <span class="c1"># 生成当前毫秒级时间戳
 </span><span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
@@ -11192,8 +11425,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="nv">$FULL_URL</span> <span class="o">=</span> <span class="nv">$API_URL</span> <span class="mf">.</span> <span class="nv">$REQUEST_PATH</span><span class="p">;</span>
 
 <span class="c1">// API 认证信息</span>
-<span class="nv">$API_KEY</span> <span class="o">=</span> <span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="p">;</span>
-<span class="nv">$API_SECRET</span> <span class="o">=</span> <span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="p">;</span>
+<span class="nv">$API_KEY</span> <span class="o">=</span> <span class="s2">"您的API-KEY"</span><span class="p">;</span>
+<span class="nv">$API_SECRET</span> <span class="o">=</span> <span class="s2">"您的API-SECRET"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="nv">$timestamp</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">microtime</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
@@ -11250,8 +11483,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="kd">const</span> <span class="nx">FULL_URL</span> <span class="o">=</span> <span class="nx">API_URL</span> <span class="o">+</span> <span class="nx">REQUEST_PATH</span><span class="p">;</span>
 
 <span class="c1">// API 认证信息</span>
-<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">vmPUZE6mv9SD5V5e14y7Ju91duEh8A</span><span class="dl">"</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">902ae3cb34ecee2779aa4d3e1d226686</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-KEY</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-SECRET</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="kd">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">().</span><span class="nx">toString</span><span class="p">();</span>
@@ -11388,7 +11621,7 @@ GET https://openapi.fameex.net/sapi/v1/account/balance?symbols=USDT,BTC,ETH
 // request headers
 Content-Type: application/json
 X-CH-TS: 1739503617552
-X-CH-APIKEY: vmPUZE6mv9SD5V5e14y7Ju91duEh8A
+X-CH-APIKEY: 您的API-KEY
 X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
@@ -11402,8 +11635,8 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 <span class="nv">FULL_URL</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">API_URL</span><span class="k">}${</span><span class="nv">REQUEST_PATH</span><span class="k">}</span><span class="s2">"</span>
 
 <span class="c"># API 认证信息</span>
-<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">"您的API-KEY"</span>
+<span class="nv">API_SECRET</span><span class="o">=</span><span class="s2">"您的API-SECRET"</span>
 
 <span class="c"># 生成当前毫秒级时间戳</span>
 <span class="nv">timestamp</span><span class="o">=</span><span class="si">$(</span><span class="nb">date</span> +%s | <span class="nb">awk</span> <span class="s1">'{print $1 * 1000}'</span><span class="si">)</span>
@@ -11451,8 +11684,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
             <span class="nc">String</span> <span class="n">fullUrl</span> <span class="o">=</span> <span class="n">apiUrl</span> <span class="o">+</span> <span class="n">requestPath</span><span class="o">;</span>
 
             <span class="c1">// API 认证信息</span>
-            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="o">;</span>
-            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span><span class="o">;</span>
 
             <span class="c1">// 生成当前毫秒级时间戳</span>
             <span class="nc">String</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="nc">Instant</span><span class="o">.</span><span class="na">now</span><span class="o">().</span><span class="na">toEpochMilli</span><span class="o">());</span>
@@ -11551,8 +11784,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
     <span class="n">fullURL</span> <span class="o">:=</span> <span class="n">apiURL</span> <span class="o">+</span> <span class="n">requestPath</span>
 
     <span class="c">// API 认证信息</span>
-    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+    <span class="n">apiKey</span> <span class="o">:=</span> <span class="s">"您的API-KEY"</span>
+    <span class="n">apiSecret</span> <span class="o">:=</span> <span class="s">"您的API-SECRET"</span>
 
     <span class="c">// 生成当前毫秒级时间戳</span>
     <span class="n">timestamp</span> <span class="o">:=</span> <span class="n">strconv</span><span class="o">.</span><span class="n">FormatInt</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">UnixNano</span><span class="p">()</span><span class="o">/</span><span class="kt">int64</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">),</span> <span class="m">10</span><span class="p">)</span>
@@ -11629,8 +11862,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="n">FULL_URL</span> <span class="o">=</span> <span class="n">API_URL</span> <span class="o">+</span> <span class="n">REQUEST_PATH</span>
 
 <span class="c1"># API 认证信息
-</span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span>
-<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"902ae3cb34ecee2779aa4d3e1d226686"</span>
+</span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"您的API-KEY"</span>
+<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"您的API-SECRET"</span>
 
 <span class="c1"># 生成当前毫秒级时间戳
 </span><span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
@@ -11676,8 +11909,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="nv">$FULL_URL</span> <span class="o">=</span> <span class="nv">$API_URL</span> <span class="mf">.</span> <span class="nv">$REQUEST_PATH</span><span class="p">;</span>
 
 <span class="c1">// API 认证信息</span>
-<span class="nv">$API_KEY</span> <span class="o">=</span> <span class="s2">"vmPUZE6mv9SD5V5e14y7Ju91duEh8A"</span><span class="p">;</span>
-<span class="nv">$API_SECRET</span> <span class="o">=</span> <span class="s2">"902ae3cb34ecee2779aa4d3e1d226686"</span><span class="p">;</span>
+<span class="nv">$API_KEY</span> <span class="o">=</span> <span class="s2">"您的API-KEY"</span><span class="p">;</span>
+<span class="nv">$API_SECRET</span> <span class="o">=</span> <span class="s2">"您的API-SECRET"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="nv">$timestamp</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">microtime</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
@@ -11734,8 +11967,8 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <span class="kd">const</span> <span class="nx">FULL_URL</span> <span class="o">=</span> <span class="nx">API_URL</span> <span class="o">+</span> <span class="nx">REQUEST_PATH</span><span class="p">;</span>
 
 <span class="c1">// API 认证信息</span>
-<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">vmPUZE6mv9SD5V5e14y7Ju91duEh8A</span><span class="dl">"</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">902ae3cb34ecee2779aa4d3e1d226686</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-KEY</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">您的API-SECRET</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="c1">// 生成当前毫秒级时间戳</span>
 <span class="kd">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">().</span><span class="nx">toString</span><span class="p">();</span>
