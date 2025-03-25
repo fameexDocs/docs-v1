@@ -2,8 +2,10 @@
 
 ## API Basic Information
 
-*   This `Spot Trading` document lists the REST interface's baseurl as `https://t(:open_url)`.
-*   This `Contract Trading` document lists the REST interface's baseurl as `https://t(:futures_url)`.
+*   This `Spot Trading` document lists the REST interface's baseurl as `https://t(:spot_http_url)`.
+*   This `Spot Trading` document lists the REST interface's backup baseurl as `https://t(:spot_http_url_bak)`.
+*   This `Contract Trading` document lists the REST interface's baseurl as `https://t(:futures_http_url)`.
+*   This `Contract Trading` document lists the REST interface's backup baseurl as `https://t(:futures_http_url_bak)`.
 *   All interfaces will return a JSON, object, or array.
 *   If the response contains an array, the array elements are arranged in reverse chronological order, with earlier data appearing first.
 *   All times and timestamps are in Unix time, with units in **milliseconds**.
@@ -88,21 +90,21 @@ Below are examples of interfaces, showing the interface format, access links, an
 
 #### GET Example: Get Server Time
 
-`GET https://t(:open_url)/sapi/v1/time`
+`GET https://t(:spot_http_url)/sapi/v1/time`
 
 GET without request parameters
 
 > Request Example
 
 ```http
-GET https://t(:open_url)/sapi/v1/time
+GET https://t(:spot_http_url)/sapi/v1/time
 
 // Headers
 Content-Type:application/json
 ```
 
 ```shell
-curl -X GET "https://t(:open_url)/sapi/v1/time"
+curl -X GET "https://t(:spot_http_url)/sapi/v1/time"
 ```
 
 ```java
@@ -116,7 +118,7 @@ public class Main {
   public static void main(String[] args) {
     try {
       // Create URL using URI
-      URI uri = new URI("https://t(:open_url)/sapi/v1/time");
+      URI uri = new URI("https://t(:spot_http_url)/sapi/v1/time");
       HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
       conn.setRequestMethod("GET");
       conn.setRequestProperty("User-Agent", "Java-Client");
@@ -150,7 +152,7 @@ import (
 )
 
 func main() {
-	url := "https://t(:open_url)/sapi/v1/time"
+	url := "https://t(:spot_http_url)/sapi/v1/time"
 
 	// Send GET request
 	resp, err := http.Get(url)
@@ -175,7 +177,7 @@ func main() {
 ```python
 import requests
 
-url = "https://t(:open_url)/sapi/v1/time"
+url = "https://t(:spot_http_url)/sapi/v1/time"
 
 try:
     response = requests.get(url)
@@ -187,7 +189,7 @@ except requests.exceptions.RequestException as e:
 
 ```php
 <?
-$url = "https://t(:open_url)/sapi/v1/time";
+$url = "https://t(:spot_http_url)/sapi/v1/time";
 
 // Initialize cURL
 $ch = curl_init();
@@ -214,7 +216,7 @@ curl_close($ch);
 ```javascript--node
 const https = require('https');
 
-const url = 'https://t(:open_url)/sapi/v1/time';
+const url = 'https://t(:spot_http_url)/sapi/v1/time';
 
 https.get(url, (res) => {
   let data = '';
@@ -256,7 +258,7 @@ https.get(url, (res) => {
 
 #### GET Example: Order Query
 
-`GET https://t(:open_url)/sapi/v1/order`
+`GET https://t(:spot_http_url)/sapi/v1/order`
 
 GET with request parameters
 
@@ -287,7 +289,7 @@ The following is an example of calling the interface to place an order using ech
 > Request Example
 
 ```http
-GET https://t(:open_url)/sapi/v1/order?orderId=12&symbol=ethusdt
+GET https://t(:spot_http_url)/sapi/v1/order?orderId=12&symbol=ethusdt
 
 // Headers Configuration
 Content-Type: application/json
@@ -300,7 +302,7 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 #!/bin/bash
 
 # Set API information
-API_URL="https://t(:open_url)"
+API_URL="https://t(:spot_http_url)"
 REQUEST_URL="/sapi/v1/order"
 QUERY_STRING="?orderId=12&symbol=ethusdt"
 
@@ -352,7 +354,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API information
-            String apiUrl = "https://t(:open_url)";
+            String apiUrl = "https://t(:spot_http_url)";
             String requestUrl = "/sapi/v1/order";
             String queryString = "?orderId=12&symbol=ethusdt";
 
@@ -455,7 +457,7 @@ import (
 
 func main() {
 	// API information
-	apiURL := "https://t(:open_url)"
+	apiURL := "https://t(:spot_http_url)"
 	requestURL := "/sapi/v1/order"
 	queryString := "?orderId=12&symbol=ethusdt"
 
@@ -536,7 +538,7 @@ import hashlib
 import requests
 
 # API Related information
-API_URL = "https://t(:open_url)"
+API_URL = "https://t(:spot_http_url)"
 REQUEST_URL = "/sapi/v1/order"
 QUERY_STRING = "?orderId=12&symbol=ethusdt"
 
@@ -586,7 +588,7 @@ print("Response Body:", response.text)
 <?
 
 // API related information
-$API_URL = "https://t(:open_url)";
+$API_URL = "https://t(:spot_http_url)";
 $REQUEST_URL = "/sapi/v1/order";
 $QUERY_STRING = "?orderId=12&symbol=ethusdt";
 
@@ -647,7 +649,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API related information
-const API_URL = "https://t(:open_url)";
+const API_URL = "https://t(:spot_http_url)";
 const REQUEST_URL = "/sapi/v1/order";
 const QUERY_STRING = "?orderId=12&symbol=ethusdt";
 
@@ -808,7 +810,7 @@ pm.variables.set('xChSign', signature);
 
 #### POST Example: Create a Test Order
 
-`POST https://t(:open_url)/sapi/v1/order/test`
+`POST https://t(:spot_http_url)/sapi/v1/order/test`
 
 **Request Headers**
 
@@ -840,7 +842,7 @@ The following is an example of placing an order by calling an API in a Linux Bas
 > Request Example
 
 ```http
-POST https://t(:open_url)/sapi/v1/order/test
+POST https://t(:spot_http_url)/sapi/v1/order/test
 
 // Headers Set up
 Content-Type: application/json
@@ -853,7 +855,7 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 #!/bin/bash
 
 # Set API-related information
-URL="https://t(:open_url)"
+URL="https://t(:spot_http_url)"
 REQUEST_PATH="/sapi/v1/order/test"
 API_URL="${URL}${REQUEST_PATH}"
 API_KEY="your API-KEY"
@@ -904,7 +906,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API Relevant information
-            String url = "https://t(:open_url)";
+            String url = "https://t(:spot_http_url)";
             String requestPath = "/sapi/v1/order/test";
             String apiUrl = url + requestPath;
             String apiKey = "your API-KEY";
@@ -1009,7 +1011,7 @@ import (
 
 func main() {
 	// API Relevant information
-    url := "https://t(:open_url)"
+    url := "https://t(:spot_http_url)"
     requestPath := "/sapi/v1/order/test"
 	apiURL := url + requestPath
 	apiKey := "your API-KEY"
@@ -1086,7 +1088,7 @@ import requests
 import json
 
 # API-related information
-URL = "https://t(:open_url)"
+URL = "https://t(:spot_http_url)"
 REQUEST_PATH = "/sapi/v1/order/test"
 API_URL = URL + REQUEST_PATH
 API_KEY = "your API-KEY"
@@ -1140,7 +1142,7 @@ print("Response Body:", response.text)
 <?
 
 // API Relevant information
-$url = "https://t(:open_url)";
+$url = "https://t(:spot_http_url)";
 $request_path = "/sapi/v1/order/test";
 $api_url = $url . $request_path;
 $api_key = "your API-KEY";
@@ -1205,7 +1207,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API-related information
-const URL = "https://t(:open_url)";
+const URL = "https://t(:spot_http_url)";
 const REQUEST_PATH = "/sapi/v1/order/test";
 const API_URL = URL + REQUEST_PATH;
 const API_KEY = "your API-KEY";
@@ -1740,21 +1742,21 @@ Description and Causes of Exception Codes and Error Codes
 
 ### Test connection
 
-`GET https://t(:open_url)/sapi/v1/ping`
+`GET https://t(:spot_http_url)/sapi/v1/ping`
 
 Test the connectivity of the REST API
 
 > Request example
 
 ```http
-GET https://t(:open_url)/sapi/v1/ping
+GET https://t(:spot_http_url)/sapi/v1/ping
 
 // Headers Setting 
 Content-Type:application/json
 ```
 
 ```shell
-curl -X GET "https://t(:open_url)/sapi/v1/ping"
+curl -X GET "https://t(:spot_http_url)/sapi/v1/ping"
 ```
 
 ```java
@@ -1768,7 +1770,7 @@ public class Main {
   public static void main(String[] args) {
     try {
       // Create a URL using URI
-      URI uri = new URI("https://t(:open_url)/sapi/v1/ping");
+      URI uri = new URI("https://t(:spot_http_url)/sapi/v1/ping");
       HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
       conn.setRequestMethod("GET");
       conn.setRequestProperty("User-Agent", "Java-Client");
@@ -1802,7 +1804,7 @@ import (
 )
 
 func main() {
-	url := "https://t(:open_url)/sapi/v1/ping"
+	url := "https://t(:spot_http_url)/sapi/v1/ping"
 
 	// Send a GET request
 	resp, err := http.Get(url)
@@ -1827,7 +1829,7 @@ func main() {
 ```python
 import requests
 
-url = "https://t(:open_url)/sapi/v1/ping"
+url = "https://t(:spot_http_url)/sapi/v1/ping"
 
 try:
     response = requests.get(url)
@@ -1839,7 +1841,7 @@ except requests.exceptions.RequestException as e:
 
 ```php
 <?
-$url = "https://t(:open_url)/sapi/v1/ping";
+$url = "https://t(:spot_http_url)/sapi/v1/ping";
 
 // Initialization cURL
 $ch = curl_init();
@@ -1866,7 +1868,7 @@ curl_close($ch);
 ```javascript--node
 const https = require('https');
 
-const url = 'https://t(:open_url)/sapi/v1/ping';
+const url = 'https://t(:spot_http_url)/sapi/v1/ping';
 
 https.get(url, (res) => {
   let data = '';
@@ -1894,21 +1896,21 @@ https.get(url, (res) => {
 
 ### Server time
 
-`GET https://t(:open_url)/sapi/v1/time`
+`GET https://t(:spot_http_url)/sapi/v1/time`
 
 Get server time
 
 > Request example
 
 ```http
-GET https://t(:open_url)/sapi/v1/time
+GET https://t(:spot_http_url)/sapi/v1/time
 
 // Headers Setting
 Content-Type:application/json
 ```
 
 ```shell
-curl -X GET "https://t(:open_url)/sapi/v1/time"
+curl -X GET "https://t(:spot_http_url)/sapi/v1/time"
 ```
 
 ```java
@@ -1922,7 +1924,7 @@ public class Main {
   public static void main(String[] args) {
     try {
       // Create a URL using URI
-      URI uri = new URI("https://t(:open_url)/sapi/v1/time");
+      URI uri = new URI("https://t(:spot_http_url)/sapi/v1/time");
       HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
       conn.setRequestMethod("GET");
       conn.setRequestProperty("User-Agent", "Java-Client");
@@ -1956,7 +1958,7 @@ import (
 )
 
 func main() {
-	url := "https://t(:open_url)/sapi/v1/time"
+	url := "https://t(:spot_http_url)/sapi/v1/time"
 
 	// Send a GET request
 	resp, err := http.Get(url)
@@ -1981,7 +1983,7 @@ func main() {
 ```python
 import requests
 
-url = "https://t(:open_url)/sapi/v1/time"
+url = "https://t(:spot_http_url)/sapi/v1/time"
 
 try:
     response = requests.get(url)
@@ -1993,7 +1995,7 @@ except requests.exceptions.RequestException as e:
 
 ```php
 <?
-$url = "https://t(:open_url)/sapi/v1/time";
+$url = "https://t(:spot_http_url)/sapi/v1/time";
 
 // Initialization cURL
 $ch = curl_init();
@@ -2020,7 +2022,7 @@ curl_close($ch);
 ```javascript--node
 const https = require('https');
 
-const url = 'https://t(:open_url)/sapi/v1/time';
+const url = 'https://t(:spot_http_url)/sapi/v1/time';
 
 https.get(url, (res) => {
   let data = '';
@@ -2062,21 +2064,21 @@ https.get(url, (res) => {
 
 ### Currency Pair List
 
-`GET https://t(:open_url)/sapi/v1/symbols`
+`GET https://t(:spot_http_url)/sapi/v1/symbols`
 
 Retrieve the set of currency pairs supported by the market
 
 > Request Example
 
 ```http
-GET https://t(:open_url)/sapi/v1/symbols
+GET https://t(:spot_http_url)/sapi/v1/symbols
 
 // Headers  setting
 Content-Type:application/json
 ```
 
 ```shell
-curl -X GET "https://t(:open_url)/sapi/v1/symbols"
+curl -X GET "https://t(:spot_http_url)/sapi/v1/symbols"
 ```
 
 ```java
@@ -2090,7 +2092,7 @@ public class Main {
   public static void main(String[] args) {
     try {
       // Use URI to create URL
-      URI uri = new URI("https://t(:open_url)/sapi/v1/symbols");
+      URI uri = new URI("https://t(:spot_http_url)/sapi/v1/symbols");
       HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
       conn.setRequestMethod("GET");
       conn.setRequestProperty("User-Agent", "Java-Client");
@@ -2124,7 +2126,7 @@ import (
 )
 
 func main() {
-	url := "https://t(:open_url)/sapi/v1/symbols"
+	url := "https://t(:spot_http_url)/sapi/v1/symbols"
 
 	// Send GET request
 	resp, err := http.Get(url)
@@ -2149,7 +2151,7 @@ func main() {
 ```python
 import requests
 
-url = "https://t(:open_url)/sapi/v1/symbols"
+url = "https://t(:spot_http_url)/sapi/v1/symbols"
 
 try:
     response = requests.get(url)
@@ -2161,7 +2163,7 @@ except requests.exceptions.RequestException as e:
 
 ```php
 <?
-$url = "https://t(:open_url)/sapi/v1/symbols";
+$url = "https://t(:spot_http_url)/sapi/v1/symbols";
 
 // Initialize cURL
 $ch = curl_init();
@@ -2188,7 +2190,7 @@ curl_close($ch);
 ```javascript--node
 const https = require('https');
 
-const url = 'https://t(:open_url)/sapi/v1/symbols';
+const url = 'https://t(:spot_http_url)/sapi/v1/symbols';
 
 https.get(url, (res) => {
   let data = '';
@@ -2295,7 +2297,7 @@ https.get(url, (res) => {
 
 ### Order book
 
-`GET https://t(:open_url)/sapi/v1/depth`
+`GET https://t(:spot_http_url)/sapi/v1/depth`
 
 Get market order book depth information
 
@@ -2310,7 +2312,7 @@ Get market order book depth information
 > Request example
 
 ```http
-GET https://t(:open_url)/sapi/v1/depth?symbol=BTCUSDT&limit=100
+GET https://t(:spot_http_url)/sapi/v1/depth?symbol=BTCUSDT&limit=100
 
 // Headers setting
 Content-Type: application/json
@@ -2321,7 +2323,7 @@ Content-Type: application/json
 #!/bin/bash
 
 # Set API-related information
-API_URL="https://t(:open_url)"
+API_URL="https://t(:spot_http_url)"
 REQUEST_URL="/sapi/v1/depth"
 QUERY_STRING="?symbol=BTCUSDT&limit=100"
 
@@ -2355,7 +2357,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API-related information
-            String apiUrl = "https://t(:open_url)";
+            String apiUrl = "https://t(:spot_http_url)";
             String requestUrl = "/sapi/v1/depth";
             String queryString = "?symbol=BTCUSDT&limit=100";
 
@@ -2418,7 +2420,7 @@ import (
 
 func main() {
 	// API-related information
-	apiURL := "https://t(:open_url)"
+	apiURL := "https://t(:spot_http_url)"
 	requestURL := "/sapi/v1/depth"
 	queryString := "?symbol=BTCUSDT&limit=100"
 
@@ -2474,7 +2476,7 @@ import hashlib
 import requests
 
 # API-related information
-API_URL = "https://t(:open_url)"
+API_URL = "https://t(:spot_http_url)"
 REQUEST_URL = "/sapi/v1/depth"
 QUERY_STRING = "?symbol=BTCUSDT&limit=100"
 
@@ -2504,7 +2506,7 @@ print("Response Body:", response.text)
 <?
 
 // API-related information
-$API_URL = "https://t(:open_url)";
+$API_URL = "https://t(:spot_http_url)";
 $REQUEST_URL = "/sapi/v1/depth";
 $QUERY_STRING = "?symbol=BTCUSDT&limit=100";
 
@@ -2545,7 +2547,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API-related information
-const API_URL = "https://t(:open_url)";
+const API_URL = "https://t(:spot_http_url)";
 const REQUEST_URL = "/sapi/v1/depth";
 const QUERY_STRING = "?symbol=BTCUSDT&limit=100";
 
@@ -2616,14 +2618,14 @@ The information corresponding to bids and asks represents all the prices in the 
 
 ### Market Ticker
 
-`GET https://t(:open_url)/sapi/v1/ticker`
+`GET https://t(:spot_http_url)/sapi/v1/ticker`
 
 Get 24-hour price change data
 
 > Request example
 
 ```http
-GET https://t(:open_url)/sapi/v1/ticker?symbol=BTCUSDT
+GET https://t(:spot_http_url)/sapi/v1/ticker?symbol=BTCUSDT
 
 // Set Headers
 Content-Type: application/json
@@ -2633,7 +2635,7 @@ Content-Type: application/json
 #!/bin/bash
 
 # Set API-related information
-API_URL="https://t(:open_url)"
+API_URL="https://t(:spot_http_url)"
 REQUEST_URL="/sapi/v1/ticker"
 QUERY_STRING="?symbol=BTCUSDT"
 
@@ -2667,7 +2669,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API-related information
-            String apiUrl = "https://t(:open_url)";
+            String apiUrl = "https://t(:spot_http_url)";
             String requestUrl = "/sapi/v1/ticker";
             String queryString = "?symbol=BTCUSDT";
 
@@ -2729,7 +2731,7 @@ import (
 
 func main() {
 	// API-related information
-	apiURL := "https://t(:open_url)"
+	apiURL := "https://t(:spot_http_url)"
 	requestURL := "/sapi/v1/ticker"
 	queryString := "?symbol=BTCUSDT"
 
@@ -2785,7 +2787,7 @@ import hashlib
 import requests
 
 # API-related information
-API_URL = "https://t(:open_url)"
+API_URL = "https://t(:spot_http_url)"
 REQUEST_URL = "/sapi/v1/ticker"
 QUERY_STRING = "?symbol=BTCUSDT"
 
@@ -2815,7 +2817,7 @@ print("Response Body:", response.text)
 <?
 
 // API-related information
-$API_URL = "https://t(:open_url)";
+$API_URL = "https://t(:spot_http_url)";
 $REQUEST_URL = "/sapi/v1/ticker";
 $QUERY_STRING = "?symbol=BTCUSDT";
 
@@ -2856,7 +2858,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API-related information
-const API_URL = "https://t(:open_url)";
+const API_URL = "https://t(:spot_http_url)";
 const REQUEST_URL = "/sapi/v1/ticker";
 const QUERY_STRING = "?symbol=BTCUSDT";
 
@@ -2923,14 +2925,14 @@ axios
 
 ### Market Ticker-V2
 
-`GET https://t(:open_url)/v2/public/ticker`
+`GET https://t(:spot_http_url)/v2/public/ticker`
 
 Get 24-hour price change data
 
 > Request example
 
 ```http
-GET https://t(:open_url)/v2/public/ticker
+GET https://t(:spot_http_url)/v2/public/ticker
 
 // Set Headers
 Content-Type: application/json
@@ -2940,7 +2942,7 @@ Content-Type: application/json
 #!/bin/bash
 
 # Set API-related information
-API_URL="https://t(:open_url)"
+API_URL="https://t(:spot_http_url)"
 REQUEST_URL="/v2/public/ticker"
 
 # Calculate the complete request path
@@ -2973,7 +2975,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API-related information
-            String apiUrl = "https://t(:open_url)";
+            String apiUrl = "https://t(:spot_http_url)";
             String requestUrl = "/v2/public/ticker";
 
             // Calculate the complete request path
@@ -3034,7 +3036,7 @@ import (
 
 func main() {
 	// API-related information
-	apiURL := "https://t(:open_url)"
+	apiURL := "https://t(:spot_http_url)"
 	requestURL := "/v2/public/ticker"
 
 	// Calculate the complete request path
@@ -3089,7 +3091,7 @@ import hashlib
 import requests
 
 # API-related information
-API_URL = "https://t(:open_url)"
+API_URL = "https://t(:spot_http_url)"
 REQUEST_URL = "/v2/public/ticker"
 
 # Calculate the full request path
@@ -3118,7 +3120,7 @@ print("Response Body:", response.text)
 <?
 
 // API-related information
-$API_URL = "https://t(:open_url)";
+$API_URL = "https://t(:spot_http_url)";
 $REQUEST_URL = "/v2/public/ticker";
 
 // Calculate the complete request path
@@ -3158,7 +3160,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API-related information
-const API_URL = "https://t(:open_url)";
+const API_URL = "https://t(:spot_http_url)";
 const REQUEST_URL = "/v2/public/ticker";
 
 // Calculate the full request path
@@ -3236,14 +3238,14 @@ axios
 
 ### Recent transactions
 
-`GET https://t(:open_url)/sapi/v1/trades`
+`GET https://t(:spot_http_url)/sapi/v1/trades`
 
 Get recent transaction data
 
 > Request Example
 
 ```http
-GET https://t(:open_url)/sapi/v1/trades?symbol=BTCUSDT&limit=10
+GET https://t(:spot_http_url)/sapi/v1/trades?symbol=BTCUSDT&limit=10
 
 // Headers Setup
 Content-Type: application/json
@@ -3253,7 +3255,7 @@ Content-Type: application/json
 #!/bin/bash
 
 # Set API-related information
-API_URL="https://t(:open_url)"
+API_URL="https://t(:spot_http_url)"
 REQUEST_URL="/sapi/v1/trades"
 QUERY_STRING="?symbol=BTCUSDT&limit=10"
 
@@ -3287,7 +3289,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API-related information
-            String apiUrl = "https://t(:open_url)";
+            String apiUrl = "https://t(:spot_http_url)";
             String requestUrl = "/sapi/v1/trades";
             String queryString = "?symbol=BTCUSDT&limit=10";
 
@@ -3349,7 +3351,7 @@ import (
 
 func main() {
 	// API-related information
-	apiURL := "https://t(:open_url)"
+	apiURL := "https://t(:spot_http_url)"
 	requestURL := "/sapi/v1/trades"
 	queryString := "?symbol=BTCUSDT&limit=10"
 
@@ -3405,7 +3407,7 @@ import hashlib
 import requests
 
 # API-related information
-API_URL = "https://t(:open_url)"
+API_URL = "https://t(:spot_http_url)"
 REQUEST_URL = "/sapi/v1/trades"
 QUERY_STRING = "?symbol=BTCUSDT&limit=10"
 
@@ -3435,7 +3437,7 @@ print("Response Body:", response.text)
 <?
 
 // API-related information
-$API_URL = "https://t(:open_url)";
+$API_URL = "https://t(:spot_http_url)";
 $REQUEST_URL = "/sapi/v1/trades";
 $QUERY_STRING = "?symbol=BTCUSDT&limit=10";
 
@@ -3476,7 +3478,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API-related information
-const API_URL = "https://t(:open_url)";
+const API_URL = "https://t(:spot_http_url)";
 const REQUEST_URL = "/sapi/v1/trades";
 const QUERY_STRING = "?symbol=BTCUSDT&limit=10";
 
@@ -3542,14 +3544,14 @@ axios
 
 ### K-line/Candlestick data
 
-`GET https://t(:open_url)/sapi/v1/klines`
+`GET https://t(:spot_http_url)/sapi/v1/klines`
 
 Get K-line data
 
 > Request Example
 
 ```http
-GET https://t(:open_url)/sapi/v1/klines?symbol=BTCUSDT&interval=1min&limit=5
+GET https://t(:spot_http_url)/sapi/v1/klines?symbol=BTCUSDT&interval=1min&limit=5
 
 // request headers
 Content-Type: application/json
@@ -3559,7 +3561,7 @@ Content-Type: application/json
 #!/bin/bash
 
 # Set API-related information
-API_URL="https://t(:open_url)"
+API_URL="https://t(:spot_http_url)"
 REQUEST_URL="/sapi/v1/klines"
 QUERY_STRING="?symbol=BTCUSDT&interval=1min&limit=5"
 
@@ -3593,7 +3595,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API-related information
-            String apiUrl = "https://t(:open_url)";
+            String apiUrl = "https://t(:spot_http_url)";
             String requestUrl = "/sapi/v1/klines";
             String queryString = "?symbol=BTCUSDT&interval=1min&limit=5";
 
@@ -3655,7 +3657,7 @@ import (
 
 func main() {
 	// API-related information
-	apiURL := "https://t(:open_url)"
+	apiURL := "https://t(:spot_http_url)"
 	requestURL := "/sapi/v1/klines"
 	queryString := "?symbol=BTCUSDT&interval=1min&limit=5"
 
@@ -3711,7 +3713,7 @@ import hashlib
 import requests
 
 # API-related information
-API_URL = "https://t(:open_url)"
+API_URL = "https://t(:spot_http_url)"
 REQUEST_URL = "/sapi/v1/klines"
 QUERY_STRING = "?symbol=BTCUSDT&interval=1min&limit=5"
 
@@ -3741,7 +3743,7 @@ print("Response Body:", response.text)
 <?
 
 // API-related information
-$API_URL = "https://t(:open_url)";
+$API_URL = "https://t(:spot_http_url)";
 $REQUEST_URL = "/sapi/v1/klines";
 $QUERY_STRING = "?symbol=BTCUSDT&interval=1min&limit=5";
 
@@ -3782,7 +3784,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API-related information
-const API_URL = "https://t(:open_url)";
+const API_URL = "https://t(:spot_http_url)";
 const REQUEST_URL = "/sapi/v1/klines";
 const QUERY_STRING = "?symbol=BTCUSDT&interval=1min&limit=5";
 
@@ -3869,7 +3871,7 @@ axios
 
 ### Create a new order
 
-`POST https://t(:open_url)/sapi/v1/order`
+`POST https://t(:spot_http_url)/sapi/v1/order`
 
 **Rate limit: 100 requests per 2 seconds**
 
@@ -3884,7 +3886,7 @@ axios
 > Request example
 
 ```http
-POST https://t(:open_url)/sapi/v1/order
+POST https://t(:spot_http_url)/sapi/v1/order
 
 // Headers Configuration
 Content-Type: application/json
@@ -3897,7 +3899,7 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 #!/bin/bash
 
 # Set API-related information
-URL="https://t(:open_url)"
+URL="https://t(:spot_http_url)"
 REQUEST_PATH="/sapi/v1/order"
 API_URL="${URL}${REQUEST_PATH}"
 API_KEY="your API-KEY"
@@ -3948,7 +3950,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API-related information
-            String url = "https://t(:open_url)";
+            String url = "https://t(:spot_http_url)";
             String requestPath = "/sapi/v1/order";
             String apiUrl = url + requestPath;
             String apiKey = "your API-KEY";
@@ -4053,7 +4055,7 @@ import (
 
 func main() {
 	// API-related information
-    url := "https://t(:open_url)"
+    url := "https://t(:spot_http_url)"
     requestPath := "/sapi/v1/order"
 	apiURL := url + requestPath
 	apiKey := "your API-KEY"
@@ -4130,7 +4132,7 @@ import requests
 import json
 
 # API-related information
-URL = "https://t(:open_url)"
+URL = "https://t(:spot_http_url)"
 REQUEST_PATH = "/sapi/v1/order"
 API_URL = URL + REQUEST_PATH
 API_KEY = "your API-KEY"
@@ -4186,7 +4188,7 @@ print("Response Body:", response.text)
 <?
 
 // API-related information
-$url = "https://t(:open_url)";
+$url = "https://t(:spot_http_url)";
 $request_path = "/sapi/v1/order";
 $api_url = $url . $request_path;
 $api_key = "your API-KEY";
@@ -4251,7 +4253,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API-related information
-const URL = "https://t(:open_url)";
+const URL = "https://t(:spot_http_url)";
 const REQUEST_PATH = "/sapi/v1/order";
 const API_URL = URL + REQUEST_PATH;
 const API_KEY = "your API-KEY";
@@ -4360,7 +4362,7 @@ axios
 
 ### Create a new order-V2
 
-`POST https://t(:open_url)/sapi/v2/order`
+`POST https://t(:spot_http_url)/sapi/v2/order`
 
 **Rate limit: 100 requests per 2 seconds**
 
@@ -4375,7 +4377,7 @@ axios
 > Request example
 
 ```http
-POST https://t(:open_url)/sapi/v2/order
+POST https://t(:spot_http_url)/sapi/v2/order
 
 body
 {"symbol":"BTCUSDT","volume":"1.00","side":"BUY","type":"LIMIT","price":"65000.00","newClientOrderId":"111000000111"}
@@ -4408,7 +4410,7 @@ signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk
 echo "Signature (X-CH-SIGN): $signature"
 
 # Send POST request
-response=$(curl -s -X POST "https://t(:open_url)${request_path}" \
+response=$(curl -s -X POST "https://t(:spot_http_url)${request_path}" \
     -H "Content-Type: application/json" \
     -H "X-CH-TS: $timestamp" \
     -H "X-CH-APIKEY: $api_key" \
@@ -4434,7 +4436,7 @@ public class SendOrder {
     // API-related information
     private static final String API_KEY = "Your API-KEY";
     private static final String API_SECRET = "Your API-SECRET";
-    private static final String BASE_URL = "https://t(:open_url)";
+    private static final String BASE_URL = "https://t(:spot_http_url)";
     private static final String REQUEST_PATH = "/sapi/v2/order";
 
     public static void main(String[] args) {
@@ -4533,7 +4535,7 @@ import (
 const (
 	APIKey     = "Your API-KEY"
 	APISecret  = "Your API-SECRET"
-	BaseURL    = "https://t(:open_url)"
+	BaseURL    = "https://t(:spot_http_url)"
 	RequestPath = "/sapi/v2/order"
 )
 
@@ -4599,7 +4601,7 @@ import requests
 # API-related information
 API_KEY = "Your API-KEY"
 API_SECRET = "Your API-SECRET"
-BASE_URL = "https://t(:open_url)"
+BASE_URL = "https://t(:spot_http_url)"
 REQUEST_PATH = "/sapi/v2/order"
 
 # Request method and request body
@@ -4644,7 +4646,7 @@ print("Response content:", response.text)
 // API-related information
 $apiKey = "Your API-KEY";
 $apiSecret = "Your API-SECRET";
-$baseUrl = "https://t(:open_url)";
+$baseUrl = "https://t(:spot_http_url)";
 $requestPath = "/sapi/v2/order";
 
 // Request method and request body
@@ -4707,7 +4709,7 @@ const axios = require('axios');
 // API-related information
 const API_KEY = "Your API-KEY";
 const API_SECRET = "Your API-SECRET";
-const BASE_URL = "https://t(:open_url)";
+const BASE_URL = "https://t(:spot_http_url)";
 const REQUEST_PATH = "/sapi/v2/order";
 
 // Request method and request body
@@ -4804,7 +4806,7 @@ sendOrder();
 
 ### Create a test order
 
-`POST https://t(:open_url)/sapi/v1/order/test`
+`POST https://t(:spot_http_url)/sapi/v1/order/test`
 
 Create and validate a new order, but it will not be sent to the matching engine
 
@@ -4819,7 +4821,7 @@ Create and validate a new order, but it will not be sent to the matching engine
 > Request example
 
 ```http
-POST https://t(:open_url)/sapi/v1/order/test
+POST https://t(:spot_http_url)/sapi/v1/order/test
 
 // Headers Configuration
 Content-Type: application/json
@@ -4832,7 +4834,7 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 #!/bin/bash
 
 # Set API-related information
-URL="https://t(:open_url)"
+URL="https://t(:spot_http_url)"
 REQUEST_PATH="/sapi/v1/order/test"
 API_URL="${URL}${REQUEST_PATH}"
 API_KEY="your API-KEY"
@@ -4883,7 +4885,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API-related information
-            String url = "https://t(:open_url)";
+            String url = "https://t(:spot_http_url)";
             String requestPath = "/sapi/v1/order/test";
             String apiUrl = url + requestPath;
             String apiKey = "your API-KEY";
@@ -4988,7 +4990,7 @@ import (
 
 func main() {
 	// API-related information
-    url := "https://t(:open_url)"
+    url := "https://t(:spot_http_url)"
     requestPath := "/sapi/v1/order/test"
 	apiURL := url + requestPath
 	apiKey := "your API-KEY"
@@ -5065,7 +5067,7 @@ import requests
 import json
 
 # API-related information
-URL = "https://t(:open_url)"
+URL = "https://t(:spot_http_url)"
 REQUEST_PATH = "/sapi/v1/order/test"
 API_URL = URL + REQUEST_PATH
 API_KEY = "your API-KEY"
@@ -5119,7 +5121,7 @@ print("Response Body:", response.text)
 <?
 
 // API-related information
-$url = "https://t(:open_url)";
+$url = "https://t(:spot_http_url)";
 $request_path = "/sapi/v1/order/test";
 $api_url = $url . $request_path;
 $api_key = "your API-KEY";
@@ -5184,7 +5186,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API-related information
-const URL = "https://t(:open_url)";
+const URL = "https://t(:spot_http_url)";
 const REQUEST_PATH = "/sapi/v1/order/test";
 const API_URL = URL + REQUEST_PATH;
 const API_KEY = "your API-KEY";
@@ -5267,7 +5269,7 @@ axios
 
 ### Batch order placement
 
-`POST https://t(:open_url)/sapi/v1/batchOrders`
+`POST https://t(:spot_http_url)/sapi/v1/batchOrders`
 
 **Rate limit rule: 50 requests per 2 seconds, with a maximum of 10 orders per batch**
 
@@ -5282,7 +5284,7 @@ axios
 > Request example
 
 ```http
-POST https://t(:open_url)/sapi/v1/batchOrders
+POST https://t(:spot_http_url)/sapi/v1/batchOrders
 
 body
 {
@@ -5336,7 +5338,7 @@ body
 
 ### Order query
 
-`GET https://t(:open_url)/sapi/v1/order`
+`GET https://t(:spot_http_url)/sapi/v1/order`
 
 **Rate limit rule: 20 requests per 2 seconds**
 
@@ -5351,7 +5353,7 @@ body
 > Request example
 
 ```http
-GET https://t(:open_url)/sapi/v1/order?orderId=2618039663715064005&symbol=btcusdt
+GET https://t(:spot_http_url)/sapi/v1/order?orderId=2618039663715064005&symbol=btcusdt
 
 // Headers Configuration
 Content-Type: application/json
@@ -5364,7 +5366,7 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 #!/bin/bash
 
 # Set API-related information
-API_URL="https://t(:open_url)"
+API_URL="https://t(:spot_http_url)"
 REQUEST_URL="/sapi/v1/order"
 QUERY_STRING="?orderId=2618039663715064005&symbol=btcusdt"
 
@@ -5416,7 +5418,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API-related information
-            String apiUrl = "https://t(:open_url)";
+            String apiUrl = "https://t(:spot_http_url)";
             String requestUrl = "/sapi/v1/order";
             String queryString = "?orderId=2618039663715064005&symbol=btcusdt";
 
@@ -5519,7 +5521,7 @@ import (
 
 func main() {
 	// API-related information
-	apiURL := "https://t(:open_url)"
+	apiURL := "https://t(:spot_http_url)"
 	requestURL := "/sapi/v1/order"
 	queryString := "?orderId=2618039663715064005&symbol=btcusdt"
 
@@ -5600,7 +5602,7 @@ import hashlib
 import requests
 
 # API-related information
-API_URL = "https://t(:open_url)"
+API_URL = "https://t(:spot_http_url)"
 REQUEST_URL = "/sapi/v1/order"
 QUERY_STRING = "?orderId=2618039663715064005&symbol=btcusdt"
 
@@ -5650,7 +5652,7 @@ print("Response Body:", response.text)
 <?
 
 // API-related information
-$API_URL = "https://t(:open_url)";
+$API_URL = "https://t(:spot_http_url)";
 $REQUEST_URL = "/sapi/v1/order";
 $QUERY_STRING = "?orderId=2618039663715064005&symbol=btcusdt";
 
@@ -5711,7 +5713,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API-related information
-const API_URL = "https://t(:open_url)";
+const API_URL = "https://t(:spot_http_url)";
 const REQUEST_URL = "/sapi/v1/order";
 const QUERY_STRING = "?orderId=2618039663715064005&symbol=btcusdt";
 
@@ -5805,7 +5807,7 @@ axios
 
 ### 订单查询-V2
 
-`GET https://t(:open_url)/sapi/v2/order`
+`GET https://t(:spot_http_url)/sapi/v2/order`
 
 **Rate limit rule: 20 requests per 2 seconds**
 
@@ -5820,7 +5822,7 @@ axios
 > Request example
 
 ```http
-GET https://t(:open_url)/sapi/v2/order?orderId=2618039663715064005&symbol=btcusdt
+GET https://t(:spot_http_url)/sapi/v2/order?orderId=2618039663715064005&symbol=btcusdt
 
 // request headers
 Content-Type: application/json
@@ -5833,7 +5835,7 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 #!/bin/bash
 
 # Set API-related information
-API_URL="https://t(:open_url)"
+API_URL="https://t(:spot_http_url)"
 REQUEST_URL="/sapi/v2/order"
 QUERY_STRING="?orderId=2618039663715064005&symbol=btcusdt"
 
@@ -5885,7 +5887,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API-related information
-            String apiUrl = "https://t(:open_url)";
+            String apiUrl = "https://t(:spot_http_url)";
             String requestUrl = "/sapi/v2/order";
             String queryString = "?orderId=2618039663715064005&symbol=btcusdt";
 
@@ -5988,7 +5990,7 @@ import (
 
 func main() {
 	// API-related information
-	apiURL := "https://t(:open_url)"
+	apiURL := "https://t(:spot_http_url)"
 	requestURL := "/sapi/v2/order"
 	queryString := "?orderId=2618039663715064005&symbol=btcusdt"
 
@@ -6069,7 +6071,7 @@ import hashlib
 import requests
 
 # API-related information
-API_URL = "https://t(:open_url)"
+API_URL = "https://t(:spot_http_url)"
 REQUEST_URL = "/sapi/v2/order"
 QUERY_STRING = "?orderId=2618039663715064005&symbol=btcusdt"
 
@@ -6119,7 +6121,7 @@ print("Response Body:", response.text)
 <?
 
 // API-related information
-$API_URL = "https://t(:open_url)";
+$API_URL = "https://t(:spot_http_url)";
 $REQUEST_URL = "/sapi/v2/order";
 $QUERY_STRING = "?orderId=2618039663715064005&symbol=btcusdt";
 
@@ -6180,7 +6182,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API-related information
-const API_URL = "https://t(:open_url)";
+const API_URL = "https://t(:spot_http_url)";
 const REQUEST_URL = "/sapi/v2/order";
 const QUERY_STRING = "?orderId=2618039663715064005&symbol=btcusdt";
 
@@ -6274,7 +6276,7 @@ axios
 
 ### Cancel order
 
-`POST https://t(:open_url)/sapi/v1/cancel`
+`POST https://t(:spot_http_url)/sapi/v1/cancel`
 
 **Rate limit rule: 100 requests per 2 seconds**
 
@@ -6289,7 +6291,7 @@ axios
 > Request example
 
 ```http
-POST https://t(:open_url)/sapi/v1/cancel
+POST https://t(:spot_http_url)/sapi/v1/cancel
 
 // Headers Configuration
 Content-Type: application/json
@@ -6302,7 +6304,7 @@ X-CH-SIGN: 3c22ee3d2940df5e9dc5b7b862ba3d75e805e97a242f52f12fec9d16bc73e1c7
 #!/bin/bash
 
 # Set API-related information
-URL="https://t(:open_url)"
+URL="https://t(:spot_http_url)"
 REQUEST_PATH="/sapi/v1/cancel"
 API_URL="${URL}${REQUEST_PATH}"
 API_KEY="your API-KEY"
@@ -6353,7 +6355,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API-related information
-            String url = "https://t(:open_url)";
+            String url = "https://t(:spot_http_url)";
             String requestPath = "/sapi/v1/cancel";
             String apiUrl = url + requestPath;
             String apiKey = "your API-KEY";
@@ -6458,7 +6460,7 @@ import (
 
 func main() {
 	// API-related information
-    url := "https://t(:open_url)"
+    url := "https://t(:spot_http_url)"
     requestPath := "/sapi/v1/cancel"
 	apiURL := url + requestPath
 	apiKey := "your API-KEY"
@@ -6535,7 +6537,7 @@ import requests
 import json
 
 # API-related information
-URL = "https://t(:open_url)"
+URL = "https://t(:spot_http_url)"
 REQUEST_PATH = "/sapi/v1/cancel"
 API_URL = URL + REQUEST_PATH
 API_KEY = "your API-KEY"
@@ -6586,7 +6588,7 @@ print("Response Body:", response.text)
 <?
 
 // API-related information
-$url = "https://t(:open_url)";
+$url = "https://t(:spot_http_url)";
 $request_path = "/sapi/v1/cancel";
 $api_url = $url . $request_path;
 $api_key = "your API-KEY";
@@ -6648,7 +6650,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API-related information
-const URL = "https://t(:open_url)";
+const URL = "https://t(:spot_http_url)";
 const REQUEST_PATH = "/sapi/v1/cancel";
 const API_URL = URL + REQUEST_PATH;
 const API_KEY = "your API-KEY";
@@ -6736,7 +6738,7 @@ axios
 
 ### Cancel order-V2
 
-`POST https://t(:open_url)/sapi/v2/cancel`
+`POST https://t(:spot_http_url)/sapi/v2/cancel`
 
 **Rate limit: 100 requests per 2 seconds**
 
@@ -6751,7 +6753,7 @@ axios
 > Request example
 
 ```http
-POST https://t(:open_url)/sapi/v2/cancel
+POST https://t(:spot_http_url)/sapi/v2/cancel
 
 body
 {"symbol": "ethusdt","orderId": "111000111"}
@@ -6784,7 +6786,7 @@ signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk
 echo "Signature (X-CH-SIGN): $signature"
 
 # Send POST request
-response=$(curl -s -X POST "https://t(:open_url)${request_path}" \
+response=$(curl -s -X POST "https://t(:spot_http_url)${request_path}" \
     -H "Content-Type: application/json" \
     -H "X-CH-TS: $timestamp" \
     -H "X-CH-APIKEY: $api_key" \
@@ -6810,7 +6812,7 @@ public class SendOrder {
     // API-related information
     private static final String API_KEY = "your API-KEY";
     private static final String API_SECRET = "your API-SECRET";
-    private static final String BASE_URL = "https://t(:open_url)";
+    private static final String BASE_URL = "https://t(:spot_http_url)";
     private static final String REQUEST_PATH = "/sapi/v2/cancel";
 
     public static void main(String[] args) {
@@ -6909,7 +6911,7 @@ import (
 const (
 	APIKey     = "your API-KEY"
 	APISecret  = "your API-SECRET"
-	BaseURL    = "https://t(:open_url)"
+	BaseURL    = "https://t(:spot_http_url)"
 	RequestPath = "/sapi/v2/cancel"
 )
 
@@ -6975,7 +6977,7 @@ import requests
 # API-related information
 API_KEY = "your API-KEY"
 API_SECRET = "your API-SECRET"
-BASE_URL = "https://t(:open_url)"
+BASE_URL = "https://t(:spot_http_url)"
 REQUEST_PATH = "/sapi/v2/cancel"
 
 # Request method and request body
@@ -7020,7 +7022,7 @@ print("Response content:", response.text)
 // API-related information
 $apiKey = "your API-KEY";
 $apiSecret = "your API-SECRET";
-$baseUrl = "https://t(:open_url)";
+$baseUrl = "https://t(:spot_http_url)";
 $requestPath = "/sapi/v2/cancel";
 
 // Request method and request body
@@ -7079,7 +7081,7 @@ const axios = require('axios');
 // API-related information
 const API_KEY = "your API-KEY";
 const API_SECRET = "your API-SECRET";
-const BASE_URL = "https://t(:open_url)";
+const BASE_URL = "https://t(:spot_http_url)";
 const REQUEST_PATH = "/sapi/v2/cancel";
 
 // Request method and request body
@@ -7154,7 +7156,7 @@ sendOrder();
 
 ### Bulk cancel orders
 
-`POST https://t(:open_url)/sapi/v1/batchCancel`
+`POST https://t(:spot_http_url)/sapi/v1/batchCancel`
 
 **Rate limit rule: 50 requests per 2 seconds, with a maximum of 10 orders per batch**
 
@@ -7169,7 +7171,7 @@ sendOrder();
 > Request example
 
 ```http
-POST https://t(:open_url)/sapi/v1/batchCancel
+POST https://t(:spot_http_url)/sapi/v1/batchCancel
 
 // Headers Configuration
 Content-Type: application/json
@@ -7182,7 +7184,7 @@ X-CH-SIGN: 3c22ee3d2940df5e9dc5b7b862ba3d75e805e97a242f52f12fec9d16bc73e1c7
 #!/bin/bash
 
 # Set API-related information
-URL="https://t(:open_url)"
+URL="https://t(:spot_http_url)"
 REQUEST_PATH="/sapi/v1/batchCancel"
 API_URL="${URL}${REQUEST_PATH}"
 API_KEY="your API-KEY"
@@ -7233,7 +7235,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API-related information
-            String url = "https://t(:open_url)";
+            String url = "https://t(:spot_http_url)";
             String requestPath = "/sapi/v1/batchCancel";
             String apiUrl = url + requestPath;
             String apiKey = "your API-KEY";
@@ -7338,7 +7340,7 @@ import (
 
 func main() {
 	// API-related information
-    url := "https://t(:open_url)"
+    url := "https://t(:spot_http_url)"
     requestPath := "/sapi/v1/batchCancel"
 	apiURL := url + requestPath
 	apiKey := "your API-KEY"
@@ -7415,7 +7417,7 @@ import requests
 import json
 
 # API-related information
-URL = "https://t(:open_url)"
+URL = "https://t(:spot_http_url)"
 REQUEST_PATH = "/sapi/v1/batchCancel"
 API_URL = URL + REQUEST_PATH
 API_KEY = "your API-KEY"
@@ -7470,7 +7472,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API-related information
-const URL = "https://t(:open_url)";
+const URL = "https://t(:spot_http_url)";
 const REQUEST_PATH = "/sapi/v1/batchCancel";
 const API_URL = URL + REQUEST_PATH;
 const API_KEY = "your API-KEY";
@@ -7559,7 +7561,7 @@ axios
 
 ### Current order
 
-`GET https://t(:open_url)/sapi/v1/openOrders`
+`GET https://t(:spot_http_url)/sapi/v1/openOrders`
 
 **Rate limit rule: 20 requests per 2 seconds**
 
@@ -7574,7 +7576,7 @@ axios
 > Request example
 
 ```http
-GET https://t(:open_url)/sapi/v1/openOrders?symbol=btcusdt&limit=10
+GET https://t(:spot_http_url)/sapi/v1/openOrders?symbol=btcusdt&limit=10
 
 // Headers Configuration
 Content-Type: application/json
@@ -7587,7 +7589,7 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 #!/bin/bash
 
 # Set API-related information
-API_URL="https://t(:open_url)"
+API_URL="https://t(:spot_http_url)"
 REQUEST_URL="/sapi/v1/openOrders"
 QUERY_STRING="?symbol=btcusdt&limit=10"
 
@@ -7639,7 +7641,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API-related information
-            String apiUrl = "https://t(:open_url)";
+            String apiUrl = "https://t(:spot_http_url)";
             String requestUrl = "/sapi/v1/openOrders";
             String queryString = "?symbol=btcusdt&limit=10";
 
@@ -7742,7 +7744,7 @@ import (
 
 func main() {
 	// API-related information
-	apiURL := "https://t(:open_url)"
+	apiURL := "https://t(:spot_http_url)"
 	requestURL := "/sapi/v1/openOrders"
 	queryString := "?symbol=btcusdt&limit=10"
 
@@ -7823,7 +7825,7 @@ import hashlib
 import requests
 
 # API-related information
-API_URL = "https://t(:open_url)"
+API_URL = "https://t(:spot_http_url)"
 REQUEST_URL = "/sapi/v1/openOrders"
 QUERY_STRING = "?symbol=btcusdt&limit=10"
 
@@ -7873,7 +7875,7 @@ print("Response Body:", response.text)
 <?
 
 // API-related information
-$API_URL = "https://t(:open_url)";
+$API_URL = "https://t(:spot_http_url)";
 $REQUEST_URL = "/sapi/v1/openOrders";
 $QUERY_STRING = "?symbol=btcusdt&limit=10";
 
@@ -7934,7 +7936,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API-related information
-const API_URL = "https://t(:open_url)";
+const API_URL = "https://t(:spot_http_url)";
 const REQUEST_URL = "/sapi/v1/openOrders";
 const QUERY_STRING = "?symbol=btcusdt&limit=10";
 
@@ -8041,7 +8043,7 @@ axios
 
 ### Current order-V2
 
-`GET https://t(:open_url)/sapi/v2/openOrders`
+`GET https://t(:spot_http_url)/sapi/v2/openOrders`
 
 **Rate limit rule: 20 requests per 2 seconds**
 
@@ -8056,7 +8058,7 @@ axios
 > Request example
 
 ```http
-GET https://t(:open_url)/sapi/v2/openOrders?symbol=btcusdt&limit=10
+GET https://t(:spot_http_url)/sapi/v2/openOrders?symbol=btcusdt&limit=10
 
 // request headers
 Content-Type: application/json
@@ -8069,7 +8071,7 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 #!/bin/bash
 
 # Set API-related information
-API_URL="https://t(:open_url)"
+API_URL="https://t(:spot_http_url)"
 REQUEST_URL="/sapi/v2/openOrders"
 QUERY_STRING="?symbol=btcusdt&limit=10"
 
@@ -8121,7 +8123,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API-related information
-            String apiUrl = "https://t(:open_url)";
+            String apiUrl = "https://t(:spot_http_url)";
             String requestUrl = "/sapi/v2/openOrders";
             String queryString = "?symbol=btcusdt&limit=10";
 
@@ -8224,7 +8226,7 @@ import (
 
 func main() {
 	// API-related information
-	apiURL := "https://t(:open_url)"
+	apiURL := "https://t(:spot_http_url)"
 	requestURL := "/sapi/v2/openOrders"
 	queryString := "?symbol=btcusdt&limit=10"
 
@@ -8305,7 +8307,7 @@ import hashlib
 import requests
 
 # API-related information
-API_URL = "https://t(:open_url)"
+API_URL = "https://t(:spot_http_url)"
 REQUEST_URL = "/sapi/v2/openOrders"
 QUERY_STRING = "?symbol=btcusdt&limit=10"
 
@@ -8355,7 +8357,7 @@ print("Response Body:", response.text)
 <?
 
 // API-related information
-$API_URL = "https://t(:open_url)";
+$API_URL = "https://t(:spot_http_url)";
 $REQUEST_URL = "/sapi/v2/openOrders";
 $QUERY_STRING = "?symbol=btcusdt&limit=10";
 
@@ -8416,7 +8418,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API-related information
-const API_URL = "https://t(:open_url)";
+const API_URL = "https://t(:spot_http_url)";
 const REQUEST_URL = "/sapi/v2/openOrders";
 const QUERY_STRING = "?symbol=btcusdt&limit=10";
 
@@ -8523,7 +8525,7 @@ axios
 
 ### Transaction records
 
-`GET https://t(:open_url)/sapi/v1/myTrades`
+`GET https://t(:spot_http_url)/sapi/v1/myTrades`
 
 **Rate limit rule: 20 requests per 2 seconds**
 
@@ -8538,7 +8540,7 @@ axios
 > Request example
 
 ```http
-GET https://t(:open_url)/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
+GET https://t(:spot_http_url)/sapi/v1/myTrades?symbol=BTCUSDT&limit=100
 
 // Headers Configuration
 Content-Type: application/json
@@ -8551,7 +8553,7 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 #!/bin/bash
 
 # Set API-related information
-API_URL="https://t(:open_url)"
+API_URL="https://t(:spot_http_url)"
 REQUEST_URL="/sapi/v1/myTrades"
 QUERY_STRING="?symbol=BTCUSDT&limit=100"
 
@@ -8603,7 +8605,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API-related information
-            String apiUrl = "https://t(:open_url)";
+            String apiUrl = "https://t(:spot_http_url)";
             String requestUrl = "/sapi/v1/myTrades";
             String queryString = "?symbol=BTCUSDT&limit=100";
 
@@ -8706,7 +8708,7 @@ import (
 
 func main() {
 	// API-related information
-	apiURL := "https://t(:open_url)"
+	apiURL := "https://t(:spot_http_url)"
 	requestURL := "/sapi/v1/myTrades"
 	queryString := "?symbol=BTCUSDT&limit=100"
 
@@ -8787,7 +8789,7 @@ import hashlib
 import requests
 
 # API-related information
-API_URL = "https://t(:open_url)"
+API_URL = "https://t(:spot_http_url)"
 REQUEST_URL = "/sapi/v1/myTrades"
 QUERY_STRING = "?symbol=BTCUSDT&limit=100"
 
@@ -8837,7 +8839,7 @@ print("Response Body:", response.text)
 <?
 
 // API-related information
-$API_URL = "https://t(:open_url)";
+$API_URL = "https://t(:spot_http_url)";
 $REQUEST_URL = "/sapi/v1/myTrades";
 $QUERY_STRING = "?symbol=BTCUSDT&limit=100";
 
@@ -8898,7 +8900,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API-related information
-const API_URL = "https://t(:open_url)";
+const API_URL = "https://t(:spot_http_url)";
 const REQUEST_URL = "/sapi/v1/myTrades";
 const QUERY_STRING = "?symbol=BTCUSDT&limit=100";
 
@@ -9027,7 +9029,7 @@ axios
 
 ### Account information (deprecated)
 
-`GET https://t(:open_url)/sapi/v1/account`
+`GET https://t(:spot_http_url)/sapi/v1/account`
 
 **Rate limit rule: 20 requests per 2 seconds**
 
@@ -9042,7 +9044,7 @@ axios
 > Request example
 
 ```http
-GET https://t(:open_url)/sapi/v1/account
+GET https://t(:spot_http_url)/sapi/v1/account
 
 // Headers Configuration
 Content-Type: application/json
@@ -9055,7 +9057,7 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 #!/bin/bash
 
 # Set API-related information
-API_URL="https://t(:open_url)"
+API_URL="https://t(:spot_http_url)"
 REQUEST_URL="/sapi/v1/account"
 QUERY_STRING=""
 
@@ -9107,7 +9109,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API-related information
-            String apiUrl = "https://t(:open_url)";
+            String apiUrl = "https://t(:spot_http_url)";
             String requestUrl = "/sapi/v1/account";
             String queryString = "";
 
@@ -9210,7 +9212,7 @@ import (
 
 func main() {
 	// API-related information
-	apiURL := "https://t(:open_url)"
+	apiURL := "https://t(:spot_http_url)"
 	requestURL := "/sapi/v1/account"
 	queryString := ""
 
@@ -9291,7 +9293,7 @@ import hashlib
 import requests
 
 # API-related information
-API_URL = "https://t(:open_url)"
+API_URL = "https://t(:spot_http_url)"
 REQUEST_URL = "/sapi/v1/account"
 QUERY_STRING = ""
 
@@ -9341,7 +9343,7 @@ print("Response Body:", response.text)
 <?
 
 // API-related information
-$API_URL = "https://t(:open_url)";
+$API_URL = "https://t(:spot_http_url)";
 $REQUEST_URL = "/sapi/v1/account";
 $QUERY_STRING = "";
 
@@ -9402,7 +9404,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API-related information
-const API_URL = "https://t(:open_url)";
+const API_URL = "https://t(:spot_http_url)";
 const REQUEST_URL = "/sapi/v1/account";
 const QUERY_STRING = "";
 
@@ -9489,7 +9491,7 @@ axios
 
 ### Account information (recommended)
 
-`GET https://t(:open_url)/sapi/v1/account/balance`
+`GET https://t(:spot_http_url)/sapi/v1/account/balance`
 
 **Rate limit rule: 20 requests per 2 seconds**
 
@@ -9505,10 +9507,10 @@ axios
 
 ```http
 // Query all currencies
-GET https://t(:open_url)/sapi/v1/account/balance
+GET https://t(:spot_http_url)/sapi/v1/account/balance
 
 // Query USDT, BTC, ETH
-GET https://t(:open_url)/sapi/v1/account/balance?symbols=USDT,BTC,ETH
+GET https://t(:spot_http_url)/sapi/v1/account/balance?symbols=USDT,BTC,ETH
 
 // Headers Configuration
 Content-Type: application/json
@@ -9521,7 +9523,7 @@ X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
 #!/bin/bash
 
 # Set API-related information
-API_URL="https://t(:open_url)"
+API_URL="https://t(:spot_http_url)"
 REQUEST_URL="/sapi/v1/account/balance"
 QUERY_STRING="?symbols=USDT,BTC,ETH"
 
@@ -9573,7 +9575,7 @@ public class FameexApiRequest {
     public static void main(String[] args) {
         try {
             // API-related information
-            String apiUrl = "https://t(:open_url)";
+            String apiUrl = "https://t(:spot_http_url)";
             String requestUrl = "/sapi/v1/account/balance";
             String queryString = "?symbols=USDT,BTC,ETH";
 
@@ -9676,7 +9678,7 @@ import (
 
 func main() {
 	// API-related information
-	apiURL := "https://t(:open_url)"
+	apiURL := "https://t(:spot_http_url)"
 	requestURL := "/sapi/v1/account/balance"
 	queryString := "?symbols=USDT,BTC,ETH"
 
@@ -9757,7 +9759,7 @@ import hashlib
 import requests
 
 # API-related information
-API_URL = "https://t(:open_url)"
+API_URL = "https://t(:spot_http_url)"
 REQUEST_URL = "/sapi/account/balance"
 QUERY_STRING = "?symbols=USDT,BTC,ETH"
 
@@ -9807,7 +9809,7 @@ print("Response Body:", response.text)
 <?
 
 // API-related information
-$API_URL = "https://t(:open_url)";
+$API_URL = "https://t(:spot_http_url)";
 $REQUEST_URL = "/sapi/v1/account/balance";
 $QUERY_STRING = "?symbols=USDT,BTC,ETH";
 
@@ -9868,7 +9870,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 
 // API-related information
-const API_URL = "https://t(:open_url)";
+const API_URL = "https://t(:spot_http_url)";
 const REQUEST_URL = "/sapi/v1/account/balance";
 const QUERY_STRING = "?symbols=USDT,BTC,ETH";
 
@@ -9969,19 +9971,19 @@ axios
 
 ### Test connection
 
-`GET https://t(:futures_url)/fapi/v1/ping`
+`GET https://t(:futures_http_url)/fapi/v1/ping`
 
 > Request example
 
 ```http
-GET https://t(:futures_url)/fapi/v1/ping
+GET https://t(:futures_http_url)/fapi/v1/ping
 
 // Headers Configuration
 Content-Type:application/json
 ```
 
 ```shell
-curl -X GET "https://t(:futures_url)/fapi/v1/ping"
+curl -X GET "https://t(:futures_http_url)/fapi/v1/ping"
 ```
 
 ```java
@@ -9995,7 +9997,7 @@ public class Main {
   public static void main(String[] args) {
     try {
       // Create a URL using URI
-      URI uri = new URI("https://t(:futures_url)/fapi/v1/ping");
+      URI uri = new URI("https://t(:futures_http_url)/fapi/v1/ping");
       HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
       conn.setRequestMethod("GET");
       conn.setRequestProperty("User-Agent", "Java-Client");
@@ -10029,7 +10031,7 @@ import (
 )
 
 func main() {
-	url := "https://t(:futures_url)/fapi/v1/ping"
+	url := "https://t(:futures_http_url)/fapi/v1/ping"
 
 	// Send GET request
 	resp, err := http.Get(url)
@@ -10054,7 +10056,7 @@ func main() {
 ```python
 import requests
 
-url = "https://t(:futures_url)/fapi/v1/ping"
+url = "https://t(:futures_http_url)/fapi/v1/ping"
 
 try:
     response = requests.get(url)
@@ -10065,7 +10067,7 @@ except requests.exceptions.RequestException as e:
 ```
 
 ```php
-$url = "https://t(:futures_url)/fapi/v1/ping";
+$url = "https://t(:futures_http_url)/fapi/v1/ping";
 
 // Initialize cURL
 $ch = curl_init();
@@ -10092,7 +10094,7 @@ curl_close($ch);
 ```javascript--node
 const https = require('https');
 
-const url = 'https://t(:futures_url)/fapi/v1/ping';
+const url = 'https://t(:futures_http_url)/fapi/v1/ping';
 
 https.get(url, (res) => {
   let data = '';
@@ -10128,19 +10130,19 @@ Test the connectivity of the REST API
 
 ### Get server time
 
-`GET https://t(:futures_url)/fapi/v1/time`
+`GET https://t(:futures_http_url)/fapi/v1/time`
 
 > Request example
 
 ```http
-GET https://t(:futures_url)/fapi/v1/time
+GET https://t(:futures_http_url)/fapi/v1/time
 
 // Headers Configuration
 Content-Type:application/json
 ```
 
 ```shell
-curl -X GET "https://t(:futures_url)/fapi/v1/time"
+curl -X GET "https://t(:futures_http_url)/fapi/v1/time"
 ```
 
 ```java
@@ -10154,7 +10156,7 @@ public class Main {
   public static void main(String[] args) {
     try {
       // Create a URL using URI
-      URI uri = new URI("https://t(:futures_url)/fapi/v1/time");
+      URI uri = new URI("https://t(:futures_http_url)/fapi/v1/time");
       HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
       conn.setRequestMethod("GET");
       conn.setRequestProperty("User-Agent", "Java-Client");
@@ -10188,7 +10190,7 @@ import (
 )
 
 func main() {
-	url := "https://t(:futures_url)/fapi/v1/time"
+	url := "https://t(:futures_http_url)/fapi/v1/time"
 
 	// Send GET request
 	resp, err := http.Get(url)
@@ -10213,7 +10215,7 @@ func main() {
 ```python
 import requests
 
-url = "https://t(:futures_url)/fapi/v1/time"
+url = "https://t(:futures_http_url)/fapi/v1/time"
 
 try:
     response = requests.get(url)
@@ -10224,7 +10226,7 @@ except requests.exceptions.RequestException as e:
 ```
 
 ```php
-$url = "https://t(:futures_url)/fapi/v1/time";
+$url = "https://t(:futures_http_url)/fapi/v1/time";
 
 // Initialize cURL
 $ch = curl_init();
@@ -10251,7 +10253,7 @@ curl_close($ch);
 ```javascript--node
 const https = require('https');
 
-const url = 'https://t(:futures_url)/fapi/v1/time';
+const url = 'https://t(:futures_http_url)/fapi/v1/time';
 
 https.get(url, (res) => {
   let data = '';
@@ -10289,19 +10291,19 @@ https.get(url, (res) => {
 
 ### Contract list
 
-`GET https://t(:futures_url)/fapi/v1/contracts`
+`GET https://t(:futures_http_url)/fapi/v1/contracts`
 
 > Request example
 
 ```http
-GET https://t(:futures_url)/fapi/v1/contracts
+GET https://t(:futures_http_url)/fapi/v1/contracts
 
 // Headers Configuration
 Content-Type:application/json
 ```
 
 ```shell
-curl -X GET "https://t(:futures_url)/fapi/v1/contracts"
+curl -X GET "https://t(:futures_http_url)/fapi/v1/contracts"
 ```
 
 ```java
@@ -10315,7 +10317,7 @@ public class Main {
   public static void main(String[] args) {
     try {
       // Create a URL using URI
-      URI uri = new URI("https://t(:futures_url)/fapi/v1/contracts");
+      URI uri = new URI("https://t(:futures_http_url)/fapi/v1/contracts");
       HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
       conn.setRequestMethod("GET");
       conn.setRequestProperty("User-Agent", "Java-Client");
@@ -10349,7 +10351,7 @@ import (
 )
 
 func main() {
-	url := "https://t(:futures_url)/fapi/v1/contracts"
+	url := "https://t(:futures_http_url)/fapi/v1/contracts"
 
 	// Send GET request
 	resp, err := http.Get(url)
@@ -10374,7 +10376,7 @@ func main() {
 ```python
 import requests
 
-url = "https://t(:futures_url)/fapi/v1/contracts"
+url = "https://t(:futures_http_url)/fapi/v1/contracts"
 
 try:
     response = requests.get(url)
@@ -10385,7 +10387,7 @@ except requests.exceptions.RequestException as e:
 ```
 
 ```php
-$url = "https://t(:futures_url)/fapi/v1/contracts";
+$url = "https://t(:futures_http_url)/fapi/v1/contracts";
 
 // 初始化 cURL
 $ch = curl_init();
@@ -10412,7 +10414,7 @@ curl_close($ch);
 ```javascript--node
 const https = require('https');
 
-const url = 'https://t(:futures_url)/fapi/v1/contracts';
+const url = 'https://t(:futures_http_url)/fapi/v1/contracts';
 
 https.get(url, (res) => {
   let data = '';
@@ -10497,21 +10499,21 @@ https.get(url, (res) => {
 
 ### Order book
 
-`GET https://t(:futures_url)/fapi/v1/depth`
+`GET https://t(:futures_http_url)/fapi/v1/depth`
 
 Market order book depth information
 
 > Request example
 
 ```http
-GET https://t(:futures_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100
+GET https://t(:futures_http_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100
 
 // Headers Configuration
 Content-Type:application/json
 ```
 
 ```shell
-curl -X GET "https://t(:futures_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100"
+curl -X GET "https://t(:futures_http_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100"
 ```
 
 ```java
@@ -10525,7 +10527,7 @@ public class Main {
   public static void main(String[] args) {
     try {
       // Create a URL using URI
-      URI uri = new URI("https://t(:futures_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100");
+      URI uri = new URI("https://t(:futures_http_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100");
       HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
       conn.setRequestMethod("GET");
       conn.setRequestProperty("User-Agent", "Java-Client");
@@ -10559,7 +10561,7 @@ import (
 )
 
 func main() {
-	url := "https://t(:futures_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100"
+	url := "https://t(:futures_http_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100"
 
 	// Send GET request
 	resp, err := http.Get(url)
@@ -10584,7 +10586,7 @@ func main() {
 ```python
 import requests
 
-url = "https://t(:futures_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100"
+url = "https://t(:futures_http_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100"
 
 try:
     response = requests.get(url)
@@ -10595,7 +10597,7 @@ except requests.exceptions.RequestException as e:
 ```
 
 ```php
-$url = "https://t(:futures_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100";
+$url = "https://t(:futures_http_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100";
 
 // Initialize cURL
 $ch = curl_init();
@@ -10622,7 +10624,7 @@ curl_close($ch);
 ```javascript--node
 const https = require('https');
 
-const url = 'https://t(:futures_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100';
+const url = 'https://t(:futures_http_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100';
 
 https.get(url, (res) => {
   let data = '';
@@ -10689,21 +10691,21 @@ The information corresponding to bids and asks represents all the prices and the
 
 ### Market Ticker
 
-`GET https://t(:futures_url)/fapi/v1/ticker`
+`GET https://t(:futures_http_url)/fapi/v1/ticker`
 
 24-hour price change data
 
 > Request example
 
 ```http
-GET https://t(:futures_url)/fapi/v1/ticker?contractName=E-BTC-USDT
+GET https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT
 
 // Headers Configuration
 Content-Type:application/json
 ```
 
 ```shell
-curl -X GET "https://t(:futures_url)/fapi/v1/ticker?contractName=E-BTC-USDT"
+curl -X GET "https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT"
 ```
 
 ```java
@@ -10717,7 +10719,7 @@ public class Main {
   public static void main(String[] args) {
     try {
       // Create a URL using URI
-      URI uri = new URI("https://t(:futures_url)/fapi/v1/ticker?contractName=E-BTC-USDT");
+      URI uri = new URI("https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT");
       HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
       conn.setRequestMethod("GET");
       conn.setRequestProperty("User-Agent", "Java-Client");
@@ -10751,7 +10753,7 @@ import (
 )
 
 func main() {
-	url := "https://t(:futures_url)/fapi/v1/ticker?contractName=E-BTC-USDT"
+	url := "https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT"
 
 	// Send GET request
 	resp, err := http.Get(url)
@@ -10776,7 +10778,7 @@ func main() {
 ```python
 import requests
 
-url = "https://t(:futures_url)/fapi/v1/ticker?contractName=E-BTC-USDT"
+url = "https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT"
 
 try:
     response = requests.get(url)
@@ -10787,7 +10789,7 @@ except requests.exceptions.RequestException as e:
 ```
 
 ```php
-$url = "https://t(:futures_url)/fapi/v1/ticker?contractName=E-BTC-USDT";
+$url = "https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT";
 
 // Initialize cURL
 $ch = curl_init();
@@ -10814,7 +10816,7 @@ curl_close($ch);
 ```javascript--node
 const https = require('https');
 
-const url = 'https://t(:futures_url)/fapi/v1/ticker?contractName=E-BTC-USDT';
+const url = 'https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT';
 
 https.get(url, (res) => {
   let data = '';
@@ -10871,14 +10873,14 @@ https.get(url, (res) => {
 
 ### Market Ticker-V2
 
-`GET https://t(:futures_url)/swap-api/v2/tickers`
+`GET https://t(:futures_http_url)/swap-api/v2/tickers`
 
 Get 24-hour price change data
 
 > Request example
 
 ```http
-GET https://t(:futures_url)/swap-api/v2/tickers
+GET https://t(:futures_http_url)/swap-api/v2/tickers
 
 // request headers
 Content-Type:application/json
@@ -10934,19 +10936,19 @@ Content-Type:application/json
 
 ### Get index/mark price
 
-`GET` `https://t(:futures_url)/fapi/v1/index`
+`GET` `https://t(:futures_http_url)/fapi/v1/index`
 
 > Request example
 
 ```http
-GET https://t(:futures_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100
+GET https://t(:futures_http_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100
 
 // Headers Configuration
 Content-Type:application/json
 ```
 
 ```shell
-curl -X GET "https://t(:futures_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100"
+curl -X GET "https://t(:futures_http_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100"
 ```
 
 ```java
@@ -10960,7 +10962,7 @@ public class Main {
   public static void main(String[] args) {
     try {
       // Create a URL using URI
-      URI uri = new URI("https://t(:futures_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100");
+      URI uri = new URI("https://t(:futures_http_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100");
       HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
       conn.setRequestMethod("GET");
       conn.setRequestProperty("User-Agent", "Java-Client");
@@ -10994,7 +10996,7 @@ import (
 )
 
 func main() {
-	url := "https://t(:futures_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100"
+	url := "https://t(:futures_http_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100"
 
 	// Send GET request
 	resp, err := http.Get(url)
@@ -11019,7 +11021,7 @@ func main() {
 ```python
 import requests
 
-url = "https://t(:futures_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100"
+url = "https://t(:futures_http_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100"
 
 try:
     response = requests.get(url)
@@ -11030,7 +11032,7 @@ except requests.exceptions.RequestException as e:
 ```
 
 ```php
-$url = "https://t(:futures_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100";
+$url = "https://t(:futures_http_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100";
 
 // Initialize cURL
 $ch = curl_init();
@@ -11057,7 +11059,7 @@ curl_close($ch);
 ```javascript--node
 const https = require('https');
 
-const url = 'https://t(:futures_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100';
+const url = 'https://t(:futures_http_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100';
 
 https.get(url, (res) => {
   let data = '';
@@ -11106,19 +11108,19 @@ https.get(url, (res) => {
 
 ### K-line / Candlestick chart data
 
-`GET https://t(:futures_url)/fapi/v1/klines`
+`GET https://t(:futures_http_url)/fapi/v1/klines`
 
 > Request example
 
 ```http
-GET https://t(:futures_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000
+GET https://t(:futures_http_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000
 
 // Headers Configuration
 Content-Type:application/json
 ```
 
 ```shell
-curl -X GET "https://t(:futures_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000"
+curl -X GET "https://t(:futures_http_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000"
 ```
 
 ```java
@@ -11132,7 +11134,7 @@ public class Main {
   public static void main(String[] args) {
     try {
       // Create a URL using URI
-      URI uri = new URI("https://t(:futures_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000");
+      URI uri = new URI("https://t(:futures_http_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000");
       HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
       conn.setRequestMethod("GET");
       conn.setRequestProperty("User-Agent", "Java-Client");
@@ -11166,7 +11168,7 @@ import (
 )
 
 func main() {
-	url := "https://t(:futures_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000"
+	url := "https://t(:futures_http_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000"
 
 	// Send GET request
 	resp, err := http.Get(url)
@@ -11191,7 +11193,7 @@ func main() {
 ```python
 import requests
 
-url = "https://t(:futures_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000"
+url = "https://t(:futures_http_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000"
 
 try:
     response = requests.get(url)
@@ -11202,7 +11204,7 @@ except requests.exceptions.RequestException as e:
 ```
 
 ```php
-$url = "https://t(:futures_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000";
+$url = "https://t(:futures_http_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000";
 
 // Initialize cURL.
 $ch = curl_init();
@@ -11229,7 +11231,7 @@ curl_close($ch);
 ```javascript--node
 const https = require('https');
 
-const url = 'https://t(:futures_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000';
+const url = 'https://t(:futures_http_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000';
 
 https.get(url, (res) => {
   let data = '';
@@ -11309,7 +11311,7 @@ https.get(url, (res) => {
 
 ### Create order
 
-`POST https://t(:futures_url)/fapi/v1/order`
+`POST https://t(:futures_http_url)/fapi/v1/order`
 
 Create a single new order
 
@@ -11324,7 +11326,7 @@ Create a single new order
 > Request example
 
 ```http
-POST https://t(:futures_url)/fapi/v1/order
+POST https://t(:futures_http_url)/fapi/v1/order
 
 body
 {"contractName":"E-BTC-USDT","price":65000.00,"volume":1.00,"type":"LIMIT","side":"BUY","open":"OPEN","positionType":1,"clientOrderId":"111000111","timeInForce":"IOC"}
@@ -11357,7 +11359,7 @@ signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk
 echo "Signature (X-CH-SIGN): $signature"
 
 # Send POST request
-response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+response=$(curl -s -X POST "https://t(:futures_http_url)${request_path}" \
     -H "Content-Type: application/json" \
     -H "X-CH-TS: $timestamp" \
     -H "X-CH-APIKEY: $api_key" \
@@ -11383,7 +11385,7 @@ public class SendOrder {
     // API-related information
     private static final String API_KEY = "Your API key";
     private static final String API_SECRET = "Your API-SECRET";
-    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String BASE_URL = "https://t(:futures_http_url)";
     private static final String REQUEST_PATH = "/fapi/v1/order";
 
     public static void main(String[] args) {
@@ -11482,7 +11484,7 @@ import (
 const (
 	APIKey     = "Your API key"
 	APISecret  = "Your API-SECRET"
-	BaseURL    = "https://t(:futures_url)"
+	BaseURL    = "https://t(:futures_http_url)"
 	RequestPath = "/fapi/v1/order"
 )
 
@@ -11548,7 +11550,7 @@ import requests
 # API-related information
 API_KEY = "Your API key"
 API_SECRET = "Your API-SECRET"
-BASE_URL = "https://t(:futures_url)"
+BASE_URL = "https://t(:futures_http_url)"
 REQUEST_PATH = "/fapi/v1/order"
 
 # Request method and request body
@@ -11593,7 +11595,7 @@ print("Response content:", response.text)
 // API-related information
 $apiKey = "Your API key";
 $apiSecret = "Your API-SECRET";
-$baseUrl = "https://t(:futures_url)";
+$baseUrl = "https://t(:futures_http_url)";
 $requestPath = "/fapi/v1/order";
 
 // Request method and request body
@@ -11659,7 +11661,7 @@ const axios = require('axios');
 // API-related information
 const API_KEY = "Your API-KEY";
 const API_SECRET = "Your API-SECRET";
-const BASE_URL = "https://t(:futures_url)";
+const BASE_URL = "https://t(:futures_http_url)";
 const REQUEST_PATH = "/fapi/v1/order";
 
 // Request method and request body
@@ -11742,7 +11744,7 @@ sendOrder();
 
 ### Create conditional order
 
-`POST https://t(:futures_url)/fapi/v1/conditionOrder`
+`POST https://t(:futures_http_url)/fapi/v1/conditionOrder`
 
 **Request headers**
 
@@ -11755,7 +11757,7 @@ sendOrder();
 > Request example
 
 ```http
-POST https://t(:futures_url)/fapi/v1/conditionOrder
+POST https://t(:futures_http_url)/fapi/v1/conditionOrder
 
 body
 {"contractName":"E-BTC-USDT","price":"100.00","volume":"1.00","type":"LIMIT","side":"BUY","positionType":"1","open":"OPEN","triggerType":"1","triggerPrice":"455"}
@@ -11788,7 +11790,7 @@ signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk
 echo "Signature (X-CH-SIGN): $signature"
 
 # Send a POST request
-response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+response=$(curl -s -X POST "https://t(:futures_http_url)${request_path}" \
     -H "Content-Type: application/json" \
     -H "X-CH-TS: $timestamp" \
     -H "X-CH-APIKEY: $api_key" \
@@ -11814,7 +11816,7 @@ public class SendOrder {
     // API-related information
     private static final String API_KEY = "Your API-KEY";
     private static final String API_SECRET = "Your API-SECRET";
-    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String BASE_URL = "https://t(:futures_http_url)";
     private static final String REQUEST_PATH = "/fapi/v1/conditionOrder";
 
     public static void main(String[] args) {
@@ -11913,7 +11915,7 @@ import (
 const (
 	APIKey     = "Your API-KEY"
 	APISecret  = "Your API-SECRET"
-	BaseURL    = "https://t(:futures_url)"
+	BaseURL    = "https://t(:futures_http_url)"
 	RequestPath = "/fapi/v1/conditionOrder"
 )
 
@@ -11979,7 +11981,7 @@ import requests
 # API-related information
 API_KEY = "Your API-KEY"
 API_SECRET = "Your API-SECRET"
-BASE_URL = "https://t(:futures_url)"
+BASE_URL = "https://t(:futures_http_url)"
 REQUEST_PATH = "/fapi/v1/conditionOrder"
 
 # Request method and request body
@@ -12024,7 +12026,7 @@ print("Response content:", response.text)
 // API-related information
 $apiKey = "Your API key";
 $apiSecret = "Your API-SECRET";
-$baseUrl = "https://t(:futures_url)";
+$baseUrl = "https://t(:futures_http_url)";
 $requestPath = "/fapi/v1/conditionOrder";
 
 // Request method and request body
@@ -12090,7 +12092,7 @@ const axios = require('axios');
 // API-related information
 const API_KEY = "Your API key";
 const API_SECRET = "Your API-SECRET";
-const BASE_URL = "https://t(:futures_url)";
+const BASE_URL = "https://t(:futures_http_url)";
 const REQUEST_PATH = "/fapi/v1/conditionOrder";
 
 // Request method and request body
@@ -12183,7 +12185,7 @@ If this API returns unexpected results, please contact the technical team, and w
 
 ### Cancel order
 
-`POST https://t(:futures_url)/fapi/v1/cancel`
+`POST https://t(:futures_http_url)/fapi/v1/cancel`
 
 **Rate limit rule: 20 requests per 2 seconds**
 
@@ -12198,7 +12200,7 @@ If this API returns unexpected results, please contact the technical team, and w
 > Request example
 
 ```http
-POST https://t(:futures_url)/fapi/v1/cancel
+POST https://t(:futures_http_url)/fapi/v1/cancel
 
 body
 {"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}
@@ -12231,7 +12233,7 @@ signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk
 echo "Signature (X-CH-SIGN): $signature"
 
 # Send a POST request
-response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+response=$(curl -s -X POST "https://t(:futures_http_url)${request_path}" \
     -H "Content-Type: application/json" \
     -H "X-CH-TS: $timestamp" \
     -H "X-CH-APIKEY: $api_key" \
@@ -12257,7 +12259,7 @@ public class SendOrder {
     // API-related information
     private static final String API_KEY = "Your API key";
     private static final String API_SECRET = "Your API-SECRET";
-    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String BASE_URL = "https://t(:futures_http_url)";
     private static final String REQUEST_PATH = "/fapi/v1/cancel";
 
     public static void main(String[] args) {
@@ -12356,7 +12358,7 @@ import (
 const (
 	APIKey     = "Your API-KEY"
 	APISecret  = "Your API-SECRET"
-	BaseURL    = "https://t(:futures_url)"
+	BaseURL    = "https://t(:futures_http_url)"
 	RequestPath = "/fapi/v1/cancel"
 )
 
@@ -12422,7 +12424,7 @@ import requests
 # API-related information
 API_KEY = "Your API-KEY"
 API_SECRET = "Your API-SECRET"
-BASE_URL = "https://t(:futures_url)"
+BASE_URL = "https://t(:futures_http_url)"
 REQUEST_PATH = "/fapi/v1/cancel"
 
 # Request method and request body
@@ -12467,7 +12469,7 @@ print("Response content:", response.text)
 // API-related information
 $apiKey = "Your API-KEY";
 $apiSecret = "Your API-SECRET";
-$baseUrl = "https://t(:futures_url)";
+$baseUrl = "https://t(:futures_http_url)";
 $requestPath = "/fapi/v1/cancel";
 
 // Request method and request body
@@ -12526,7 +12528,7 @@ const axios = require('axios');
 // API-related information
 const API_KEY = "Your API key";
 const API_SECRET = "Your API-SECRET";
-const BASE_URL = "https://t(:futures_url)";
+const BASE_URL = "https://t(:futures_http_url)";
 const REQUEST_PATH = "/fapi/v1/cancel";
 
 // Request method and request body
@@ -12589,7 +12591,7 @@ sendOrder();
 
 ### Cancel conditional order
 
-`POST https://t(:futures_url)/fapi/v1/cancel_trigger_order`
+`POST https://t(:futures_http_url)/fapi/v1/cancel_trigger_order`
 
 **Rate limit rule: 20 requests per 2 seconds**
 
@@ -12604,7 +12606,7 @@ sendOrder();
 > Request example
 
 ```http
-POST https://t(:futures_url)/fapi/v1/cancel_trigger_order
+POST https://t(:futures_http_url)/fapi/v1/cancel_trigger_order
 
 body
 {"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}
@@ -12637,7 +12639,7 @@ signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk
 echo "Signature (X-CH-SIGN): $signature"
 
 # Send a POST request
-response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+response=$(curl -s -X POST "https://t(:futures_http_url)${request_path}" \
     -H "Content-Type: application/json" \
     -H "X-CH-TS: $timestamp" \
     -H "X-CH-APIKEY: $api_key" \
@@ -12663,7 +12665,7 @@ public class SendOrder {
     // API-related information
     private static final String API_KEY = "Your API-KEY";
     private static final String API_SECRET = "Your API-SECRET";
-    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String BASE_URL = "https://t(:futures_http_url)";
     private static final String REQUEST_PATH = "/fapi/v1/cancel_trigger_order";
 
     public static void main(String[] args) {
@@ -12762,7 +12764,7 @@ import (
 const (
 	APIKey     = "Your API key"
 	APISecret  = "Your API-SECRET"
-	BaseURL    = "https://t(:futures_url)"
+	BaseURL    = "https://t(:futures_http_url)"
 	RequestPath = "/fapi/v1/cancel_trigger_order"
 )
 
@@ -12828,7 +12830,7 @@ import requests
 # API-related information
 API_KEY = "Your API key"
 API_SECRET = "Your API-SECRET"
-BASE_URL = "https://t(:futures_url)"
+BASE_URL = "https://t(:futures_http_url)"
 REQUEST_PATH = "/fapi/v1/cancel_trigger_order"
 
 # Request method and request body
@@ -12873,7 +12875,7 @@ print("Response content:", response.text)
 // API-related information
 $apiKey = "Your API key";
 $apiSecret = "Your API-SECRET";
-$baseUrl = "https://t(:futures_url)";
+$baseUrl = "https://t(:futures_http_url)";
 $requestPath = "/fapi/v1/cancel_trigger_order";
 
 // Request method and request body
@@ -12932,7 +12934,7 @@ const axios = require('axios');
 // API-related information
 const API_KEY = "Your API key";
 const API_SECRET = "Your API-SECRET";
-const BASE_URL = "https://t(:futures_url)";
+const BASE_URL = "https://t(:futures_http_url)";
 const REQUEST_PATH = "/fapi/v1/cancel_trigger_order";
 
 // Request method and request body
@@ -12996,7 +12998,7 @@ sendOrder();
 
 ### Order details
 
-`GET https://t(:futures_url)/fapi/v1/order`
+`GET https://t(:futures_http_url)/fapi/v1/order`
 
 **Rate limit rule: 20 requests per 2 seconds**
 
@@ -13011,7 +13013,7 @@ sendOrder();
 > Request example
 
 ```http
-POST https://t(:futures_url)/fapi/v1/order
+POST https://t(:futures_http_url)/fapi/v1/order
 
 body
 {"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}
@@ -13044,7 +13046,7 @@ signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk
 echo "Signature (X-CH-SIGN): $signature"
 
 # Use cURL to send a POST request
-response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+response=$(curl -s -X POST "https://t(:futures_http_url)${request_path}" \
     -H "Content-Type: application/json" \
     -H "X-CH-TS: $timestamp" \
     -H "X-CH-APIKEY: $api_key" \
@@ -13070,7 +13072,7 @@ public class SendOrder {
     // API-related information
     private static final String API_KEY = API-related information";
     private static final String API_SECRET = "Your API-SECRET";
-    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String BASE_URL = "https://t(:futures_http_url)";
     private static final String REQUEST_PATH = "/fapi/v1/order";
 
     public static void main(String[] args) {
@@ -13169,7 +13171,7 @@ import (
 const (
 	APIKey     = "Your API key"
 	APISecret  = "Your API-SECRET"
-	BaseURL    = "https://t(:futures_url)"
+	BaseURL    = "https://t(:futures_http_url)"
 	RequestPath = "/fapi/v1/order"
 )
 
@@ -13235,7 +13237,7 @@ import requests
 # API-related information
 API_KEY = "Your API key"
 API_SECRET = "Your API-SECRET"
-BASE_URL = "https://t(:futures_url)"
+BASE_URL = "https://t(:futures_http_url)"
 REQUEST_PATH = "/fapi/v1/order"
 
 # Request method and request body
@@ -13280,7 +13282,7 @@ print("Response content:", response.text)
 // API-related information
 $apiKey = "Your API key";
 $apiSecret = "Your API-SECRET";
-$baseUrl = "https://t(:futures_url)";
+$baseUrl = "https://t(:futures_http_url)";
 $requestPath = "/fapi/v1/order";
 
 // Request method and request body
@@ -13339,7 +13341,7 @@ const axios = require('axios');
 // API-related information
 const API_KEY = "Your API key";
 const API_SECRET = "Your API-SECRET";
-const BASE_URL = "https://t(:futures_url)";
+const BASE_URL = "https://t(:futures_http_url)";
 const REQUEST_PATH = "/fapi/v1/order";
 
 // Request method and request body
@@ -13435,7 +13437,7 @@ sendOrder();
 
 ### Current order
 
-`GET https://t(:futures_url)/fapi/v1/openOrders`
+`GET https://t(:futures_http_url)/fapi/v1/openOrders`
 
 **Rate limit rule: 20 requests per 2 seconds**
 
@@ -13450,7 +13452,7 @@ sendOrder();
 > Request example
 
 ```http
-POST https://t(:futures_url)/fapi/v1/openOrders
+POST https://t(:futures_http_url)/fapi/v1/openOrders
 
 body
 {"contractName":"E-BTC-USDT"}
@@ -13483,7 +13485,7 @@ signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk
 echo "Signature (X-CH-SIGN): $signature"
 
 # Send a POST request
-response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+response=$(curl -s -X POST "https://t(:futures_http_url)${request_path}" \
     -H "Content-Type: application/json" \
     -H "X-CH-TS: $timestamp" \
     -H "X-CH-APIKEY: $api_key" \
@@ -13509,7 +13511,7 @@ public class SendOrder {
     // API-related information
     private static final String API_KEY = "Your API key";
     private static final String API_SECRET = "Your API-SECRET";
-    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String BASE_URL = "https://t(:futures_http_url)";
     private static final String REQUEST_PATH = "/fapi/v1/openOrders";
 
     public static void main(String[] args) {
@@ -13608,7 +13610,7 @@ import (
 const (
 	APIKey     = "Your API key"
 	APISecret  = "Your API-SECRET"
-	BaseURL    = "https://t(:futures_url)"
+	BaseURL    = "https://t(:futures_http_url)"
 	RequestPath = "/fapi/v1/openOrders"
 )
 
@@ -13674,7 +13676,7 @@ import requests
 # API-related information
 API_KEY = "Your API-KEY"
 API_SECRET = "Your API-SECRET"
-BASE_URL = "https://t(:futures_url)"
+BASE_URL = "https://t(:futures_http_url)"
 REQUEST_PATH = "/fapi/v1/openOrders"
 
 # Request method and request body
@@ -13719,7 +13721,7 @@ print("Response content:", response.text)
 // API-related information
 $apiKey = "API-related information";
 $apiSecret = "Your API-SECRET";
-$baseUrl = "https://t(:futures_url)";
+$baseUrl = "https://t(:futures_http_url)";
 $requestPath = "/fapi/v1/openOrders";
 
 // Request method and request body
@@ -13777,7 +13779,7 @@ const axios = require('axios');
 // API-related information
 const API_KEY = "Your API key";
 const API_SECRET = "Your API-SECRET";
-const BASE_URL = "https://t(:futures_url)";
+const BASE_URL = "https://t(:futures_http_url)";
 const REQUEST_PATH = "/fapi/v1/openOrders";
 
 // Request method and request body
@@ -13866,7 +13868,7 @@ Response parameters
 
 ### Historical Orders
 
-`POST https://t(:futures_url)/fapi/v1/orderHistorical`
+`POST https://t(:futures_http_url)/fapi/v1/orderHistorical`
 
 **Request headers**
 
@@ -13879,7 +13881,7 @@ Response parameters
 > Request example
 
 ```http
-POST https://t(:futures_url)/fapi/v1/orderHistorical
+POST https://t(:futures_http_url)/fapi/v1/orderHistorical
 
 body
 {"contractName":"E-BTC-USDT"}
@@ -13912,7 +13914,7 @@ signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk
 echo "Signature (X-CH-SIGN): $signature"
 
 # Send a POST request
-response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+response=$(curl -s -X POST "https://t(:futures_http_url)${request_path}" \
     -H "Content-Type: application/json" \
     -H "X-CH-TS: $timestamp" \
     -H "X-CH-APIKEY: $api_key" \
@@ -13938,7 +13940,7 @@ public class SendOrder {
     // API-related information
     private static final String API_KEY = "Your API-KEY";
     private static final String API_SECRET = "Your API-SECRET";
-    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String BASE_URL = "https://t(:futures_http_url)";
     private static final String REQUEST_PATH = "/fapi/v1/orderHistorical";
 
     public static void main(String[] args) {
@@ -14037,7 +14039,7 @@ import (
 const (
 	APIKey     = "Your API key"
 	APISecret  = "Your API-SECRET"
-	BaseURL    = "https://t(:futures_url)"
+	BaseURL    = "https://t(:futures_http_url)"
 	RequestPath = "/fapi/v1/orderHistorical"
 )
 
@@ -14103,7 +14105,7 @@ import requests
 # API-related information
 API_KEY = "Your API-KEY"
 API_SECRET = "Your API-SECRET"
-BASE_URL = "https://t(:futures_url)"
+BASE_URL = "https://t(:futures_http_url)"
 REQUEST_PATH = "/fapi/v1/orderHistorical"
 
 # Request method and request body
@@ -14148,7 +14150,7 @@ print("Response content:", response.text)
 // API-related information
 $apiKey = "Your API-KEY";
 $apiSecret = "Your API-SECRET";
-$baseUrl = "https://t(:futures_url)";
+$baseUrl = "https://t(:futures_http_url)";
 $requestPath = "/fapi/v1/orderHistorical";
 
 // Request method and request body
@@ -14206,7 +14208,7 @@ const axios = require('axios');
 // API-related information
 const API_KEY = "Your API-KEY";
 const API_SECRET = "Your API-SECRET";
-const BASE_URL = "https://t(:futures_url)";
+const BASE_URL = "https://t(:futures_http_url)";
 const REQUEST_PATH = "/fapi/v1/orderHistorical";
 
 // Request method and request body
@@ -14293,7 +14295,7 @@ If this API returns unexpected results, please contact the technical team, and w
 
 ### Profit and Loss Record
 
-`POST https://t(:futures_url)/fapi/v1/profitHistorical`
+`POST https://t(:futures_http_url)/fapi/v1/profitHistorical`
 
 If this API returns an error, please contact the technical team, and we will provide you with relevant assistance
 
@@ -14308,7 +14310,7 @@ If this API returns an error, please contact the technical team, and we will pro
 > Request example
 
 ```http
-POST https://t(:futures_url)/fapi/v1/profitHistorical
+POST https://t(:futures_http_url)/fapi/v1/profitHistorical
 
 body
 {"contractName":"E-BTC-USDT"}
@@ -14341,7 +14343,7 @@ signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk
 echo "Signature (X-CH-SIGN): $signature"
 
 # Send a POST request
-response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+response=$(curl -s -X POST "https://t(:futures_http_url)${request_path}" \
     -H "Content-Type: application/json" \
     -H "X-CH-TS: $timestamp" \
     -H "X-CH-APIKEY: $api_key" \
@@ -14367,7 +14369,7 @@ public class SendOrder {
     // API-related information
     private static final String API_KEY = "Your API-KEY";
     private static final String API_SECRET = "Your API-SECRET";
-    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String BASE_URL = "https://t(:futures_http_url)";
     private static final String REQUEST_PATH = "/fapi/v1/profitHistorical";
 
     public static void main(String[] args) {
@@ -14466,7 +14468,7 @@ import (
 const (
 	APIKey     = "Your API key"
 	APISecret  = "Your API-SECRET"
-	BaseURL    = "https://t(:futures_url)"
+	BaseURL    = "https://t(:futures_http_url)"
 	RequestPath = "/fapi/v1/profitHistorical"
 )
 
@@ -14531,7 +14533,7 @@ import requests
 # API-related information
 API_KEY = "Your API-KEY"
 API_SECRET = "Your API-SECRET"
-BASE_URL = "https://t(:futures_url)"
+BASE_URL = "https://t(:futures_http_url)"
 REQUEST_PATH = "/fapi/v1/profitHistorical"
 
 
@@ -14577,7 +14579,7 @@ print("Response content:", response.text)
 // API-related information
 $apiKey = "Your API-KEY";
 $apiSecret = "Your API-SECRET";
-$baseUrl = "https://t(:futures_url)";
+$baseUrl = "https://t(:futures_http_url)";
 $requestPath = "/fapi/v1/profitHistorical";
 
 // Request method and request body
@@ -14635,7 +14637,7 @@ const axios = require('axios');
 // API-related information
 const API_KEY = "Your API-KEY";
 const API_SECRET = "Your API-SECRET";
-const BASE_URL = "https://t(:futures_url)";
+const BASE_URL = "https://t(:futures_http_url)";
 const REQUEST_PATH = "/fapi/v1/profitHistorical";
 
 // Request method and request body
@@ -14718,7 +14720,7 @@ If this API returns unexpected results, please contact the technical team, and w
 
 ### Transaction records
 
-`GET https://t(:futures_url)/fapi/v1/myTrades`
+`GET https://t(:futures_http_url)/fapi/v1/myTrades`
 
 **Rate limit rule: 20 requests per 2 seconds**
 
@@ -14733,7 +14735,7 @@ If this API returns unexpected results, please contact the technical team, and w
 > Request example
 
 ```http
-POST https://t(:futures_url)/fapi/v1/myTrades
+POST https://t(:futures_http_url)/fapi/v1/myTrades
 
 body
 {"contractName":"E-BTC-USDT"}
@@ -14766,7 +14768,7 @@ signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk
 echo "Signature (X-CH-SIGN): $signature"
 
 # Send a POST request
-response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+response=$(curl -s -X POST "https://t(:futures_http_url)${request_path}" \
     -H "Content-Type: application/json" \
     -H "X-CH-TS: $timestamp" \
     -H "X-CH-APIKEY: $api_key" \
@@ -14792,7 +14794,7 @@ public class SendOrder {
     // API-related information
     private static final String API_KEY = "Your API-KEY";
     private static final String API_SECRET = "Your API-SECRET";
-    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String BASE_URL = "https://t(:futures_http_url)";
     private static final String REQUEST_PATH = "/fapi/v1/myTrades";
 
     public static void main(String[] args) {
@@ -14891,7 +14893,7 @@ import (
 const (
 	APIKey     = "Your API-KEY"
 	APISecret  = "Your API-SECRET"
-	BaseURL    = "https://t(:futures_url)"
+	BaseURL    = "https://t(:futures_http_url)"
 	RequestPath = "/fapi/v1/myTrades"
 )
 
@@ -14957,7 +14959,7 @@ import requests
 # API-related information
 API_KEY = "Your API-KEY"
 API_SECRET = "Your API-SECRET"
-BASE_URL = "https://t(:futures_url)"
+BASE_URL = "https://t(:futures_http_url)"
 REQUEST_PATH = "/fapi/v1/myTrades"
 
 # Request method and request body
@@ -15002,7 +15004,7 @@ print("Response content:", response.text)
 // API-related information
 $apiKey = "Your API key";
 $apiSecret = "Your API-SECRET";
-$baseUrl = "https://t(:futures_url)";
+$baseUrl = "https://t(:futures_http_url)";
 $requestPath = "/fapi/v1/myTrades";
 
 // Request method and request body
@@ -15060,7 +15062,7 @@ const axios = require('axios');
 // API-related information
 const API_KEY = "Your API-KEY";
 const API_SECRET = "Your API-SECRET";
-const BASE_URL = "https://t(:futures_url)";
+const BASE_URL = "https://t(:futures_http_url)";
 const REQUEST_PATH = "/fapi/v1/myTrades";
 
 // Request method and request body
@@ -15173,7 +15175,7 @@ sendOrder();
 
 ### Change position mode
 
-`POST https://t(:futures_url)/fapi/v1/edit_user_position_model`
+`POST https://t(:futures_http_url)/fapi/v1/edit_user_position_model`
 
 **Request headers**
 
@@ -15186,7 +15188,7 @@ sendOrder();
 > Request example
 
 ```http
-POST https://t(:futures_url)/fapi/v1/edit_user_position_model
+POST https://t(:futures_http_url)/fapi/v1/edit_user_position_model
 
 body
 {"contractName":"E-BTC-USDT","positionModel":"1"}
@@ -15219,7 +15221,7 @@ signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk
 echo "Signature (X-CH-SIGN): $signature"
 
 # Send a POST request
-response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+response=$(curl -s -X POST "https://t(:futures_http_url)${request_path}" \
     -H "Content-Type: application/json" \
     -H "X-CH-TS: $timestamp" \
     -H "X-CH-APIKEY: $api_key" \
@@ -15245,7 +15247,7 @@ public class SendOrder {
     // API-related information
     private static final String API_KEY = "Your API key";
     private static final String API_SECRET = "Your API-SECRET";
-    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String BASE_URL = "https://t(:futures_http_url)";
     private static final String REQUEST_PATH = "/fapi/v1/edit_user_position_model";
 
     public static void main(String[] args) {
@@ -15344,7 +15346,7 @@ import (
 const (
 	APIKey     = "Your API-KEY"
 	APISecret  = "Your API-SECRET"
-	BaseURL    = "https://t(:futures_url)"
+	BaseURL    = "https://t(:futures_http_url)"
 	RequestPath = "/fapi/v1/edit_user_position_model"
 )
 
@@ -15410,7 +15412,7 @@ import requests
 # API-related information
 API_KEY = "Your API-KEY"
 API_SECRET = "Your API-SECRET"
-BASE_URL = "https://t(:futures_url)"
+BASE_URL = "https://t(:futures_http_url)"
 REQUEST_PATH = "/fapi/v1/edit_user_position_model"
 
 # Request method and request body
@@ -15455,7 +15457,7 @@ print("Response content:", response.text)
 // API-related information
 $apiKey = "Your API key";
 $apiSecret = "Your API-SECRET";
-$baseUrl = "https://t(:futures_url)";
+$baseUrl = "https://t(:futures_http_url)";
 $requestPath = "/fapi/v1/edit_user_position_model";
 
 // Request method and request body
@@ -15514,7 +15516,7 @@ const axios = require('axios');
 // API-related information
 const API_KEY = "Your API key";
 const API_SECRET = "Your API-SECRET";
-const BASE_URL = "https://t(:futures_url)";
+const BASE_URL = "https://t(:futures_http_url)";
 const REQUEST_PATH = "/fapi/v1/edit_user_position_model";
 
 // Request method and request body
@@ -15579,7 +15581,7 @@ sendOrder();
 
 ### Change Margin Mode
 
-`POST https://t(:futures_url)/fapi/v1/edit_user_margin_model`
+`POST https://t(:futures_http_url)/fapi/v1/edit_user_margin_model`
 
 **Request headers**
 
@@ -15592,7 +15594,7 @@ sendOrder();
 > Request example
 
 ```http
-POST https://t(:futures_url)/fapi/v1/edit_user_margin_model
+POST https://t(:futures_http_url)/fapi/v1/edit_user_margin_model
 
 body
 {"contractName":"E-BTC-USDT","marginModel":"1"}
@@ -15625,7 +15627,7 @@ signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk
 echo "Signature (X-CH-SIGN): $signature"
 
 # Send a POST request
-response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+response=$(curl -s -X POST "https://t(:futures_http_url)${request_path}" \
     -H "Content-Type: application/json" \
     -H "X-CH-TS: $timestamp" \
     -H "X-CH-APIKEY: $api_key" \
@@ -15651,7 +15653,7 @@ public class SendOrder {
     // API-related information
     private static final String API_KEY = "Your API-KEY";
     private static final String API_SECRET = "Your API-SECRET";
-    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String BASE_URL = "https://t(:futures_http_url)";
     private static final String REQUEST_PATH = "/fapi/v1/edit_user_margin_model";
 
     public static void main(String[] args) {
@@ -15750,7 +15752,7 @@ import (
 const (
 	APIKey     = "Your API-KEY"
 	APISecret  = "Your API-SECRET"
-	BaseURL    = "https://t(:futures_url)"
+	BaseURL    = "https://t(:futures_http_url)"
 	RequestPath = "/fapi/v1/edit_user_margin_model"
 )
 
@@ -15816,7 +15818,7 @@ import requests
 # API-related information
 API_KEY = "Your API-KEY"
 API_SECRET = "Your API-SECRET"
-BASE_URL = "https://t(:futures_url)"
+BASE_URL = "https://t(:futures_http_url)"
 REQUEST_PATH = "/fapi/v1/edit_user_margin_model"
 
 # Request method and request body
@@ -15861,7 +15863,7 @@ print("Response content:", response.text)
 // API-related information
 $apiKey = "Your API-KEY";
 $apiSecret = "Your API-SECRET";
-$baseUrl = "https://t(:futures_url)";
+$baseUrl = "https://t(:futures_http_url)";
 $requestPath = "/fapi/v1/edit_user_margin_model";
 
 // Request method and request body
@@ -15920,7 +15922,7 @@ const axios = require('axios');
 // API-related information
 const API_KEY = "Your API-KEY";
 const API_SECRET = "Your API-SECRET";
-const BASE_URL = "https://t(:futures_url)";
+const BASE_URL = "https://t(:futures_http_url)";
 const REQUEST_PATH = "/fapi/v1/edit_user_margin_model";
 
 // Request method and request body
@@ -15985,7 +15987,7 @@ sendOrder();
 
 ### Change Leverage Ratio
 
-`POST` `https://t(:futures_url)/fapi/v1/edit_lever`
+`POST` `https://t(:futures_http_url)/fapi/v1/edit_lever`
 
 **Request headers**
 
@@ -15998,7 +16000,7 @@ sendOrder();
 > Request example
 
 ```http
-POST https://t(:futures_url)/fapi/v1/edit_lever
+POST https://t(:futures_http_url)/fapi/v1/edit_lever
 
 body
 {"contractName":"E-BTC-USDT","newLever":"1"}
@@ -16031,7 +16033,7 @@ signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk
 echo "Signature (X-CH-SIGN): $signature"
 
 # Send a POST request
-response=$(curl -s -X POST "https://t(:futures_url)${request_path}" \
+response=$(curl -s -X POST "https://t(:futures_http_url)${request_path}" \
     -H "Content-Type: application/json" \
     -H "X-CH-TS: $timestamp" \
     -H "X-CH-APIKEY: $api_key" \
@@ -16057,7 +16059,7 @@ public class SendOrder {
     // API-related information
     private static final String API_KEY = "Your API-KEY";
     private static final String API_SECRET = "Your API-SECRET";
-    private static final String BASE_URL = "https://t(:futures_url)";
+    private static final String BASE_URL = "https://t(:futures_http_url)";
     private static final String REQUEST_PATH = "/fapi/v1/edit_lever";
 
     public static void main(String[] args) {
@@ -16156,7 +16158,7 @@ import (
 const (
 	APIKey     = "Your API-KEY"
 	APISecret  = "Your API-SECRET"
-	BaseURL    = "https://t(:futures_url)"
+	BaseURL    = "https://t(:futures_http_url)"
 	RequestPath = "/fapi/v1/edit_lever"
 )
 
@@ -16222,7 +16224,7 @@ import requests
 # API-related information
 API_KEY = "Your API-KEY"
 API_SECRET = "Your API-SECRET"
-BASE_URL = "https://t(:futures_url)"
+BASE_URL = "https://t(:futures_http_url)"
 REQUEST_PATH = "/fapi/v1/edit_lever"
 
 # Request method and request body
@@ -16267,7 +16269,7 @@ print("Response content:", response.text)
 // API-related information
 $apiKey = "Your API key";
 $apiSecret = "Your API-SECRET";
-$baseUrl = "https://t(:futures_url)";
+$baseUrl = "https://t(:futures_http_url)";
 $requestPath = "/fapi/v1/edit_lever";
 
 // Request method and request body
@@ -16326,7 +16328,7 @@ const axios = require('axios');
 // API-related information
 const API_KEY = "Your API-KEY";
 const API_SECRET = "Your API-SECRET";
-const BASE_URL = "https://t(:futures_url)";
+const BASE_URL = "https://t(:futures_http_url)";
 const REQUEST_PATH = "/fapi/v1/edit_lever";
 
 // Request method and request body
@@ -16403,8 +16405,10 @@ WebSocket is a new protocol in HTML5. It enables full-duplex communication betwe
 
 ## Basic information
 
-*   The basic cryptocurrency market data endpoint：<wss://t(:ws_url)/kline-api/ws>。
+*   The basic cryptocurrency market data endpoint：<wss://t(:spot_ws_url)/kline-api/ws>。
+*   The basic cryptocurrency market data backup endpoint：<wss://t(:spot_ws_url_bak)/kline-api/ws>。
 *   The basic contract market data endpoint：<wss://t(:futures_ws_url)/kline-api/ws>。
+*   The basic contract market data backup endpoint：<wss://t(:futures_ws_url_bak)/kline-api/ws>。
 *   The returned data, except for heartbeat data, will be compressed in binary format (users need to decompress it using the Gzip algorithm).
 
 ### Heartbeat

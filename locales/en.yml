@@ -3,7 +3,11 @@ en:
     title: FameEX OpenAPI Docs
     current: English
     next: 中文
-    open_url: openapi.fameex.net
-    futures_url: futuresopenapi.fameex.net
-    ws_url: ws.fameex.net
-    futures_ws_url: futuresws.fameex.net
+    spot_http_url: openapi.fameex.com
+    spot_http_url_bak: openapi.fameex.net
+    futures_http_url: futuresopenapi.fameex.com
+    futures_http_url_bak: futuresopenapi.fameex.net
+    spot_ws_url: ws.fameex.com
+    spot_ws_url_bak: ws.fameex.net
+    futures_ws_url: futuresws.fameex.com
+    futures_ws_url_bak: futuresws.fameex.net
