@@ -3,9 +3,7 @@
 ## API Basic Information
 
 *   This `Spot Trading` document lists the REST interface's baseurl as `https://t(:spot_http_url)`.
-*   This `Spot Trading` document lists the REST interface's backup baseurl as `https://t(:spot_http_url_bak)`.
 *   This `Contract Trading` document lists the REST interface's baseurl as `https://t(:futures_http_url)`.
-*   This `Contract Trading` document lists the REST interface's backup baseurl as `https://t(:futures_http_url_bak)`.
 *   All interfaces will return a JSON, object, or array.
 *   If the response contains an array, the array elements are arranged in reverse chronological order, with earlier data appearing first.
 *   All times and timestamps are in Unix time, with units in **milliseconds**.
@@ -16406,9 +16404,7 @@ WebSocket is a new protocol in HTML5. It enables full-duplex communication betwe
 ## Basic information
 
 *   The basic cryptocurrency market data endpoint：<wss://t(:spot_ws_url)/kline-api/ws>。
-*   The basic cryptocurrency market data backup endpoint：<wss://t(:spot_ws_url_bak)/kline-api/ws>。
 *   The basic contract market data endpoint：<wss://t(:futures_ws_url)/kline-api/ws>。
-*   The basic contract market data backup endpoint：<wss://t(:futures_ws_url_bak)/kline-api/ws>。
 *   The returned data, except for heartbeat data, will be compressed in binary format (users need to decompress it using the Gzip algorithm).
 
 ### Heartbeat
