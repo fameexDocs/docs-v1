@@ -16391,6 +16391,465 @@ sendOrder();
 }
 ```
 
+### Current Holdings List
+
+`POST` `https://t(:futures_http_url)/fapi/v1/positionList`
+
+**Request headers**
+
+| Parameter name                         | Type    | Description  |
+| :--------------------------------------| :-------| :------------|
+| X-CH-TS<font color="red">\*</font>     | integer | Timestamp    |
+| X-CH-APIKEY<font color="red">\*</font> | string  | Your API-KEY |
+| X-CH-SIGN<font color="red">\*</font>   | string  | Signature    |
+
+> Request example
+
+```http
+POST https://t(:futures_http_url)/fapi/v1/positionList
+
+body
+{"contractName":"E-BTC-USDT","limit":10,"page":1}
+```
+```shell
+#!/bin/bash
+
+# API Related Information
+api_key="Your's API-KEY"
+api_secret="Your's API-SECRET"
+
+# Request Information
+timestamp=$(($(date +%s%N)/1000000))  # Millisecond-level timestamp
+method="POST"
+request_path="/fapi/v1/positionList"
+
+# Request body (in JSON format)
+body='{"contractName":"E-BTC-USDT","limit":10,"page":1}'
+
+# Remove whitespace characters in the body to ensure signature consistency
+body=$(echo "$body" | jq -c)
+
+# Concatenate the signature string
+sign_str="${timestamp}${method}${request_path}${body}"
+echo "Signature String: $sign_str"
+
+# Generate HMAC SHA256 signature
+signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk '{print $2}')
+echo "Sign (X-CH-SIGN): $signature"
+
+# Send POST request
+response=$(curl -s -X POST "https://t(:futures_http_url)${request_path}" \
+    -H "Content-Type: application/json" \
+    -H "X-CH-TS: $timestamp" \
+    -H "X-CH-APIKEY: $api_key" \
+    -H "X-CH-SIGN: $signature" \
+    -d "$body")
+
+# Output the response result
+echo "response: $response"
+```
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
+
+public class SendOrder {
+
+    // API Related Information
+    private static final String API_KEY = "Your's API-KEY";
+    private static final String API_SECRET = "Your's API-SECRET";
+    private static final String BASE_URL = "https://t(:futures_http_url)";
+    private static final String REQUEST_PATH = "/fapi/v1/positionList";
+
+    public static void main(String[] args) {
+        try {
+            // Get timestamp (in milliseconds)
+            long timestamp = TimeUnit.MILLISECONDS.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+
+            // HTTP request method
+            String method = "POST";
+
+            // Request body (in JSON format, use compact format)
+            String body = "{"contractName":"E-BTC-USDT","limit":10,"page":1}";
+            System.out.println("请求主体 (body): " + body);
+
+            // Concatenate signature string
+            String signStr = timestamp + method + REQUEST_PATH + body;
+            System.out.println("签名字符串: " + signStr);
+
+            // Generate HMAC SHA256 signature
+            String signature = hmacSHA256(signStr, API_SECRET);
+            System.out.println("签名 (X-CH-SIGN): " + signature);
+
+            // Create URL using URI
+            URI uri = new URI(BASE_URL + REQUEST_PATH);
+            HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("X-CH-TS", String.valueOf(timestamp));
+            conn.setRequestProperty("X-CH-APIKEY", API_KEY);
+            conn.setRequestProperty("X-CH-SIGN", signature);
+            conn.setRequestProperty("User-Agent", "Java-Client");
+            conn.setDoOutput(true);
+
+            // Send request body
+            try (OutputStream os = conn.getOutputStream()) {
+                os.write(body.getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            }
+
+            // Read response
+            int responseCode = conn.getResponseCode();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    responseCode >= 200 && responseCode < 300 ? conn.getInputStream() : conn.getErrorStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            // Output response result
+            System.out.println("响应 (" + responseCode + "): " + response.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Generates an HMAC SHA256 signature.
+     *
+     * @param data   The string to be signed
+     * @param secret The secret key
+     * @return HMAC SHA256 signature
+     */
+    public static String hmacSHA256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        mac.init(secretKeySpec);
+        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+}
+```
+```go
+package main
+
+import (
+	"bytes"
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"time"
+)
+
+// API Related Information
+const (
+	APIKey     = "Your's API-KEY"
+	APISecret  = "Your's API-SECRET"
+	BaseURL    = "https://t(:futures_http_url)"
+	RequestPath = "/fapi/v1/positionList"
+)
+
+func main() {
+	// Get timestamp (in milliseconds)
+	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+
+	// HTTP request method
+	method := "POST"
+
+	// Request body (in JSON format, use compact format)
+	body := `{"contractName":"E-BTC-USDT","limit":10,"page":1}`
+
+	// Concatenate signature string
+	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+	fmt.Println("Signature String:", signStr)
+
+	// Generate HMAC SHA256 signature
+	signature := generateHMACSHA256(signStr, APISecret)
+	fmt.Println("Sign (X-CH-SIGN):", signature)
+
+	// Send POST request
+	url := BaseURL + RequestPath
+	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+	if err != nil {
+		fmt.Println("Failed to create request:", err)
+		return
+	}
+
+	// Set request headers
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+	req.Header.Set("X-CH-APIKEY", APIKey)
+	req.Header.Set("X-CH-SIGN", signature)
+
+	// Execute the request
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Request failed:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// Read response
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("response:", string(responseBody))
+}
+
+// Generates an HMAC SHA256 signature
+func generateHMACSHA256(data, secret string) string {
+	h := hmac.New(sha256.New, []byte(secret))
+	h.Write([]byte(data))
+	return hex.EncodeToString(h.Sum(nil))
+}
+```
+```python
+import time
+import hmac
+import hashlib
+import requests
+
+# API Related Information
+API_KEY = "Your's API-KEY"
+API_SECRET = "Your's API-SECRET"
+BASE_URL = "https://t(:futures_http_url)"
+REQUEST_PATH = "/fapi/v1/positionList"
+
+# Request method and request body
+method = "POST"
+body = {"contractName":"E-BTC-USDT","limit":10,"page":1}
+
+
+# Get timestamp (in milliseconds)
+timestamp = int(time.time() * 1000)
+
+# Convert the request body to a compact JSON string
+import json
+body_str = json.dumps(body, separators=(',', ':'))
+print("Request body:", body_str)
+
+# Concatenate signature string
+sign_str = f"{timestamp}{method}{REQUEST_PATH}{body_str}"
+print("signature string:", sign_str)
+
+# Generate HMAC SHA256 signature
+signature = hmac.new(API_SECRET.encode('utf-8'), sign_str.encode('utf-8'), hashlib.sha256).hexdigest()
+print("sign (X-CH-SIGN):", signature)
+
+# Build request headers
+headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": str(timestamp),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Python-Client"
+}
+
+# Send POST request
+url = BASE_URL + REQUEST_PATH
+response = requests.post(url, headers=headers, data=body_str)
+
+# Output response result
+print("Response status code :", response.status_code)
+print("Response content:", response.text)
+```
+```php
+// API Related Information
+$apiKey = "您的API-KEY";
+$apiSecret = "您的API-SECRET";
+$baseUrl = "https://t(:futures_http_url)";
+$requestPath = "/fapi/v1/positionList";
+
+// Request method and request body
+$method = "POST";
+$body = json_encode([
+    "contractName"  => "E-BTC-USDT",
+    "limit" => "10",
+    "page" => "1"
+], JSON_UNESCAPED_SLASHES);
+
+// Millisecond-level timestamp
+$timestamp = round(microtime(true) * 1000);
+
+// Concatenate signature string
+$signStr = $timestamp . $method . $requestPath . $body;
+echo "签名字符串: " . $signStr . PHP_EOL;
+
+// Generate HMAC SHA256 signature
+$signature = hash_hmac('sha256', $signStr, $apiSecret);
+echo "签名 (X-CH-SIGN): " . $signature . PHP_EOL;
+
+// Build request headers
+$headers = [
+    "Content-Type: application/json",
+    "X-CH-TS: $timestamp",
+    "X-CH-APIKEY: $apiKey",
+    "X-CH-SIGN: $signature",
+    "User-Agent: PHP-Client"
+];
+
+// Send POST request
+$url = $baseUrl . $requestPath;
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // This should only be used in development; enable SSL verification in production environments
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+if (curl_errno($ch)) {
+    echo "Request failed: " . curl_error($ch) . PHP_EOL;
+} else {
+    echo "Response status code: $httpCode" . PHP_EOL;
+    echo "Response content: $response" . PHP_EOL;
+}
+
+curl_close($ch);
+```
+```javascript--node
+const crypto = require('crypto');
+const axios = require('axios');
+
+// API 相关信息
+const API_KEY = "Your's API-KEY";
+const API_SECRET = "Your's API-SECRET";
+const BASE_URL = "https://t(:futures_http_url)";
+const REQUEST_PATH = "/fapi/v1/positionList";
+
+// Request method and request body
+const method = "POST";
+const body = JSON.stringify({
+    contractName: "E-BTC-USDT",
+    limit: "10",
+    "page":1
+});
+
+// Get timestamp in milliseconds
+const timestamp = Date.now();
+
+// Concatenate the signature string
+const signStr = `${timestamp}${method}${REQUEST_PATH}${body}`;
+console.log("signature string:", signStr);
+
+// Generate HMAC SHA256 signature
+const signature = crypto.createHmac('sha256', API_SECRET).update(signStr).digest('hex');
+console.log("sign (X-CH-SIGN):", signature);
+
+// Build request headers
+const headers = {
+    "Content-Type": "application/json",
+    "X-CH-TS": timestamp.toString(),
+    "X-CH-APIKEY": API_KEY,
+    "X-CH-SIGN": signature,
+    "User-Agent": "Node.js-Client"
+};
+
+// Send POST request
+async function sendOrder() {
+    try {
+        const response = await axios.post(`${BASE_URL}${REQUEST_PATH}`, body, { headers });
+        console.log("Response status code:", response.status);
+        console.log("Response content:", response.data);
+    } catch (error) {
+        console.error("Request failed:", error.response ? error.response.data : error.message);
+    }
+}
+
+// Execute the request
+sendOrder();
+
+```
+
+**Request parameters**
+
+| Parameter name                          | Type    | Description                     |
+|:----------------------------------------| :-------|:--------------------------------|
+| contractName<font color="red">\*</font> | string  | Contract Name, e.g.,`E-BTC-USDT`|
+| limit<font color="red">\*</font>        | integer | Number of records displayed     |
+| page<font color="red">\*</font>         | integer | Current page number             |
+
+> Return example
+
+```json
+{
+    "code": "0",
+    "msg": "Success",
+    "data": {
+        "records": [
+            {
+                "id": 42888,
+                "originUid": 18099,
+                "uid": 10059,
+                "contractName": "E-BTC-USDT",
+                "volume": 2.0000000000000000,
+                "holdAmount": 0E-16,
+                "openPrice": 94777.1000000000000000,
+                "closePrice": 0E-16,
+                "closeVolume": 0E-16,
+                "historyRealizedAmount": -0.0142165650000000,
+                "unRealizedAmount": -0.11638000000000000000000000000000000000000000000000000000,
+                "ctime": "2025-05-06 03:14:19",
+                "status": 1,
+                "side": "BUY",
+                "leverageLevel": 100
+            }
+        ],
+        "total": 23,
+        "size": 1,
+        "current": 1,
+        "orders": [],
+        "optimizeCountSql": true,
+        "hitCount": false,
+        "countId": null,
+        "maxLimit": null,
+        "searchCount": true,
+        "pages": 23
+    },
+    "succ": true
+}
+```
+
+**Response Parameters**
+
+| Parameter name                                     | Type       | Description                                       |
+|:---------------------------------------------------|:-----------|:--------------------------------------------------|
+| id<font color="red">\*</font>                      | integer    | Data ID                                           |
+| contractName<font color="red">\*</font>            | string     | Contract Name                                     |
+| volume<font color="red">\*</font>                  | bigDecimal | Position quantity                                 |
+| holdAmount<font color="red">\*</font>              | bigDecimal | Position margin                                   |
+| openPrice<font color="red">\*</font>               | bigDecimal | Opening price                                     |
+| closePrice<font color="red">\*</font>              | bigDecimal | Closing average price                             |
+| closeVolume<font color="red">\*</font>             | bigDecimal | Closed position quantity                          |
+| historyRealizedAmount<font color="red">\*</font>   | bigDecimal | Historical cumulative realized profits and losses |
+| unRealizedAmount<font color="red">\*</font>        | bigDecimal | Unrealized Profit and Loss                        |
+| ctime<font color="red">\*</font>                   | string     | Creation time                                     |
+| status<font color="red">\*</font>                  | integer    | Position Validity (0: Invalid, 1: Valid)          |
+| side<font color="red">\*</font>                    | string     | Position direction                                |
+| leverageLevel<font color="red">\*</font>           | integer    | Leverage ratio                                    |
+
+
+
 # Websocket
 
 ## Overview
