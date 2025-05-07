@@ -718,6 +718,9 @@
                           <li>
                             <a href="#change-leverage-ratio" class="toc-h3 toc-link" data-title="Change Leverage Ratio">Change Leverage Ratio</a>
                           </li>
+                          <li>
+                            <a href="#current-holdings-list" class="toc-h3 toc-link" data-title="Current Holdings List">Current Holdings List</a>
+                          </li>
                       </ul>
                   </li>
               </ul>
@@ -19193,7 +19196,542 @@ body
     </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w"> 
     </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w"> 
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h1 id='websocket'>Websocket</h1><h2 id='overview'>Overview</h2>
+</span></code></pre></div><h3 id='current-holdings-list'>Current Holdings List</h3>
+<p><code>POST</code> <code>https://futuresopenapi.fameex.com/fapi/v1/positionList</code></p>
+
+<p><strong>Request headers</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter name</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">X-CH-TS<font color="red">*</font></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">Timestamp</td>
+</tr>
+<tr>
+<td style="text-align: left">X-CH-APIKEY<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Your API-KEY</td>
+</tr>
+<tr>
+<td style="text-align: left">X-CH-SIGN<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Signature</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://futuresopenapi.fameex.com/fapi/v1/positionList
+
+body
+{"contractName":"E-BTC-USDT","limit":10,"page":1}
+</span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
+
+<span class="c"># API Related Information</span>
+<span class="nv">api_key</span><span class="o">=</span><span class="s2">"Your's API-KEY"</span>
+<span class="nv">api_secret</span><span class="o">=</span><span class="s2">"Your's API-SECRET"</span>
+
+<span class="c"># Request Information</span>
+<span class="nv">timestamp</span><span class="o">=</span><span class="k">$((</span><span class="si">$(</span><span class="nb">date</span> +%s%N<span class="si">)</span><span class="o">/</span><span class="m">1000000</span><span class="k">))</span>  <span class="c"># Millisecond-level timestamp</span>
+<span class="nv">method</span><span class="o">=</span><span class="s2">"POST"</span>
+<span class="nv">request_path</span><span class="o">=</span><span class="s2">"/fapi/v1/positionList"</span>
+
+<span class="c"># Request body (in JSON format)</span>
+<span class="nv">body</span><span class="o">=</span><span class="s1">'{"contractName":"E-BTC-USDT","limit":10,"page":1}'</span>
+
+<span class="c"># Remove whitespace characters in the body to ensure signature consistency</span>
+<span class="nv">body</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$body</span><span class="s2">"</span> | jq <span class="nt">-c</span><span class="si">)</span>
+
+<span class="c"># Concatenate the signature string</span>
+<span class="nv">sign_str</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">timestamp</span><span class="k">}${</span><span class="nv">method</span><span class="k">}${</span><span class="nv">request_path</span><span class="k">}${</span><span class="nv">body</span><span class="k">}</span><span class="s2">"</span>
+<span class="nb">echo</span> <span class="s2">"Signature String: </span><span class="nv">$sign_str</span><span class="s2">"</span>
+
+<span class="c"># Generate HMAC SHA256 signature</span>
+<span class="nv">signature</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"</span><span class="nv">$sign_str</span><span class="s2">"</span> | openssl dgst <span class="nt">-sha256</span> <span class="nt">-hmac</span> <span class="s2">"</span><span class="nv">$api_secret</span><span class="s2">"</span> | <span class="nb">awk</span> <span class="s1">'{print $2}'</span><span class="si">)</span>
+<span class="nb">echo</span> <span class="s2">"Sign (X-CH-SIGN): </span><span class="nv">$signature</span><span class="s2">"</span>
+
+<span class="c"># Send POST request</span>
+<span class="nv">response</span><span class="o">=</span><span class="si">$(</span>curl <span class="nt">-s</span> <span class="nt">-X</span> POST <span class="s2">"https://futuresopenapi.fameex.com</span><span class="k">${</span><span class="nv">request_path</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-CH-TS: </span><span class="nv">$timestamp</span><span class="s2">"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-CH-APIKEY: </span><span class="nv">$api_key</span><span class="s2">"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-CH-SIGN: </span><span class="nv">$signature</span><span class="s2">"</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s2">"</span><span class="nv">$body</span><span class="s2">"</span><span class="si">)</span>
+
+<span class="c"># Output the response result</span>
+<span class="nb">echo</span> <span class="s2">"response: </span><span class="nv">$response</span><span class="s2">"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">javax.crypto.Mac</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.crypto.spec.SecretKeySpec</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.InputStreamReader</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.OutputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.HttpURLConnection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.URI</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.charset.StandardCharsets</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.TimeUnit</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SendOrder</span> <span class="o">{</span>
+
+    <span class="c1">// API Related Information</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">API_KEY</span> <span class="o">=</span> <span class="s">"Your's API-KEY"</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">API_SECRET</span> <span class="o">=</span> <span class="s">"Your's API-SECRET"</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">BASE_URL</span> <span class="o">=</span> <span class="s">"https://futuresopenapi.fameex.com"</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">REQUEST_PATH</span> <span class="o">=</span> <span class="s">"/fapi/v1/positionList"</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">// Get timestamp (in milliseconds)</span>
+            <span class="kt">long</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">.</span><span class="na">convert</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">(),</span> <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">);</span>
+
+            <span class="c1">// HTTP request method</span>
+            <span class="nc">String</span> <span class="n">method</span> <span class="o">=</span> <span class="s">"POST"</span><span class="o">;</span>
+
+            <span class="c1">// Request body (in JSON format, use compact format)</span>
+            <span class="nc">String</span> <span class="n">body</span> <span class="o">=</span> <span class="s">"{"</span><span class="n">contractName</span><span class="s">":"</span><span class="no">E</span><span class="o">-</span><span class="no">BTC</span><span class="o">-</span><span class="no">USDT</span><span class="s">","</span><span class="n">limit</span><span class="s">":10,"</span><span class="n">page</span><span class="s">":1}"</span><span class="o">;</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"请求主体 (body): "</span> <span class="o">+</span> <span class="n">body</span><span class="o">);</span>
+
+            <span class="c1">// Concatenate signature string</span>
+            <span class="nc">String</span> <span class="n">signStr</span> <span class="o">=</span> <span class="n">timestamp</span> <span class="o">+</span> <span class="n">method</span> <span class="o">+</span> <span class="no">REQUEST_PATH</span> <span class="o">+</span> <span class="n">body</span><span class="o">;</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"签名字符串: "</span> <span class="o">+</span> <span class="n">signStr</span><span class="o">);</span>
+
+            <span class="c1">// Generate HMAC SHA256 signature</span>
+            <span class="nc">String</span> <span class="n">signature</span> <span class="o">=</span> <span class="n">hmacSHA256</span><span class="o">(</span><span class="n">signStr</span><span class="o">,</span> <span class="no">API_SECRET</span><span class="o">);</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"签名 (X-CH-SIGN): "</span> <span class="o">+</span> <span class="n">signature</span><span class="o">);</span>
+
+            <span class="c1">// Create URL using URI</span>
+            <span class="no">URI</span> <span class="n">uri</span> <span class="o">=</span> <span class="k">new</span> <span class="no">URI</span><span class="o">(</span><span class="no">BASE_URL</span> <span class="o">+</span> <span class="no">REQUEST_PATH</span><span class="o">);</span>
+            <span class="nc">HttpURLConnection</span> <span class="n">conn</span> <span class="o">=</span> <span class="o">(</span><span class="nc">HttpURLConnection</span><span class="o">)</span> <span class="n">uri</span><span class="o">.</span><span class="na">toURL</span><span class="o">().</span><span class="na">openConnection</span><span class="o">();</span>
+            <span class="n">conn</span><span class="o">.</span><span class="na">setRequestMethod</span><span class="o">(</span><span class="s">"POST"</span><span class="o">);</span>
+            <span class="n">conn</span><span class="o">.</span><span class="na">setRequestProperty</span><span class="o">(</span><span class="s">"Content-Type"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">);</span>
+            <span class="n">conn</span><span class="o">.</span><span class="na">setRequestProperty</span><span class="o">(</span><span class="s">"X-CH-TS"</span><span class="o">,</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">timestamp</span><span class="o">));</span>
+            <span class="n">conn</span><span class="o">.</span><span class="na">setRequestProperty</span><span class="o">(</span><span class="s">"X-CH-APIKEY"</span><span class="o">,</span> <span class="no">API_KEY</span><span class="o">);</span>
+            <span class="n">conn</span><span class="o">.</span><span class="na">setRequestProperty</span><span class="o">(</span><span class="s">"X-CH-SIGN"</span><span class="o">,</span> <span class="n">signature</span><span class="o">);</span>
+            <span class="n">conn</span><span class="o">.</span><span class="na">setRequestProperty</span><span class="o">(</span><span class="s">"User-Agent"</span><span class="o">,</span> <span class="s">"Java-Client"</span><span class="o">);</span>
+            <span class="n">conn</span><span class="o">.</span><span class="na">setDoOutput</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+
+            <span class="c1">// Send request body</span>
+            <span class="k">try</span> <span class="o">(</span><span class="nc">OutputStream</span> <span class="n">os</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">())</span> <span class="o">{</span>
+                <span class="n">os</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">body</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="nc">StandardCharsets</span><span class="o">.</span><span class="na">UTF_8</span><span class="o">));</span>
+                <span class="n">os</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+            <span class="o">}</span>
+
+            <span class="c1">// Read response</span>
+            <span class="kt">int</span> <span class="n">responseCode</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">getResponseCode</span><span class="o">();</span>
+            <span class="nc">BufferedReader</span> <span class="n">reader</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nc">InputStreamReader</span><span class="o">(</span>
+                    <span class="n">responseCode</span> <span class="o">&gt;=</span> <span class="mi">200</span> <span class="o">&amp;&amp;</span> <span class="n">responseCode</span> <span class="o">&lt;</span> <span class="mi">300</span> <span class="o">?</span> <span class="n">conn</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">()</span> <span class="o">:</span> <span class="n">conn</span><span class="o">.</span><span class="na">getErrorStream</span><span class="o">()));</span>
+            <span class="nc">StringBuilder</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuilder</span><span class="o">();</span>
+            <span class="nc">String</span> <span class="n">line</span><span class="o">;</span>
+            <span class="k">while</span> <span class="o">((</span><span class="n">line</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">response</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">line</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="n">reader</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+            <span class="c1">// Output response result</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"响应 ("</span> <span class="o">+</span> <span class="n">responseCode</span> <span class="o">+</span> <span class="s">"): "</span> <span class="o">+</span> <span class="n">response</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * Generates an HMAC SHA256 signature.
+     *
+     * @param data   The string to be signed
+     * @param secret The secret key
+     * @return HMAC SHA256 signature
+     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">hmacSHA256</span><span class="o">(</span><span class="nc">String</span> <span class="n">data</span><span class="o">,</span> <span class="nc">String</span> <span class="n">secret</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="nc">Mac</span> <span class="n">mac</span> <span class="o">=</span> <span class="nc">Mac</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">"HmacSHA256"</span><span class="o">);</span>
+        <span class="nc">SecretKeySpec</span> <span class="n">secretKeySpec</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecretKeySpec</span><span class="o">(</span><span class="n">secret</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="nc">StandardCharsets</span><span class="o">.</span><span class="na">UTF_8</span><span class="o">),</span> <span class="s">"HmacSHA256"</span><span class="o">);</span>
+        <span class="n">mac</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="n">secretKeySpec</span><span class="o">);</span>
+        <span class="kt">byte</span><span class="o">[]</span> <span class="n">hash</span> <span class="o">=</span> <span class="n">mac</span><span class="o">.</span><span class="na">doFinal</span><span class="o">(</span><span class="n">data</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="nc">StandardCharsets</span><span class="o">.</span><span class="na">UTF_8</span><span class="o">));</span>
+        <span class="nc">StringBuilder</span> <span class="n">hexString</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuilder</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">byte</span> <span class="n">b</span> <span class="o">:</span> <span class="n">hash</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">String</span> <span class="n">hex</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">toHexString</span><span class="o">(</span><span class="mh">0xff</span> <span class="o">&amp;</span> <span class="n">b</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">hex</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="n">hexString</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="sc">'0'</span><span class="o">);</span>
+            <span class="n">hexString</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">hex</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">hexString</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight go tab-go"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"bytes"</span>
+    <span class="s">"crypto/hmac"</span>
+    <span class="s">"crypto/sha256"</span>
+    <span class="s">"encoding/hex"</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"io/ioutil"</span>
+    <span class="s">"net/http"</span>
+    <span class="s">"time"</span>
+<span class="p">)</span>
+
+<span class="c">// API Related Information</span>
+<span class="k">const</span> <span class="p">(</span>
+    <span class="n">APIKey</span>     <span class="o">=</span> <span class="s">"Your's API-KEY"</span>
+    <span class="n">APISecret</span>  <span class="o">=</span> <span class="s">"Your's API-SECRET"</span>
+    <span class="n">BaseURL</span>    <span class="o">=</span> <span class="s">"https://futuresopenapi.fameex.com"</span>
+    <span class="n">RequestPath</span> <span class="o">=</span> <span class="s">"/fapi/v1/positionList"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c">// Get timestamp (in milliseconds)</span>
+    <span class="n">timestamp</span> <span class="o">:=</span> <span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">UnixNano</span><span class="p">()</span> <span class="o">/</span> <span class="kt">int64</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">)</span>
+
+    <span class="c">// HTTP request method</span>
+    <span class="n">method</span> <span class="o">:=</span> <span class="s">"POST"</span>
+
+    <span class="c">// Request body (in JSON format, use compact format)</span>
+    <span class="n">body</span> <span class="o">:=</span> <span class="s">`{"contractName":"E-BTC-USDT","limit":10,"page":1}`</span>
+
+    <span class="c">// Concatenate signature string</span>
+    <span class="n">signStr</span> <span class="o">:=</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"%d%s%s%s"</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">RequestPath</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Signature String:"</span><span class="p">,</span> <span class="n">signStr</span><span class="p">)</span>
+
+    <span class="c">// Generate HMAC SHA256 signature</span>
+    <span class="n">signature</span> <span class="o">:=</span> <span class="n">generateHMACSHA256</span><span class="p">(</span><span class="n">signStr</span><span class="p">,</span> <span class="n">APISecret</span><span class="p">)</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Sign (X-CH-SIGN):"</span><span class="p">,</span> <span class="n">signature</span><span class="p">)</span>
+
+    <span class="c">// Send POST request</span>
+    <span class="n">url</span> <span class="o">:=</span> <span class="n">BaseURL</span> <span class="o">+</span> <span class="n">RequestPath</span>
+    <span class="n">req</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">NewRequest</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">bytes</span><span class="o">.</span><span class="n">NewBuffer</span><span class="p">([]</span><span class="kt">byte</span><span class="p">(</span><span class="n">body</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Failed to create request:"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="c">// Set request headers</span>
+    <span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Content-Type"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
+    <span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"X-CH-TS"</span><span class="p">,</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">))</span>
+    <span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"X-CH-APIKEY"</span><span class="p">,</span> <span class="n">APIKey</span><span class="p">)</span>
+    <span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"X-CH-SIGN"</span><span class="p">,</span> <span class="n">signature</span><span class="p">)</span>
+
+    <span class="c">// Execute the request</span>
+    <span class="n">client</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="n">http</span><span class="o">.</span><span class="n">Client</span><span class="p">{}</span>
+    <span class="n">resp</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">client</span><span class="o">.</span><span class="n">Do</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Request failed:"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">defer</span> <span class="n">resp</span><span class="o">.</span><span class="n">Body</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+
+    <span class="c">// Read response</span>
+    <span class="n">responseBody</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">ioutil</span><span class="o">.</span><span class="n">ReadAll</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">Body</span><span class="p">)</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"response:"</span><span class="p">,</span> <span class="kt">string</span><span class="p">(</span><span class="n">responseBody</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="c">// Generates an HMAC SHA256 signature</span>
+<span class="k">func</span> <span class="n">generateHMACSHA256</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">secret</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="n">h</span> <span class="o">:=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="n">sha256</span><span class="o">.</span><span class="n">New</span><span class="p">,</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">(</span><span class="n">secret</span><span class="p">))</span>
+    <span class="n">h</span><span class="o">.</span><span class="n">Write</span><span class="p">([]</span><span class="kt">byte</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">hex</span><span class="o">.</span><span class="n">EncodeToString</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">Sum</span><span class="p">(</span><span class="no">nil</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">hmac</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="c1"># API Related Information
+</span><span class="n">API_KEY</span> <span class="o">=</span> <span class="s">"Your's API-KEY"</span>
+<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">"Your's API-SECRET"</span>
+<span class="n">BASE_URL</span> <span class="o">=</span> <span class="s">"https://futuresopenapi.fameex.com"</span>
+<span class="n">REQUEST_PATH</span> <span class="o">=</span> <span class="s">"/fapi/v1/positionList"</span>
+
+<span class="c1"># Request method and request body
+</span><span class="n">method</span> <span class="o">=</span> <span class="s">"POST"</span>
+<span class="n">body</span> <span class="o">=</span> <span class="p">{</span><span class="s">"contractName"</span><span class="p">:</span><span class="s">"E-BTC-USDT"</span><span class="p">,</span><span class="s">"limit"</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="s">"page"</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+
+
+<span class="c1"># Get timestamp (in milliseconds)
+</span><span class="n">timestamp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># Convert the request body to a compact JSON string
+</span><span class="kn">import</span> <span class="nn">json</span>
+<span class="n">body_str</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s">','</span><span class="p">,</span> <span class="s">':'</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Request body:"</span><span class="p">,</span> <span class="n">body_str</span><span class="p">)</span>
+
+<span class="c1"># Concatenate signature string
+</span><span class="n">sign_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}{</span><span class="n">method</span><span class="si">}{</span><span class="n">REQUEST_PATH</span><span class="si">}{</span><span class="n">body_str</span><span class="si">}</span><span class="s">"</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"signature string:"</span><span class="p">,</span> <span class="n">sign_str</span><span class="p">)</span>
+
+<span class="c1"># Generate HMAC SHA256 signature
+</span><span class="n">signature</span> <span class="o">=</span> <span class="n">hmac</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">API_SECRET</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">),</span> <span class="n">sign_str</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">),</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"sign (X-CH-SIGN):"</span><span class="p">,</span> <span class="n">signature</span><span class="p">)</span>
+
+<span class="c1"># Build request headers
+</span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">,</span>
+    <span class="s">"X-CH-TS"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">timestamp</span><span class="p">),</span>
+    <span class="s">"X-CH-APIKEY"</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
+    <span class="s">"X-CH-SIGN"</span><span class="p">:</span> <span class="n">signature</span><span class="p">,</span>
+    <span class="s">"User-Agent"</span><span class="p">:</span> <span class="s">"Python-Client"</span>
+<span class="p">}</span>
+
+<span class="c1"># Send POST request
+</span><span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">REQUEST_PATH</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">body_str</span><span class="p">)</span>
+
+<span class="c1"># Output response result
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Response status code :"</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Response content:"</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="c1">// API Related Information</span>
+<span class="nv">$apiKey</span> <span class="o">=</span> <span class="s2">"您的API-KEY"</span><span class="p">;</span>
+<span class="nv">$apiSecret</span> <span class="o">=</span> <span class="s2">"您的API-SECRET"</span><span class="p">;</span>
+<span class="nv">$baseUrl</span> <span class="o">=</span> <span class="s2">"https://futuresopenapi.fameex.com"</span><span class="p">;</span>
+<span class="nv">$requestPath</span> <span class="o">=</span> <span class="s2">"/fapi/v1/positionList"</span><span class="p">;</span>
+
+<span class="c1">// Request method and request body</span>
+<span class="nv">$method</span> <span class="o">=</span> <span class="s2">"POST"</span><span class="p">;</span>
+<span class="nv">$body</span> <span class="o">=</span> <span class="nb">json_encode</span><span class="p">([</span>
+    <span class="s2">"contractName"</span>  <span class="o">=&gt;</span> <span class="s2">"E-BTC-USDT"</span><span class="p">,</span>
+    <span class="s2">"limit"</span> <span class="o">=&gt;</span> <span class="s2">"10"</span><span class="p">,</span>
+    <span class="s2">"page"</span> <span class="o">=&gt;</span> <span class="s2">"1"</span>
+<span class="p">],</span> <span class="no">JSON_UNESCAPED_SLASHES</span><span class="p">);</span>
+
+<span class="c1">// Millisecond-level timestamp</span>
+<span class="nv">$timestamp</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">microtime</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
+
+<span class="c1">// Concatenate signature string</span>
+<span class="nv">$signStr</span> <span class="o">=</span> <span class="nv">$timestamp</span> <span class="mf">.</span> <span class="nv">$method</span> <span class="mf">.</span> <span class="nv">$requestPath</span> <span class="mf">.</span> <span class="nv">$body</span><span class="p">;</span>
+<span class="k">echo</span> <span class="s2">"签名字符串: "</span> <span class="mf">.</span> <span class="nv">$signStr</span> <span class="mf">.</span> <span class="kc">PHP_EOL</span><span class="p">;</span>
+
+<span class="c1">// Generate HMAC SHA256 signature</span>
+<span class="nv">$signature</span> <span class="o">=</span> <span class="nb">hash_hmac</span><span class="p">(</span><span class="s1">'sha256'</span><span class="p">,</span> <span class="nv">$signStr</span><span class="p">,</span> <span class="nv">$apiSecret</span><span class="p">);</span>
+<span class="k">echo</span> <span class="s2">"签名 (X-CH-SIGN): "</span> <span class="mf">.</span> <span class="nv">$signature</span> <span class="mf">.</span> <span class="kc">PHP_EOL</span><span class="p">;</span>
+
+<span class="c1">// Build request headers</span>
+<span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"Content-Type: application/json"</span><span class="p">,</span>
+    <span class="s2">"X-CH-TS: </span><span class="nv">$timestamp</span><span class="s2">"</span><span class="p">,</span>
+    <span class="s2">"X-CH-APIKEY: </span><span class="nv">$apiKey</span><span class="s2">"</span><span class="p">,</span>
+    <span class="s2">"X-CH-SIGN: </span><span class="nv">$signature</span><span class="s2">"</span><span class="p">,</span>
+    <span class="s2">"User-Agent: PHP-Client"</span>
+<span class="p">];</span>
+
+<span class="c1">// Send POST request</span>
+<span class="nv">$url</span> <span class="o">=</span> <span class="nv">$baseUrl</span> <span class="mf">.</span> <span class="nv">$requestPath</span><span class="p">;</span>
+<span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="no">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$url</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="no">CURLOPT_POST</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="no">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$headers</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="no">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nv">$body</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="no">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="no">CURLOPT_SSL_VERIFYPEER</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span> <span class="c1">// This should only be used in development; enable SSL verification in production environments</span>
+
+<span class="nv">$response</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+<span class="nv">$httpCode</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="no">CURLINFO_HTTP_CODE</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nb">curl_errno</span><span class="p">(</span><span class="nv">$ch</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"Request failed: "</span> <span class="mf">.</span> <span class="nb">curl_error</span><span class="p">(</span><span class="nv">$ch</span><span class="p">)</span> <span class="mf">.</span> <span class="kc">PHP_EOL</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"Response status code: </span><span class="nv">$httpCode</span><span class="s2">"</span> <span class="mf">.</span> <span class="kc">PHP_EOL</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s2">"Response content: </span><span class="nv">$response</span><span class="s2">"</span> <span class="mf">.</span> <span class="kc">PHP_EOL</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript--node"><code><span class="kd">const</span> <span class="nx">crypto</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">crypto</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">axios</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="c1">// API 相关信息</span>
+<span class="kd">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Your's API-KEY</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">API_SECRET</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Your's API-SECRET</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">BASE_URL</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">https://futuresopenapi.fameex.com</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">REQUEST_PATH</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">/fapi/v1/positionList</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="c1">// Request method and request body</span>
+<span class="kd">const</span> <span class="nx">method</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">body</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+    <span class="na">contractName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">E-BTC-USDT</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">limit</span><span class="p">:</span> <span class="dl">"</span><span class="s2">10</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">page</span><span class="dl">"</span><span class="p">:</span><span class="mi">1</span>
+<span class="p">});</span>
+
+<span class="c1">// Get timestamp in milliseconds</span>
+<span class="kd">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
+
+<span class="c1">// Concatenate the signature string</span>
+<span class="kd">const</span> <span class="nx">signStr</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">timestamp</span><span class="p">}${</span><span class="nx">method</span><span class="p">}${</span><span class="nx">REQUEST_PATH</span><span class="p">}${</span><span class="nx">body</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">signature string:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">signStr</span><span class="p">);</span>
+
+<span class="c1">// Generate HMAC SHA256 signature</span>
+<span class="kd">const</span> <span class="nx">signature</span> <span class="o">=</span> <span class="nx">crypto</span><span class="p">.</span><span class="nx">createHmac</span><span class="p">(</span><span class="dl">'</span><span class="s1">sha256</span><span class="dl">'</span><span class="p">,</span> <span class="nx">API_SECRET</span><span class="p">).</span><span class="nx">update</span><span class="p">(</span><span class="nx">signStr</span><span class="p">).</span><span class="nx">digest</span><span class="p">(</span><span class="dl">'</span><span class="s1">hex</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">sign (X-CH-SIGN):</span><span class="dl">"</span><span class="p">,</span> <span class="nx">signature</span><span class="p">);</span>
+
+<span class="c1">// Build request headers</span>
+<span class="kd">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">X-CH-TS</span><span class="dl">"</span><span class="p">:</span> <span class="nx">timestamp</span><span class="p">.</span><span class="nx">toString</span><span class="p">(),</span>
+    <span class="dl">"</span><span class="s2">X-CH-APIKEY</span><span class="dl">"</span><span class="p">:</span> <span class="nx">API_KEY</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">X-CH-SIGN</span><span class="dl">"</span><span class="p">:</span> <span class="nx">signature</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">User-Agent</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Node.js-Client</span><span class="dl">"</span>
+<span class="p">};</span>
+
+<span class="c1">// Send POST request</span>
+<span class="k">async</span> <span class="kd">function</span> <span class="nx">sendOrder</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">axios</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s2">`</span><span class="p">${</span><span class="nx">BASE_URL</span><span class="p">}${</span><span class="nx">REQUEST_PATH</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span> <span class="nx">body</span><span class="p">,</span> <span class="p">{</span> <span class="nx">headers</span> <span class="p">});</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Response status code:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Response content:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">"</span><span class="s2">Request failed:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">error</span><span class="p">.</span><span class="nx">response</span> <span class="p">?</span> <span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span> <span class="p">:</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Execute the request</span>
+<span class="nx">sendOrder</span><span class="p">();</span>
+
+</code></pre></div>
+<p><strong>Request parameters</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter name</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">contractName<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Contract Name, e.g.,<code>E-BTC-USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">limit<font color="red">*</font></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">Number of records displayed</td>
+</tr>
+<tr>
+<td style="text-align: left">page<font color="red">*</font></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">Current page number</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Return example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"records"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">42888</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"originUid"</span><span class="p">:</span><span class="w"> </span><span class="mi">18099</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="mi">10059</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"contractName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"E-BTC-USDT"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0000000000000000</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"holdAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0E-16</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"openPrice"</span><span class="p">:</span><span class="w"> </span><span class="mf">94777.1000000000000000</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"closePrice"</span><span class="p">:</span><span class="w"> </span><span class="mi">0E-16</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"closeVolume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0E-16</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"historyRealizedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.0142165650000000</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"unRealizedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.11638000000000000000000000000000000000000000000000000000</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"ctime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-05-06 03:14:19"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"leverageLevel"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"current"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"orders"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+        </span><span class="nl">"optimizeCountSql"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"hitCount"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"countId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"maxLimit"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"searchCount"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"pages"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"succ"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Response Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter name</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id<font color="red">*</font></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">Data ID</td>
+</tr>
+<tr>
+<td style="text-align: left">contractName<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Contract Name</td>
+</tr>
+<tr>
+<td style="text-align: left">volume<font color="red">*</font></td>
+<td style="text-align: left">bigDecimal</td>
+<td style="text-align: left">Position quantity</td>
+</tr>
+<tr>
+<td style="text-align: left">holdAmount<font color="red">*</font></td>
+<td style="text-align: left">bigDecimal</td>
+<td style="text-align: left">Position margin</td>
+</tr>
+<tr>
+<td style="text-align: left">openPrice<font color="red">*</font></td>
+<td style="text-align: left">bigDecimal</td>
+<td style="text-align: left">Opening price</td>
+</tr>
+<tr>
+<td style="text-align: left">closePrice<font color="red">*</font></td>
+<td style="text-align: left">bigDecimal</td>
+<td style="text-align: left">Closing average price</td>
+</tr>
+<tr>
+<td style="text-align: left">closeVolume<font color="red">*</font></td>
+<td style="text-align: left">bigDecimal</td>
+<td style="text-align: left">Closed position quantity</td>
+</tr>
+<tr>
+<td style="text-align: left">historyRealizedAmount<font color="red">*</font></td>
+<td style="text-align: left">bigDecimal</td>
+<td style="text-align: left">Historical cumulative realized profits and losses</td>
+</tr>
+<tr>
+<td style="text-align: left">unRealizedAmount<font color="red">*</font></td>
+<td style="text-align: left">bigDecimal</td>
+<td style="text-align: left">Unrealized Profit and Loss</td>
+</tr>
+<tr>
+<td style="text-align: left">ctime<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Creation time</td>
+</tr>
+<tr>
+<td style="text-align: left">status<font color="red">*</font></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">Position Validity (0: Invalid, 1: Valid)</td>
+</tr>
+<tr>
+<td style="text-align: left">side<font color="red">*</font></td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">Position direction</td>
+</tr>
+<tr>
+<td style="text-align: left">leverageLevel<font color="red">*</font></td>
+<td style="text-align: left">integer</td>
+<td style="text-align: left">Leverage ratio</td>
+</tr>
+</tbody></table>
+<h1 id='websocket'>Websocket</h1><h2 id='overview'>Overview</h2>
 <p>WebSocket is a new protocol in HTML5. It enables full-duplex communication between the client and the server, allowing data to be transmitted quickly in both directions. A connection between the client and the server can be established through a simple handshake, and the server can actively push information to the client based on business rules. Its advantages are as follows:</p>
 
 <ul>
