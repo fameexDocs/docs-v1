@@ -14070,7 +14070,12 @@ body
 <tr>
 <td style="text-align: left">type<font color="red">*</font></td>
 <td style="text-align: left">string</td>
-<td style="text-align: left">Order type:<code>LIMIT</code>/<code>MARKET</code></td>
+<td style="text-align: left">Order type:<code>LIMIT</code>/<code>MARKET</code> (<code>LIMIT</code>: Limit order, <code>MARKET</code>: Market order)</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left">Note: When <code>timeInForce</code> is provided, this field will be ignored.</td>
 </tr>
 <tr>
 <td style="text-align: left">side<font color="red">*</font></td>
@@ -14090,7 +14095,27 @@ body
 <tr>
 <td style="text-align: left">timeInForce</td>
 <td style="text-align: left">string</td>
-<td style="text-align: left"><code>IOC, FOK, POST_ONLY</code></td>
+<td style="text-align: left">Optional values: <code>IOC</code>,<code>FOK</code>,<code>POST_ONLY</code></td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left">(<code>IOC</code>: Cancel unfilled parts immediately,</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left"><code>FOK</code>: Cancel if not fully filled immediately,</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left"><code>POST_ONLY</code>: Cancel if not a passive order )</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left">Note: If this field is set, it will override the <code>type</code> field and be used as the final order type.</td>
 </tr>
 <tr>
 <td style="text-align: left">clientOrderId</td>

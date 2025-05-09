@@ -14069,7 +14069,12 @@ body
 <tr>
 <td style="text-align: left">type<font color="red">*</font></td>
 <td style="text-align: left">string</td>
-<td style="text-align: left">订单类型，<code>LIMIT/MARKET</code></td>
+<td style="text-align: left">订单类型，<code>LIMIT</code>/<code>MARKET</code> (<code>LIMIT</code>:限价委托,<code>MARKET</code>:市价委托)</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left">注意：当 <code>timeInForce</code> 有传值时，此字段会被忽略！</td>
 </tr>
 <tr>
 <td style="text-align: left">side<font color="red">*</font></td>
@@ -14089,7 +14094,27 @@ body
 <tr>
 <td style="text-align: left">timeInForce</td>
 <td style="text-align: left">string</td>
-<td style="text-align: left"><code>IOC, FOK, POST_ONLY</code></td>
+<td style="text-align: left">可选值：<code>IOC</code>,<code>FOK</code>,<code>POST_ONLY</code></td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left">(<code>IOC</code>:无法立即成交的部分就撤销,</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left"><code>FOK</code>:无法全部立即成交就撤销,</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left"><code>POST_ONLY</code>:无法成为被动单就撤销)</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td style="text-align: left"></td>
+<td style="text-align: left">注意：如果该字段有值，将直接覆盖 <code>type</code> 字段，作为最终订单类型处理。</td>
 </tr>
 <tr>
 <td style="text-align: left">clientOrderId</td>
