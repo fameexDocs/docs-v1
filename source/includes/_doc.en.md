@@ -11721,11 +11721,16 @@ sendOrder();
 | contractName<font color="red">\*</font> | string |`Uppercase`contract name, such as`E-BTC-USDT`                             |
 | price                                   | number | Order price. This field is mandatory for limit orders. It has precision restrictions set by the administrator      |
 | volume<font color="red">\*</font>       | number | Order quantity. It has precision restrictions set by the administrator. For market orders, this field represents the order value |
-| type<font color="red">\*</font>         | string | Order type:`LIMIT`/`MARKET`                                      |
+| type<font color="red">\*</font>         | string | Order type:`LIMIT`/`MARKET` (`LIMIT`: Limit order, `MARKET`: Market order)|
+|                                         |        | Note: When `timeInForce` is provided, this field will be ignored.     |
 | side<font color="red">\*</font>         | string | Order direction:`BUY`/`SELL`                                           |
 | open<font color="red">\*</font>         | string | Position direction:`OPEN`/`CLOSE`                                       |
 | positionType<font color="red">\*</font> | number | Position type: 1 (Cross Margin) / 2 (Isolated Margin)                                      |
-| timeInForce                             | string | `IOC, FOK, POST_ONLY`                                            |
+| timeInForce                             | string | Optional values: `IOC`,`FOK`,`POST_ONLY`         |
+|                                         |        | (`IOC`: Cancel unfilled parts immediately,       |
+|                                         |        | `FOK`: Cancel if not fully filled immediately,   |
+|                                         |        | `POST_ONLY`: Cancel if not a passive order )     |
+|                                         |        | Note: If this field is set, it will override the `type` field and be used as the final order type.   |
 | clientOrderId                           | string | Client order identifier, a string with a length of fewer than 32 characters                            |
 
 > Response example

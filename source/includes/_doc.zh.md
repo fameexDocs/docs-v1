@@ -11717,11 +11717,16 @@ sendOrder();
 | contractName<font color="red">\*</font> | string | `大写`合约名称，例如：`E-BTC-USDT`                               |
 | price                                   | number | 下单价格，限价单时该字段为必传，有精度限制，精度由管理员设置     |
 | volume<font color="red">\*</font>       | number | 下单张数，有精度限制，精度由管理员设置，市价开仓时这里单位是价值 |
-| type<font color="red">\*</font>         | string | 订单类型，`LIMIT/MARKET`                                         |
+| type<font color="red">\*</font>         | string | 订单类型，`LIMIT`/`MARKET` (`LIMIT`:限价委托,`MARKET`:市价委托)           |
+|                                         |        | 注意：当 `timeInForce` 有传值时，此字段会被忽略！                      |
 | side<font color="red">\*</font>         | string | 买卖方向，`BUY/SELL`                                             |
 | open<font color="red">\*</font>         | string | 开平仓方向，`OPEN/CLOSE`                                         |
 | positionType<font color="red">\*</font> | number | 持仓类型，`1:全仓/2:逐仓`                                        |
-| timeInForce                             | string | `IOC, FOK, POST_ONLY`                                            |
+| timeInForce                             | string | 可选值：`IOC`,`FOK`,`POST_ONLY`                                 |
+|                                         |        | (`IOC`:无法立即成交的部分就撤销,                                   |
+|                                         |        | `FOK`:无法全部立即成交就撤销,                                     |
+|                                         |        | `POST_ONLY`:无法成为被动单就撤销)                                 |
+|                                         |        | 注意：如果该字段有值，将直接覆盖 `type` 字段，作为最终订单类型处理。       |
 | clientOrderId                           | string | 客户端下单标识，长度小于32位的字符串                             |
 
 > 返回示例
