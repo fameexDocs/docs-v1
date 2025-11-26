@@ -595,7 +595,7 @@
                             <a href="#order-query" class="toc-h3 toc-link" data-title="Order query">Order query</a>
                           </li>
                           <li>
-                            <a href="#v2" class="toc-h3 toc-link" data-title="订单查询-V2">订单查询-V2</a>
+                            <a href="#order-query-v2" class="toc-h3 toc-link" data-title="Order Query-V2">Order Query-V2</a>
                           </li>
                           <li>
                             <a href="#cancel-order" class="toc-h3 toc-link" data-title="Cancel order">Cancel order</a>
@@ -1085,8 +1085,8 @@ Content-Type:application/json
 <p>Response Example</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"timezone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"China Standard Time"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"serverTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1705039779880</span><span class="w">
+    </span><span class="nl">"timezone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UTC"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"server_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1705039779880</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Response Parameters</strong></p>
@@ -1102,11 +1102,11 @@ Content-Type:application/json
 <tr>
 <td style="text-align: left">timezone</td>
 <td style="text-align: left">string</td>
-<td style="text-align: left"><code>China Standard Time</code></td>
+<td style="text-align: left"><code>UTC</code></td>
 <td style="text-align: left">Server timezone</td>
 </tr>
 <tr>
-<td style="text-align: left">serverTime</td>
+<td style="text-align: left">server_time</td>
 <td style="text-align: left">long</td>
 <td style="text-align: left"><code>1705039779880</code></td>
 <td style="text-align: left">Server timestamp</td>
@@ -3469,63 +3469,67 @@ Content-Type:application/json
 <p>Return example</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"quantityPrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"limitVolumeMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sccadai"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"pricePrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"marketBuyMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"marketSellMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"baseAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SCCA"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"limitPriceMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"quoteAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DAI"</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"quantityPrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"limitVolumeMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btcusdt"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"pricePrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"marketBuyMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"marketSellMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"baseAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"limitPriceMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"quoteAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"quantityPrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"limitVolumeMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bchusdt"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"pricePrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"marketBuyMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"marketSellMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"baseAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BCH"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"limitPriceMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"quoteAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"quantityPrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"limitVolumeMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"etcusdt"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"pricePrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"marketBuyMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"marketSellMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"baseAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETC"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"limitPriceMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"quoteAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"quantityPrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"limitVolumeMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ltcbtc"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"pricePrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"marketBuyMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"marketSellMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"baseAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LTC"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"limitPriceMin"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.001</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"quoteAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-    </span><span class="p">]</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSDT"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"baseAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"quoteAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"pricePrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"quantityPrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitMoneyMin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitVolumeMin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.00001"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitVolumeMax"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitMoneyMax"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000000"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LTCUSDT"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"baseAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LTC"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"quoteAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"pricePrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"quantityPrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitMoneyMin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitVolumeMin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.001"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitVolumeMax"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11509.049"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitMoneyMax"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9000000"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FILUSDT"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"baseAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FIL"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"quoteAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"pricePrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"quantityPrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitMoneyMin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitVolumeMin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.89"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitVolumeMax"</span><span class="p">:</span><span class="w"> </span><span class="s2">"890000"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitMoneyMax"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000000"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DOTUSDT"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"baseAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DOT"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"quoteAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"pricePrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"quantityPrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitMoneyMin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitVolumeMin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.56"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitVolumeMax"</span><span class="p">:</span><span class="w"> </span><span class="s2">"560000"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitMoneyMax"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000000"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"XLMUSDT"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"baseAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"XLM"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"quoteAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"pricePrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"quantityPrecision"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitMoneyMin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitVolumeMin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitVolumeMax"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12000000"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"limitMoneyMax"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000000"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Return parameter</strong></p>
@@ -3569,28 +3573,28 @@ Content-Type:application/json
 <td style="text-align: left">Quantity precision</td>
 </tr>
 <tr>
+<td style="text-align: left">limitMoneyMin</td>
+<td style="text-align: left">BigDecimal</td>
+<td style="text-align: left"><code>0.0001</code></td>
+<td style="text-align: left">Minimum order amount limit for orders</td>
+</tr>
+<tr>
 <td style="text-align: left">limitVolumeMin</td>
 <td style="text-align: left">BigDecimal</td>
 <td style="text-align: left"><code>0.0001</code></td>
-<td style="text-align: left">Minimum order quantity limit for limit orders</td>
+<td style="text-align: left">Minimum order quantity limit for orders</td>
 </tr>
 <tr>
-<td style="text-align: left">marketBuyMin</td>
+<td style="text-align: left">limitVolumeMax</td>
 <td style="text-align: left">BigDecimal</td>
 <td style="text-align: left"><code>0.0001</code></td>
-<td style="text-align: left">Minimum purchase quantity for market orders</td>
+<td style="text-align: left">Maximum order quantity limit for orders</td>
 </tr>
 <tr>
-<td style="text-align: left">marketSellMin</td>
+<td style="text-align: left">limitMoneyMax</td>
 <td style="text-align: left">BigDecimal</td>
 <td style="text-align: left"><code>0.0001</code></td>
-<td style="text-align: left">Minimum sell quantity for market orders</td>
-</tr>
-<tr>
-<td style="text-align: left">limitPriceMin</td>
-<td style="text-align: left">BigDecimal</td>
-<td style="text-align: left"><code>0.001</code></td>
-<td style="text-align: left">Minimum price limit for limit orders</td>
+<td style="text-align: left">Maximum order amount limit for orders</td>
 </tr>
 </tbody></table>
 <h2 id='market-data'>Market data</h2><h3 id='security-type-none-2'>Security type: None</h3>
@@ -3873,27 +3877,31 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <p>Return example</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1701658276000</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"bids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="mf">3.90000000</span><span class="p">,</span><span class="w">     </span><span class="err">//</span><span class="w"> </span><span class="err">Price</span><span class="w">
-            </span><span class="mf">43.10000000</span><span class="w">    </span><span class="err">//</span><span class="w"> </span><span class="err">Quantity</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1764180842868</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"bids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">[</span><span class="w">
+                </span><span class="mf">90058.6</span><span class="p">,</span><span class="w">
+                </span><span class="mf">7.7918</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="p">[</span><span class="w">
+                </span><span class="mf">90058.59</span><span class="p">,</span><span class="w">
+                </span><span class="mf">7.09332</span><span class="w">
+            </span><span class="p">]</span><span class="w">
         </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="mf">4.00000000</span><span class="p">,</span><span class="w">
-            </span><span class="mf">19.20000000</span><span class="w">
+        </span><span class="nl">"asks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">[</span><span class="w">
+                </span><span class="mf">90058.7</span><span class="p">,</span><span class="w">
+                </span><span class="mf">4.35464</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="p">[</span><span class="w">
+                </span><span class="mf">90058.72</span><span class="p">,</span><span class="w">
+                </span><span class="mf">3.95142</span><span class="w">
+            </span><span class="p">]</span><span class="w">
         </span><span class="p">]</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="nl">"asks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="mf">4.00000200</span><span class="p">,</span><span class="w">     </span><span class="err">//</span><span class="w"> </span><span class="err">Price</span><span class="w">
-            </span><span class="mf">12.00000000</span><span class="w">     </span><span class="err">//</span><span class="w"> </span><span class="err">Quantity</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="mf">5.10000000</span><span class="p">,</span><span class="w">
-            </span><span class="mf">28.00000000</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Return parameter</strong></p>
@@ -4198,15 +4206,19 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <p>Return example</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">22400.0</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">9900.51</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"vol"</span><span class="p">:</span><span class="w"> </span><span class="mf">4691.0</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"last"</span><span class="p">:</span><span class="w"> </span><span class="mf">9211.60</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">9100.34</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"buy"</span><span class="p">:</span><span class="w"> </span><span class="mf">9210.0</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"sell"</span><span class="p">:</span><span class="w"> </span><span class="mf">9213.0</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"rose"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+0.05"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1595563624731</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">1357550713.60334</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">90267.9</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"vol"</span><span class="p">:</span><span class="w"> </span><span class="mf">15520.54679</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"last"</span><span class="p">:</span><span class="w"> </span><span class="mf">90253.5</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">86180.1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"buy"</span><span class="p">:</span><span class="w"> </span><span class="mf">90217.6</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"sell"</span><span class="p">:</span><span class="w"> </span><span class="mf">90217.7</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"rose"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+0.0295494912"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1764180900000</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Return parameter</strong></p>
@@ -4901,20 +4913,24 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <blockquote>
 <p>Response example</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">131.0000000000000000</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"qty"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1000000000000000</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1704788645416</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sell"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">132.0000000000000000</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"qty"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.2000000000000000</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1704788282332</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">90310.4</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"qty"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.06466</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1764181079236</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">90305.6</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"qty"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.51622</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1764181078271</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Response parameters</strong></p>
 
@@ -5231,32 +5247,28 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <blockquote>
 <p>Return example</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">6228.77</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"vol"</span><span class="p">:</span><span class="w"> </span><span class="mf">2456.11</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">6220.13</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"idx"</span><span class="p">:</span><span class="w"> </span><span class="mi">1594640340000</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">6225.63</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">6129.41</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">6228.77</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"vol"</span><span class="p">:</span><span class="w"> </span><span class="mf">1700.21</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">6228.77</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"idx"</span><span class="p">:</span><span class="w"> </span><span class="mi">1587632160000</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">6228.77</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">6228.77</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">6228.77</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"vol"</span><span class="p">:</span><span class="w"> </span><span class="mf">1908.52</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">6228.77</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"idx"</span><span class="p">:</span><span class="w"> </span><span class="mi">1587632100000</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">6228.77</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">6228.77</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">87754.2</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"vol"</span><span class="p">:</span><span class="w"> </span><span class="mf">13.29173</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">87694.4</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"idx"</span><span class="p">:</span><span class="w"> </span><span class="mi">1764175260000</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">87719.7</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">87739.7</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">87723.1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"vol"</span><span class="p">:</span><span class="w"> </span><span class="mf">8.95014</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">87687.3</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"idx"</span><span class="p">:</span><span class="w"> </span><span class="mi">1764175320000</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">87723.1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">87719.7</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Response parameters</strong></p>
 
@@ -5795,18 +5807,20 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 <p>Response example</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSDT"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="s2">"2618039663715064005"</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">97081.19</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00001</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"111000000111"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"transactTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1739867150800</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LIMIT"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW"</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"781594618796015616"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ENAUSDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"transactTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1764183478446</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LIMIT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INIT"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Response parameters</strong></p>
@@ -5822,7 +5836,7 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 <tr>
 <td style="text-align: left">orderId</td>
 <td style="text-align: left">long</td>
-<td style="text-align: left"><code>2012274607240433332</code></td>
+<td style="text-align: left"><code>781594618796015616</code></td>
 <td style="text-align: left">Order ID (system-generated)</td>
 </tr>
 <tr>
@@ -7421,16 +7435,21 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <p>Response example</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btcusdt"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="mi">0E-16</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="mi">2618039663715064005</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">97081.1900000000000000</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0000100000000000</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"avgPrice"</span><span class="p">:</span><span class="w"> </span><span class="mi">0E-16</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"transactTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1739867150753</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LIMIT"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New Order"</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"781601003987136512"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enausdt"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"avgPrice"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LIMIT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"transactTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1764185000794</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Response parameters</strong></p>
@@ -7492,7 +7511,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <td style="text-align: left">Order type. Possible values are:<code>LIMIT</code>(Limit Order) and<code>MARKET</code>(Market Order)</td>
 </tr>
 <tr>
-<td style="text-align: left">transactTime</td>
+<td style="text-align: left">time</td>
 <td style="text-align: left">long</td>
 <td style="text-align: left"><code>1672274311107</code></td>
 <td style="text-align: left">Timestamp</td>
@@ -7510,7 +7529,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <td style="text-align: left">Order status. Possible values are:<code>New Order</code>(New order, no fills),<code>Partially Filled</code>(Partially filled),<code>Filled</code>(Fully filled)</td>
 </tr>
 </tbody></table>
-<h3 id='v2'>订单查询-V2</h3>
+<h3 id='order-query-v2'>Order Query-V2</h3>
 <p><code>GET https://openapi.fameex.com/sapi/v2/order</code></p>
 
 <p><strong>Rate limit rule: 20 requests per 2 seconds</strong></p>
@@ -7962,16 +7981,21 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <p>Response example</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethusdt"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"150695552109032492"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">4765.29</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.01</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"avgPrice"</span><span class="p">:</span><span class="w"> </span><span class="mf">4754.24</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"transactTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1672274311107</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LIMIT"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New Order"</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"781601003987136512"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enausdt"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"avgPrice"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LIMIT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"transactTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1764185000794</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Response parameters</strong></p>
@@ -8508,11 +8532,13 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 <p>Response example</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btcusdt"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="s2">"2618039663715064005"</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PENDING_CANCEL"</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"781594618796015616"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enausdt"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PENDING_CANCEL"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Response parameters</strong></p>
@@ -8963,11 +8989,13 @@ body
 <p>Response example</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethusdt"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="s2">"1938321163093079425"</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PENDING_CANCEL"</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"781594618796015616"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enausdt"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PENDING_CANCEL"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Response parameters</strong></p>
@@ -9401,14 +9429,18 @@ curl <span class="nt">-X</span> POST <span class="s2">"</span><span class="nv">$
 <p>Successful response data</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="mi">165964665990709251</span><span class="p">,</span><span class="w">
-        </span><span class="mi">165964665990709252</span><span class="p">,</span><span class="w">
-        </span><span class="mi">165964665990709253</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="nl">"failed"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Cancellation</span><span class="w"> </span><span class="err">failure</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">usually</span><span class="w"> </span><span class="err">due</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">order</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">existing</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">already</span><span class="w"> </span><span class="err">reaching</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">final</span><span class="w"> </span><span class="err">state</span><span class="w">
-        </span><span class="mi">165964665990709250</span><span class="w">
-    </span><span class="p">]</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="mi">165964665990709251</span><span class="p">,</span><span class="w">
+            </span><span class="mi">165964665990709252</span><span class="p">,</span><span class="w">
+            </span><span class="mi">165964665990709253</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="nl">"failed"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">取消失败一般是因为订单不存在或订单状态已经到终态</span><span class="w">
+            </span><span class="mi">165964665990709250</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <blockquote>
@@ -9866,32 +9898,36 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <blockquote>
 <p>Response example</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETHUSDT"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1938321163093077686</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.10"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"avgPrice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1701240367864</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MARKET"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW_"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETHUSDT"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1938321163093078022</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"avgPrice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1701243281850</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MARKET"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW_"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"781594618796015616"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ENAUSDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"avgPrice"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LIMIT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1764183478446</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETHUSDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1938321163093078022</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"avgPrice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1701243281850</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MARKET"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW_"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Response parameters</strong></p>
 
@@ -10415,32 +10451,36 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <blockquote>
 <p>Response example</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETHUSDT"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1938321163093077686"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.10"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"avgPrice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1701240367864</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MARKET"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW_"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETHUSDT"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1938321163093078022"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"avgPrice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1701243281850</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MARKET"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW_"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"781594618796015616"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ENAUSDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"avgPrice"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LIMIT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1764183478446</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETHUSDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1938321163093078022</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"origQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"avgPrice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1701243281850</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MARKET"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEW_"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Response parameters</strong></p>
 
@@ -10964,42 +11004,40 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <blockquote>
 <p>Response example</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETHUSDT"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00000000428</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"isMaker"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"isBuyer"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"bidId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1954603951049381893</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"bidUserId"</span><span class="p">:</span><span class="w"> </span><span class="mi">10083</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"feeCoin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mi">2334</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"qty"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00000428</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"askId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1856176838352995447</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">159</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1701623660989</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"isSelf"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"askUserId"</span><span class="p">:</span><span class="w"> </span><span class="mi">10671</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETHUSDT"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00000004284</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"isMaker"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"isBuyer"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"bidId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1938321163093068889</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"bidUserId"</span><span class="p">:</span><span class="w"> </span><span class="mi">10083</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"feeCoin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mi">2334</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"qty"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00004284</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"askId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1856176838352995447</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">158</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1701165091964</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"isSelf"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"askUserId"</span><span class="p">:</span><span class="w"> </span><span class="mi">10671</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ENAUSDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">781602664387395584</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="mi">781602663370088448</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.2812</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"qty"</span><span class="p">:</span><span class="w"> </span><span class="mf">9.99</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1764185396665</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"isBuyer"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"isMaker"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"feeCoin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.002809188</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"userId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10055930"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SELL"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ENAUSDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">781602630887489536</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="mi">781602630773108736</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.2813</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"qty"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1764185388678</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"isBuyer"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"isMaker"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"feeCoin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ENA"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"userId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10055930"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUY"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Response parameters</strong></p>
 
@@ -12035,23 +12073,27 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 <p>Response example</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"balances"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"free"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15.00"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"locked"</span><span class="p">:</span><span class="w"> </span><span class="s2">"30.00"</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"free"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.00"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"locked"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20.00"</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"free"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100.00"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"locked"</span><span class="p">:</span><span class="w"> </span><span class="s2">"70.00"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-    </span><span class="p">]</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"balances"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"free"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9.993378812"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"locked"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"free"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.00"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"locked"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20.00"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"free"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100.00"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"locked"</span><span class="p">:</span><span class="w"> </span><span class="s2">"70.00"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Response parameters</strong></p>
