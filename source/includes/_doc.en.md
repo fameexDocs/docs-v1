@@ -240,8 +240,8 @@ https.get(url, (res) => {
 
 ```json
 {
-    "timezone": "China Standard Time",
-    "serverTime": 1705039779880
+    "timezone": "UTC",
+    "server_time": 1705039779880
 }
 ```
 
@@ -249,8 +249,8 @@ https.get(url, (res) => {
 
 | Parameter Name    | Type   | Example        | Description         |
 | :----------| :------| :---------------------| :------------|
-| timezone   | string | `China Standard Time` | Server timezone   |
-| serverTime | long   | `1705039779880`       | Server timestamp  |
+| timezone   | string | `UTC` | Server timezone   |
+| server_time | long   | `1705039779880`       | Server timestamp  |
 
 
 
@@ -2214,63 +2214,67 @@ https.get(url, (res) => {
 
 ```json
 {
-    "symbols": [
-        {
-            "quantityPrecision": 3,
-            "limitVolumeMin": 0.0001,
-            "symbol": "sccadai",
-            "pricePrecision": 6,
-            "marketBuyMin": 0.0001,
-            "marketSellMin": 0.0001,
-            "baseAsset": "SCCA",
-            "limitPriceMin": 0.001,
-            "quoteAsset": "DAI"
-        },
-        {
-            "quantityPrecision": 8,
-            "limitVolumeMin": 0.0001,
-            "symbol": "btcusdt",
-            "pricePrecision": 2,
-            "marketBuyMin": 0.0001,
-            "marketSellMin": 0.0001,
-            "baseAsset": "BTC",
-            "limitPriceMin": 0.001,
-            "quoteAsset": "USDT"
-        },
-        {
-            "quantityPrecision": 3,
-            "limitVolumeMin": 0.0001,
-            "symbol": "bchusdt",
-            "pricePrecision": 2,
-            "marketBuyMin": 0.0001,
-            "marketSellMin": 0.0001,
-            "baseAsset": "BCH",
-            "limitPriceMin": 0.001,
-            "quoteAsset": "USDT"
-        },
-        {
-            "quantityPrecision": 2,
-            "limitVolumeMin": 0.0001,
-            "symbol": "etcusdt",
-            "pricePrecision": 2,
-            "marketBuyMin": 0.0001,
-            "marketSellMin": 0.0001,
-            "baseAsset": "ETC",
-            "limitPriceMin": 0.001,
-            "quoteAsset": "USDT"
-        },
-        {
-            "quantityPrecision": 2,
-            "limitVolumeMin": 0.0001,
-            "symbol": "ltcbtc",
-            "pricePrecision": 6,
-            "marketBuyMin": 0.0001,
-            "marketSellMin": 0.0001,
-            "baseAsset": "LTC",
-            "limitPriceMin": 0.001,
-            "quoteAsset": "BTC"
-        }
-    ]
+    "code": 0,
+    "msg": "Success",
+    "data": {
+        "symbols": [
+            {
+                "symbol": "BTCUSDT",
+                "baseAsset": "BTC",
+                "quoteAsset": "USDT",
+                "pricePrecision": 2,
+                "quantityPrecision": 5,
+                "limitMoneyMin": "1",
+                "limitVolumeMin": "0.00001",
+                "limitVolumeMax": "100",
+                "limitMoneyMax": "1000000"
+            },
+            {
+                "symbol": "LTCUSDT",
+                "baseAsset": "LTC",
+                "quoteAsset": "USDT",
+                "pricePrecision": 2,
+                "quantityPrecision": 3,
+                "limitMoneyMin": "5",
+                "limitVolumeMin": "0.001",
+                "limitVolumeMax": "11509.049",
+                "limitMoneyMax": "9000000"
+            },
+            {
+                "symbol": "FILUSDT",
+                "baseAsset": "FIL",
+                "quoteAsset": "USDT",
+                "pricePrecision": 3,
+                "quantityPrecision": 2,
+                "limitMoneyMin": "5",
+                "limitVolumeMin": "0.89",
+                "limitVolumeMax": "890000",
+                "limitMoneyMax": "2000000"
+            },
+            {
+                "symbol": "DOTUSDT",
+                "baseAsset": "DOT",
+                "quoteAsset": "USDT",
+                "pricePrecision": 3,
+                "quantityPrecision": 3,
+                "limitMoneyMin": "5",
+                "limitVolumeMin": "0.56",
+                "limitVolumeMax": "560000",
+                "limitMoneyMax": "2000000"
+            },
+            {
+                "symbol": "XLMUSDT",
+                "baseAsset": "XLM",
+                "quoteAsset": "USDT",
+                "pricePrecision": 4,
+                "quantityPrecision": 1,
+                "limitMoneyMin": "5",
+                "limitVolumeMin": "12",
+                "limitVolumeMax": "12000000",
+                "limitMoneyMax": "2000000"
+            }
+        ]
+    }
 }
 ```
 
@@ -2283,10 +2287,10 @@ https.get(url, (res) => {
 | quoteAsset        | string     | `USDT`    | `Quote currency`         |
 | pricePrecision    | integer    | `6`       | Price precision           |
 | quantityPrecision | integer    | `3`       | Quantity precision           |
-| limitVolumeMin    | BigDecimal | `0.0001`  | Minimum order quantity limit for limit orders |
-| marketBuyMin      | BigDecimal | `0.0001`  | Minimum purchase quantity for market orders |
-| marketSellMin     | BigDecimal | `0.0001`  | Minimum sell quantity for market orders |
-| limitPriceMin     | BigDecimal | `0.001`   | Minimum price limit for limit orders |
+| limitMoneyMin     | BigDecimal | `0.0001`  | Minimum order amount limit for orders |
+| limitVolumeMin    | BigDecimal | `0.0001`  | Minimum order quantity limit for orders |
+| limitVolumeMax    | BigDecimal | `0.0001`  | Maximum order quantity limit for orders |
+| limitMoneyMax     | BigDecimal | `0.0001`  | Maximum order amount limit for orders |
 
 
 ## Market data
@@ -2581,27 +2585,31 @@ axios
 
 ```json
 {
-    "time": 1701658276000,
-    "bids": [
-        [
-            3.90000000,     // Price
-            43.10000000    // Quantity
+    "code": 0,
+    "msg": "Success",
+    "data": {
+        "time": 1764180842868,
+        "bids": [
+            [
+                90058.6,
+                7.7918
+            ],
+            [
+                90058.59,
+                7.09332
+            ]
         ],
-        [
-            4.00000000,
-            19.20000000
+        "asks": [
+            [
+                90058.7,
+                4.35464
+            ],
+            [
+                90058.72,
+                3.95142
+            ]
         ]
-    ],
-    "asks": [
-        [
-            4.00000200,     // Price
-            12.00000000     // Quantity
-        ],
-        [
-            5.10000000,
-            28.00000000
-        ]
-    ]
+    }
 }
 ```
 
@@ -2897,15 +2905,19 @@ axios
 
 ```json
 {
-    "amount": 22400.0,
-    "high": 9900.51,
-    "vol": 4691.0,
-    "last": 9211.60,
-    "low": 9100.34,
-    "buy": 9210.0,
-    "sell": 9213.0,
-    "rose": "+0.05",
-    "time": 1595563624731
+    "code": 0,
+    "msg": "Success",
+    "data": {
+        "amount": 1357550713.60334,
+        "high": 90267.9,
+        "vol": 15520.54679,
+        "last": 90253.5,
+        "low": 86180.1,
+        "buy": 90217.6,
+        "sell": 90217.7,
+        "rose": "+0.0295494912",
+        "time": 1764180900000
+    }
 }
 ```
 
@@ -3517,20 +3529,24 @@ axios
 > Response example
 
 ```json
-[
-    {
-        "side": "buy",
-        "price": 131.0000000000000000,
-        "qty": 0.1000000000000000,
-        "time": 1704788645416
-    },
-    {
-        "side": "sell",
-        "price": 132.0000000000000000,
-        "qty": 0.2000000000000000,
-        "time": 1704788282332
-    }
-]
+{
+    "code": 0,
+    "msg": "Success",
+    "data": [
+        {
+            "side": "BUY",
+            "price": 90310.4,
+            "qty": 0.06466,
+            "time": 1764181079236
+        },
+        {
+            "side": "BUY",
+            "price": 90305.6,
+            "qty": 0.51622,
+            "time": 1764181078271
+        }
+    ]
+}
 ```
 
 **Response parameters**
@@ -3824,32 +3840,28 @@ axios
 > Return example
 
 ```json
-[
-    {
-        "high": 6228.77,
-        "vol": 2456.11,
-        "low": 6220.13,
-        "idx": 1594640340000,
-        "close": 6225.63,
-        "open": 6129.41
-    },
-    {
-        "high": 6228.77,
-        "vol": 1700.21,
-        "low": 6228.77,
-        "idx": 1587632160000,
-        "close": 6228.77,
-        "open": 6228.77
-    },
-    {
-        "high": 6228.77,
-        "vol": 1908.52,
-        "low": 6228.77,
-        "idx": 1587632100000,
-        "close": 6228.77,
-        "open": 6228.77
-    }
-]
+{
+    "code": 0,
+    "msg": "Success",
+    "data": [
+        {
+            "high": 87754.2,
+            "vol": 13.29173,
+            "low": 87694.4,
+            "idx": 1764175260000,
+            "close": 87719.7,
+            "open": 87739.7
+        },
+        {
+            "high": 87723.1,
+            "vol": 8.95014,
+            "low": 87687.3,
+            "idx": 1764175320000,
+            "close": 87723.1,
+            "open": 87719.7
+        }
+    ]
+}
 ```
 
 **Response parameters**
@@ -4330,18 +4342,20 @@ axios
 
 ```json
 {
-    "symbol": "BTCUSDT",
-    "side": "BUY",
-    "executedQty": 0,
-    "orderId": [
-        "2618039663715064005"
-    ],
-    "price": 97081.19,
-    "origQty": 0.00001,
-    "clientOrderId": "111000000111",
-    "transactTime": 1739867150800,
-    "type": "LIMIT",
-    "status": "NEW"
+    "code": 0,
+    "msg": "Success",
+    "data": {
+        "orderId": "781594618796015616",
+        "clientOrderId": "",
+        "symbol": "ENAUSDT",
+        "transactTime": 1764183478446,
+        "price": 0.1,
+        "origQty": 50,
+        "executedQty": 0,
+        "type": "LIMIT",
+        "side": "BUY",
+        "status": "INIT"
+    }
 }
 ```
 
@@ -4349,7 +4363,7 @@ axios
 
 | Parameter name| Type    | Example               | Description                                                                                                          |
 | :-------------| :-------| :---------------------| :-------------------------------------------------------------------------------------------------------------|
-| orderId       | long    | `2012274607240433332` | Order ID (system-generated)                                                                                   |
+| orderId       | long    | `781594618796015616` | Order ID (system-generated)                                                                                   |
 | clientOrderId | string  | `213443`              | Order ID (user-generated)                                                                                     |
 | symbol        | string  | `BTCUSDT`             |`Uppercase` trading pair name                                                                                  |
 | transactTime  | integer | `1704959985403`       | Order creation timestamp                                                                                      |
@@ -5776,16 +5790,21 @@ axios
 
 ```json
 {
-    "symbol": "btcusdt",
-    "side": "BUY",
-    "executedQty": 0E-16,
-    "orderId": 2618039663715064005,
-    "price": 97081.1900000000000000,
-    "origQty": 0.0000100000000000,
-    "avgPrice": 0E-16,
-    "transactTime": 1739867150753,
-    "type": "LIMIT",
-    "status": "New Order"
+    "code": 0,
+    "msg": "Success",
+    "data": {
+        "orderId": "781601003987136512",
+        "clientOrderId": "",
+        "symbol": "enausdt",
+        "price": 0.1,
+        "origQty": 50,
+        "executedQty": 0,
+        "avgPrice": 0,
+        "type": "LIMIT",
+        "transactTime": 1764185000794,
+        "side": "BUY",
+        "status": "NEW"
+    }
 }
 ```
 
@@ -5801,11 +5820,11 @@ axios
 | executedQty   | float  | `0`                  | Filled order quantity                                                                                            |
 | avgPrice      | float  | `4754.24`            | The average price of the filled order                                                                                      |
 | type          | string | `LIMIT`              | Order type. Possible values are:`LIMIT`(Limit Order) and`MARKET`(Market Order)                                               |
-| transactTime  | long   | `1672274311107`      | Timestamp                                                                                                      |
+| time          | long   | `1672274311107`      | Timestamp                                                                                                      |
 | side          | string | `BUY`                | Order direction. Possible values are:`BUY`(Buy/Long) and`SELL`(Sell/Short)                                         |
 | status        | string | `New Order`          | Order status. Possible values are:`New Order`(New order, no fills),`Partially Filled`(Partially filled),`Filled`(Fully filled) |
 
-### 订单查询-V2
+### Order Query-V2
 
 `GET https://t(:spot_http_url)/sapi/v2/order`
 
@@ -6245,16 +6264,21 @@ axios
 
 ```json
 {
-    "symbol": "ethusdt",
-    "side": "BUY",
-    "executedQty": 0,
-    "orderId": "150695552109032492",
-    "price": 4765.29,
-    "origQty": 1.01,
-    "avgPrice": 4754.24,
-    "transactTime": 1672274311107,
-    "type": "LIMIT",
-    "status": "New Order"
+    "code": 0,
+    "msg": "Success",
+    "data": {
+        "orderId": "781601003987136512",
+        "clientOrderId": "",
+        "symbol": "enausdt",
+        "price": 0.1,
+        "origQty": 50,
+        "executedQty": 0,
+        "avgPrice": 0,
+        "type": "LIMIT",
+        "transactTime": 1764185000794,
+        "side": "BUY",
+        "status": "NEW"
+    }
 }
 ```
 
@@ -6720,11 +6744,13 @@ axios
 
 ```json
 {
-    "symbol": "btcusdt",
-    "orderId": [
-        "2618039663715064005"
-    ],
-    "status": "PENDING_CANCEL"
+    "code": 0,
+    "msg": "Success",
+    "data": {
+        "orderId": "781594618796015616",
+        "symbol": "enausdt",
+        "status": "PENDING_CANCEL"
+    }
 }
 ```
 
@@ -7138,11 +7164,13 @@ sendOrder();
 
 ```json
 {
-    "symbol": "ethusdt",
-    "orderId": [
-        "1938321163093079425"
-    ],
-    "status": "PENDING_CANCEL"
+    "code": 0,
+    "msg": "Success",
+    "data": {
+        "orderId": "781594618796015616",
+        "symbol": "enausdt",
+        "status": "PENDING_CANCEL"
+    }
 }
 ```
 
@@ -7542,14 +7570,18 @@ axios
 
 ```json
 {
-    "success": [
-        165964665990709251,
-        165964665990709252,
-        165964665990709253
-    ],
-    "failed": [ // Cancellation failure is usually due to the order not existing or already reaching a final state
-        165964665990709250
-    ]
+    "code": 0,
+    "msg": "Success",
+    "data": {
+        "success": [
+            165964665990709251,
+            165964665990709252,
+            165964665990709253
+        ],
+        "failed": [ // 取消失败一般是因为订单不存在或订单状态已经到终态
+            165964665990709250
+        ]
+    }
 }
 ```
 
@@ -7998,32 +8030,36 @@ axios
 > Response example
 
 ```json
-[
-    {
-        "symbol": "ETHUSDT",
-        "side": "BUY",
-        "executedQty": "0",
-        "orderId": 1938321163093077686,
-        "price": "0",
-        "origQty": "0.10",
-        "avgPrice": "0",
-        "time": 1701240367864,
-        "type": "MARKET",
-        "status": "NEW_"
-    },
-    {
-        "symbol": "ETHUSDT",
-        "side": "BUY",
-        "executedQty": "0",
-        "orderId": 1938321163093078022,
-        "price": "0",
-        "origQty": "0.01",
-        "avgPrice": "0",
-        "time": 1701243281850,
-        "type": "MARKET",
-        "status": "NEW_"
-    }
-]
+{
+    "code": 0,
+    "msg": "Success",
+    "data": [
+        {
+            "orderId": "781594618796015616",
+            "symbol": "ENAUSDT",
+            "price": 0.1,
+            "origQty": 50,
+            "executedQty": 0,
+            "avgPrice": 0,
+            "type": "LIMIT",
+            "time": 1764183478446,
+            "side": "BUY",
+            "status": "NEW"
+        },
+        {
+            "symbol": "ETHUSDT",
+            "side": "BUY",
+            "executedQty": "0",
+            "orderId": 1938321163093078022,
+            "price": "0",
+            "origQty": "0.01",
+            "avgPrice": "0",
+            "time": 1701243281850,
+            "type": "MARKET",
+            "status": "NEW_"
+        }
+    ]
+}
 ```
 
 **Response parameters**
@@ -8480,32 +8516,36 @@ axios
 > Response example
 
 ```json
-[
-    {
-        "symbol": "ETHUSDT",
-        "side": "BUY",
-        "executedQty": "0",
-        "orderId": "1938321163093077686",
-        "price": "0",
-        "origQty": "0.10",
-        "avgPrice": "0",
-        "time": 1701240367864,
-        "type": "MARKET",
-        "status": "NEW_"
-    },
-    {
-        "symbol": "ETHUSDT",
-        "side": "BUY",
-        "executedQty": "0",
-        "orderId": "1938321163093078022",
-        "price": "0",
-        "origQty": "0.01",
-        "avgPrice": "0",
-        "time": 1701243281850,
-        "type": "MARKET",
-        "status": "NEW_"
-    }
-]
+{
+    "code": 0,
+    "msg": "Success",
+    "data": [
+        {
+            "orderId": "781594618796015616",
+            "symbol": "ENAUSDT",
+            "price": 0.1,
+            "origQty": 50,
+            "executedQty": 0,
+            "avgPrice": 0,
+            "type": "LIMIT",
+            "time": 1764183478446,
+            "side": "BUY",
+            "status": "NEW"
+        },
+        {
+            "symbol": "ETHUSDT",
+            "side": "BUY",
+            "executedQty": "0",
+            "orderId": 1938321163093078022,
+            "price": "0",
+            "origQty": "0.01",
+            "avgPrice": "0",
+            "time": 1701243281850,
+            "type": "MARKET",
+            "status": "NEW_"
+        }
+    ]
+}
 ```
 
 **Response parameters**
@@ -8963,42 +9003,40 @@ axios
 > Response example
 
 ```json
-[
-    {
-        "symbol": "ETHUSDT",
-        "side": "BUY",
-        "fee": 0.00000000428,
-        "isMaker": false,
-        "isBuyer": true,
-        "bidId": 1954603951049381893,
-        "bidUserId": 10083,
-        "feeCoin": "ETH",
-        "price": 2334,
-        "qty": 0.00000428,
-        "askId": 1856176838352995447,
-        "id": 159,
-        "time": 1701623660989,
-        "isSelf": false,
-        "askUserId": 10671
-    },
-    {
-        "symbol": "ETHUSDT",
-        "side": "BUY",
-        "fee": 0.00000004284,
-        "isMaker": false,
-        "isBuyer": true,
-        "bidId": 1938321163093068889,
-        "bidUserId": 10083,
-        "feeCoin": "ETH",
-        "price": 2334,
-        "qty": 0.00004284,
-        "askId": 1856176838352995447,
-        "id": 158,
-        "time": 1701165091964,
-        "isSelf": false,
-        "askUserId": 10671
-    }
-]
+{
+    "code": 0,
+    "msg": "Success",
+    "data": [
+        {
+            "symbol": "ENAUSDT",
+            "id": 781602664387395584,
+            "orderId": 781602663370088448,
+            "price": 0.2812,
+            "qty": 9.99,
+            "time": 1764185396665,
+            "isBuyer": false,
+            "isMaker": false,
+            "feeCoin": "USDT",
+            "fee": 0.002809188,
+            "userId": "10055930",
+            "side": "SELL"
+        },
+        {
+            "symbol": "ENAUSDT",
+            "id": 781602630887489536,
+            "orderId": 781602630773108736,
+            "price": 0.2813,
+            "qty": 10,
+            "time": 1764185388678,
+            "isBuyer": true,
+            "isMaker": false,
+            "feeCoin": "ENA",
+            "fee": 0.01,
+            "userId": "10055930",
+            "side": "BUY"
+        }
+    ]
+}
 ```
 
 **Response parameters**
@@ -9932,23 +9970,27 @@ axios
 
 ```json
 {
-    "balances": [
-        {
-            "asset": "USDT",
-            "free": "15.00",
-            "locked": "30.00"
-        },
-        {
-            "asset": "BTC",
-            "free": "10.00",
-            "locked": "20.00"
-        },
-        {
-            "asset": "ETH",
-            "free": "100.00",
-            "locked": "70.00"
-        }
-    ]
+    "code": 0,
+    "msg": "Success",
+    "data": {
+        "balances": [
+            {
+                "asset": "USDT",
+                "free": "9.993378812",
+                "locked": "0"
+            },
+            {
+                "asset": "BTC",
+                "free": "10.00",
+                "locked": "20.00"
+            },
+            {
+                "asset": "ETH",
+                "free": "100.00",
+                "locked": "70.00"
+            }
+        ]
+    }
 }
 ```
 
