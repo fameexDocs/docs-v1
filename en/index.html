@@ -732,10 +732,42 @@
                     <a href="#overview" class="toc-h2 toc-link" data-title="Overview">Overview</a>
                   </li>
                   <li>
-                    <a href="#basic-information" class="toc-h2 toc-link" data-title="Basic information">Basic information</a>
+                    <a href="#spot" class="toc-h2 toc-link" data-title="Spot">Spot</a>
                       <ul class="toc-list-h3">
                           <li>
+                            <a href="#basic-information" class="toc-h3 toc-link" data-title="Basic Information">Basic Information</a>
+                          </li>
+                          <li>
                             <a href="#heartbeat" class="toc-h3 toc-link" data-title="Heartbeat">Heartbeat</a>
+                          </li>
+                          <li>
+                            <a href="#subscription-unsubscription-parameters" class="toc-h3 toc-link" data-title="Subscription / Unsubscription Parameters">Subscription / Unsubscription Parameters</a>
+                          </li>
+                          <li>
+                            <a href="#subscription" class="toc-h3 toc-link" data-title="Subscription">Subscription</a>
+                          </li>
+                          <li>
+                            <a href="#subscribe-full-order-book-depth" class="toc-h3 toc-link" data-title="Subscribe Full Order Book Depth">Subscribe Full Order Book Depth</a>
+                          </li>
+                          <li>
+                            <a href="#subscribe-real-time-trades" class="toc-h3 toc-link" data-title="Subscribe Real-time Trades">Subscribe Real-time Trades</a>
+                          </li>
+                          <li>
+                            <a href="#subscribe-kline-market-data" class="toc-h3 toc-link" data-title="Subscribe Kline Market Data">Subscribe Kline Market Data</a>
+                          </li>
+                          <li>
+                            <a href="#subscribe-24h-market-ticker" class="toc-h3 toc-link" data-title="Subscribe 24h Market Ticker">Subscribe 24h Market Ticker</a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li>
+                    <a href="#futures" class="toc-h2 toc-link" data-title="Futures">Futures</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#basic-information-2" class="toc-h3 toc-link" data-title="Basic information">Basic information</a>
+                          </li>
+                          <li>
+                            <a href="#heartbeat-2" class="toc-h3 toc-link" data-title="Heartbeat">Heartbeat</a>
                           </li>
                           <li>
                             <a href="#demo" class="toc-h3 toc-link" data-title="Demo">Demo</a>
@@ -19808,15 +19840,276 @@ body
 </ul>
 
 <aside class="notice">It is strongly recommended that developers use the WebSocket API to get market data, such as market prices and order book depth.</aside>
-<h2 id='basic-information'>Basic information</h2>
+<h2 id='spot'>Spot</h2><h3 id='basic-information'>Basic Information</h3>
 <ul>
-<li>  The basic cryptocurrency market data endpoint：<a href="wss://ws.fameex.com/kline-api/ws">wss://ws.fameex.com/kline-api/ws</a>。</li>
-<li>  The basic cryptocurrency market data backup endpoint：<a href="wss://ws.fameex.net/kline-api/ws">wss://ws.fameex.net/kline-api/ws</a>。</li>
+<li>  url：<a href="wss://wsapi.fameex.com/v1/ws/stream/public">wss://wsapi.fameex.com/v1/ws/stream/public</a>。</li>
+</ul>
+
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"event_rep"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"system"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ready"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"tick"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1766066323820"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='heartbeat'>Heartbeat</h3>
+<p>To keep the connection active and stable, it is recommended to perform the following actions:</p>
+
+<ol>
+<li><p>After receiving each message, the user should set a timer with a duration of N seconds, where N is less than 30.</p></li>
+<li><p>If the timer is triggered (i.e., no new message is received within N seconds), send the string &#39;ping&#39;.</p></li>
+<li><p>You should expect a text string &#39;pong&#39; as a response. If no response is received within N seconds, trigger an error or reconnect.</p></li>
+</ol>
+
+<blockquote>
+<p>Heartbeat example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"heartbeat"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ping"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"event_rep"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pong"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"tick"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1766061007743"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='subscription-unsubscription-parameters'>Subscription / Unsubscription Parameters</h3>
+<p>Kline interval suffixes
+* Seconds: 1s
+* Minutes: 1m, 3m, 5m, 15m, 30m
+* Hours: 1h, 2h, 4h, 6h, 8h, 12h
+* Days: 1d, 3d
+* Weeks: 1w
+* Months: 1M</p>
+
+<table><thead>
+<tr>
+<th style="text-align: left">event</th>
+<th style="text-align: left">channel</th>
+<th style="text-align: left">description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">sub</td>
+<td style="text-align: left">market_${symbol}_depth_step</td>
+<td style="text-align: left">Subscribe full order book depth</td>
+</tr>
+<tr>
+<td style="text-align: left">unsub</td>
+<td style="text-align: left">market_${symbol}_depth_step</td>
+<td style="text-align: left">Unsubscribe full order book depth</td>
+</tr>
+<tr>
+<td style="text-align: left">sub</td>
+<td style="text-align: left">market_${symbol}_trade</td>
+<td style="text-align: left">Subscribe real-time trades</td>
+</tr>
+<tr>
+<td style="text-align: left">unsub</td>
+<td style="text-align: left">market_${symbol}_trade</td>
+<td style="text-align: left">Unsubscribe real-time trades</td>
+</tr>
+<tr>
+<td style="text-align: left">sub</td>
+<td style="text-align: left">market_${symbol}_ticker</td>
+<td style="text-align: left">Subscribe 24h market ticker</td>
+</tr>
+<tr>
+<td style="text-align: left">unsub</td>
+<td style="text-align: left">market_${symbol}_ticker</td>
+<td style="text-align: left">Unsubscribe 24h market ticker</td>
+</tr>
+<tr>
+<td style="text-align: left">sub</td>
+<td style="text-align: left">market_${symbol}<em>kline</em>${interval}</td>
+<td style="text-align: left">Subscribe ${interval} real-time Kline data</td>
+</tr>
+<tr>
+<td style="text-align: left">unsub</td>
+<td style="text-align: left">market_${symbol}<em>kline</em>${interval}</td>
+<td style="text-align: left">Unsubscribe ${interval} real-time Kline data</td>
+</tr>
+<tr>
+<td style="text-align: left">sub</td>
+<td style="text-align: left">market_${symbol}_kline_1M</td>
+<td style="text-align: left">Subscribe 1-month historical Kline data</td>
+</tr>
+<tr>
+<td style="text-align: left">unsub</td>
+<td style="text-align: left">market_${symbol}_kline_1M</td>
+<td style="text-align: left">Unsubscribe 1M real-time Kline data</td>
+</tr>
+</tbody></table>
+<h3 id='subscription'>Subscription</h3><h3 id='subscribe-full-order-book-depth'>Subscribe Full Order Book Depth</h3>
+<blockquote>
+<p>Subscription example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sub"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market_${symbol}_depth_step"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">$</span><span class="p">{</span><span class="err">symbol</span><span class="p">},</span><span class="w"> </span><span class="err">E.g.</span><span class="w"> </span><span class="err">btcusdt</span><span class="w">
+    </span><span class="nl">"cb_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Business</span><span class="w"> </span><span class="err">ID</span><span class="p">,</span><span class="w"> </span><span class="err">optional</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"event_rep"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market_btcusdt_depth_step"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"tick"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"pair"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSDT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"bids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Buy</span><span class="w"> </span><span class="err">orders</span><span class="w">
+      </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"87263.1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"0.1"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"87263.09"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"0.1"</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"asks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Sell</span><span class="w"> </span><span class="err">orders</span><span class="w">
+      </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"85528.97"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"0.1"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"85554.73"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"0.1"</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"pre_update_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9164837"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"last_update_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9164840"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1766062757172"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='subscribe-real-time-trades'>Subscribe Real-time Trades</h3>
+<blockquote>
+<p>Subscription example
+<code>json
+{
+  &quot;event&quot;: &quot;sub&quot;,
+  &quot;params&quot;: {
+    &quot;channel&quot;: &quot;market_${symbol}_trade&quot;, // ${symbol}, E.g. btcusdt
+    &quot;cb_id&quot;: &quot;1&quot;  // Business ID, optional
+  }
+}
+</code></p>
+
+<p>Response example
+<code>json
+{
+  &quot;event_rep&quot;: &quot;&quot;,
+  &quot;channel&quot;: &quot;market_btcusdt_trade&quot;,
+  &quot;data&quot;: [
+    {
+      &quot;amount&quot;: &quot;22790.07645&quot;,    // Total amount
+      &quot;ds&quot;: &quot;&quot;,
+      &quot;price&quot;: &quot;87671.00&quot;,        // Price
+      &quot;side&quot;: &quot;SELL&quot;,             // Trade side: buy, sell
+      &quot;ts&quot;: &quot;1766063060107&quot;,
+      &quot;vol&quot;: &quot;0.25995&quot;            // Quantity
+    }
+  ],
+  &quot;tick&quot;: null,
+  &quot;ts&quot;: &quot;1766063061126&quot;,
+  &quot;status&quot;: &quot;ok&quot;
+}
+</code></p>
+</blockquote>
+<h3 id='subscribe-kline-market-data'>Subscribe Kline Market Data</h3>
+<blockquote>
+<p>Subscription example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sub"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">$</span><span class="p">{</span><span class="err">symbol</span><span class="p">},</span><span class="w"> </span><span class="err">E.g.</span><span class="w"> </span><span class="err">btcusdt</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">$</span><span class="p">{</span><span class="err">interval</span><span class="p">},</span><span class="w"> </span><span class="err">E.g.</span><span class="w"> </span><span class="mi">1</span><span class="err">min/</span><span class="mi">5</span><span class="err">min/</span><span class="mi">15</span><span class="err">min/</span><span class="mi">30</span><span class="err">min/</span><span class="mi">60</span><span class="err">min/</span><span class="mi">1</span><span class="err">day/</span><span class="mi">1</span><span class="err">week/</span><span class="mi">1</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market_${symbol}_kline_${interval}"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"cb_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Business</span><span class="w"> </span><span class="err">ID</span><span class="p">,</span><span class="w"> </span><span class="err">optional</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"event_rep"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market_btcusdt_kline_1m"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"tick"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1701994.52252"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="s2">"88291.70"</span><span class="p">,</span><span class="w">        </span><span class="err">//</span><span class="w"> </span><span class="err">Close</span><span class="w"> </span><span class="err">price</span><span class="w">
+    </span><span class="nl">"ds"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="s2">"88328.90"</span><span class="p">,</span><span class="w">         </span><span class="err">//</span><span class="w"> </span><span class="err">High</span><span class="w"> </span><span class="err">price</span><span class="w">
+    </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1766065020000"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="s2">"88169.40"</span><span class="p">,</span><span class="w">          </span><span class="err">//</span><span class="w"> </span><span class="err">Low</span><span class="w"> </span><span class="err">price</span><span class="w">
+    </span><span class="nl">"open"</span><span class="p">:</span><span class="w"> </span><span class="s2">"88211.60"</span><span class="p">,</span><span class="w">         </span><span class="err">//</span><span class="w"> </span><span class="err">Open</span><span class="w"> </span><span class="err">price</span><span class="w">
+    </span><span class="nl">"vol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"19.2841"</span><span class="w">            </span><span class="err">//</span><span class="w"> </span><span class="err">Trading</span><span class="w"> </span><span class="err">volume</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1766065072255"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='subscribe-24h-market-ticker'>Subscribe 24h Market Ticker</h3>
+<blockquote>
+<p>Subscription example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sub"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market_${symbol}_ticker"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">$</span><span class="p">{</span><span class="err">symbol</span><span class="p">},</span><span class="w"> </span><span class="err">E.g.</span><span class="w"> </span><span class="err">btcusdt</span><span class="w">
+    </span><span class="nl">"cb_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">                           </span><span class="err">//</span><span class="w"> </span><span class="err">Business</span><span class="w"> </span><span class="err">ID</span><span class="p">,</span><span class="w"> </span><span class="err">optional</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"event_rep"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market_btcusdt_ticker"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"tick"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1080601292.38171"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Trading</span><span class="w"> </span><span class="err">amount</span><span class="w">
+    </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="s2">"88953.30"</span><span class="p">,</span><span class="w">          </span><span class="err">//</span><span class="w"> </span><span class="err">Close</span><span class="w"> </span><span class="err">price</span><span class="w">
+    </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="s2">"90364.3"</span><span class="p">,</span><span class="w">            </span><span class="err">//</span><span class="w"> </span><span class="err">High</span><span class="w"> </span><span class="err">price</span><span class="w">
+    </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="s2">"85312.9"</span><span class="p">,</span><span class="w">             </span><span class="err">//</span><span class="w"> </span><span class="err">Low</span><span class="w"> </span><span class="err">price</span><span class="w">
+    </span><span class="nl">"open"</span><span class="p">:</span><span class="w"> </span><span class="s2">"87507.60"</span><span class="p">,</span><span class="w">           </span><span class="err">//</span><span class="w"> </span><span class="err">Open</span><span class="w"> </span><span class="err">price</span><span class="w">
+    </span><span class="nl">"rose"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0172601894"</span><span class="p">,</span><span class="w">       </span><span class="err">//</span><span class="w"> </span><span class="err">Price</span><span class="w"> </span><span class="err">change</span><span class="w"> </span><span class="err">rate</span><span class="w">
+    </span><span class="nl">"vol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12398.36035"</span><span class="w">          </span><span class="err">//</span><span class="w"> </span><span class="err">Trading</span><span class="w"> </span><span class="err">volume</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1766065787125"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='futures'>Futures</h2><h3 id='basic-information-2'>Basic information</h3>
+<ul>
 <li>  The basic contract market data endpoint：<a href="wss://futuresws.fameex.com/kline-api/ws">wss://futuresws.fameex.com/kline-api/ws</a>。</li>
 <li>  The basic contract market data backup endpoint：<a href="wss://futuresws.fameex.net/kline-api/ws">wss://futuresws.fameex.net/kline-api/ws</a>。</li>
 <li>  The returned data, except for heartbeat data, will be compressed in binary format (users need to decompress it using the Gzip algorithm).</li>
 </ul>
-<h3 id='heartbeat'>Heartbeat</h3>
+<h3 id='heartbeat-2'>Heartbeat</h3>
 <p>To keep the connection active and stable, it is recommended to perform the following actions:</p>
 
 <ol>
