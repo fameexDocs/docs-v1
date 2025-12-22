@@ -16909,10 +16909,248 @@ WebSocket is a new protocol in HTML5. It enables full-duplex communication betwe
 
 <aside class="notice">It is strongly recommended that developers use the WebSocket API to get market data, such as market prices and order book depth.</aside>
 
-## Basic information
+## Spot
 
-*   The basic cryptocurrency market data endpoint：<wss://t(:spot_ws_url)/kline-api/ws>。
-*   The basic cryptocurrency market data backup endpoint：<wss://t(:spot_ws_url_bak)/kline-api/ws>。
+### Basic Information
+
+*   url：<wss://wsapi.fameex.com/v1/ws/stream/public>。
+
+> Response example
+
+```json
+{
+  "event_rep": "",
+  "channel": "system",
+  "data": {
+    "status": "ready"
+  },
+  "tick": null,
+  "ts": "1766066323820",
+  "status": "ok"
+}
+```
+### Heartbeat
+
+To keep the connection active and stable, it is recommended to perform the following actions:
+
+1. After receiving each message, the user should set a timer with a duration of N seconds, where N is less than 30.
+
+2. If the timer is triggered (i.e., no new message is received within N seconds), send the string 'ping'.
+
+3. You should expect a text string 'pong' as a response. If no response is received within N seconds, trigger an error or reconnect.
+
+> Heartbeat example
+
+```json
+{
+  "event": "heartbeat",
+  "params": {
+    "channel": "ping"
+  }
+}
+```
+
+> Response example
+
+```json
+{
+  "event_rep": "",
+  "channel": "",
+  "data": {
+    "channel": "pong"
+  },
+  "tick": null,
+  "ts": "1766061007743",
+  "status": "ok"
+}
+```
+
+### Subscription / Unsubscription Parameters
+
+Kline interval suffixes
+* Seconds: 1s
+* Minutes: 1m, 3m, 5m, 15m, 30m
+* Hours: 1h, 2h, 4h, 6h, 8h, 12h
+* Days: 1d, 3d
+* Weeks: 1w
+* Months: 1M
+
+| event	| channel                       |	description            |
+|:------|:------------------------------|:------------------------ |
+| sub	| market_${symbol}_depth_step	        | Subscribe full order book depth |
+| unsub	| market_${symbol}_depth_step	        | Unsubscribe full order book depth |
+| sub	| market_${symbol}_trade	            | Subscribe real-time trades |
+| unsub	| market_${symbol}_trade	            | Unsubscribe real-time trades |
+| sub	| market_${symbol}_ticker	            | Subscribe 24h market ticker |
+| unsub	| market_${symbol}_ticker	            | Unsubscribe 24h market ticker |
+| sub	| market_${symbol}_kline_${interval}	| Subscribe ${interval} real-time Kline data |
+| unsub	| market_${symbol}_kline_${interval}	| Unsubscribe ${interval} real-time Kline data |
+| sub	| market_${symbol}_kline_1M	            | Subscribe 1-month historical Kline data |
+| unsub	| market_${symbol}_kline_1M	            | Unsubscribe 1M real-time Kline data |
+
+### Subscription
+### Subscribe Full Order Book Depth
+
+> Subscription example
+
+```json
+{
+  "event": "sub",
+  "params": {
+    "channel": "market_${symbol}_depth_step", // ${symbol}, E.g. btcusdt
+    "cb_id": "1"  // Business ID, optional
+  }
+}
+```
+
+> Response example
+
+```json
+{
+  "event_rep": "",
+  "channel": "market_btcusdt_depth_step",
+  "data": null,
+  "tick": {
+    "pair": "BTCUSDT",
+    "bids": [  // Buy orders
+      [
+        "87263.1",
+        "0.1"
+      ],
+      [
+        "87263.09",
+        "0.1"
+      ]
+    ],
+    "asks": [ // Sell orders
+      [
+        "85528.97",
+        "0.1"
+      ],
+      [
+        "85554.73",
+        "0.1"
+      ]
+    ],
+    "pre_update_id": "9164837",
+    "last_update_id": "9164840"
+  },
+  "ts": "1766062757172",
+  "status": "ok"
+}
+```
+
+### Subscribe Real-time Trades
+
+> Subscription example
+```json
+{
+  "event": "sub",
+  "params": {
+    "channel": "market_${symbol}_trade", // ${symbol}, E.g. btcusdt
+    "cb_id": "1"  // Business ID, optional
+  }
+}
+```
+
+> Response example
+```json
+{
+  "event_rep": "",
+  "channel": "market_btcusdt_trade",
+  "data": [
+    {
+      "amount": "22790.07645",    // Total amount
+      "ds": "",
+      "price": "87671.00",        // Price
+      "side": "SELL",             // Trade side: buy, sell
+      "ts": "1766063060107",
+      "vol": "0.25995"            // Quantity
+    }
+  ],
+  "tick": null,
+  "ts": "1766063061126",
+  "status": "ok"
+}
+```
+
+### Subscribe Kline Market Data
+
+> Subscription example
+
+```json
+{
+  "event": "sub",
+  "params": {
+    // ${symbol}, E.g. btcusdt
+    // ${interval}, E.g. 1min/5min/15min/30min/60min/1day/1week/1
+    "channel": "market_${symbol}_kline_${interval}",
+    "cb_id": "1"  // Business ID, optional
+  }
+}
+```
+
+> Response example
+
+```json
+{
+  "event_rep": "",
+  "channel": "market_btcusdt_kline_1m",
+  "data": null,
+  "tick": {
+    "amount": "1701994.52252",
+    "close": "88291.70",        // Close price
+    "ds": "",
+    "high": "88328.90",         // High price
+    "ts": "1766065020000",
+    "low": "88169.40",          // Low price
+    "open": "88211.60",         // Open price
+    "vol": "19.2841"            // Trading volume
+  },
+  "ts": "1766065072255",
+  "status": "ok"
+}
+```
+
+### Subscribe 24h Market Ticker
+
+> Subscription example
+
+```json
+{
+  "event": "sub",
+  "params": {
+    "channel": "market_${symbol}_ticker",  // ${symbol}, E.g. btcusdt
+    "cb_id": "1"                           // Business ID, optional
+  }
+}
+```
+
+> Response example
+
+```json
+{
+  "event_rep": "",
+  "channel": "market_btcusdt_ticker",
+  "data": null,
+  "tick": {
+    "amount": "1080601292.38171", // Trading amount
+    "close": "88953.30",          // Close price
+    "high": "90364.3",            // High price
+    "low": "85312.9",             // Low price
+    "open": "87507.60",           // Open price
+    "rose": "0.0172601894",       // Price change rate
+    "vol": "12398.36035"          // Trading volume
+  },
+  "ts": "1766065787125",
+  "status": "ok"
+}
+```
+
+## Futures
+
+### Basic information
+
 *   The basic contract market data endpoint：<wss://t(:futures_ws_url)/kline-api/ws>。
 *   The basic contract market data backup endpoint：<wss://t(:futures_ws_url_bak)/kline-api/ws>。
 *   The returned data, except for heartbeat data, will be compressed in binary format (users need to decompress it using the Gzip algorithm).

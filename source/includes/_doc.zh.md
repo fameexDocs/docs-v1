@@ -16905,10 +16905,250 @@ WebSocket是HTML5一种新的协议（Protocol）。它实现了客户端与服�
 
 <aside class="notice">强烈建议开发者使用WebSocket API获取市场行情和买卖深度等信息。</aside>
 
-## 基本信息
+## 现货
 
-*   币币行情url：<wss://t(:spot_ws_url)/kline-api/ws>。
-*   币币行情备用url：<wss://t(:spot_ws_url_bak)/kline-api/ws>。
+### 基本信息
+
+*   url：<wss://wsapi.fameex.com/v1/ws/stream/public>。
+
+> 返回示例
+
+```json
+{
+  "event_rep": "",
+  "channel": "system",
+  "data": {
+    "status": "ready"
+  },
+  "tick": null,
+  "ts": "1766066323820",
+  "status": "ok"
+}
+```
+
+### 心跳
+
+为了保持连接有效且稳定，建议您进行以下操作：
+
+1. 每次接收到消息后，用户设置一个定时器，定时N秒，N小于30。
+
+2. 如果定时器被触发（N秒内没有收到新消息），发送字符串'ping'。
+
+3. 期待一个文字字符串'pong'作为回应。如果在N秒内未收到，请发出错误或重新连接。
+
+> 心跳示例
+```json
+{
+  "event": "heartbeat",
+  "params": {
+    "channel": "ping"
+  }
+}
+```
+
+> 返回示例
+
+```json
+{
+  "event_rep": "",
+  "channel": "",
+  "data": {
+    "channel": "pong"
+  },
+  "tick": null,
+  "ts": "1766061007743",
+  "status": "ok"
+}
+```
+
+### 订阅/取消订阅参数
+
+Kline interval 后缀
+* 秒: 1s
+* 分: 1m, 3m, 5m, 15m, 30m
+* 时: 1h, 2h, 4h, 6h, 8h, 12h
+* 天: 1d, 3d
+* 週: 1w
+* 月: 1M
+
+| event | channel                       | description             |
+|:------|:------------------------------|:------------------------
+| sub   | `market_${symbol}_depth_step`  | `订阅全量深度`              | 
+| unsub | `market_${symbol}_depth_step`  | `取消订阅全量深度`          |
+| sub   | `market_${symbol}_trade` | `订阅实时成交`          |
+| unsub | `market_${symbol}_trade` | `取消订阅实时成交`      |
+| sub   | `market_${symbol}_ticker`       | `订阅24h行情数据`       |
+| unsub | `market_${symbol}_ticker`       | `取消订阅24h行情数据`   |
+| sub   | `market_${symbol}_kline_${interval}`   | `订阅${interval}实时K线信息`   |
+| unsub   | `market_${symbol}_kline_${interval}`   | `取消订阅${interval}实时K线信息`   |
+| sub   | `market_${symbol}_kline_1M` | `订阅1month历史K线记录` |
+| unsub   | `market_${symbol}_kline_1M`   | `取消订阅1M实时K线信息`   |
+
+### 订阅
+### 订阅全量深度
+
+> 订阅示例
+
+```json
+{
+  "event": "sub",
+  "params": {
+    "channel": "market_${symbol}_depth_step", // ${symbol}, E.g. btcusdt
+    "cb_id": "1"  // 业务id非必填
+  }
+}
+```
+
+> 返回示例
+
+```json
+{
+  "event_rep": "",
+  "channel": "market_btcusdt_depth_step",
+  "data": null,
+  "tick": {
+    "pair": "BTCUSDT",
+    "bids": [  // 买盘
+      [
+        "87263.1",
+        "0.1"
+      ],
+      [
+        "87263.09",
+        "0.1"
+      ]
+    ],
+    "asks": [ // 卖盘
+      [
+        "85528.97",
+        "0.1"
+      ],
+      [
+        "85554.73",
+        "0.1"
+      ]
+    ],
+    "pre_update_id": "9164837",
+    "last_update_id": "9164840"
+  },
+  "ts": "1766062757172",
+  "status": "ok"
+}
+```
+
+### 订阅实时成交
+
+> 订阅示例
+
+```json
+{
+  "event": "sub",
+  "params": {
+    "channel": "market_${symbol}_trade", // ${symbol}, E.g. btcusdt
+    "cb_id": "1"  // 业务id非必填
+  }
+}
+```
+
+> 返回示例
+
+```json
+{
+  "event_rep": "",
+  "channel": "market_btcusdt_trade",
+  "data": [
+    {
+      "amount": "22790.07645",    // 总额
+      "ds": "",
+      "price": "87671.00",        // 单价
+      "side": "SELL",             // 买卖方向buy，sell
+      "ts": "1766063060107",      
+      "vol": "0.25995"            // 数量
+    }
+  ],
+  "tick": null,
+  "ts": "1766063061126",
+  "status": "ok"
+}
+```
+
+### 订阅K线行情
+
+> 订阅示例
+
+```json
+{
+  "event": "sub",
+  "params": {
+    // ${symbol}, E.g. btcusdt
+    // ${interval}, E.g. 1min/5min/15min/30min/60min/1day/1week/1
+    "channel": "market_${symbol}_kline_${interval}", 
+    "cb_id": "1"  // 业务id非必填
+  }
+}
+```
+
+> 返回示例
+
+```json
+{
+  "event_rep": "",
+  "channel": "market_btcusdt_kline_1m",
+  "data": null,
+  "tick": {
+    "amount": "1701994.52252",
+    "close": "88291.70",        // 收盘价            
+    "ds": "",
+    "high": "88328.90",         // 最高价
+    "ts": "1766065020000",
+    "low": "88169.40",          // 最低价
+    "open": "88211.60",         // 开盘价
+    "vol": "19.2841"            // 交易量
+  },
+  "ts": "1766065072255",
+  "status": "ok"
+}
+```
+
+### 订阅24h行情Ticker
+
+> 订阅示例
+
+```json
+{
+  "event": "sub",
+  "params": {
+    "channel": "market_${symbol}_ticker",  // ${symbol}, E.g. btcusdt
+    "cb_id": "1"                           // 业务id非必填
+  }
+}
+```
+
+> 返回示例
+
+```json
+{
+  "event_rep": "",
+  "channel": "market_btcusdt_ticker",
+  "data": null,
+  "tick": {
+    "amount": "1080601292.38171", // 交易额
+    "close": "88953.30",          // 收盘价
+    "high": "90364.3",            // 最高价
+    "low": "85312.9",             // 最低价
+    "open": "87507.60",           // 开盘价
+    "rose": "0.0172601894",       // 涨幅
+    "vol": "12398.36035"          // 交易量
+  },
+  "ts": "1766065787125",
+  "status": "ok"
+}
+```
+
+## 合约
+
+### 基本信息
+
 *   合约行情url：<wss://t(:futures_ws_url)/kline-api/ws>。
 *   合约行情备用url：<wss://t(:futures_ws_url_bak)/kline-api/ws>。
 *   返回数据除了心跳数据都会二进制压缩（用户需要通过Gzip算法进行解压）。
@@ -16935,7 +17175,7 @@ WebSocket是HTML5一种新的协议（Protocol）。它实现了客户端与服�
 
 [Websocket Demo](https://github.com/exchange2021/openapidemo/blob/master/src/main/java/com/ws/WsTest.java)
 
-## 订阅/取消订阅参数
+### 订阅/取消订阅参数
 
 | event | channel                       | description             |
 |:------|:------------------------------|:------------------------|
@@ -16949,7 +17189,7 @@ WebSocket是HTML5一种新的协议（Protocol）。它实现了客户端与服�
 | req   | `market_$symbol_kline_1month` | `请求1month历史K线记录` |
 
 
-## 订阅
+### 订阅
 
 ### 订阅全量深度
 
