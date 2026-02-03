@@ -9776,7 +9776,7 @@ import requests
 
 # API-related information
 API_URL = "https://t(:spot_http_url)"
-REQUEST_URL = "/sapi/account/balance"
+REQUEST_URL = "/sapi/v1/account/balance"
 QUERY_STRING = "?symbols=USDT,BTC,ETH"
 
 # Calculate the complete request URL
@@ -16066,7 +16066,7 @@ sendOrder();
 POST https://t(:futures_http_url)/fapi/v1/edit_lever
 
 body
-{"contractName":"E-BTC-USDT","newLever":"1"}
+{"contractName":"E-BTC-USDT","nowLevel":"1"}
 ```
 
 ```shell
@@ -16082,7 +16082,7 @@ method="POST"
 request_path="/fapi/v1/edit_lever"
 
 # Request body (in JSON format)
-body='{"contractName":"E-BTC-USDT","newLever":"1"}'
+body='{"contractName":"E-BTC-USDT","nowLevel":"1"}'
 
 # Remove whitespace characters from the body to ensure signature consistency
 body=$(echo "$body" | jq -c)
@@ -16135,7 +16135,7 @@ public class SendOrder {
             String method = "POST";
 
             // Request body (in JSON format, make sure to use compact format)
-            String body = "{"contractName":"E-BTC-USDT","newLever":"1"}";
+            String body = "{"contractName":"E-BTC-USDT","nowLevel":"1"}";
             System.out.println("Request body (body): " + body);
 
             // Concatenate the signature string
@@ -16235,7 +16235,7 @@ func main() {
 	method := "POST"
 
 	// Request body (in JSON format)
-	body := `{"contractName":"E-BTC-USDT","newLever":"1"}`
+	body := `{"contractName":"E-BTC-USDT","nowLevel":"1"}`
 
 	// Concatenate the signature string
 	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
@@ -16295,7 +16295,7 @@ REQUEST_PATH = "/fapi/v1/edit_lever"
 
 # Request method and request body
 method = "POST"
-body = {"contractName":"E-BTC-USDT","newLever":"1"}
+body = {"contractName":"E-BTC-USDT","nowLevel":"1"}
 
 
 # Get timestamp (in milliseconds)
@@ -16343,7 +16343,7 @@ $requestPath = "/fapi/v1/edit_lever";
 $method = "POST";
 $body = json_encode([
     "contractName"  => "E-BTC-USDT",
-    "newLever" => "1"
+    "nowLevel" => "1"
 ], JSON_UNESCAPED_SLASHES);
 
 // Get timestamp in milliseconds
@@ -16403,7 +16403,7 @@ const REQUEST_PATH = "/fapi/v1/edit_lever";
 const method = "POST";
 const body = JSON.stringify({
     contractName: "E-BTC-USDT",
-    newLever: "1"
+    nowLevel: "1"
 });
 
 // Get timestamp in milliseconds
@@ -16447,7 +16447,7 @@ sendOrder();
 | Parameter name                          | Type    | Description                      |
 | :-------------------------------------- | :------ | :------------------------------- |
 | contractName<font color="red">\*</font> | string  | Contract Name, e.g.,`E-BTC-USDT` |
-| newLever<font color="red">\*</font>     | integer | Adjust Leverage Ratio            |
+| nowLevel<font color="red">\*</font>     | integer | Adjust Leverage Ratio            |
 
 > Return example
 

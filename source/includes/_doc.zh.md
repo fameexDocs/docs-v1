@@ -9772,7 +9772,7 @@ import requests
 
 # API 相关信息
 API_URL = "https://t(:spot_http_url)"
-REQUEST_URL = "/sapi/account/balance"
+REQUEST_URL = "/sapi/v1/account/balance"
 QUERY_STRING = "?symbols=USDT,BTC,ETH"
 
 # 计算完整的请求路径
@@ -16062,7 +16062,7 @@ sendOrder();
 POST https://t(:futures_http_url)/fapi/v1/edit_lever
 
 body
-{"contractName":"E-BTC-USDT","newLever":"1"}
+{"contractName":"E-BTC-USDT","nowLevel":"1"}
 ```
 
 ```shell
@@ -16078,7 +16078,7 @@ method="POST"
 request_path="/fapi/v1/edit_lever"
 
 # 请求主体 (JSON 格式)
-body='{"contractName":"E-BTC-USDT","newLever":"1"}'
+body='{"contractName":"E-BTC-USDT","nowLevel":"1"}'
 
 # 删除 body 中的空白字符，保证签名的一致性
 body=$(echo "$body" | jq -c)
@@ -16131,7 +16131,7 @@ public class SendOrder {
             String method = "POST";
 
             // 请求主体 (JSON 格式，注意使用紧凑格式)
-            String body = "{"contractName":"E-BTC-USDT","newLever":"1"}";
+            String body = "{"contractName":"E-BTC-USDT","nowLevel":"1"}";
             System.out.println("请求主体 (body): " + body);
 
             // 拼接签名字符串
@@ -16231,7 +16231,7 @@ func main() {
 	method := "POST"
 
 	// 请求主体 (JSON 格式)
-	body := `{"contractName":"E-BTC-USDT","newLever":"1"}`
+	body := `{"contractName":"E-BTC-USDT","nowLevel":"1"}`
 
 	// 拼接签名字符串
 	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
@@ -16291,7 +16291,7 @@ REQUEST_PATH = "/fapi/v1/edit_lever"
 
 # 请求方法和请求主体
 method = "POST"
-body = {"contractName":"E-BTC-USDT","newLever":"1"}
+body = {"contractName":"E-BTC-USDT","nowLevel":"1"}
 
 
 # 获取时间戳 (毫秒级)
@@ -16339,7 +16339,7 @@ $requestPath = "/fapi/v1/edit_lever";
 $method = "POST";
 $body = json_encode([
     "contractName"  => "E-BTC-USDT",
-    "newLever" => "1"
+    "nowLevel" => "1"
 ], JSON_UNESCAPED_SLASHES);
 
 // 获取毫秒级时间戳
@@ -16399,7 +16399,7 @@ const REQUEST_PATH = "/fapi/v1/edit_lever";
 const method = "POST";
 const body = JSON.stringify({
     contractName: "E-BTC-USDT",
-    newLever: "1"
+    nowLevel: "1"
 });
 
 // 获取毫秒级时间戳
@@ -16443,7 +16443,7 @@ sendOrder();
 | 参数名                                  | 类型    | 描述                         |
 | :-------------------------------------- | :------ | :--------------------------- |
 | contractName<font color="red">\*</font> | string  | 合约名称，例如：`E-BTC-USDT` |
-| newLever<font color="red">\*</font>     | integer | 调整杠杆倍数                 |
+| nowLevel<font color="red">\*</font>     | integer | 调整杠杆倍数                 |
 
 > 返回示例
 
