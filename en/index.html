@@ -11940,7 +11940,7 @@ curl <span class="nt">-X</span> GET <span class="s2">"</span><span class="nv">$F
 
 <span class="c1"># API-related information
 </span><span class="n">API_URL</span> <span class="o">=</span> <span class="s">"https://openapi.fameex.com"</span>
-<span class="n">REQUEST_URL</span> <span class="o">=</span> <span class="s">"/sapi/account/balance"</span>
+<span class="n">REQUEST_URL</span> <span class="o">=</span> <span class="s">"/sapi/v1/account/balance"</span>
 <span class="n">QUERY_STRING</span> <span class="o">=</span> <span class="s">"?symbols=USDT,BTC,ETH"</span>
 
 <span class="c1"># Calculate the complete request URL
@@ -18905,7 +18905,7 @@ body
 <div class="highlight"><pre class="highlight http tab-http"><code><span class="err">POST https://futuresopenapi.fameex.com/fapi/v1/edit_lever
 
 body
-{"contractName":"E-BTC-USDT","newLever":"1"}
+{"contractName":"E-BTC-USDT","nowLevel":"1"}
 </span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">#!/bin/bash</span>
 
 <span class="c"># API-related information</span>
@@ -18918,7 +18918,7 @@ body
 <span class="nv">request_path</span><span class="o">=</span><span class="s2">"/fapi/v1/edit_lever"</span>
 
 <span class="c"># Request body (in JSON format)</span>
-<span class="nv">body</span><span class="o">=</span><span class="s1">'{"contractName":"E-BTC-USDT","newLever":"1"}'</span>
+<span class="nv">body</span><span class="o">=</span><span class="s1">'{"contractName":"E-BTC-USDT","nowLevel":"1"}'</span>
 
 <span class="c"># Remove whitespace characters from the body to ensure signature consistency</span>
 <span class="nv">body</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$body</span><span class="s2">"</span> | jq <span class="nt">-c</span><span class="si">)</span>
@@ -18968,7 +18968,7 @@ body
             <span class="nc">String</span> <span class="n">method</span> <span class="o">=</span> <span class="s">"POST"</span><span class="o">;</span>
 
             <span class="c1">// Request body (in JSON format, make sure to use compact format)</span>
-            <span class="nc">String</span> <span class="n">body</span> <span class="o">=</span> <span class="s">"{"</span><span class="n">contractName</span><span class="s">":"</span><span class="no">E</span><span class="o">-</span><span class="no">BTC</span><span class="o">-</span><span class="no">USDT</span><span class="s">","</span><span class="n">newLever</span><span class="s">":"</span><span class="mi">1</span><span class="s">"}"</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">body</span> <span class="o">=</span> <span class="s">"{"</span><span class="n">contractName</span><span class="s">":"</span><span class="no">E</span><span class="o">-</span><span class="no">BTC</span><span class="o">-</span><span class="no">USDT</span><span class="s">","</span><span class="n">nowLevel</span><span class="s">":"</span><span class="mi">1</span><span class="s">"}"</span><span class="o">;</span>
             <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Request body (body): "</span> <span class="o">+</span> <span class="n">body</span><span class="o">);</span>
 
             <span class="c1">// Concatenate the signature string</span>
@@ -19065,7 +19065,7 @@ body
     <span class="n">method</span> <span class="o">:=</span> <span class="s">"POST"</span>
 
     <span class="c">// Request body (in JSON format)</span>
-    <span class="n">body</span> <span class="o">:=</span> <span class="s">`{"contractName":"E-BTC-USDT","newLever":"1"}`</span>
+    <span class="n">body</span> <span class="o">:=</span> <span class="s">`{"contractName":"E-BTC-USDT","nowLevel":"1"}`</span>
 
     <span class="c">// Concatenate the signature string</span>
     <span class="n">signStr</span> <span class="o">:=</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"%d%s%s%s"</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">RequestPath</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
@@ -19122,7 +19122,7 @@ body
 
 <span class="c1"># Request method and request body
 </span><span class="n">method</span> <span class="o">=</span> <span class="s">"POST"</span>
-<span class="n">body</span> <span class="o">=</span> <span class="p">{</span><span class="s">"contractName"</span><span class="p">:</span><span class="s">"E-BTC-USDT"</span><span class="p">,</span><span class="s">"newLever"</span><span class="p">:</span><span class="s">"1"</span><span class="p">}</span>
+<span class="n">body</span> <span class="o">=</span> <span class="p">{</span><span class="s">"contractName"</span><span class="p">:</span><span class="s">"E-BTC-USDT"</span><span class="p">,</span><span class="s">"nowLevel"</span><span class="p">:</span><span class="s">"1"</span><span class="p">}</span>
 
 
 <span class="c1"># Get timestamp (in milliseconds)
@@ -19167,7 +19167,7 @@ body
 <span class="nv">$method</span> <span class="o">=</span> <span class="s2">"POST"</span><span class="p">;</span>
 <span class="nv">$body</span> <span class="o">=</span> <span class="nb">json_encode</span><span class="p">([</span>
     <span class="s2">"contractName"</span>  <span class="o">=&gt;</span> <span class="s2">"E-BTC-USDT"</span><span class="p">,</span>
-    <span class="s2">"newLever"</span> <span class="o">=&gt;</span> <span class="s2">"1"</span>
+    <span class="s2">"nowLevel"</span> <span class="o">=&gt;</span> <span class="s2">"1"</span>
 <span class="p">],</span> <span class="no">JSON_UNESCAPED_SLASHES</span><span class="p">);</span>
 
 <span class="c1">// Get timestamp in milliseconds</span>
@@ -19224,7 +19224,7 @@ body
 <span class="kd">const</span> <span class="nx">method</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">body</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
     <span class="na">contractName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">E-BTC-USDT</span><span class="dl">"</span><span class="p">,</span>
-    <span class="na">newLever</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1</span><span class="dl">"</span>
+    <span class="na">nowLevel</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1</span><span class="dl">"</span>
 <span class="p">});</span>
 
 <span class="c1">// Get timestamp in milliseconds</span>
@@ -19277,7 +19277,7 @@ body
 <td style="text-align: left">Contract Name, e.g.,<code>E-BTC-USDT</code></td>
 </tr>
 <tr>
-<td style="text-align: left">newLever<font color="red">*</font></td>
+<td style="text-align: left">nowLevel<font color="red">*</font></td>
 <td style="text-align: left">integer</td>
 <td style="text-align: left">Adjust Leverage Ratio</td>
 </tr>
