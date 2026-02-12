@@ -17257,7 +17257,7 @@ To keep the connection active and stable, it is recommended to perform the follo
       [10001.21, 0.2],
       [10002.22, 0.34]
     ],
-    "bids": [
+    "buys": [
       //Buy order
       [9999.53, 0.93],
       [9998.2, 0.2],
