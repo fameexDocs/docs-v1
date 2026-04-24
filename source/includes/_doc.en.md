@@ -1412,271 +1412,19 @@ if (timestamp < (serverTime + 1000) && (serverTime - timestamp) <= recvWindow) {
 ```
 
 <aside class="notice">Regarding Transaction Timeliness: The internet connection is not 100% reliable and cannot be fully depended on. Therefore, the latency from your local system to the exchange server will have fluctuations. This is the purpose of setting the <code>recvWindow</code>. If you are engaged in high-frequency trading and have higher requirements for transaction timeliness, you can adjust <code>recvWindow</code> flexibly to meet your needs. It is not recommended to use a <code>recvWindow</code> greater than 5 seconds.</aside>
+                                      |
 
-<a name="Return Code Type"></a>
+# Spot trading
+## Enumeration type
 
-# Return Code Type
-
-Description and Causes of Exception Codes and Error Codes
-
-<aside class="warning">The following return content is for basic parameter validation. If the return code is not included in the return code types listed below, it indicates an error outside the business layer, and you need to contact technical personnel for resolution.</aside>
-
-## 10XX - General Server and Network Errors
-
-### Code:-1000 UNKNOWN
-
-| Code | Tag     | msg                                                    | Cause                                                  |
-| :--- | :------ | :----------------------------------------------------- | :----------------------------------------------------- |
-| 1000 | UNKNOWN | An unknown error occurred while processing the request | An unknown error occurred while processing the request |
-
-### Code:-1001 DISCONNECTED
-
-| Code | Tag          | msg                                                              | Cause                                          |
-| :--- | :----------- | :--------------------------------------------------------------- | :--------------------------------------------- |
-| 1001 | DISCONNECTED | Internal error; unable to process your request. Please try again | Internal error; unable to process your request |
-
-### Code:-1002 UNAUTHORIZED
-
-| Code | Tag          | msg                                                                                                                                              | Cause                                       |
-| :--- | :----------- | :----------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------ |
-| 1002 | UNAUTHORIZED | You do not have permission to execute this request. The request requires an API Key. We recommend attaching `X-CH-APIKEY` in all request headers | The request header is missing `X-CH-APIKEY` |
-
-### Code:-1003 TOO_MANY_REQUESTS
-
-| Code | Tag               | msg                                               | Cause                                             |
-| :--- | :---------------- | :------------------------------------------------ | :------------------------------------------------ |
-| 1003 | TOO_MANY_REQUESTS | The request is too frequent and exceeds the limit | The request is too frequent and exceeds the limit |
-
-### Code:-1004 NO_THIS_COMPANY
-
-| Code | Tag             | msg                                                                     | Cause                                                                   |
-| :--- | :-------------- | :---------------------------------------------------------------------- | :---------------------------------------------------------------------- |
-| 1004 | NO_THIS_COMPANY | You do not have permission to execute this request. User does not exist | You do not have permission to execute this request. User does not exist |
-
-### Code:-1006 UNEXPECTED_RESP
-
-| Code | Tag             | msg                                                                                         | Cause                                                                                       |
-| :--- | :-------------- | :------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------ |
-| 1006 | UNEXPECTED_RESP | The received message does not conform to the preset format, and the order status is unknown | The received message does not conform to the preset format, and the order status is unknown |
-
-### Code:-1007 TIMEOUT
-
-| Code | Tag     | msg                                                                                           | Cause           |
-| :--- | :------ | :-------------------------------------------------------------------------------------------- | :-------------- |
-| 1007 | TIMEOUT | Timeout waiting for backend server response. Sending status unknown; execution status unknown | Request timeout |
-
-### Code:-1014 UNKNOWN_ORDER_COMPOSITION
-
-| Code | Tag                       | msg                           | Cause                                                                              |
-| :--- | :------------------------ | :---------------------------- | :--------------------------------------------------------------------------------- |
-| 1014 | UNKNOWN_ORDER_COMPOSITION | Unsupported order combination | The order combination does not exist or an incorrect order combination was entered |
-
-### Code:-1015 TOO_MANY_ORDERS
-
-| Code | Tag             | msg                                                      | Cause                                        |
-| :--- | :-------------- | :------------------------------------------------------- | :------------------------------------------- |
-| 1015 | TOO_MANY_ORDERS | Too many orders. Please reduce the number of your orders | The order quantity exceeds the maximum limit |
-
-### Code:-1016 SERVICE_SHUTTING_DOWN
-
-| Code | Tag                   | msg            | Cause                                                  |
-| :--- | :-------------------- | :------------- | :----------------------------------------------------- |
-| 1016 | SERVICE_SHUTTING_DOWN | Server offline | The server is offline and the interface is unavailable |
-
-### Code:-1017 NO_CONTENT_TYPE
-
-| Code | Tag             | msg                                                                                               | Cause                                        |
-| :--- | :-------------- | :------------------------------------------------------------------------------------------------ | :------------------------------------------- |
-| 1017 | NO_CONTENT_TYPE | We recommend attaching `Content-Type` in all request headers and setting it to `application/json` | The request header is missing `Content-Type` |
-
-### Code:-1020 UNSUPPORTED_OPERATION
-
-| Code | Tag                   | msg                             | Cause                                                                                                        |
-| :--- | :-------------------- | :------------------------------ | :----------------------------------------------------------------------------------------------------------- |
-| 1020 | UNSUPPORTED_OPERATION | This operation is not supported | An incorrect request operation was made. You need to coordinate with the technical team to resolve the issue |
-
-### Code:-1021 INVALID_TIMESTAMP
-
-| Code | Tag               | msg                                             | Cause                                                                                                                                                                  |
-| :--- | :---------------- | :---------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1021 | INVALID_TIMESTAMP | Invalid timestamp, the time offset is too large | The timestamp offset is too large. The server determines that the client’s time is more than 1 second ahead of the server’s time based on the timestamp in the request |
-
-### Code:-1022 INVALID_SIGNATURE
-
-| Code | Tag               | msg               | Cause                         |
-| :--- | :---------------- | :---------------- | :---------------------------- |
-| 1022 | INVALID_SIGNATURE | Invalid signature | Signature verification failed |
-
-### Code:-1023 UNAUTHORIZED
-
-| Code | Tag          | msg                                                                                                                                           | Cause                                   |
-| :--- | :----------- | :-------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------- |
-| 1023 | UNAUTHORIZED | You do not have permission to execute this request. The request requires a timestamp. We recommend attaching `X-CH-TS` in all request headers | The request header is missing `X-CH-TS` |
-
-### Code:-1024 UNAUTHORIZED
-
-| Code | Tag          | msg                                                                                                                                        | Cause                                     |
-| :--- | :----------- | :----------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------- |
-| 1024 | UNAUTHORIZED | You do not have permission to execute this request. The request requires a sign. We recommend attaching `X-CH-SIGN` in all request headers | The request header is missing `X-CH-SIGN` |
-
-## 11XX - Issue in the request content
-
-### Code:-1100 ILLEGAL_CHARS
-
-| Code | Tag           | msg                          | Cause                        |
-| :--- | :------------ | :--------------------------- | :--------------------------- |
-| 1100 | ILLEGAL_CHARS | Issue in the request content | Issue in the request content |
-
-### Code:-1101 TOO_MANY_PARAMETERS
-
-| Code | Tag                 | msg                      | Cause                                                                               |
-| :--- | :------------------ | :----------------------- | :---------------------------------------------------------------------------------- |
-| 1101 | TOO_MANY_PARAMETERS | Too many parameters sent | The parameter content is too large or duplicate parameter values have been detected |
-
-### Code:-1102 MANDATORY_PARAM_EMPTY_OR_MALFORMED
-
-| Code | Tag                                | msg                                                                        | Cause                                                                                          |
-| :--- | :--------------------------------- | :------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------- |
-| 1102 | MANDATORY_PARAM_EMPTY_OR_MALFORMED | Mandatory parameter {0} was not sent, is empty, or has an incorrect format | The parameter is empty; a required parameter was not provided or has an incorrect input format |
-
-### Code:-1103 UNKNOWN_PARAM
-
-| Code | Tag           | msg                           | Cause                                                                                                  |
-| :--- | :------------ | :---------------------------- | :----------------------------------------------------------------------------------------------------- |
-| 1103 | UNKNOWN_PARAM | An unknown parameter was sent | The parameter content or format in the request is incorrect. Please check if the fields contain spaces |
-
-### Code:-1104 UNREAD_PARAMETERS
-
-| Code | Tag               | msg                               | Cause                                                                             |
-| :--- | :---------------- | :-------------------------------- | :-------------------------------------------------------------------------------- |
-| 1104 | UNREAD_PARAMETERS | Not all sent parameters were read | Not all sent parameters were read; the parameter '%s' was read, but '%s' was sent |
-
-### Code:-1105 PARAM_EMPTY
-
-| Code | Tag         | msg                    | Cause                         |
-| :--- | :---------- | :--------------------- | :---------------------------- |
-| 1105 | PARAM_EMPTY | Parameter {0} is empty | A required parameter is empty |
-
-### Code:-1106 PARAM_NOT_REQUIRED
-
-| Code | Tag                | msg                                     | Cause                                       |
-| :--- | :----------------- | :-------------------------------------- | :------------------------------------------ |
-| 1106 | PARAM_NOT_REQUIRED | This parameter does not need to be sent | The parameter '%s' does not need to be sent |
-
-### Code:-1111 BAD_PRECISION
-
-| Code | Tag           | msg                                                            | Cause                                                          |
-| :--- | :------------ | :------------------------------------------------------------- | :------------------------------------------------------------- |
-| 1111 | BAD_PRECISION | The precision exceeds the maximum value defined for this asset | The precision exceeds the maximum value defined for this asset |
-
-### Code:-1112 NO_DEPTH
-
-| Code | Tag      | msg                                           | Cause                                   |
-| :--- | :------- | :-------------------------------------------- | :-------------------------------------- |
-| 1112 | NO_DEPTH | There are no open orders for the trading pair | The order to be canceled does not exist |
-
-### Code:-1116 INVALID_ORDER_TYPE
-
-| Code | Tag                | msg                | Cause              |
-| :--- | :----------------- | :----------------- | :----------------- |
-| 1116 | INVALID_ORDER_TYPE | Invalid order type | Invalid order type |
-
-### Code:-1117 INVALID_SIDE
-
-| Code | Tag          | msg                        | Cause                      |
-| :--- | :----------- | :------------------------- | :------------------------- |
-| 1117 | INVALID_SIDE | Invalid buy/sell direction | Invalid buy/sell direction |
-
-### Code:-1121 BAD_SYMBOL
-
-| Code | Tag        | msg              | Cause                                        |
-| :--- | :--------- | :--------------- | :------------------------------------------- |
-| 1121 | BAD_SYMBOL | Invalid contract | Incorrect trading pair name or contract name |
-
-### Code:-1136 ORDER_QUANTITY_TOO_SMALL
-
-| Code | Tag                      | msg                                               | Cause                                             |
-| :--- | :----------------------- | :------------------------------------------------ | :------------------------------------------------ |
-| 1136 | ORDER_QUANTITY_TOO_SMALL | The order quantity is less than the minimum value | The order quantity is less than the minimum value |
-
-### Code:-1138 ORDER_PRICE_WAVE_EXCEED
-
-| Code | Tag                     | msg                                       | Cause                                     |
-| :--- | :---------------------- | :---------------------------------------- | :---------------------------------------- |
-| 1138 | ORDER_PRICE_WAVE_EXCEED | The order price exceeds the allowed range | The order price exceeds the allowed range |
-
-### Code:-1139 ORDER_NOT_SUPPORT_MARKET
-
-| Code | Tag                      | msg                                              | Cause                                            |
-| :--- | :----------------------- | :----------------------------------------------- | :----------------------------------------------- |
-| 1139 | ORDER_NOT_SUPPORT_MARKET | This trading pair does not support market orders | This trading pair does not support market orders |
-
-### Code:-1145 ORDER_NOT_SUPPORT_CANCELLATION
-
-| Code | Tag                            | msg                                          | Cause                        |
-| :--- | :----------------------------- | :------------------------------------------- | :--------------------------- |
-| 1145 | ORDER_NOT_SUPPORT_CANCELLATION | The order status does not allow cancellation | The order cannot be canceled |
-
-### Code:-1147 PRICE_VOLUME_PRESION_ERROR
-
-| Code | Tag                        | msg                                                   | Cause                                                 |
-| :--- | :------------------------- | :---------------------------------------------------- | :---------------------------------------------------- |
-| 1147 | PRICE_VOLUME_PRESION_ERROR | Price or quantity precision exceeds the maximum limit | The order price or quantity exceeds the maximum limit |
-
-## 2XXX - Other related return codes
-
-### Code:-2013 NO_SUCH_ORDER
-
-| Code | Tag           | msg                      | Cause                    |
-| :--- | :------------ | :----------------------- | :----------------------- |
-| 2013 | NO_SUCH_ORDER | The order does not exist | The order does not exist |
-
-### Code:-2015 REJECTED_API_KEY
-
-| Code | Tag              | msg                                          | Cause                               |
-| :--- | :--------------- | :------------------------------------------- | :---------------------------------- |
-| 2015 | REJECTED_API_KEY | Invalid API key, IP, or operation permission | Signature or IP verification failed |
-
-### Code:-2016 EXCHANGE_LOCK
-
-| Code | Tag           | msg               | Cause                        |
-| :--- | :------------ | :---------------- | :--------------------------- |
-| 2016 | EXCHANGE_LOCK | Trading is frozen | The user's trading is frozen |
-
-### Code:-2017 BALANCE_NOT_ENOUGH
-
-| Code | Tag                | msg                  | Cause                                          |
-| :--- | :----------------- | :------------------- | :--------------------------------------------- |
-| 2017 | BALANCE_NOT_ENOUGH | Insufficient balance | The user’s account has an insufficient balance |
-
-### Code:-2100 PARAM_ERROR
-
-| Code | Tag         | msg             | Cause                 |
-| :--- | :---------- | :-------------- | :-------------------- |
-| 2100 | PARAM_ERROR | Parameter issue | Parameter input error |
-
-### Code:-2200 ORDER_CREATE_FAILS
-
-| Code | Tag                | msg        | Cause            |
-| :--- | :----------------- | :--------- | :--------------- |
-| 2200 | ORDER_CREATE_FAILS | Illegal IP | Not a trusted IP |
-
-### Code:35
-
-| Code | Tag | msg                           | Cause                                |
-| :--- | :-- | :---------------------------- | :----------------------------------- |
-| 35   |     | Order placement is prohibited | The user's trading may be restricted |
-
-# Enumeration type
-
-## Trading pair
+### Trading pair
 
 | Value   | Description                                                                                                |
 | :------ | :--------------------------------------------------------------------------------------------------------- |
 | `base`  | Refers to the trading asset of a trading pair, specifically the asset name that appears in the front part  |
 | `quote` | Refers to the pricing asset of a trading pair, specifically the asset name that appears in the latter part |
 
-## Order status
+### Order status
 
 | Value                        | Description               |
 | :--------------------------- | :------------------------ |
@@ -1688,21 +1436,21 @@ Description and Causes of Exception Codes and Error Codes
 | `Partially Filled/Cancelled` | Partially filled/Canceled |
 | `REJECTED`                   | Order rejected            |
 
-## Order type
+### Order type
 
 | Value    | Description  |
 | :------- | :----------- |
 | `LIMIT`  | Limit order  |
 | `MARKET` | Market order |
 
-## Order direction
+### Order direction
 
 | Value  | Description |
 | :----- | :---------- |
 | `BUY`  | Buy order   |
 | `SELL` | Sell order  |
 
-## K-line interval
+### K-line interval
 
 | Value   | Description | Example                                   |
 | :------ | :---------- | :---------------------------------------- |
@@ -1710,10 +1458,7 @@ Description and Causes of Exception Codes and Error Codes
 | `h`     | Hour        | `1h`, `4h`                                |
 | `day`   | Day         | `1day`                                    |
 | `week`  | Week        | `1week`                                   |
-| `month` | Month       |                                           |
-
-# Spot trading
-
+| `month` | Month       |  `month` |
 ## Public
 
 ### Security type: None
@@ -2035,8 +1780,8 @@ https.get(url, (res) => {
 
 | parameter name | Type   | Example               | Description      |
 | :------------- | :----- | :-------------------- | :--------------- |
-| timezone       | string | `China Standard Time` | Server time zone |
-| serverTime     | long   | `1705039779880`       | Server timestamp |
+| timezone       | string | `UTC Time`            | UTC zone |
+| serverTime     | long   | `1705039779880`       | timestamp (milliseconds)|
 
 <a name="spot-trading-public-currency-pair-list"></a>
 
@@ -2260,7 +2005,7 @@ https.get(url, (res) => {
 
 | Parameter name    | Type       | Example   | Description                             |
 | :---------------- | :--------- | :-------- | :-------------------------------------- |
-| symbol            | string     | `btcusdt` | `Lowercase`currency pair name           |
+| symbol            | string     | `BTCUSDT` | `Uppercase`currency pair name           |
 | baseAsset         | string     | `BTC`     | `Base currency`                         |
 | quoteAsset        | string     | `USDT`    | `Quote currency`                        |
 | pricePrecision    | integer    | `6`       | Price precision                         |
@@ -2585,317 +2330,6 @@ axios
 | asks           | array | `[[4.0,12.0],[5.1,28.0]]` | Order book ask information, the array length is 2, index 1 is the price, type is float; index 2 is the quantity corresponding to the current price, type is float |
 
 The information corresponding to bids and asks represents all the prices in the order book and the quantities corresponding to those prices, arranged from the best price (highest bid and lowest ask) downwards
-
-### Market Ticker
-
-`GET https://t(:spot_http_url)/sapi/v1/ticker`
-
-Get 24-hour price change data
-
-> Request example
-
-```http
-GET https://t(:spot_http_url)/sapi/v1/ticker?symbol=BTCUSDT
-
-// Set Headers
-Content-Type: application/json
-```
-
-```shell
-#!/bin/bash
-
-# Set API-related information
-API_URL="https://t(:spot_http_url)"
-REQUEST_URL="/sapi/v1/ticker"
-QUERY_STRING="?symbol=BTCUSDT"
-
-# Calculate the complete request path
-REQUEST_PATH="${REQUEST_URL}${QUERY_STRING}"
-FULL_URL="${API_URL}${REQUEST_PATH}"
-
-# Define request method
-METHOD="GET"
-
-# **Print debug information**
-echo "==== Request information ===="
-echo "Request URL: ${FULL_URL}"
-echo "=================="
-
-# Send GET request
-curl -X GET "$FULL_URL" \
-    -H "Content-Type: application/json"
-```
-
-```java
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.time.Instant;
-import java.util.Scanner;
-
-public class FameexApiRequest {
-    public static void main(String[] args) {
-        try {
-            // API-related information
-            String apiUrl = "https://t(:spot_http_url)";
-            String requestUrl = "/sapi/v1/ticker";
-            String queryString = "?symbol=BTCUSDT";
-
-            // Calculate the complete request path
-            String requestPath = requestUrl + queryString;
-            String fullUrl = apiUrl + requestPath;
-
-            // Request method
-            String method = "GET";
-
-            // **Print debug information**
-            System.out.println("==== Request information ====");
-            System.out.println("Request URL: " + fullUrl);
-            System.out.println("==================");
-
-            // Send GET request
-            sendGetRequest(fullUrl);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Send HTTP GET request
-    public static void sendGetRequest(String fullUrl) {
-        try {
-            URL url = new URL(fullUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-
-            // Set request headers
-            conn.setRequestProperty("Content-Type", "application/json");
-
-            // Send request and get response
-            int responseCode = conn.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
-
-            Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name());
-            while (scanner.hasNextLine()) {
-                System.out.println(scanner.nextLine());
-            }
-            scanner.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
-)
-
-func main() {
-	// API-related information
-	apiURL := "https://t(:spot_http_url)"
-	requestURL := "/sapi/v1/ticker"
-	queryString := "?symbol=BTCUSDT"
-
-	// Calculate the complete request path
-	requestPath := requestURL + queryString
-	fullURL := apiURL + requestPath
-
-	// Request method
-	method := "GET"
-
-	// **Print debug information**
-	fmt.Println("==== Request information ====")
-	fmt.Println("Request URL:", fullURL)
-	fmt.Println("==================")
-
-	// Send GET request
-	sendGetRequest(fullURL, method)
-}
-
-// Send HTTP GET request
-func sendGetRequest(fullURL, method string) {
-	client := &http.Client{}
-
-	// Create request
-	req, err := http.NewRequest(method, fullURL, nil)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
-
-	// Set Headers
-	req.Header.Set("Content-Type", "application/json")
-
-	// Send request
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
-
-	// Read response
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
-}
-```
-
-```python
-import time
-import hmac
-import hashlib
-import requests
-
-# API-related information
-API_URL = "https://t(:spot_http_url)"
-REQUEST_URL = "/sapi/v1/ticker"
-QUERY_STRING = "?symbol=BTCUSDT"
-
-# Calculate the full request path
-REQUEST_PATH = REQUEST_URL + QUERY_STRING
-FULL_URL = API_URL + REQUEST_PATH
-
-# **Print debug information**
-print("==== Request information ====")
-print("Request URL:", FULL_URL)
-print("==================")
-
-# Send GET request
-headers = {
-    "Content-Type": "application/json"
-}
-
-response = requests.get(FULL_URL, headers=headers)
-
-# Print response
-print("Response Code:", response.status_code)
-print("Response Body:", response.text)
-
-```
-
-```php
-<?
-
-// API-related information
-$API_URL = "https://t(:spot_http_url)";
-$REQUEST_URL = "/sapi/v1/ticker";
-$QUERY_STRING = "?symbol=BTCUSDT";
-
-// Calculate the complete request path
-$REQUEST_PATH = $REQUEST_URL . $QUERY_STRING;
-$FULL_URL = $API_URL . $REQUEST_PATH;
-
-// **Print debug information**
-echo "==== Request information ====\n";
-echo "Request URL: " . $FULL_URL . "\n";
-echo "==================\n";
-
-// Send GET request
-$headers = [
-    "Content-Type: application/json",
-];
-
-// Send GET request using cURL
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $FULL_URL);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-// Execute request and get response
-$response = curl_exec($ch);
-$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
-
-// Print response
-echo "Response Code: $http_code\n";
-echo "Response Body: $response\n";
-
-?>
-```
-
-```javascript--node
-const axios = require("axios");
-const crypto = require("crypto");
-
-// API-related information
-const API_URL = "https://t(:spot_http_url)";
-const REQUEST_URL = "/sapi/v1/ticker";
-const QUERY_STRING = "?symbol=BTCUSDT";
-
-// Calculate the full request path
-const REQUEST_PATH = REQUEST_URL + QUERY_STRING;
-const FULL_URL = API_URL + REQUEST_PATH;
-
-// **Print debug information**
-console.log("==== Request information ====");
-console.log("Request URL:", FULL_URL);
-console.log("==================");
-
-// Send GET request
-const headers = {
-  "Content-Type": "application/json",
-};
-
-axios
-  .get(FULL_URL, { headers })
-  .then((response) => {
-    console.log("Response Code:", response.status);
-    console.log("Response Body:", response.data);
-  })
-  .catch((error) => {
-    console.error("Error:", error.response ? error.response.data : error.message);
-  });
-```
-
-**Request parameters**
-
-| Parameter name                    | Type   | Description                                          |
-| :-------------------------------- | :----- | :--------------------------------------------------- |
-| symbol<font color="red">\*</font> | string | Uppercase currency pair name, for example: `BTCUSDT` |
-
-> Return example
-
-```json
-{
-  "code": 0,
-  "msg": "Success",
-  "data": {
-    "amount": 1357550713.60334,
-    "high": 90267.9,
-    "vol": 15520.54679,
-    "last": 90253.5,
-    "low": 86180.1,
-    "buy": 90217.6,
-    "sell": 90217.7,
-    "rose": "+0.0295494912",
-    "time": 1764180900000
-  }
-}
-```
-
-**Return parameter**
-
-| Parameter name | Type   | Example         | Description                                                                                                   |
-| :------------- | :----- | :-------------- | :------------------------------------------------------------------------------------------------------------ |
-| time           | long   | `1595563624731` | Current timestamp                                                                                             |
-| high           | float  | `9900.51`       | Highest price                                                                                                 |
-| low            | float  | `9100.34`       | Lowest price                                                                                                  |
-| last           | float  | `9211.60`       | Latest trade price                                                                                            |
-| vol            | float  | `4691.0`        | Trading volume                                                                                                |
-| amount         | float  | `22400.0`       | Transaction Amount                                                                                            |
-| buy            | float  | `9210.0`        | Bid price                                                                                                     |
-| sell           | float  | `9213.0`        | Ask price                                                                                                     |
-| rose           | string | `+0.05`         | Price change percentage,`+`indicates an increase,`-`indicates a decrease, and `+0.05`indicates a`5%` increase |
 
 ### Market Ticker-V2
 
@@ -3843,506 +3277,6 @@ axios
 <aside class='notice'>All trading-related endpoints below require signature and API-key authentication.</aside>
 
 ### Create a new order
-
-`POST https://t(:spot_http_url)/sapi/v1/order`
-
-**Rate limit: 100 requests per 2 seconds**
-
-**Request headers**
-
-| Parameter name                         | Type    | Description  |
-| :------------------------------------- | :------ | :----------- |
-| X-CH-SIGN<font color="red">\*</font>   | string  | Signature    |
-| X-CH-APIKEY<font color="red">\*</font> | string  | Your API key |
-| X-CH-TS<font color="red">\*</font>     | integer | Timestamp    |
-
-> Request example
-
-```http
-POST https://t(:spot_http_url)/sapi/v1/order
-
-// Headers Configuration
-Content-Type: application/json
-X-CH-TS: 1739503617552
-X-CH-APIKEY: your API-KEY
-X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
-```
-
-```shell
-#!/bin/bash
-
-# Set API-related information
-URL="https://t(:spot_http_url)"
-REQUEST_PATH="/sapi/v1/order"
-API_URL="${URL}${REQUEST_PATH}"
-API_KEY="your API-KEY"
-API_SECRET="your API-SECRET"
-
-# Generate the current millisecond-level timestamp
-timestamp=$(date +%s | awk '{print $1 * 1000}')
-
-# Define the request method
-METHOD="POST"
-
-# Define request body (JSON format)
-BODY_JSON='{"symbol":"BTCUSDT","volume":0.00001,"side":"BUY","type":"LIMIT","price":97081.19,"newClientOrderId":"111000000111"}'
-
-# Generate signature (X-CH-SIGN)
-SIGN_PAYLOAD="${timestamp}${METHOD}${REQUEST_PATH}${BODY_JSON}"
-SIGNATURE=$(echo -n "$SIGN_PAYLOAD" | openssl dgst -sha256 -hmac "$API_SECRET" | awk '{print $2}')
-
-# **Print debugging information**
-echo "==== Request information ===="
-echo "Timestamp (X-CH-TS): $timestamp"
-echo "Sign Payload (String to be signed): $SIGN_PAYLOAD"
-echo "Signature (X-CH-SIGN): $SIGNATURE"
-echo "Request Body: $BODY_JSON"
-echo "=================="
-
-# Send request
-curl -X POST "$API_URL" \
-    -H "X-CH-SIGN: $SIGNATURE" \
-    -H "X-CH-APIKEY: $API_KEY" \
-    -H "X-CH-TS: $timestamp" \
-    -H "Content-Type: application/json" \
-    -d "$BODY_JSON"
-```
-
-```java
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
-import java.io.OutputStream;
-import java.time.Instant;
-import java.util.Base64;
-
-public class FameexApiRequest {
-    public static void main(String[] args) {
-        try {
-            // API-related information
-            String url = "https://t(:spot_http_url)";
-            String requestPath = "/sapi/v1/order";
-            String apiUrl = url + requestPath;
-            String apiKey = "your API-KEY";
-            String apiSecret = "your API-SECRET";
-
-            // Get the current millisecond-level timestamp
-            String timestamp = String.valueOf(Instant.now().toEpochMilli());
-
-            // Request method and path
-            String method = "POST";
-
-            // Define the request body (JSON format)
-            String bodyJson = "{\"symbol\":\"BTCUSDT\",\"volume\":\"0.00001\",\"side\":\"BUY\",\"type\":\"LIMIT\",\"price\":\"97081.19\",\"newClientOrderId\":\"111000000111\"}";
-
-            // Generate signature (X-CH-SIGN)
-            String signPayload = timestamp + method + requestPath + bodyJson;
-            String signature = hmacSha256(signPayload, apiSecret);
-
-            // **Print debugging information**
-            System.out.println("==== Request information ====");
-            System.out.println("Timestamp (X-CH-TS): " + timestamp);
-            System.out.println("Sign Payload (String to be signed): " + signPayload);
-            System.out.println("Signature (X-CH-SIGN): " + signature);
-            System.out.println("Request Body: " + bodyJson);
-            System.out.println("==================");
-
-            // Send request
-            sendPostRequest(apiUrl, apiKey, timestamp, signature, bodyJson);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // HMAC-SHA256 Signature calculation
-    public static String hmacSha256(String data, String secret) throws Exception {
-        Mac mac = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-        mac.init(secretKeySpec);
-        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : hash) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) {
-                hexString.append('0');
-            }
-            hexString.append(hex);
-        }
-        return hexString.toString();
-    }
-
-    // Send HTTP POST request
-    public static void sendPostRequest(String apiUrl, String apiKey, String timestamp, String signature, String bodyJson) {
-        try {
-            URL url = new URL(apiUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("X-CH-SIGN", signature);
-            conn.setRequestProperty("X-CH-APIKEY", apiKey);
-            conn.setRequestProperty("X-CH-TS", timestamp);
-            conn.setDoOutput(true);
-
-            // Send request body
-            try (OutputStream os = conn.getOutputStream()) {
-                byte[] input = bodyJson.getBytes(StandardCharsets.UTF_8);
-                os.write(input, 0, input.length);
-            }
-
-            // Read response
-            int responseCode = conn.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
-
-            Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name());
-            while (scanner.hasNextLine()) {
-                System.out.println(scanner.nextLine());
-            }
-            scanner.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-```
-
-```go
-package main
-
-import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
-)
-
-func main() {
-	// API-related information
-    url := "https://t(:spot_http_url)"
-    requestPath := "/sapi/v1/order"
-	apiURL := url + requestPath
-	apiKey := "your API-KEY"
-	apiSecret := "your API-SECRET"
-
-	// Generate the current millisecond-level timestamp
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
-
-	// Request method and path
-	method := "POST"
-
-	// Define the request body (JSON format)
-	bodyJSON := `{"symbol":"BTCUSDT","volume":"0.00001","side":"BUY","type":"LIMIT","price":"97081.19","newClientOrderId":"111000000111"}`
-
-	// Generate signature (X-CH-SIGN)
-	signPayload := timestamp + method + requestPath + bodyJSON
-	signature := hmacSHA256(signPayload, apiSecret)
-
-	// **Print debugging information**
-	fmt.Println("==== Request information ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (String to be signed):", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request Body:", bodyJSON)
-	fmt.Println("==================")
-
-	// Send request
-	sendPostRequest(apiURL, apiKey, timestamp, signature, bodyJSON)
-}
-
-// HMAC-SHA256 Signature calculation
-func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
-}
-
-// Send HTTP POST request
-func sendPostRequest(apiURL, apiKey, timestamp, signature, bodyJSON string) {
-	client := &http.Client{}
-
-	// Create request
-	req, err := http.NewRequest("POST", apiURL, bytes.NewBuffer([]byte(bodyJSON)))
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
-
-	// Set Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
-
-	// Send request
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
-
-	// Read response
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response:", string(body))
-}
-```
-
-```python
-import time
-import hmac
-import hashlib
-import requests
-import json
-
-# API-related information
-URL = "https://t(:spot_http_url)"
-REQUEST_PATH = "/sapi/v1/order"
-API_URL = URL + REQUEST_PATH
-API_KEY = "your API-KEY"
-API_SECRET = "your API-SECRET"
-
-# Generate the current millisecond-level timestamp
-timestamp = str(int(time.time() * 1000))
-
-# Request method and path
-METHOD = "POST"
-
-
-# Define the request body (JSON format)
-body_json = {
-    "symbol": "BTCUSDT",
-    "volume": "0.00001",
-    "side": "BUY",
-    "type": "LIMIT",
-    "price": "97081.19",
-    "newClientOrderId": "111000000111",
-}
-body_str = json.dumps(body_json, separators=(',', ':'))  # Ensure the JSON string is correctly formatted
-
-# Generate signature (X-CH-SIGN)
-sign_payload = timestamp + METHOD + REQUEST_PATH + body_str
-signature = hmac.new(API_SECRET.encode(), sign_payload.encode(), hashlib.sha256).hexdigest()
-
-# **Print debugging information**
-print("==== Request information ====")
-print("Timestamp (X-CH-TS):", timestamp)
-print("Sign Payload (String to be signed):", sign_payload)
-print("Signature (X-CH-SIGN):", signature)
-print("Request Body:", body_str)
-print("==================")
-
-# Send request
-headers = {
-    "X-CH-SIGN": signature,
-    "X-CH-APIKEY": API_KEY,
-    "X-CH-TS": timestamp,
-    "Content-Type": "application/json"
-}
-
-response = requests.post(API_URL, headers=headers, data=body_str)
-
-# Print response
-print("Response Code:", response.status_code)
-print("Response Body:", response.text)
-
-```
-
-```php
-<?
-
-// API-related information
-$url = "https://t(:spot_http_url)";
-$request_path = "/sapi/v1/order";
-$api_url = $url . $request_path;
-$api_key = "your API-KEY";
-$api_secret = "your API-SECRET";
-
-// Generate the current millisecond-level timestamp
-$timestamp = round(microtime(true) * 1000);
-
-// Request method
-$method = "POST";
-
-// Define request body (JSON format)
-$body_json = json_encode([
-    "symbol" => "BTCUSDT",
-    "price" => "9300",
-    "volume" => "1",
-    "side" => "BUY",
-    "type" => "LIMIT"
-], JSON_UNESCAPED_SLASHES); // Ensure the JSON format is correct
-
-// Generate signature (X-CH-SIGN)
-$sign_payload = $timestamp . $method . $request_path . $body_json;
-$signature = hash_hmac('sha256', $sign_payload, $api_secret);
-
-// **Print debugging information**
-echo "==== Request information ====\n";
-echo "Timestamp (X-CH-TS): " . $timestamp . "\n";
-echo "Sign Payload (String to be signed): " . $sign_payload . "\n";
-echo "Signature (X-CH-SIGN): " . $signature . "\n";
-echo "Request Body: " . $body_json . "\n";
-echo "==================\n";
-
-// Send request
-$headers = [
-    "Content-Type: application/json",
-    "X-CH-SIGN: $signature",
-    "X-CH-APIKEY: $api_key",
-    "X-CH-TS: $timestamp"
-];
-
-// Use cURL to send a POST request
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $api_url);
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $body_json);
-
-// Execute the request and get the response
-$response = curl_exec($ch);
-$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
-
-// Print response
-echo "Response Code: $http_code\n";
-echo "Response Body: $response\n";
-
-```
-
-```javascript--node
-const axios = require("axios");
-const crypto = require("crypto");
-
-// API-related information
-const URL = "https://t(:spot_http_url)";
-const REQUEST_PATH = "/sapi/v1/order";
-const API_URL = URL + REQUEST_PATH;
-const API_KEY = "your API-KEY";
-const API_SECRET = "your API-SECRET";
-
-// Generate the current millisecond-level timestamp
-const timestamp = Date.now().toString();
-
-// Request method
-const METHOD = "POST";
-
-// Define request body (JSON format)
-const bodyJson = JSON.stringify({
-  symbol: "BTCUSDT",
-  price: "9300",
-  volume: "1",
-  side: "BUY",
-  type: "LIMIT",
-});
-
-// Generate signature (X-CH-SIGN)
-const signPayload = timestamp + METHOD + REQUEST_PATH + bodyJson;
-const signature = crypto
-  .createHmac("sha256", API_SECRET)
-  .update(signPayload)
-  .digest("hex");
-
-// **Print debugging information**
-console.log("==== Request information ====");
-console.log("Timestamp (X-CH-TS):", timestamp);
-console.log("Sign Payload (String to be signed):", signPayload);
-console.log("Signature (X-CH-SIGN):", signature);
-console.log("Request Body:", bodyJson);
-console.log("==================");
-
-// Send request
-const headers = {
-  "Content-Type": "application/json",
-  "X-CH-SIGN": signature,
-  "X-CH-APIKEY": API_KEY,
-  "X-CH-TS": timestamp,
-};
-
-axios
-  .post(API_URL, bodyJson, { headers })
-  .then((response) => {
-    console.log("Response Code:", response.status);
-    console.log("Response Body:", response.data);
-  })
-  .catch((error) => {
-    console.error("Error:", error.response ? error.response.data : error.message);
-  });
-
-```
-
-> body
-
-```json
-{
-  "symbol": "BTCUSDT",
-  "volume": 1.0,
-  "side": "BUY",
-  "type": "LIMIT",
-  "price": 65000.0,
-  "newClientOrderId": "111000000111"
-}
-```
-
-**Request parameters**
-
-| Parameter name                    | Type   | Description                                                                                                                                   |
-| :-------------------------------- | :----- | :-------------------------------------------------------------------------------------------------------------------------------------------- |
-| symbol<font color="red">\*</font> | string | `Uppercase` trading pair name, e.g.,`BTCUSDT`(refer to Trading Pair List for`symbol`)                                                         |
-| volume<font color="red">\*</font> | number | Order quantity, with precision restrictions configured by the administrator (refer to[Trading Pair List]for `limitVolumeMin` )                |
-| side<font color="red">\*</font>   | string | Order direction，`BUY/SELL`                                                                                                                   |
-| type<font color="red">\*</font>   | string | Order type，`LIMIT/MARKET`                                                                                                                    |
-| price                             | number | Order price, required for`LIMIT`orders, with precision restrictions configured by the administrator (refer to[Recent Transactions]for`price`) |
-| newClientOrderId                  | string | Client order ID                                                                                                                               |
-
-> Response example
-
-```json
-{
-  "code": 0,
-  "msg": "Success",
-  "data": {
-    "orderId": "781594618796015616",
-    "clientOrderId": "",
-    "symbol": "ENAUSDT",
-    "transactTime": 1764183478446,
-    "price": 0.1,
-    "origQty": 50,
-    "executedQty": 0,
-    "type": "LIMIT",
-    "side": "BUY",
-    "status": "INIT"
-  }
-}
-```
-
-**Response parameters**
-
-| Parameter name | Type    | Example              | Description                                                                                                                     |
-| :------------- | :------ | :------------------- | :------------------------------------------------------------------------------------------------------------------------------ |
-| orderId        | long    | `781594618796015616` | Order ID (system-generated)                                                                                                     |
-| clientOrderId  | string  | `213443`             | Order ID (user-generated)                                                                                                       |
-| symbol         | string  | `BTCUSDT`            | `Uppercase` trading pair name                                                                                                   |
-| transactTime   | integer | `1704959985403`      | Order creation timestamp                                                                                                        |
-| price          | float   | `47651.29`           | Order price                                                                                                                     |
-| origQty        | float   | `0.01`               | Order quantity                                                                                                                  |
-| executedQty    | float   | `0`                  | Filled order quantity                                                                                                           |
-| type           | string  | `LIMIT`              | Order type. Possible values:`LIMIT`(Limit Order) and`MARKET`(Market Order)                                                      |
-| side           | string  | `BUY`                | Order direction. Possible values:`BUY`(Long) and`SELL`(Short).                                                                  |
-| status         | string  | `NEW`                | Order status. Possible values:`New Order`(New order, no fills),`Partially Filled`(Partially filled),`Filled`(Completely filled) |
-
-### Create a new order-V2
 
 `POST https://t(:spot_http_url)/sapi/v2/order`
 
@@ -5327,481 +4261,7 @@ body
 
 -->
 
-### Order query
-
-`GET https://t(:spot_http_url)/sapi/v1/order`
-
-**Rate limit rule: 20 requests per 2 seconds**
-
-**Request headers**
-
-| Parameter name                         | Type    | Description  |
-| :------------------------------------- | :------ | :----------- |
-| X-CH-SIGN<font color="red">\*</font>   | string  | Signature    |
-| X-CH-APIKEY<font color="red">\*</font> | string  | Your API key |
-| X-CH-TS<font color="red">\*</font>     | integer | Timestamp    |
-
-> Request example
-
-```http
-GET https://t(:spot_http_url)/sapi/v1/order?orderId=2618039663715064005&symbol=btcusdt
-
-// Headers Configuration
-Content-Type: application/json
-X-CH-TS: 1739503617552
-X-CH-APIKEY: your API-KEY
-X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
-```
-
-```shell
-#!/bin/bash
-
-# Set API-related information
-API_URL="https://t(:spot_http_url)"
-REQUEST_URL="/sapi/v1/order"
-QUERY_STRING="?orderId=2618039663715064005&symbol=btcusdt"
-
-# Calculate the complete request URL
-REQUEST_PATH="${REQUEST_URL}${QUERY_STRING}"
-FULL_URL="${API_URL}${REQUEST_PATH}"
-
-# API authentication information
-API_KEY="your API-KEY"
-API_SECRET="your API-SECRET"
-
-# Generate the current millisecond-level timestamp
-timestamp=$(date +%s | awk '{print $1 * 1000}')
-
-# Define the request method
-METHOD="GET"
-
-# Generate signature (X-CH-SIGN) - GET requests have no body
-SIGN_PAYLOAD="${timestamp}${METHOD}${REQUEST_PATH}"
-SIGNATURE=$(echo -n "$SIGN_PAYLOAD" | openssl dgst -sha256 -hmac "$API_SECRET" | awk '{print $2}')
-
-# **Print debugging information**
-echo "==== Request information ===="
-echo "Timestamp (X-CH-TS): $timestamp"
-echo "Sign Payload (String to be signed): $SIGN_PAYLOAD"
-echo "Signature (X-CH-SIGN): $SIGNATURE"
-echo "Request URL: ${FULL_URL}"
-echo "=================="
-
-# Send GET request
-curl -X GET "$FULL_URL" \
-    -H "X-CH-SIGN: $SIGNATURE" \
-    -H "X-CH-APIKEY: $API_KEY" \
-    -H "X-CH-TS: $timestamp" \
-    -H "Content-Type: application/json"
-
-```
-
-```java
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.time.Instant;
-import java.util.Scanner;
-
-public class FameexApiRequest {
-    public static void main(String[] args) {
-        try {
-            // API-related information
-            String apiUrl = "https://t(:spot_http_url)";
-            String requestUrl = "/sapi/v1/order";
-            String queryString = "?orderId=2618039663715064005&symbol=btcusdt";
-
-            // Calculate the complete request URL
-            String requestPath = requestUrl + queryString;
-            String fullUrl = apiUrl + requestPath;
-
-            // API authentication information
-            String apiKey = "your API-KEY";
-            String apiSecret = "your API-SECRET";
-
-            // Generate the current millisecond-level timestamp
-            String timestamp = String.valueOf(Instant.now().toEpochMilli());
-
-            // Request method
-            String method = "GET";
-
-            // Generate signature (X-CH-SIGN) - GET requests have no body
-            String signPayload = timestamp + method + requestPath;
-            String signature = hmacSha256(signPayload, apiSecret);
-
-            // **Print debugging information**
-            System.out.println("==== Request information ====");
-            System.out.println("Timestamp (X-CH-TS): " + timestamp);
-            System.out.println("Sign Payload (String to be signed): " + signPayload);
-            System.out.println("Signature (X-CH-SIGN): " + signature);
-            System.out.println("Request URL: " + fullUrl);
-            System.out.println("==================");
-
-            // Send GET request
-            sendGetRequest(fullUrl, apiKey, timestamp, signature);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // HMAC-SHA256 Signature calculation
-    public static String hmacSha256(String data, String secret) throws Exception {
-        Mac mac = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-        mac.init(secretKeySpec);
-        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
-
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : hash) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) {
-                hexString.append('0');
-            }
-            hexString.append(hex);
-        }
-        return hexString.toString();
-    }
-
-    // Send HTTP POST request
-    public static void sendGetRequest(String fullUrl, String apiKey, String timestamp, String signature) {
-        try {
-            URL url = new URL(fullUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-
-            // Set request headers
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("X-CH-SIGN", signature);
-            conn.setRequestProperty("X-CH-APIKEY", apiKey);
-            conn.setRequestProperty("X-CH-TS", timestamp);
-
-            // Send the request and get the response
-            int responseCode = conn.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
-
-            Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name());
-            while (scanner.hasNextLine()) {
-                System.out.println(scanner.nextLine());
-            }
-            scanner.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-```
-
-```go
-package main
-
-import (
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
-)
-
-func main() {
-	// API-related information
-	apiURL := "https://t(:spot_http_url)"
-	requestURL := "/sapi/v1/order"
-	queryString := "?orderId=2618039663715064005&symbol=btcusdt"
-
-	// Calculate the complete request URL
-	requestPath := requestURL + queryString
-	fullURL := apiURL + requestPath
-
-	// API authentication information
-	apiKey := "your API-KEY"
-	apiSecret := "your API-SECRET"
-
-	// Generate the current millisecond-level timestamp
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
-
-	// Request method
-	method := "GET"
-
-	// Generate signature (X-CH-SIGN) - GET requests have no body
-	signPayload := timestamp + method + requestPath
-	signature := hmacSHA256(signPayload, apiSecret)
-
-	// **Print debugging information**
-	fmt.Println("==== Request information ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (String to be signed):", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request URL:", fullURL)
-	fmt.Println("==================")
-
-	// Send GET request
-	sendGetRequest(fullURL, apiKey, timestamp, signature)
-}
-
-// Compute HMAC-SHA256 signature
-func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
-}
-
-// Send HTTP GET request
-func sendGetRequest(fullURL, apiKey, timestamp, signature string) {
-	client := &http.Client{}
-
-	// Create request
-	req, err := http.NewRequest("GET", fullURL, nil)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
-
-	// Set Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
-
-	// Send request
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
-
-	// Read response
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
-}
-
-```
-
-```python
-import time
-import hmac
-import hashlib
-import requests
-
-# API-related information
-API_URL = "https://t(:spot_http_url)"
-REQUEST_URL = "/sapi/v1/order"
-QUERY_STRING = "?orderId=2618039663715064005&symbol=btcusdt"
-
-# Calculate the complete request URL
-REQUEST_PATH = REQUEST_URL + QUERY_STRING
-FULL_URL = API_URL + REQUEST_PATH
-
-# API authentication information
-API_KEY = "your API-KEY"
-API_SECRET = "your API-SECRET"
-
-# Generate the current millisecond-level timestamp
-timestamp = str(int(time.time() * 1000))
-
-# Request method
-METHOD = "GET"
-
-# Generate signature (X-CH-SIGN) - GET requests have no body
-SIGN_PAYLOAD = timestamp + METHOD + REQUEST_PATH
-SIGNATURE = hmac.new(API_SECRET.encode(), SIGN_PAYLOAD.encode(), hashlib.sha256).hexdigest()
-
-# **Print debugging information**
-print("==== Request information ====")
-print("Timestamp (X-CH-TS):", timestamp)
-print("Sign Payload (String to be signed):", SIGN_PAYLOAD)
-print("Signature (X-CH-SIGN):", SIGNATURE)
-print("Request URL:", FULL_URL)
-print("==================")
-
-# Send GET request
-headers = {
-    "X-CH-SIGN": SIGNATURE,
-    "X-CH-APIKEY": API_KEY,
-    "X-CH-TS": timestamp,
-    "Content-Type": "application/json"
-}
-
-response = requests.get(FULL_URL, headers=headers)
-
-# Print response
-print("Response Code:", response.status_code)
-print("Response Body:", response.text)
-
-```
-
-```php
-<?
-
-// API-related information
-$API_URL = "https://t(:spot_http_url)";
-$REQUEST_URL = "/sapi/v1/order";
-$QUERY_STRING = "?orderId=2618039663715064005&symbol=btcusdt";
-
-// Calculate the complete request URL
-$REQUEST_PATH = $REQUEST_URL . $QUERY_STRING;
-$FULL_URL = $API_URL . $REQUEST_PATH;
-
-// API authentication information
-$API_KEY = "your API-KEY";
-$API_SECRET = "your API-SECRET";
-
-// Generate the current millisecond-level timestamp
-$timestamp = round(microtime(true) * 1000);
-
-// Request method
-$METHOD = "GET";
-
-// Generate signature (X-CH-SIGN) - GET requests have no body
-$SIGN_PAYLOAD = $timestamp . $METHOD . $REQUEST_PATH;
-$SIGNATURE = hash_hmac('sha256', $SIGN_PAYLOAD, $API_SECRET);
-
-// **Print debugging information**
-echo "==== Request information ====\n";
-echo "Timestamp (X-CH-TS): " . $timestamp . "\n";
-echo "Sign Payload (String to be signed): " . $SIGN_PAYLOAD . "\n";
-echo "Signature (X-CH-SIGN): " . $SIGNATURE . "\n";
-echo "Request URL: " . $FULL_URL . "\n";
-echo "==================\n";
-
-// Send GET request
-$headers = [
-    "Content-Type: application/json",
-    "X-CH-SIGN: $SIGNATURE",
-    "X-CH-APIKEY: $API_KEY",
-    "X-CH-TS: $timestamp"
-];
-
-// Use cURL to send a GET request
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $FULL_URL);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-// Execute the request and get the response
-$response = curl_exec($ch);
-$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
-
-// Print response
-echo "Response Code: $http_code\n";
-echo "Response Body: $response\n";
-
-?>
-```
-
-```javascript--node
-const axios = require("axios");
-const crypto = require("crypto");
-
-// API-related information
-const API_URL = "https://t(:spot_http_url)";
-const REQUEST_URL = "/sapi/v1/order";
-const QUERY_STRING = "?orderId=2618039663715064005&symbol=btcusdt";
-
-// Calculate the complete request URL
-const REQUEST_PATH = REQUEST_URL + QUERY_STRING;
-const FULL_URL = API_URL + REQUEST_PATH;
-
-// API authentication information
-const API_KEY = "your API-KEY";
-const API_SECRET = "your API-SECRET";
-
-// Generate the current millisecond-level timestamp
-const timestamp = Date.now().toString();
-
-// Request method
-const METHOD = "GET";
-
-// Generate signature (X-CH-SIGN) - GET requests have no body
-const SIGN_PAYLOAD = timestamp + METHOD + REQUEST_PATH;
-const SIGNATURE = crypto
-  .createHmac("sha256", API_SECRET)
-  .update(SIGN_PAYLOAD)
-  .digest("hex");
-
-// **Print debugging information**
-console.log("==== Request information ====");
-console.log("Timestamp (X-CH-TS):", timestamp);
-console.log("Sign Payload String to be signed):", SIGN_PAYLOAD);
-console.log("Signature (X-CH-SIGN):", SIGNATURE);
-console.log("Request URL:", FULL_URL);
-console.log("==================");
-
-// Send GET request
-const headers = {
-  "Content-Type": "application/json",
-  "X-CH-SIGN": SIGNATURE,
-  "X-CH-APIKEY": API_KEY,
-  "X-CH-TS": timestamp,
-};
-
-axios
-  .get(FULL_URL, { headers })
-  .then((response) => {
-    console.log("Response Code:", response.status);
-    console.log("Response Body:", response.data);
-  })
-  .catch((error) => {
-    console.error("Error:", error.response ? error.response.data : error.message);
-  });
-```
-
-**Request parameters**
-
-| Parameter name                     | Type   | Description                                    |
-| :--------------------------------- | :----- | :--------------------------------------------- |
-| orderId<font color="red">\*</font> | string | Order ID (system-generated)                    |
-| symbol<font color="red">\*</font>  | string | `Lowercase`trading pair name, such as`ethusdt` |
-
-> Response example
-
-```json
-{
-  "code": 0,
-  "msg": "Success",
-  "data": {
-    "orderId": "781601003987136512",
-    "clientOrderId": "",
-    "symbol": "enausdt",
-    "price": 0.1,
-    "origQty": 50,
-    "executedQty": 0,
-    "avgPrice": 0,
-    "type": "LIMIT",
-    "transactTime": 1764185000794,
-    "side": "BUY",
-    "status": "NEW"
-  }
-}
-```
-
-**Response parameters**
-
-| Parameter name | Type   | Example              | Description                                                                                                                    |
-| :------------- | :----- | :------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
-| orderId        | long   | `150695552109032492` | Order ID (system-generated)                                                                                                    |
-| clientOrderId  | string | `213443`             | Order ID (user-generated)                                                                                                      |
-| symbol         | string | `ethusdt`            | `Lowercase`trading pair name                                                                                                   |
-| price          | float  | `4765.29`            | Order price                                                                                                                    |
-| origQty        | float  | `1.01`               | Order quantity                                                                                                                 |
-| executedQty    | float  | `0`                  | Filled order quantity                                                                                                          |
-| avgPrice       | float  | `4754.24`            | The average price of the filled order                                                                                          |
-| type           | string | `LIMIT`              | Order type. Possible values are:`LIMIT`(Limit Order) and`MARKET`(Market Order)                                                 |
-| time           | long   | `1672274311107`      | Timestamp                                                                                                                      |
-| side           | string | `BUY`                | Order direction. Possible values are:`BUY`(Buy/Long) and`SELL`(Sell/Short)                                                     |
-| status         | string | `New Order`          | Order status. Possible values are:`New Order`(New order, no fills),`Partially Filled`(Partially filled),`Filled`(Fully filled) |
-
-### Order Query-V2
+### Order Query
 
 `GET https://t(:spot_http_url)/sapi/v2/order`
 
@@ -6275,471 +4735,8 @@ axios
 | side           | string | `BUY`                | Order direction. Possible values are:`BUY`(Buy/Long) and`SELL`(Sell/Short)                                                     |
 | status         | string | `New Order`          | Order status. Possible values are:`New Order`(New order, no fills),`Partially Filled`(Partially filled),`Filled`(Fully filled) |
 
+
 ### Cancel order
-
-`POST https://t(:spot_http_url)/sapi/v1/cancel`
-
-**Rate limit rule: 100 requests per 2 seconds**
-
-**Request headers**
-
-| Parameter name                         | Type    | Description  |
-| :------------------------------------- | :------ | :----------- |
-| X-CH-SIGN<font color="red">\*</font>   | string  | Signature    |
-| X-CH-APIKEY<font color="red">\*</font> | string  | Your API key |
-| X-CH-TS<font color="red">\*</font>     | integer | Timestamp    |
-
-> Request example
-
-```http
-POST https://t(:spot_http_url)/sapi/v1/cancel
-
-// Headers Configuration
-Content-Type: application/json
-X-CH-TS: 1739945835000
-X-CH-APIKEY: your API-KEY
-X-CH-SIGN: 3c22ee3d2940df5e9dc5b7b862ba3d75e805e97a242f52f12fec9d16bc73e1c7
-```
-
-```shell
-#!/bin/bash
-
-# Set API-related information
-URL="https://t(:spot_http_url)"
-REQUEST_PATH="/sapi/v1/cancel"
-API_URL="${URL}${REQUEST_PATH}"
-API_KEY="your API-KEY"
-API_SECRET="your API-SECRET"
-
-# Generate the current millisecond-level timestamp
-timestamp=$(date +%s | awk '{print $1 * 1000}')
-
-# Define the request method
-METHOD="POST"
-
-# Define the request body (JSON format)
-BODY_JSON='{"symbol":"btcusdt","orderId":"2618039663715064005"}'
-
-# Generate signature (X-CH-SIGN)
-SIGN_PAYLOAD="${timestamp}${METHOD}${REQUEST_PATH}${BODY_JSON}"
-SIGNATURE=$(echo -n "$SIGN_PAYLOAD" | openssl dgst -sha256 -hmac "$API_SECRET" | awk '{print $2}')
-
-# **Print debugging information**
-echo "==== Request information ===="
-echo "Timestamp (X-CH-TS): $timestamp"
-echo "Sign Payload (String to be signed): $SIGN_PAYLOAD"
-echo "Signature (X-CH-SIGN): $SIGNATURE"
-echo "Request Body: $BODY_JSON"
-echo "=================="
-
-# Send request
-curl -X POST "$API_URL" \
-    -H "X-CH-SIGN: $SIGNATURE" \
-    -H "X-CH-APIKEY: $API_KEY" \
-    -H "X-CH-TS: $timestamp" \
-    -H "Content-Type: application/json" \
-    -d "$BODY_JSON"
-```
-
-```java
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
-import java.io.OutputStream;
-import java.time.Instant;
-import java.util.Base64;
-
-public class FameexApiRequest {
-    public static void main(String[] args) {
-        try {
-            // API-related information
-            String url = "https://t(:spot_http_url)";
-            String requestPath = "/sapi/v1/cancel";
-            String apiUrl = url + requestPath;
-            String apiKey = "your API-KEY";
-            String apiSecret = "your API-SECRET";
-
-            // Get the current millisecond-level timestamp
-            String timestamp = String.valueOf(Instant.now().toEpochMilli());
-
-            // Request method
-            String method = "POST";
-
-            // Define the request body (JSON format)
-            String bodyJson = "{\"symbol\":\"btcusdt\",\"orderId\":\"2618039663715064005\"";
-
-            // Generate signature (X-CH-SIGN)
-            String signPayload = timestamp + method + requestPath + bodyJson;
-            String signature = hmacSha256(signPayload, apiSecret);
-
-            // **Print debugging information**
-            System.out.println("==== Request information ====");
-            System.out.println("Timestamp (X-CH-TS): " + timestamp);
-            System.out.println("Sign Payload (String to be signed): " + signPayload);
-            System.out.println("Signature (X-CH-SIGN): " + signature);
-            System.out.println("Request Body: " + bodyJson);
-            System.out.println("==================");
-
-            // Send request
-            sendPostRequest(apiUrl, apiKey, timestamp, signature, bodyJson);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // HMAC-SHA256 Signature calculation
-    public static String hmacSha256(String data, String secret) throws Exception {
-        Mac mac = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-        mac.init(secretKeySpec);
-        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : hash) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) {
-                hexString.append('0');
-            }
-            hexString.append(hex);
-        }
-        return hexString.toString();
-    }
-
-    // Send HTTP POST request
-    public static void sendPostRequest(String apiUrl, String apiKey, String timestamp, String signature, String bodyJson) {
-        try {
-            URL url = new URL(apiUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("X-CH-SIGN", signature);
-            conn.setRequestProperty("X-CH-APIKEY", apiKey);
-            conn.setRequestProperty("X-CH-TS", timestamp);
-            conn.setDoOutput(true);
-
-            // Send request body
-            try (OutputStream os = conn.getOutputStream()) {
-                byte[] input = bodyJson.getBytes(StandardCharsets.UTF_8);
-                os.write(input, 0, input.length);
-            }
-
-            // Read response
-            int responseCode = conn.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
-
-            Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name());
-            while (scanner.hasNextLine()) {
-                System.out.println(scanner.nextLine());
-            }
-            scanner.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-```
-
-```go
-package main
-
-import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
-)
-
-func main() {
-	// API-related information
-    url := "https://t(:spot_http_url)"
-    requestPath := "/sapi/v1/cancel"
-	apiURL := url + requestPath
-	apiKey := "your API-KEY"
-	apiSecret := "your API-SECRET"
-
-	// Generate the current millisecond-level timestamp
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
-
-	// Request method
-	method := "POST"
-
-	// Define the request body (JSON format)
-	bodyJSON := `{"symbol":"btcusdt","orderId":"2618039663715064005"}`
-
-	// Generate signature (X-CH-SIGN)
-	signPayload := timestamp + method + requestPath + bodyJSON
-	signature := hmacSHA256(signPayload, apiSecret)
-
-	// **Print debugging information**
-	fmt.Println("==== Request information ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (String to be signed):", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request Body:", bodyJSON)
-	fmt.Println("==================")
-
-	// Send request
-	sendPostRequest(apiURL, apiKey, timestamp, signature, bodyJSON)
-}
-
-// HMAC-SHA256 Signature calculation
-func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
-}
-
-// Send HTTP POST request
-func sendPostRequest(apiURL, apiKey, timestamp, signature, bodyJSON string) {
-	client := &http.Client{}
-
-	// Create request
-	req, err := http.NewRequest("POST", apiURL, bytes.NewBuffer([]byte(bodyJSON)))
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
-
-	// Set Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
-
-	// Send request
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
-
-	// Read response
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response:", string(body))
-}
-```
-
-```python
-import time
-import hmac
-import hashlib
-import requests
-import json
-
-# API-related information
-URL = "https://t(:spot_http_url)"
-REQUEST_PATH = "/sapi/v1/cancel"
-API_URL = URL + REQUEST_PATH
-API_KEY = "your API-KEY"
-API_SECRET = "your API-SECRET"
-
-# Generate the current millisecond-level timestamp
-timestamp = str(int(time.time() * 1000))
-
-# Request method
-METHOD = "POST"
-
-# Define the request body (JSON format)
-body_json = {
-    "symbol": "btcusdt",
-    "orderId": "2618039663715064005"
-}
-body_str = json.dumps(body_json, separators=(',', ':'))  # Ensure the JSON string format is correct
-
-# Generate signature (X-CH-SIGN)
-sign_payload = timestamp + METHOD + REQUEST_PATH + body_str
-signature = hmac.new(API_SECRET.encode(), sign_payload.encode(), hashlib.sha256).hexdigest()
-
-# **Print debugging information**
-print("==== Request information ====")
-print("Timestamp (X-CH-TS):", timestamp)
-print("Sign Payload (String to be signed):", sign_payload)
-print("Signature (X-CH-SIGN):", signature)
-print("Request Body:", body_str)
-print("==================")
-
-# Send request
-headers = {
-    "X-CH-SIGN": signature,
-    "X-CH-APIKEY": API_KEY,
-    "X-CH-TS": timestamp,
-    "Content-Type": "application/json"
-}
-
-response = requests.post(API_URL, headers=headers, data=body_str)
-
-# Print response
-print("Response Code:", response.status_code)
-print("Response Body:", response.text)
-
-```
-
-```php
-<?
-
-// API-related information
-$url = "https://t(:spot_http_url)";
-$request_path = "/sapi/v1/cancel";
-$api_url = $url . $request_path;
-$api_key = "your API-KEY";
-$api_secret = "your API-SECRET";
-
-// Generate the current millisecond-level timestamp
-$timestamp = round(microtime(true) * 1000);
-
-// Request method
-$method = "POST";
-
-// Define the request body (JSON format)
-$body_json = json_encode([
-    "symbol" => "btcusdt",
-    "orderId" => "2618039663715064005"
-], JSON_UNESCAPED_SLASHES); // Ensure the JSON format is correct
-
-// Generate signature (X-CH-SIGN)
-$sign_payload = $timestamp . $method . $request_path . $body_json;
-$signature = hash_hmac('sha256', $sign_payload, $api_secret);
-
-// **Print debugging information**
-echo "==== Request information息 ====\n";
-echo "Timestamp (X-CH-TS): " . $timestamp . "\n";
-echo "Sign Payload (String to be signed): " . $sign_payload . "\n";
-echo "Signature (X-CH-SIGN): " . $signature . "\n";
-echo "Request Body: " . $body_json . "\n";
-echo "==================\n";
-
-// Send request
-$headers = [
-    "Content-Type: application/json",
-    "X-CH-SIGN: $signature",
-    "X-CH-APIKEY: $api_key",
-    "X-CH-TS: $timestamp"
-];
-
-// Use cURL to send a POST request
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $api_url);
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $body_json);
-
-// Execute the request and get the response
-$response = curl_exec($ch);
-$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
-
-// Print response
-echo "Response Code: $http_code\n";
-echo "Response Body: $response\n";
-
-```
-
-```javascript--node
-const axios = require("axios");
-const crypto = require("crypto");
-
-// API-related information
-const URL = "https://t(:spot_http_url)";
-const REQUEST_PATH = "/sapi/v1/cancel";
-const API_URL = URL + REQUEST_PATH;
-const API_KEY = "your API-KEY";
-const API_SECRET = "your API-SECRET";
-
-// Generate the current millisecond-level timestamp
-const timestamp = Date.now().toString();
-
-// Request method
-const METHOD = "POST";
-
-// Define the request body (JSON format)
-const bodyJson = JSON.stringify({
-  symbol: "btcusdt",
-  orderId: "2618039663715064005",
-});
-
-// Generate signature (X-CH-SIGN)
-const signPayload = timestamp + METHOD + REQUEST_PATH + bodyJson;
-const signature = crypto
-  .createHmac("sha256", API_SECRET)
-  .update(signPayload)
-  .digest("hex");
-
-// **Print debugging information**
-console.log("==== Request information ====");
-console.log("Timestamp (X-CH-TS):", timestamp);
-console.log("Sign Payload (String to be signed):", signPayload);
-console.log("Signature (X-CH-SIGN):", signature);
-console.log("Request Body:", bodyJson);
-console.log("==================");
-
-// Send request
-const headers = {
-  "Content-Type": "application/json",
-  "X-CH-SIGN": signature,
-  "X-CH-APIKEY": API_KEY,
-  "X-CH-TS": timestamp,
-};
-
-axios
-  .post(API_URL, bodyJson, { headers })
-  .then((response) => {
-    console.log("Response Code:", response.status);
-    console.log("Response Body:", response.data);
-  })
-  .catch((error) => {
-    console.error("Error:", error.response ? error.response.data : error.message);
-  });
-
-```
-
-> body
-
-```json
-{ "symbol": "btcusdt", "orderId": "2618039663715064005" }
-```
-
-**Request parameters**
-
-| Parameter name                     | Type   | Description                                    |
-| :--------------------------------- | :----- | :--------------------------------------------- |
-| orderId<font color="red">\*</font> | string | Order ID (system-generated)                    |
-| symbol<font color="red">\*</font>  | string | `Lowercase`trading pair name, such as`ethusdt` |
-
-> Response example
-
-```json
-{
-  "code": 0,
-  "msg": "Success",
-  "data": {
-    "orderId": "781594618796015616",
-    "symbol": "enausdt",
-    "status": "PENDING_CANCEL"
-  }
-}
-```
-
-**Response parameters**
-
-| Parameter name | Type   | Example               | Description                   |
-| :------------- | :----- | :-------------------- | :---------------------------- |
-| orderId        | long   | `1938321163093079425` | Order ID (system-generated)   |
-| symbol         | string | `ethusdt`             | Trading pair name             |
-| status         | string | `PENDING_CANCEL`      | Order status:`PENDING_CANCEL` |
-
-### Cancel order-V2
 
 `POST https://t(:spot_http_url)/sapi/v2/cancel`
 
@@ -7571,492 +5568,6 @@ axios
 ```
 
 ### Current order
-
-`GET https://t(:spot_http_url)/sapi/v1/openOrders`
-
-**Rate limit rule: 20 requests per 2 seconds**
-
-**Request headers**
-
-| Parameter name                         | Type    | Description  |
-| :------------------------------------- | :------ | :----------- |
-| X-CH-SIGN<font color="red">\*</font>   | string  | Signature    |
-| X-CH-APIKEY<font color="red">\*</font> | string  | Your API key |
-| X-CH-TS<font color="red">\*</font>     | integer | Timestamp    |
-
-> Request example
-
-```http
-GET https://t(:spot_http_url)/sapi/v1/openOrders?symbol=btcusdt&limit=10
-
-// Headers Configuration
-Content-Type: application/json
-X-CH-TS: 1739503617552
-X-CH-APIKEY: your API-KEY
-X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
-```
-
-```shell
-#!/bin/bash
-
-# Set API-related information
-API_URL="https://t(:spot_http_url)"
-REQUEST_URL="/sapi/v1/openOrders"
-QUERY_STRING="?symbol=btcusdt&limit=10"
-
-# Calculate the complete request URL
-REQUEST_PATH="${REQUEST_URL}${QUERY_STRING}"
-FULL_URL="${API_URL}${REQUEST_PATH}"
-
-# API authentication information
-API_KEY="your API-KEY"
-API_SECRET="your API-SECRET"
-
-# Generate the current millisecond-level timestamp
-timestamp=$(date +%s | awk '{print $1 * 1000}')
-
-# Define the request method
-METHOD="GET"
-
-# Generate signature (X-CH-SIGN) - GET requests have no body
-SIGN_PAYLOAD="${timestamp}${METHOD}${REQUEST_PATH}"
-SIGNATURE=$(echo -n "$SIGN_PAYLOAD" | openssl dgst -sha256 -hmac "$API_SECRET" | awk '{print $2}')
-
-# **Print debugging information**
-echo "==== Request information ===="
-echo "Timestamp (X-CH-TS): $timestamp"
-echo "Sign Payload (String to be signed): $SIGN_PAYLOAD"
-echo "Signature (X-CH-SIGN): $SIGNATURE"
-echo "Request URL: ${FULL_URL}"
-echo "=================="
-
-# Send GET request
-curl -X GET "$FULL_URL" \
-    -H "X-CH-SIGN: $SIGNATURE" \
-    -H "X-CH-APIKEY: $API_KEY" \
-    -H "X-CH-TS: $timestamp" \
-    -H "Content-Type: application/json"
-
-```
-
-```java
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.time.Instant;
-import java.util.Scanner;
-
-public class FameexApiRequest {
-    public static void main(String[] args) {
-        try {
-            // API-related information
-            String apiUrl = "https://t(:spot_http_url)";
-            String requestUrl = "/sapi/v1/openOrders";
-            String queryString = "?symbol=btcusdt&limit=10";
-
-            // Calculate the complete request URL
-            String requestPath = requestUrl + queryString;
-            String fullUrl = apiUrl + requestPath;
-
-            // API authentication information
-            String apiKey = "your API-KEY";
-            String apiSecret = "your API-SECRET";
-
-            // Generate the current millisecond-level timestamp
-            String timestamp = String.valueOf(Instant.now().toEpochMilli());
-
-            // Request method
-            String method = "GET";
-
-            // Generate signature (X-CH-SIGN) - GET requests have no body
-            String signPayload = timestamp + method + requestPath;
-            String signature = hmacSha256(signPayload, apiSecret);
-
-            // **Print debugging information**
-            System.out.println("==== Request information ====");
-            System.out.println("Timestamp (X-CH-TS): " + timestamp);
-            System.out.println("Sign Payload (string to be signed): " + signPayload);
-            System.out.println("Signature (X-CH-SIGN): " + signature);
-            System.out.println("Request URL: " + fullUrl);
-            System.out.println("==================");
-
-            // Send GET request
-            sendGetRequest(fullUrl, apiKey, timestamp, signature);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // HMAC-SHA256 signature calculation
-    public static String hmacSha256(String data, String secret) throws Exception {
-        Mac mac = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-        mac.init(secretKeySpec);
-        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
-
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : hash) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) {
-                hexString.append('0');
-            }
-            hexString.append(hex);
-        }
-        return hexString.toString();
-    }
-
-    // Send HTTP GET request
-    public static void sendGetRequest(String fullUrl, String apiKey, String timestamp, String signature) {
-        try {
-            URL url = new URL(fullUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-
-            // Set request headers
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("X-CH-SIGN", signature);
-            conn.setRequestProperty("X-CH-APIKEY", apiKey);
-            conn.setRequestProperty("X-CH-TS", timestamp);
-
-            // Send the request and get the response
-            int responseCode = conn.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
-
-            Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name());
-            while (scanner.hasNextLine()) {
-                System.out.println(scanner.nextLine());
-            }
-            scanner.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-```
-
-```go
-package main
-
-import (
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
-)
-
-func main() {
-	// API-related information
-	apiURL := "https://t(:spot_http_url)"
-	requestURL := "/sapi/v1/openOrders"
-	queryString := "?symbol=btcusdt&limit=10"
-
-	// Calculate the complete request URL
-	requestPath := requestURL + queryString
-	fullURL := apiURL + requestPath
-
-	// API authentication information
-	apiKey := "your API-KEY"
-	apiSecret := "your API-SECRET"
-
-	// Generate the current millisecond-level timestamp
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
-
-	// Request method
-	method := "GET"
-
-	// Generate signature (X-CH-SIGN) - GET requests have no body
-	signPayload := timestamp + method + requestPath
-	signature := hmacSHA256(signPayload, apiSecret)
-
-	// **Print debugging information**
-	fmt.Println("==== Request information ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (string to be signed): ", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request URL:", fullURL)
-	fmt.Println("==================")
-
-	// Send GET request
-	sendGetRequest(fullURL, apiKey, timestamp, signature)
-}
-
-// Compute HMAC-SHA256 signature
-func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
-}
-
-// Send HTTP GET request
-func sendGetRequest(fullURL, apiKey, timestamp, signature string) {
-	client := &http.Client{}
-
-	// Create request
-	req, err := http.NewRequest("GET", fullURL, nil)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
-
-	// Set Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
-
-	// Send request
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
-
-	// Read response
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
-}
-
-```
-
-```python
-import time
-import hmac
-import hashlib
-import requests
-
-# API-related information
-API_URL = "https://t(:spot_http_url)"
-REQUEST_URL = "/sapi/v1/openOrders"
-QUERY_STRING = "?symbol=btcusdt&limit=10"
-
-# Calculate the complete request URL
-REQUEST_PATH = REQUEST_URL + QUERY_STRING
-FULL_URL = API_URL + REQUEST_PATH
-
-# API authentication information
-API_KEY = "your API-KEY"
-API_SECRET = "your API-SECRET"
-
-# Generate the current millisecond-level timestamp
-timestamp = str(int(time.time() * 1000))
-
-# Request method
-METHOD = "GET"
-
-# Generate signature (X-CH-SIGN) - GET requests have no body
-SIGN_PAYLOAD = timestamp + METHOD + REQUEST_PATH
-SIGNATURE = hmac.new(API_SECRET.encode(), SIGN_PAYLOAD.encode(), hashlib.sha256).hexdigest()
-
-# **Print debugging information**
-print("==== Request information ====")
-print("Timestamp (X-CH-TS):", timestamp)
-print("Sign Payload (String to be signed):", SIGN_PAYLOAD)
-print("Signature (X-CH-SIGN):", SIGNATURE)
-print("Request URL:", FULL_URL)
-print("==================")
-
-# Send GET request
-headers = {
-    "X-CH-SIGN": SIGNATURE,
-    "X-CH-APIKEY": API_KEY,
-    "X-CH-TS": timestamp,
-    "Content-Type": "application/json"
-}
-
-response = requests.get(FULL_URL, headers=headers)
-
-# Print response
-print("Response Code:", response.status_code)
-print("Response Body:", response.text)
-
-```
-
-```php
-<?
-
-// API-related information
-$API_URL = "https://t(:spot_http_url)";
-$REQUEST_URL = "/sapi/v1/openOrders";
-$QUERY_STRING = "?symbol=btcusdt&limit=10";
-
-// Calculate the complete request URL
-$REQUEST_PATH = $REQUEST_URL . $QUERY_STRING;
-$FULL_URL = $API_URL . $REQUEST_PATH;
-
-// API authentication information
-$API_KEY = "your API-KEY";
-$API_SECRET = "your API-SECRET";
-
-// Generate the current millisecond-level timestamp
-$timestamp = round(microtime(true) * 1000);
-
-// Request method
-$METHOD = "GET";
-
-// Generate signature (X-CH-SIGN) - GET requests have no body
-$SIGN_PAYLOAD = $timestamp . $METHOD . $REQUEST_PATH;
-$SIGNATURE = hash_hmac('sha256', $SIGN_PAYLOAD, $API_SECRET);
-
-// **Print debugging information**
-echo "==== Request information ====\n";
-echo "Timestamp (X-CH-TS): " . $timestamp . "\n";
-echo "Sign Payload (String to be signed): " . $SIGN_PAYLOAD . "\n";
-echo "Signature (X-CH-SIGN): " . $SIGNATURE . "\n";
-echo "Request URL: " . $FULL_URL . "\n";
-echo "==================\n";
-
-// Send GET request
-$headers = [
-    "Content-Type: application/json",
-    "X-CH-SIGN: $SIGNATURE",
-    "X-CH-APIKEY: $API_KEY",
-    "X-CH-TS: $timestamp"
-];
-
-// Use cURL to send a GET request
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $FULL_URL);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-// Execute the request and get the response
-$response = curl_exec($ch);
-$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
-
-// Print response
-echo "Response Code: $http_code\n";
-echo "Response Body: $response\n";
-
-?>
-```
-
-```javascript--node
-const axios = require("axios");
-const crypto = require("crypto");
-
-// API-related information
-const API_URL = "https://t(:spot_http_url)";
-const REQUEST_URL = "/sapi/v1/openOrders";
-const QUERY_STRING = "?symbol=btcusdt&limit=10";
-
-// Calculate the complete request URL
-const REQUEST_PATH = REQUEST_URL + QUERY_STRING;
-const FULL_URL = API_URL + REQUEST_PATH;
-
-// API authentication information
-const API_KEY = "your API-KEY";
-const API_SECRET = "your API-SECRET";
-
-// Generate the current millisecond-level timestamp
-const timestamp = Date.now().toString();
-
-// Request method
-const METHOD = "GET";
-
-// Generate signature (X-CH-SIGN) - GET requests have no body
-const SIGN_PAYLOAD = timestamp + METHOD + REQUEST_PATH;
-const SIGNATURE = crypto
-  .createHmac("sha256", API_SECRET)
-  .update(SIGN_PAYLOAD)
-  .digest("hex");
-
-// **Print debugging information**
-console.log("==== Request information ====");
-console.log("Timestamp (X-CH-TS):", timestamp);
-console.log("Sign Payload (string to be signed): ", SIGN_PAYLOAD);
-console.log("Signature (X-CH-SIGN):", SIGNATURE);
-console.log("Request URL:", FULL_URL);
-console.log("==================");
-
-// Send GET request
-const headers = {
-  "Content-Type": "application/json",
-  "X-CH-SIGN": SIGNATURE,
-  "X-CH-APIKEY": API_KEY,
-  "X-CH-TS": timestamp,
-};
-
-axios
-  .get(FULL_URL, { headers })
-  .then((response) => {
-    console.log("Response Code:", response.status);
-    console.log("Response Body:", response.data);
-  })
-  .catch((error) => {
-    console.error("Error:", error.response ? error.response.data : error.message);
-  });
-```
-
-**Request parameters**
-
-| Parameter name                    | Type    | Description                                      |
-| :-------------------------------- | :------ | :----------------------------------------------- |
-| symbol<font color="red">\*</font> | string  | `Lowercase` trading pair name, such as `ethusdt` |
-| limit                             | integer | Maximum 1000                                     |
-
-> Response example
-
-```json
-{
-  "code": 0,
-  "msg": "Success",
-  "data": [
-    {
-      "orderId": "781594618796015616",
-      "symbol": "ENAUSDT",
-      "price": 0.1,
-      "origQty": 50,
-      "executedQty": 0,
-      "avgPrice": 0,
-      "type": "LIMIT",
-      "time": 1764183478446,
-      "side": "BUY",
-      "status": "NEW"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "side": "BUY",
-      "executedQty": "0",
-      "orderId": 1938321163093078022,
-      "price": "0",
-      "origQty": "0.01",
-      "avgPrice": "0",
-      "time": 1701243281850,
-      "type": "MARKET",
-      "status": "NEW_"
-    }
-  ]
-}
-```
-
-**Response parameters**
-
-| Parameter name | Type   | Example              | Description                                                                                                                    |
-| :------------- | :----- | :------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
-| orderId        | long   | `150695552109032492` | Order ID (system-generated)                                                                                                    |
-| symbol         | string | `ETHUSDT`            | Trading pair name                                                                                                              |
-| price          | float  | `4765.29`            | Order price                                                                                                                    |
-| origQty        | float  | `1.01`               | Order quantity                                                                                                                 |
-| executedQty    | float  | `1.01`               | Filled order quantity                                                                                                          |
-| avgPrice       | float  | `4754.24`            | The average price of the filled order                                                                                          |
-| type           | string | `LIMIT`              | Order type. Possible values are:`LIMIT`(Limit Order) and`MARKET`(Market Order)                                                 |
-| time           | long   | `1701243281850`      | Timestamp                                                                                                                      |
-| side           | string | `BUY`                | Order direction. Possible values are: BUY (Buy/Long) and SELL (Sell/Short)                                                     |
-| status         | string | `New Order`          | Order status. Possible values are:`New Order`(New order, no fills),`Partially Filled`(Partially filled), Filled (Fully filled) |
-
-### Current order-V2
 
 `GET https://t(:spot_http_url)/sapi/v2/openOrders`
 
@@ -9043,468 +6554,6 @@ axios
 
 <aside class="notice">The APIs under the account section require signature and API-key authentication.</aside>
 
-### Account information (deprecated)
-
-`GET https://t(:spot_http_url)/sapi/v1/account`
-
-**Rate limit rule: 20 requests per 2 seconds**
-
-**Request headers**
-
-| Parameter name                         | Type    | Description  |
-| :------------------------------------- | :------ | :----------- |
-| X-CH-SIGN<font color="red">\*</font>   | string  | Signature    |
-| X-CH-APIKEY<font color="red">\*</font> | string  | Your API key |
-| X-CH-TS<font color="red">\*</font>     | integer | Timestamp    |
-
-> Request example
-
-```http
-GET https://t(:spot_http_url)/sapi/v1/account
-
-// Headers Configuration
-Content-Type: application/json
-X-CH-TS: 1739503617552
-X-CH-APIKEY: your API-KEY
-X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
-```
-
-```shell
-#!/bin/bash
-
-# Set API-related information
-API_URL="https://t(:spot_http_url)"
-REQUEST_URL="/sapi/v1/account"
-QUERY_STRING=""
-
-# Calculate the complete request URL
-REQUEST_PATH="${REQUEST_URL}${QUERY_STRING}"
-FULL_URL="${API_URL}${REQUEST_PATH}"
-
-# API authentication information
-API_KEY="your API-KEY"
-API_SECRET="your API-SECRET"
-
-# Generate the current millisecond-level timestamp
-timestamp=$(date +%s | awk '{print $1 * 1000}')
-
-# Define the request method
-METHOD="GET"
-
-# Generate signature (X-CH-SIGN) - GET requests have no body
-SIGN_PAYLOAD="${timestamp}${METHOD}${REQUEST_PATH}"
-SIGNATURE=$(echo -n "$SIGN_PAYLOAD" | openssl dgst -sha256 -hmac "$API_SECRET" | awk '{print $2}')
-
-# **Print debugging information**
-echo "==== Request information ===="
-echo "Timestamp (X-CH-TS): $timestamp"
-echo "Sign Payload (String to be signed): $SIGN_PAYLOAD"
-echo "Signature (X-CH-SIGN): $SIGNATURE"
-echo "Request URL: ${FULL_URL}"
-echo "=================="
-
-# Send GET request
-curl -X GET "$FULL_URL" \
-    -H "X-CH-SIGN: $SIGNATURE" \
-    -H "X-CH-APIKEY: $API_KEY" \
-    -H "X-CH-TS: $timestamp" \
-    -H "Content-Type: application/json"
-
-```
-
-```java
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.time.Instant;
-import java.util.Scanner;
-
-public class FameexApiRequest {
-    public static void main(String[] args) {
-        try {
-            // API-related information
-            String apiUrl = "https://t(:spot_http_url)";
-            String requestUrl = "/sapi/v1/account";
-            String queryString = "";
-
-            // Calculate the complete request URL
-            String requestPath = requestUrl + queryString;
-            String fullUrl = apiUrl + requestPath;
-
-            // API authentication information
-            String apiKey = "your API-KEY";
-            String apiSecret = "your API-SECRET";
-
-            // Generate the current millisecond-level timestamp
-            String timestamp = String.valueOf(Instant.now().toEpochMilli());
-
-            // Request method
-            String method = "GET";
-
-            // Generate signature (X-CH-SIGN) - GET requests have no body
-            String signPayload = timestamp + method + requestPath;
-            String signature = hmacSha256(signPayload, apiSecret);
-
-            // **Print debugging information**
-            System.out.println("==== Request information ====");
-            System.out.println("Timestamp (X-CH-TS): " + timestamp);
-            System.out.println("Sign Payload (String to be signed): " + signPayload);
-            System.out.println("Signature (X-CH-SIGN): " + signature);
-            System.out.println("Request URL: " + fullUrl);
-            System.out.println("==================");
-
-            // Send GET request
-            sendGetRequest(fullUrl, apiKey, timestamp, signature);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // HMAC-SHA256 signature calculation
-    public static String hmacSha256(String data, String secret) throws Exception {
-        Mac mac = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-        mac.init(secretKeySpec);
-        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
-
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : hash) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) {
-                hexString.append('0');
-            }
-            hexString.append(hex);
-        }
-        return hexString.toString();
-    }
-
-    // Send HTTP GET request
-    public static void sendGetRequest(String fullUrl, String apiKey, String timestamp, String signature) {
-        try {
-            URL url = new URL(fullUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-
-            // Set request headers
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("X-CH-SIGN", signature);
-            conn.setRequestProperty("X-CH-APIKEY", apiKey);
-            conn.setRequestProperty("X-CH-TS", timestamp);
-
-            // Send the request and get the response
-            int responseCode = conn.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
-
-            Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name());
-            while (scanner.hasNextLine()) {
-                System.out.println(scanner.nextLine());
-            }
-            scanner.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-```
-
-```go
-package main
-
-import (
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
-)
-
-func main() {
-	// API-related information
-	apiURL := "https://t(:spot_http_url)"
-	requestURL := "/sapi/v1/account"
-	queryString := ""
-
-	// Calculate the complete request URL
-	requestPath := requestURL + queryString
-	fullURL := apiURL + requestPath
-
-	// API authentication information
-	apiKey := "your API-KEY"
-	apiSecret := "your API-SECRET"
-
-	// Generate the current millisecond-level timestamp
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
-
-	// Request method
-	method := "GET"
-
-	// Generate signature (X-CH-SIGN) - GET requests have no body
-	signPayload := timestamp + method + requestPath
-	signature := hmacSHA256(signPayload, apiSecret)
-
-	// **Print debugging information**
-	fmt.Println("==== Request information ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (String to be signed):", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request URL:", fullURL)
-	fmt.Println("==================")
-
-	// Send GET request
-	sendGetRequest(fullURL, apiKey, timestamp, signature)
-}
-
-// Compute HMAC-SHA256 signature
-func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
-}
-
-// Send HTTP GET request
-func sendGetRequest(fullURL, apiKey, timestamp, signature string) {
-	client := &http.Client{}
-
-	// Create request
-	req, err := http.NewRequest("GET", fullURL, nil)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
-
-	// Set Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
-
-	// Send request
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
-
-	// Read response
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
-}
-
-```
-
-```python
-import time
-import hmac
-import hashlib
-import requests
-
-# API-related information
-API_URL = "https://t(:spot_http_url)"
-REQUEST_URL = "/sapi/v1/account"
-QUERY_STRING = ""
-
-# Calculate the complete request URL
-REQUEST_PATH = REQUEST_URL + QUERY_STRING
-FULL_URL = API_URL + REQUEST_PATH
-
-# API authentication information
-API_KEY = "your API-KEY"
-API_SECRET = "your API-SECRET"
-
-# Generate the current millisecond-level timestamp
-timestamp = str(int(time.time() * 1000))
-
-# Request method
-METHOD = "GET"
-
-# Generate signature (X-CH-SIGN) - GET requests have no body
-SIGN_PAYLOAD = timestamp + METHOD + REQUEST_PATH
-SIGNATURE = hmac.new(API_SECRET.encode(), SIGN_PAYLOAD.encode(), hashlib.sha256).hexdigest()
-
-# **Print debugging information**
-print("==== Request information ====")
-print("Timestamp (X-CH-TS):", timestamp)
-print("Sign Payload (String to be signed):", SIGN_PAYLOAD)
-print("Signature (X-CH-SIGN):", SIGNATURE)
-print("Request URL:", FULL_URL)
-print("==================")
-
-# Send GET request
-headers = {
-    "X-CH-SIGN": SIGNATURE,
-    "X-CH-APIKEY": API_KEY,
-    "X-CH-TS": timestamp,
-    "Content-Type": "application/json"
-}
-
-response = requests.get(FULL_URL, headers=headers)
-
-# Print response
-print("Response Code:", response.status_code)
-print("Response Body:", response.text)
-
-```
-
-```php
-<?
-
-// API-related information
-$API_URL = "https://t(:spot_http_url)";
-$REQUEST_URL = "/sapi/v1/account";
-$QUERY_STRING = "";
-
-// Calculate the complete request URL
-$REQUEST_PATH = $REQUEST_URL . $QUERY_STRING;
-$FULL_URL = $API_URL . $REQUEST_PATH;
-
-// API authentication information
-$API_KEY = "your API-KEY";
-$API_SECRET = "your API-SECRET";
-
-// Generate the current millisecond-level timestamp
-$timestamp = round(microtime(true) * 1000);
-
-// Request method
-$METHOD = "GET";
-
-// Generate signature (X-CH-SIGN) - GET requests have no body
-$SIGN_PAYLOAD = $timestamp . $METHOD . $REQUEST_PATH;
-$SIGNATURE = hash_hmac('sha256', $SIGN_PAYLOAD, $API_SECRET);
-
-// **Print debugging information**
-echo "==== Request information ====\n";
-echo "Timestamp (X-CH-TS): " . $timestamp . "\n";
-echo "Sign Payload (String to be signed): " . $SIGN_PAYLOAD . "\n";
-echo "Signature (X-CH-SIGN): " . $SIGNATURE . "\n";
-echo "Request URL: " . $FULL_URL . "\n";
-echo "==================\n";
-
-// Send GET request
-$headers = [
-    "Content-Type: application/json",
-    "X-CH-SIGN: $SIGNATURE",
-    "X-CH-APIKEY: $API_KEY",
-    "X-CH-TS: $timestamp"
-];
-
-// Use cURL to send a GET reques
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $FULL_URL);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-// Execute the request and get the response
-$response = curl_exec($ch);
-$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
-
-// Print response
-echo "Response Code: $http_code\n";
-echo "Response Body: $response\n";
-
-?>
-```
-
-```javascript--node
-const axios = require("axios");
-const crypto = require("crypto");
-
-// API-related information
-const API_URL = "https://t(:spot_http_url)";
-const REQUEST_URL = "/sapi/v1/account";
-const QUERY_STRING = "";
-
-// Calculate the complete request URL
-const REQUEST_PATH = REQUEST_URL + QUERY_STRING;
-const FULL_URL = API_URL + REQUEST_PATH;
-
-// API authentication information
-const API_KEY = "your API-KEY";
-const API_SECRET = "your API-SECRET";
-
-// Generate the current millisecond-level timestamp
-const timestamp = Date.now().toString();
-
-// Request method
-const METHOD = "GET";
-
-// Generate signature (X-CH-SIGN) - GET requests have no body
-const SIGN_PAYLOAD = timestamp + METHOD + REQUEST_PATH;
-const SIGNATURE = crypto
-  .createHmac("sha256", API_SECRET)
-  .update(SIGN_PAYLOAD)
-  .digest("hex");
-
-// **Print debugging information**
-console.log("==== Request information ====");
-console.log("Timestamp (X-CH-TS):", timestamp);
-console.log("Sign Payload (String to be signed):", SIGN_PAYLOAD);
-console.log("Signature (X-CH-SIGN):", SIGNATURE);
-console.log("Request URL:", FULL_URL);
-console.log("==================");
-
-// Send GET request
-const headers = {
-  "Content-Type": "application/json",
-  "X-CH-SIGN": SIGNATURE,
-  "X-CH-APIKEY": API_KEY,
-  "X-CH-TS": timestamp,
-};
-
-axios
-  .get(FULL_URL, { headers })
-  .then((response) => {
-    console.log("Response Code:", response.status);
-    console.log("Response Body:", response.data);
-  })
-  .catch((error) => {
-    console.error("Error:", error.response ? error.response.data : error.message);
-  });
-```
-
-> Return example
-
-```json
-{
-  "balances": [
-    {
-      "asset": "ABAT",
-      "free": "10.00",
-      "locked": "20.00"
-    },
-    {
-      "asset": "DOT",
-      "free": "10.00",
-      "locked": "10.00"
-    },
-    {
-      "asset": "TT",
-      "free": "50.00",
-      "locked": "50.00"
-    }
-  ]
-}
-```
-
-**Response parameters**
-
-| Parameter name | Type   | Description          |
-| :------------- | :----- | :------------------- |
-| balances       | array  | Account balance set. |
-| asset          | string | Trading pair         |
-| free           | string | Available balance    |
-| locked         | string | Frozen balance       |
-
 ### Account information (recommended)
 
 `GET https://t(:spot_http_url)/sapi/v1/account/balance`
@@ -9977,11 +7026,56 @@ axios
 | Parameter name | Type   | Description       |
 | :------------- | :----- | :---------------- |
 | balances       | array  | Account balance   |
-| asset          | string | Trading pair      |
+| asset          | string | coin              |
 | free           | string | Available balance |
 | locked         | string | Frozen balance    |
 
 # Contract trading
+
+## Enumeration type
+
+### Trading pair
+
+| Value   | Description                                                                                                |
+| :------ | :--------------------------------------------------------------------------------------------------------- |
+| `base`  | Refers to the trading asset of a trading pair, specifically the asset name that appears in the front part  |
+| `quote` | Refers to the pricing asset of a trading pair, specifically the asset name that appears in the latter part |
+
+### Order status
+
+| Value                        | Description               |
+| :--------------------------- | :------------------------ |
+| `New Order`                  | Create a new order        |
+| `Partially Filled`           | Partially filled          |
+| `Filled`                     | Fully filled              |
+| `Cancelled`                  | Canceled                  |
+| `To be Cancelled`            | Canceling                 |
+| `Partially Filled/Cancelled` | Partially filled/Canceled |
+| `REJECTED`                   | Order rejected            |
+
+### Order type
+
+| Value    | Description  |
+| :------- | :----------- |
+| `LIMIT`  | Limit order  |
+| `MARKET` | Market order |
+
+### Order direction
+
+| Value  | Description |
+| :----- | :---------- |
+| `BUY`  | Buy order   |
+| `SELL` | Sell order  |
+
+### K-line interval
+
+| Value   | Description | Example                                   |
+| :------ | :---------- | :---------------------------------------- |
+| `min`   | Minute      | `1min`, `5min`, `15min`, `30min`, `60min` |
+| `h`     | Hour        | `1h`, `4h`                                |
+| `day`   | Day         | `1day`                                    |
+| `week`  | Week        | `1week`                                   |
+| `month` | Month       |     
 
 ## Public
 
@@ -17459,6 +14553,261 @@ To keep the connection active and stable, it is recommended to perform the follo
 ## Java
 
 [JAVA Demo](https://github.com/)
+
+<a name="Return Code Type"></a>
+
+# Return Code Type
+
+Description and Causes of Exception Codes and Error Codes
+
+<aside class="warning">The following return content is for basic parameter validation. If the return code is not included in the return code types listed below, it indicates an error outside the business layer, and you need to contact technical personnel for resolution.</aside>
+
+## 10XX - General Server and Network Errors
+
+### Code:-1000 UNKNOWN
+
+| Code | Tag     | msg                                                    | Cause                                                  |
+| :--- | :------ | :----------------------------------------------------- | :----------------------------------------------------- |
+| 1000 | UNKNOWN | An unknown error occurred while processing the request | An unknown error occurred while processing the request |
+
+### Code:-1001 DISCONNECTED
+
+| Code | Tag          | msg                                                              | Cause                                          |
+| :--- | :----------- | :--------------------------------------------------------------- | :--------------------------------------------- |
+| 1001 | DISCONNECTED | Internal error; unable to process your request. Please try again | Internal error; unable to process your request |
+
+### Code:-1002 UNAUTHORIZED
+
+| Code | Tag          | msg                                                                                                                                              | Cause                                       |
+| :--- | :----------- | :----------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------ |
+| 1002 | UNAUTHORIZED | You do not have permission to execute this request. The request requires an API Key. We recommend attaching `X-CH-APIKEY` in all request headers | The request header is missing `X-CH-APIKEY` |
+
+### Code:-1003 TOO_MANY_REQUESTS
+
+| Code | Tag               | msg                                               | Cause                                             |
+| :--- | :---------------- | :------------------------------------------------ | :------------------------------------------------ |
+| 1003 | TOO_MANY_REQUESTS | The request is too frequent and exceeds the limit | The request is too frequent and exceeds the limit |
+
+### Code:-1004 NO_THIS_COMPANY
+
+| Code | Tag             | msg                                                                     | Cause                                                                   |
+| :--- | :-------------- | :---------------------------------------------------------------------- | :---------------------------------------------------------------------- |
+| 1004 | NO_THIS_COMPANY | You do not have permission to execute this request. User does not exist | You do not have permission to execute this request. User does not exist |
+
+### Code:-1006 UNEXPECTED_RESP
+
+| Code | Tag             | msg                                                                                         | Cause                                                                                       |
+| :--- | :-------------- | :------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------ |
+| 1006 | UNEXPECTED_RESP | The received message does not conform to the preset format, and the order status is unknown | The received message does not conform to the preset format, and the order status is unknown |
+
+### Code:-1007 TIMEOUT
+
+| Code | Tag     | msg                                                                                           | Cause           |
+| :--- | :------ | :-------------------------------------------------------------------------------------------- | :-------------- |
+| 1007 | TIMEOUT | Timeout waiting for backend server response. Sending status unknown; execution status unknown | Request timeout |
+
+### Code:-1014 UNKNOWN_ORDER_COMPOSITION
+
+| Code | Tag                       | msg                           | Cause                                                                              |
+| :--- | :------------------------ | :---------------------------- | :--------------------------------------------------------------------------------- |
+| 1014 | UNKNOWN_ORDER_COMPOSITION | Unsupported order combination | The order combination does not exist or an incorrect order combination was entered |
+
+### Code:-1015 TOO_MANY_ORDERS
+
+| Code | Tag             | msg                                                      | Cause                                        |
+| :--- | :-------------- | :------------------------------------------------------- | :------------------------------------------- |
+| 1015 | TOO_MANY_ORDERS | Too many orders. Please reduce the number of your orders | The order quantity exceeds the maximum limit |
+
+### Code:-1016 SERVICE_SHUTTING_DOWN
+
+| Code | Tag                   | msg            | Cause                                                  |
+| :--- | :-------------------- | :------------- | :----------------------------------------------------- |
+| 1016 | SERVICE_SHUTTING_DOWN | Server offline | The server is offline and the interface is unavailable |
+
+### Code:-1017 NO_CONTENT_TYPE
+
+| Code | Tag             | msg                                                                                               | Cause                                        |
+| :--- | :-------------- | :------------------------------------------------------------------------------------------------ | :------------------------------------------- |
+| 1017 | NO_CONTENT_TYPE | We recommend attaching `Content-Type` in all request headers and setting it to `application/json` | The request header is missing `Content-Type` |
+
+### Code:-1020 UNSUPPORTED_OPERATION
+
+| Code | Tag                   | msg                             | Cause                                                                                                        |
+| :--- | :-------------------- | :------------------------------ | :----------------------------------------------------------------------------------------------------------- |
+| 1020 | UNSUPPORTED_OPERATION | This operation is not supported | An incorrect request operation was made. You need to coordinate with the technical team to resolve the issue |
+
+### Code:-1021 INVALID_TIMESTAMP
+
+| Code | Tag               | msg                                             | Cause                                                                                                                                                                  |
+| :--- | :---------------- | :---------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1021 | INVALID_TIMESTAMP | Invalid timestamp, the time offset is too large | The timestamp offset is too large. The server determines that the client’s time is more than 1 second ahead of the server’s time based on the timestamp in the request |
+
+### Code:-1022 INVALID_SIGNATURE
+
+| Code | Tag               | msg               | Cause                         |
+| :--- | :---------------- | :---------------- | :---------------------------- |
+| 1022 | INVALID_SIGNATURE | Invalid signature | Signature verification failed |
+
+### Code:-1023 UNAUTHORIZED
+
+| Code | Tag          | msg                                                                                                                                           | Cause                                   |
+| :--- | :----------- | :-------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------- |
+| 1023 | UNAUTHORIZED | You do not have permission to execute this request. The request requires a timestamp. We recommend attaching `X-CH-TS` in all request headers | The request header is missing `X-CH-TS` |
+
+### Code:-1024 UNAUTHORIZED
+
+| Code | Tag          | msg                                                                                                                                        | Cause                                     |
+| :--- | :----------- | :----------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------- |
+| 1024 | UNAUTHORIZED | You do not have permission to execute this request. The request requires a sign. We recommend attaching `X-CH-SIGN` in all request headers | The request header is missing `X-CH-SIGN` |
+
+## 11XX - Issue in the request content
+
+### Code:-1100 ILLEGAL_CHARS
+
+| Code | Tag           | msg                          | Cause                        |
+| :--- | :------------ | :--------------------------- | :--------------------------- |
+| 1100 | ILLEGAL_CHARS | Issue in the request content | Issue in the request content |
+
+### Code:-1101 TOO_MANY_PARAMETERS
+
+| Code | Tag                 | msg                      | Cause                                                                               |
+| :--- | :------------------ | :----------------------- | :---------------------------------------------------------------------------------- |
+| 1101 | TOO_MANY_PARAMETERS | Too many parameters sent | The parameter content is too large or duplicate parameter values have been detected |
+
+### Code:-1102 MANDATORY_PARAM_EMPTY_OR_MALFORMED
+
+| Code | Tag                                | msg                                                                        | Cause                                                                                          |
+| :--- | :--------------------------------- | :------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------- |
+| 1102 | MANDATORY_PARAM_EMPTY_OR_MALFORMED | Mandatory parameter {0} was not sent, is empty, or has an incorrect format | The parameter is empty; a required parameter was not provided or has an incorrect input format |
+
+### Code:-1103 UNKNOWN_PARAM
+
+| Code | Tag           | msg                           | Cause                                                                                                  |
+| :--- | :------------ | :---------------------------- | :----------------------------------------------------------------------------------------------------- |
+| 1103 | UNKNOWN_PARAM | An unknown parameter was sent | The parameter content or format in the request is incorrect. Please check if the fields contain spaces |
+
+### Code:-1104 UNREAD_PARAMETERS
+
+| Code | Tag               | msg                               | Cause                                                                             |
+| :--- | :---------------- | :-------------------------------- | :-------------------------------------------------------------------------------- |
+| 1104 | UNREAD_PARAMETERS | Not all sent parameters were read | Not all sent parameters were read; the parameter '%s' was read, but '%s' was sent |
+
+### Code:-1105 PARAM_EMPTY
+
+| Code | Tag         | msg                    | Cause                         |
+| :--- | :---------- | :--------------------- | :---------------------------- |
+| 1105 | PARAM_EMPTY | Parameter {0} is empty | A required parameter is empty |
+
+### Code:-1106 PARAM_NOT_REQUIRED
+
+| Code | Tag                | msg                                     | Cause                                       |
+| :--- | :----------------- | :-------------------------------------- | :------------------------------------------ |
+| 1106 | PARAM_NOT_REQUIRED | This parameter does not need to be sent | The parameter '%s' does not need to be sent |
+
+### Code:-1111 BAD_PRECISION
+
+| Code | Tag           | msg                                                            | Cause                                                          |
+| :--- | :------------ | :------------------------------------------------------------- | :------------------------------------------------------------- |
+| 1111 | BAD_PRECISION | The precision exceeds the maximum value defined for this asset | The precision exceeds the maximum value defined for this asset |
+
+### Code:-1112 NO_DEPTH
+
+| Code | Tag      | msg                                           | Cause                                   |
+| :--- | :------- | :-------------------------------------------- | :-------------------------------------- |
+| 1112 | NO_DEPTH | There are no open orders for the trading pair | The order to be canceled does not exist |
+
+### Code:-1116 INVALID_ORDER_TYPE
+
+| Code | Tag                | msg                | Cause              |
+| :--- | :----------------- | :----------------- | :----------------- |
+| 1116 | INVALID_ORDER_TYPE | Invalid order type | Invalid order type |
+
+### Code:-1117 INVALID_SIDE
+
+| Code | Tag          | msg                        | Cause                      |
+| :--- | :----------- | :------------------------- | :------------------------- |
+| 1117 | INVALID_SIDE | Invalid buy/sell direction | Invalid buy/sell direction |
+
+### Code:-1121 BAD_SYMBOL
+
+| Code | Tag        | msg              | Cause                                        |
+| :--- | :--------- | :--------------- | :------------------------------------------- |
+| 1121 | BAD_SYMBOL | Invalid contract | Incorrect trading pair name or contract name |
+
+### Code:-1136 ORDER_QUANTITY_TOO_SMALL
+
+| Code | Tag                      | msg                                               | Cause                                             |
+| :--- | :----------------------- | :------------------------------------------------ | :------------------------------------------------ |
+| 1136 | ORDER_QUANTITY_TOO_SMALL | The order quantity is less than the minimum value | The order quantity is less than the minimum value |
+
+### Code:-1138 ORDER_PRICE_WAVE_EXCEED
+
+| Code | Tag                     | msg                                       | Cause                                     |
+| :--- | :---------------------- | :---------------------------------------- | :---------------------------------------- |
+| 1138 | ORDER_PRICE_WAVE_EXCEED | The order price exceeds the allowed range | The order price exceeds the allowed range |
+
+### Code:-1139 ORDER_NOT_SUPPORT_MARKET
+
+| Code | Tag                      | msg                                              | Cause                                            |
+| :--- | :----------------------- | :----------------------------------------------- | :----------------------------------------------- |
+| 1139 | ORDER_NOT_SUPPORT_MARKET | This trading pair does not support market orders | This trading pair does not support market orders |
+
+### Code:-1145 ORDER_NOT_SUPPORT_CANCELLATION
+
+| Code | Tag                            | msg                                          | Cause                        |
+| :--- | :----------------------------- | :------------------------------------------- | :--------------------------- |
+| 1145 | ORDER_NOT_SUPPORT_CANCELLATION | The order status does not allow cancellation | The order cannot be canceled |
+
+### Code:-1147 PRICE_VOLUME_PRESION_ERROR
+
+| Code | Tag                        | msg                                                   | Cause                                                 |
+| :--- | :------------------------- | :---------------------------------------------------- | :---------------------------------------------------- |
+| 1147 | PRICE_VOLUME_PRESION_ERROR | Price or quantity precision exceeds the maximum limit | The order price or quantity exceeds the maximum limit |
+
+## 2XXX - Other related return codes
+
+### Code:-2013 NO_SUCH_ORDER
+
+| Code | Tag           | msg                      | Cause                    |
+| :--- | :------------ | :----------------------- | :----------------------- |
+| 2013 | NO_SUCH_ORDER | The order does not exist | The order does not exist |
+
+### Code:-2015 REJECTED_API_KEY
+
+| Code | Tag              | msg                                          | Cause                               |
+| :--- | :--------------- | :------------------------------------------- | :---------------------------------- |
+| 2015 | REJECTED_API_KEY | Invalid API key, IP, or operation permission | Signature or IP verification failed |
+
+### Code:-2016 EXCHANGE_LOCK
+
+| Code | Tag           | msg               | Cause                        |
+| :--- | :------------ | :---------------- | :--------------------------- |
+| 2016 | EXCHANGE_LOCK | Trading is frozen | The user's trading is frozen |
+
+### Code:-2017 BALANCE_NOT_ENOUGH
+
+| Code | Tag                | msg                  | Cause                                          |
+| :--- | :----------------- | :------------------- | :--------------------------------------------- |
+| 2017 | BALANCE_NOT_ENOUGH | Insufficient balance | The user’s account has an insufficient balance |
+
+### Code:-2100 PARAM_ERROR
+
+| Code | Tag         | msg             | Cause                 |
+| :--- | :---------- | :-------------- | :-------------------- |
+| 2100 | PARAM_ERROR | Parameter issue | Parameter input error |
+
+### Code:-2200 ORDER_CREATE_FAILS
+
+| Code | Tag                | msg        | Cause            |
+| :--- | :----------------- | :--------- | :--------------- |
+| 2200 | ORDER_CREATE_FAILS | Illegal IP | Not a trusted IP |
+
+### Code:35
+
+| Code | Tag | msg                           | Cause                                |
+| :--- | :-- | :---------------------------- | :----------------------------------- |
+| 35   |     | Order placement is prohibited | The user's trading may be restricted |
+
 
 # "Frequently Asked Questions" (FAQ)
 

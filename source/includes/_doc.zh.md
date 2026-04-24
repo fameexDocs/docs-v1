@@ -1409,270 +1409,19 @@ if (timestamp < (serverTime + 1000) && (serverTime - timestamp) <= recvWindow) {
 
 <aside class="notice">关于交易时效性：互联网状况并不100%可靠，不可完全依赖，因此你的程序本地到交易所服务器的时延会有抖动。这是我们设置<code>recvWindow</code>的目的所在，如果你从事高频交易，对交易时效性有较高的要求，可以灵活设置<code>recvWindow</code>以达到你的要求。不推荐使用5秒以上的<code>recvWindow</code>。</aside>
 
-<a name="返回码类型"></a>
 
-# 返回码类型
+# 现货交易
 
-异常码和错误码的描述和原因
+## 枚举类型
 
-<aside class="warning">以下返回内容均为基本参数校验，若返回码不包含在以下列出的返回码类型中，则为业务层以外的错误提示返回，需要联系技术人员进行处理。</aside>
-
-## 10XX - 通用服务器和网络错误
-
-### Code:-1000 UNKNOWN
-
-| Code | Tag     | msg                    | 原因                   |
-| :--- | :------ | :--------------------- | :--------------------- |
-| 1000 | UNKNOWN | 处理请求时发生未知错误 | 处理请求时发生未知错误 |
-
-### Code:-1001 DISCONNECTED
-
-| Code | Tag          | msg                                    | 原因                       |
-| :--- | :----------- | :------------------------------------- | :------------------------- |
-| 1001 | DISCONNECTED | 内部错误；无法处理您的请求。请再试一次 | 内部错误；无法处理您的请求 |
-
-### Code:-1002 UNAUTHORIZED
-
-| Code | Tag          | msg                                                                              | 原因                       |
-| :--- | :----------- | :------------------------------------------------------------------------------- | :------------------------- |
-| 1002 | UNAUTHORIZED | 您无权执行此请求。请求需要发送 API Key，我们建议在所有的请求头附加 `X-CH-APIKEY` | 请求头中缺少 `X-CH-APIKEY` |
-
-### Code:-1003 TOO_MANY_REQUESTS
-
-| Code | Tag               | msg                  | 原因                 |
-| :--- | :---------------- | :------------------- | :------------------- |
-| 1003 | TOO_MANY_REQUESTS | 请求过于频繁超过限制 | 请求过于频繁超过限制 |
-
-### Code:-1004 NO_THIS_COMPANY
-
-| Code | Tag             | msg                            | 原因                           |
-| :--- | :-------------- | :----------------------------- | :----------------------------- |
-| 1004 | NO_THIS_COMPANY | 您无权执行此请求 user not exit | 您无权执行此请求 user not exit |
-
-### Code:-1006 UNEXPECTED_RESP
-
-| Code | Tag             | msg                                        | 原因                                       |
-| :--- | :-------------- | :----------------------------------------- | :----------------------------------------- |
-| 1006 | UNEXPECTED_RESP | 接收到了不符合预设格式的消息，下单状态未知 | 接收到了不符合预设格式的消息，下单状态未知 |
-
-### Code:-1007 TIMEOUT
-
-| Code | Tag     | msg                                                | 原因     |
-| :--- | :------ | :------------------------------------------------- | :------- |
-| 1007 | TIMEOUT | 等待后端服务器响应超时。发送状态未知；执行状态未知 | 请求超时 |
-
-### Code:-1014 UNKNOWN_ORDER_COMPOSITION
-
-| Code | Tag                       | msg              | 原因                                 |
-| :--- | :------------------------ | :--------------- | :----------------------------------- |
-| 1014 | UNKNOWN_ORDER_COMPOSITION | 不支持的订单组合 | 订单组合不存在或输入了错误的订单组合 |
-
-### Code:-1015 TOO_MANY_ORDERS
-
-| Code | Tag             | msg                          | 原因                     |
-| :--- | :-------------- | :--------------------------- | :----------------------- |
-| 1015 | TOO_MANY_ORDERS | 订单太多。请减少你的订单数量 | 下单数量超过最大数量限制 |
-
-### Code:-1016 SERVICE_SHUTTING_DOWN
-
-| Code | Tag                   | msg        | 原因                         |
-| :--- | :-------------------- | :--------- | :--------------------------- |
-| 1016 | SERVICE_SHUTTING_DOWN | 服务器下线 | 服务器已下线，无法访问该接口 |
-
-### Code:-1017 NO_CONTENT_TYPE
-
-| Code | Tag             | msg                                                                | 原因                      |
-| :--- | :-------------- | :----------------------------------------------------------------- | :------------------------ |
-| 1017 | NO_CONTENT_TYPE | 我们建议在所有的请求头附加 Content-Type，并设置成 application/json | 请求头中缺少 Content-Type |
-
-### Code:-1020 UNSUPPORTED_OPERATION
-
-| Code | Tag                   | msg          | 原因                                             |
-| :--- | :-------------------- | :----------- | :----------------------------------------------- |
-| 1020 | UNSUPPORTED_OPERATION | 不支持此操作 | 进行了错误的请求操作，需要同技术团队进行对接解决 |
-
-### Code:-1021 INVALID_TIMESTAMP
-
-| Code | Tag               | msg                        | 原因                                                                                |
-| :--- | :---------------- | :------------------------- | :---------------------------------------------------------------------------------- |
-| 1021 | INVALID_TIMESTAMP | 无效的时间戳，时间偏移过大 | 时间戳偏移偏大，服务器根据请求中的时间戳判定客户端时间比服务器时间提前了 1 秒钟以上 |
-
-### Code:-1022 INVALID_SIGNATURE
-
-| Code | Tag               | msg        | 原因         |
-| :--- | :---------------- | :--------- | :----------- |
-| 1022 | INVALID_SIGNATURE | 无效的签名 | 签名验证失败 |
-
-### Code:-1023 UNAUTHORIZED
-
-| Code | Tag          | msg                                                                            | 原因                   |
-| :--- | :----------- | :----------------------------------------------------------------------------- | :--------------------- |
-| 1023 | UNAUTHORIZED | 您无权执行此请求。请求需要发送 timestamp，我们建议在所有的请求头附加 `X-CH-TS` | 请求头中缺少 `X-CH-TS` |
-
-### Code:-1024 UNAUTHORIZED
-
-| Code | Tag          | msg                                                                         | 原因                     |
-| :--- | :----------- | :-------------------------------------------------------------------------- | :----------------------- |
-| 1024 | UNAUTHORIZED | 您无权执行此请求。请求需要发送 sign，我们建议在所有的请求头附加 `X-CH-SIGN` | 请求头中缺少 `X-CH-SIGN` |
-
-## 11XX - 请求内容中的问题
-
-### Code:-1100 ILLEGAL_CHARS
-
-| Code | Tag           | msg                | 原因               |
-| :--- | :------------ | :----------------- | :----------------- |
-| 1100 | ILLEGAL_CHARS | 请求中存在非法字符 | 请求中存在非法字符 |
-
-### Code:-1101 TOO_MANY_PARAMETERS
-
-| Code | Tag                 | msg            | 原因                             |
-| :--- | :------------------ | :------------- | :------------------------------- |
-| 1101 | TOO_MANY_PARAMETERS | 发送的参数太多 | 参数内容过多或检测到的参数值重复 |
-
-### Code:-1102 MANDATORY_PARAM_EMPTY_OR_MALFORMED
-
-| Code | Tag                                | msg                                | 原因                                     |
-| :--- | :--------------------------------- | :--------------------------------- | :--------------------------------------- |
-| 1102 | MANDATORY_PARAM_EMPTY_OR_MALFORMED | 强制参数{0}未发送，为空/或格式错误 | 参数为空，必传参数未传或不正确的入参格式 |
-
-### Code:-1103 UNKNOWN_PARAM
-
-| Code | Tag           | msg            | 原因                                                       |
-| :--- | :------------ | :------------- | :--------------------------------------------------------- |
-| 1103 | UNKNOWN_PARAM | 发送了未知参数 | 请求参数中的参数内容或者格式错误，请检查是否字段中包含空格 |
-
-### Code:-1104 UNREAD_PARAMETERS
-
-| Code | Tag               | msg                        | 原因                                                         |
-| :--- | :---------------- | :------------------------- | :----------------------------------------------------------- |
-| 1104 | UNREAD_PARAMETERS | 并非所有发送的参数都被读取 | 并非所有发送的参数都被读取；读取了'％s'参数，但被发送了'％s' |
-
-### Code:-1105 PARAM_EMPTY
-
-| Code | Tag         | msg         | 原因         |
-| :--- | :---------- | :---------- | :----------- |
-| 1105 | PARAM_EMPTY | 参数{0}为空 | 必传参数为空 |
-
-### Code:-1106 PARAM_NOT_REQUIRED
-
-| Code | Tag                | msg              | 原因                |
-| :--- | :----------------- | :--------------- | :------------------ |
-| 1106 | PARAM_NOT_REQUIRED | 不需要发送此参数 | 不需要发送参数'％s' |
-
-### Code:-1111 BAD_PRECISION
-
-| Code | Tag           | msg                        | 原因                       |
-| :--- | :------------ | :------------------------- | :------------------------- |
-| 1111 | BAD_PRECISION | 精度超过此资产定义的最大值 | 精度超过此资产定义的最大值 |
-
-### Code:-1112 NO_DEPTH
-
-| Code | Tag      | msg            | 原因                   |
-| :--- | :------- | :------------- | :--------------------- |
-| 1112 | NO_DEPTH | 交易对没有挂单 | 需要取消的该订单不存在 |
-
-### Code:-1116 INVALID_ORDER_TYPE
-
-| Code | Tag                | msg          | 原因         |
-| :--- | :----------------- | :----------- | :----------- |
-| 1116 | INVALID_ORDER_TYPE | 无效订单类型 | 无效订单类型 |
-
-### Code:-1117 INVALID_SIDE
-
-| Code | Tag          | msg          | 原因         |
-| :--- | :----------- | :----------- | :----------- |
-| 1117 | INVALID_SIDE | 无效买卖方向 | 无效买卖方向 |
-
-### Code:-1121 BAD_SYMBOL
-
-| Code | Tag        | msg        | 原因                               |
-| :--- | :--------- | :--------- | :--------------------------------- |
-| 1121 | BAD_SYMBOL | 无效的合约 | 币对名称输入错误或合约名称输入错误 |
-
-### Code:-1136 ORDER_QUANTITY_TOO_SMALL
-
-| Code | Tag                      | msg                | 原因                     |
-| :--- | :----------------------- | :----------------- | :----------------------- |
-| 1136 | ORDER_QUANTITY_TOO_SMALL | 订单数量小于最小值 | 订单 quantity 小于最小值 |
-
-### Code:-1138 ORDER_PRICE_WAVE_EXCEED
-
-| Code | Tag                     | msg                  | 原因                 |
-| :--- | :---------------------- | :------------------- | :------------------- |
-| 1138 | ORDER_PRICE_WAVE_EXCEED | 订单价格超出允许范围 | 订单价格超出允许范围 |
-
-### Code:-1139 ORDER_NOT_SUPPORT_MARKET
-
-| Code | Tag                      | msg                  | 原因                   |
-| :--- | :----------------------- | :------------------- | :--------------------- |
-| 1139 | ORDER_NOT_SUPPORT_MARKET | 该币对不支持市价交易 | 该交易对不支持市价交易 |
-
-### Code:-1145 ORDER_NOT_SUPPORT_CANCELLATION
-
-| Code | Tag                            | msg                  | 原因             |
-| :--- | :----------------------------- | :------------------- | :--------------- |
-| 1145 | ORDER_NOT_SUPPORT_CANCELLATION | 该订单状态不允许撤销 | 订单不能够被取消 |
-
-### Code:-1147 PRICE_VOLUME_PRESION_ERROR
-
-| Code | Tag                        | msg                        | 原因                         |
-| :--- | :------------------------- | :------------------------- | :--------------------------- |
-| 1147 | PRICE_VOLUME_PRESION_ERROR | 价格或数量精度超过最大限制 | 订单的价格或数量超过最大限制 |
-
-## 2XXX - 其他相关返回码
-
-### Code:-2013 NO_SUCH_ORDER
-
-| Code | Tag           | msg        | 原因       |
-| :--- | :------------ | :--------- | :--------- |
-| 2013 | NO_SUCH_ORDER | 订单不存在 | 订单不存在 |
-
-### Code:-2015 REJECTED_API_KEY
-
-| Code | Tag              | msg                            | 原因             |
-| :--- | :--------------- | :----------------------------- | :--------------- |
-| 2015 | REJECTED_API_KEY | 无效的 API 密钥，IP 或操作权限 | 签名或 IP 不通过 |
-
-### Code:-2016 EXCHANGE_LOCK
-
-| Code | Tag           | msg        | 原因             |
-| :--- | :------------ | :--------- | :--------------- |
-| 2016 | EXCHANGE_LOCK | 交易被冻结 | 该用户交易被冻结 |
-
-### Code:-2017 BALANCE_NOT_ENOUGH
-
-| Code | Tag                | msg      | 原因                 |
-| :--- | :----------------- | :------- | :------------------- |
-| 2017 | BALANCE_NOT_ENOUGH | 余额不足 | 用户该账户中余额不足 |
-
-### Code:-2100 PARAM_ERROR
-
-| Code | Tag         | msg      | 原因         |
-| :--- | :---------- | :------- | :----------- |
-| 2100 | PARAM_ERROR | 参数问题 | 参数输入错误 |
-
-### Code:-2200 ORDER_CREATE_FAILS
-
-| Code | Tag                | msg        | 原因          |
-| :--- | :----------------- | :--------- | :------------ |
-| 2200 | ORDER_CREATE_FAILS | Illegal IP | 不是信任的 IP |
-
-### Code:35
-
-| Code | Tag | msg      | 原因               |
-| :--- | :-- | :------- | :----------------- |
-| 35   |     | 禁止下单 | 用户交易可能被限制 |
-
-# 枚举类型
-
-## 交易对
+### 交易对
 
 | 值      | 说明                                           |
 | :------ | :--------------------------------------------- |
 | `base`  | 指一个交易对的交易对象，即写在靠前部分的资产名 |
 | `quote` | 指一个交易对的定价资产，即写在靠后部分资产名   |
 
-## 订单状态
+### 订单状态
 
 | 值                           | 说明            |
 | :--------------------------- | :-------------- |
@@ -1684,21 +1433,21 @@ if (timestamp < (serverTime + 1000) && (serverTime - timestamp) <= recvWindow) {
 | `Partially Filled/Cancelled` | 部分成交/已取消 |
 | `REJECTED`                   | 订单被拒绝      |
 
-## 订单种类
+### 订单种类
 
 | 值       | 说明   |
 | :------- | :----- |
 | `LIMIT`  | 限价单 |
 | `MARKET` | 市价单 |
 
-## 订单方向
+### 订单方向
 
 | 值     | 说明 |
 | :----- | :--- |
 | `BUY`  | 买单 |
 | `SELL` | 卖单 |
 
-## K 线间隔
+### K 线间隔
 
 | 值      | 说明 | 示例                                      |
 | :------ | :--- | :---------------------------------------- |
@@ -1707,8 +1456,6 @@ if (timestamp < (serverTime + 1000) && (serverTime - timestamp) <= recvWindow) {
 | `day`   | 天   | `1day`                                    |
 | `week`  | 周   | `1week`                                   |
 | `month` | 月   |                                           |
-
-# 现货交易
 
 ## 公共
 
@@ -2256,7 +2003,7 @@ https.get(url, (res) => {
 
 | 参数名            | 类型       | 示例      | 描述               |
 | :---------------- | :--------- | :-------- | :----------------- |
-| symbol            | string     | `btcusdt` | `小写`币对名称     |
+| symbol            | string     | `BTCUSDT` | `大写`币对名称     |
 | baseAsset         | string     | `BTC`     | `基准货币`         |
 | quoteAsset        | string     | `USDT`    | `计价货币`         |
 | pricePrecision    | integer    | `6`       | 价格精度           |
@@ -3481,7 +3228,7 @@ axios
 | 参数名                            | 类型   | 描述                            |
 | :-------------------------------- | :----- | :------------------------------ |
 | symbol<font color="red">\*</font> | string | `大写`币对名称，例如：`BTCUSDT` |
-| limit                             | string | 默认：100；最大：1000           |
+| limit                             | string | 默认：100；最大：200           |
 
 > 返回示例
 
@@ -3839,506 +3586,6 @@ axios
 <aside class='notice'>交易下方的接口都需要签名和API-key验证。</aside>
 
 ### 创建新订单
-
-`POST https://t(:spot_http_url)/sapi/v1/order`
-
-**限速规则: 100 次/2s**
-
-**请求头**
-
-| 参数名                                 | 类型    | 描述         |
-| :------------------------------------- | :------ | :----------- |
-| X-CH-SIGN<font color="red">\*</font>   | string  | 签名         |
-| X-CH-APIKEY<font color="red">\*</font> | string  | 您的 API-key |
-| X-CH-TS<font color="red">\*</font>     | integer | 时间戳       |
-
-> 请求示例
-
-```http
-POST https://t(:spot_http_url)/sapi/v1/order
-
-// request headers
-Content-Type: application/json
-X-CH-TS: 1739503617552
-X-CH-APIKEY: 您的API-KEY
-X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
-```
-
-```shell
-#!/bin/bash
-
-# 设置 API 相关信息
-URL="https://t(:spot_http_url)"
-REQUEST_PATH="/sapi/v1/order"
-API_URL="${URL}${REQUEST_PATH}"
-API_KEY="您的API-KEY"
-API_SECRET="您的API-SECRET"
-
-# 生成当前毫秒级时间戳
-timestamp=$(date +%s | awk '{print $1 * 1000}')
-
-# 定义请求方法
-METHOD="POST"
-
-# 定义请求体 (JSON 格式)
-BODY_JSON='{"symbol":"BTCUSDT","volume":0.00001,"side":"BUY","type":"LIMIT","price":97081.19,"newClientOrderId":"111000000111"}'
-
-# 生成签名 (X-CH-SIGN)
-SIGN_PAYLOAD="${timestamp}${METHOD}${REQUEST_PATH}${BODY_JSON}"
-SIGNATURE=$(echo -n "$SIGN_PAYLOAD" | openssl dgst -sha256 -hmac "$API_SECRET" | awk '{print $2}')
-
-# **打印调试信息**
-echo "==== 请求信息 ===="
-echo "Timestamp (X-CH-TS): $timestamp"
-echo "Sign Payload (待签名字符串): $SIGN_PAYLOAD"
-echo "Signature (X-CH-SIGN): $SIGNATURE"
-echo "Request Body: $BODY_JSON"
-echo "=================="
-
-# 发送请求
-curl -X POST "$API_URL" \
-    -H "X-CH-SIGN: $SIGNATURE" \
-    -H "X-CH-APIKEY: $API_KEY" \
-    -H "X-CH-TS: $timestamp" \
-    -H "Content-Type: application/json" \
-    -d "$BODY_JSON"
-```
-
-```java
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
-import java.io.OutputStream;
-import java.time.Instant;
-import java.util.Base64;
-
-public class FameexApiRequest {
-    public static void main(String[] args) {
-        try {
-            // API 相关信息
-            String url = "https://t(:spot_http_url)";
-            String requestPath = "/sapi/v1/order";
-            String apiUrl = url + requestPath;
-            String apiKey = "您的API-KEY";
-            String apiSecret = "您的API-SECRET";
-
-            // 获取当前毫秒级时间戳
-            String timestamp = String.valueOf(Instant.now().toEpochMilli());
-
-            // 请求方法和路径
-            String method = "POST";
-
-            // 定义请求体 (JSON 格式)
-            String bodyJson = "{\"symbol\":\"BTCUSDT\",\"volume\":\"0.00001\",\"side\":\"BUY\",\"type\":\"LIMIT\",\"price\":\"97081.19\",\"newClientOrderId\":\"111000000111\"}";
-
-            // 生成签名 (X-CH-SIGN)
-            String signPayload = timestamp + method + requestPath + bodyJson;
-            String signature = hmacSha256(signPayload, apiSecret);
-
-            // **打印调试信息**
-            System.out.println("==== 请求信息 ====");
-            System.out.println("Timestamp (X-CH-TS): " + timestamp);
-            System.out.println("Sign Payload (待签名字符串): " + signPayload);
-            System.out.println("Signature (X-CH-SIGN): " + signature);
-            System.out.println("Request Body: " + bodyJson);
-            System.out.println("==================");
-
-            // 发送请求
-            sendPostRequest(apiUrl, apiKey, timestamp, signature, bodyJson);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // HMAC-SHA256 签名计算
-    public static String hmacSha256(String data, String secret) throws Exception {
-        Mac mac = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-        mac.init(secretKeySpec);
-        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : hash) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) {
-                hexString.append('0');
-            }
-            hexString.append(hex);
-        }
-        return hexString.toString();
-    }
-
-    // 发送 HTTP POST 请求
-    public static void sendPostRequest(String apiUrl, String apiKey, String timestamp, String signature, String bodyJson) {
-        try {
-            URL url = new URL(apiUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("X-CH-SIGN", signature);
-            conn.setRequestProperty("X-CH-APIKEY", apiKey);
-            conn.setRequestProperty("X-CH-TS", timestamp);
-            conn.setDoOutput(true);
-
-            // 发送请求体
-            try (OutputStream os = conn.getOutputStream()) {
-                byte[] input = bodyJson.getBytes(StandardCharsets.UTF_8);
-                os.write(input, 0, input.length);
-            }
-
-            // 读取响应
-            int responseCode = conn.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
-
-            Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name());
-            while (scanner.hasNextLine()) {
-                System.out.println(scanner.nextLine());
-            }
-            scanner.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-```
-
-```go
-package main
-
-import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
-)
-
-func main() {
-	// API 相关信息
-    url := "https://t(:spot_http_url)"
-    requestPath := "/sapi/v1/order"
-	apiURL := url + requestPath
-	apiKey := "您的API-KEY"
-	apiSecret := "您的API-SECRET"
-
-	// 生成当前毫秒级时间戳
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
-
-	// 请求方法和路径
-	method := "POST"
-
-	// 定义请求体 (JSON 格式)
-	bodyJSON := `{"symbol":"BTCUSDT","volume":"0.00001","side":"BUY","type":"LIMIT","price":"97081.19","newClientOrderId":"111000000111"}`
-
-	// 生成签名 (X-CH-SIGN)
-	signPayload := timestamp + method + requestPath + bodyJSON
-	signature := hmacSHA256(signPayload, apiSecret)
-
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (待签名字符串):", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request Body:", bodyJSON)
-	fmt.Println("==================")
-
-	// 发送请求
-	sendPostRequest(apiURL, apiKey, timestamp, signature, bodyJSON)
-}
-
-// HMAC-SHA256 签名计算
-func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
-}
-
-// 发送 HTTP POST 请求
-func sendPostRequest(apiURL, apiKey, timestamp, signature, bodyJSON string) {
-	client := &http.Client{}
-
-	// 创建请求
-	req, err := http.NewRequest("POST", apiURL, bytes.NewBuffer([]byte(bodyJSON)))
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
-
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
-
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
-
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response:", string(body))
-}
-```
-
-```python
-import time
-import hmac
-import hashlib
-import requests
-import json
-
-# API 相关信息
-URL = "https://t(:spot_http_url)"
-REQUEST_PATH = "/sapi/v1/order"
-API_URL = URL + REQUEST_PATH
-API_KEY = "您的API-KEY"
-API_SECRET = "您的API-SECRET"
-
-# 生成当前毫秒级时间戳
-timestamp = str(int(time.time() * 1000))
-
-# 请求方法和路径
-METHOD = "POST"
-
-
-# 定义请求体 (JSON 格式)
-body_json = {
-    "symbol": "BTCUSDT",
-    "volume": "0.00001",
-    "side": "BUY",
-    "type": "LIMIT",
-    "price": "97081.19",
-    "newClientOrderId": "111000000111",
-}
-body_str = json.dumps(body_json, separators=(',', ':'))  # 确保 JSON 字符串格式正确
-
-# 生成签名 (X-CH-SIGN)
-sign_payload = timestamp + METHOD + REQUEST_PATH + body_str
-signature = hmac.new(API_SECRET.encode(), sign_payload.encode(), hashlib.sha256).hexdigest()
-
-# **打印调试信息**
-print("==== 请求信息 ====")
-print("Timestamp (X-CH-TS):", timestamp)
-print("Sign Payload (待签名字符串):", sign_payload)
-print("Signature (X-CH-SIGN):", signature)
-print("Request Body:", body_str)
-print("==================")
-
-# 发送请求
-headers = {
-    "X-CH-SIGN": signature,
-    "X-CH-APIKEY": API_KEY,
-    "X-CH-TS": timestamp,
-    "Content-Type": "application/json"
-}
-
-response = requests.post(API_URL, headers=headers, data=body_str)
-
-# 打印响应
-print("Response Code:", response.status_code)
-print("Response Body:", response.text)
-
-```
-
-```php
-<?
-
-// API 相关信息
-$url = "https://t(:spot_http_url)";
-$request_path = "/sapi/v1/order";
-$api_url = $url . $request_path;
-$api_key = "您的API-KEY";
-$api_secret = "您的API-SECRET";
-
-// 生成当前毫秒级时间戳
-$timestamp = round(microtime(true) * 1000);
-
-// 请求方法
-$method = "POST";
-
-// 定义请求体 (JSON 格式)
-$body_json = json_encode([
-    "symbol" => "BTCUSDT",
-    "price" => "9300",
-    "volume" => "1",
-    "side" => "BUY",
-    "type" => "LIMIT"
-], JSON_UNESCAPED_SLASHES); // 确保 JSON 格式正确
-
-// 生成签名 (X-CH-SIGN)
-$sign_payload = $timestamp . $method . $request_path . $body_json;
-$signature = hash_hmac('sha256', $sign_payload, $api_secret);
-
-// **打印调试信息**
-echo "==== 请求信息 ====\n";
-echo "Timestamp (X-CH-TS): " . $timestamp . "\n";
-echo "Sign Payload (待签名字符串): " . $sign_payload . "\n";
-echo "Signature (X-CH-SIGN): " . $signature . "\n";
-echo "Request Body: " . $body_json . "\n";
-echo "==================\n";
-
-// 发送请求
-$headers = [
-    "Content-Type: application/json",
-    "X-CH-SIGN: $signature",
-    "X-CH-APIKEY: $api_key",
-    "X-CH-TS: $timestamp"
-];
-
-// 使用 cURL 发送 POST 请求
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $api_url);
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $body_json);
-
-// 执行请求并获取响应
-$response = curl_exec($ch);
-$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
-
-// 打印响应
-echo "Response Code: $http_code\n";
-echo "Response Body: $response\n";
-
-```
-
-```javascript--node
-const axios = require("axios");
-const crypto = require("crypto");
-
-// API 相关信息
-const URL = "https://t(:spot_http_url)";
-const REQUEST_PATH = "/sapi/v1/order";
-const API_URL = URL + REQUEST_PATH;
-const API_KEY = "您的API-KEY";
-const API_SECRET = "您的API-SECRET";
-
-// 生成当前毫秒级时间戳
-const timestamp = Date.now().toString();
-
-// 请求方法
-const METHOD = "POST";
-
-// 定义请求体 (JSON 格式)
-const bodyJson = JSON.stringify({
-  symbol: "BTCUSDT",
-  price: "9300",
-  volume: "1",
-  side: "BUY",
-  type: "LIMIT",
-});
-
-// 生成签名 (X-CH-SIGN)
-const signPayload = timestamp + METHOD + REQUEST_PATH + bodyJson;
-const signature = crypto
-  .createHmac("sha256", API_SECRET)
-  .update(signPayload)
-  .digest("hex");
-
-// **打印调试信息**
-console.log("==== 请求信息 ====");
-console.log("Timestamp (X-CH-TS):", timestamp);
-console.log("Sign Payload (待签名字符串):", signPayload);
-console.log("Signature (X-CH-SIGN):", signature);
-console.log("Request Body:", bodyJson);
-console.log("==================");
-
-// 发送请求
-const headers = {
-  "Content-Type": "application/json",
-  "X-CH-SIGN": signature,
-  "X-CH-APIKEY": API_KEY,
-  "X-CH-TS": timestamp,
-};
-
-axios
-  .post(API_URL, bodyJson, { headers })
-  .then((response) => {
-    console.log("Response Code:", response.status);
-    console.log("Response Body:", response.data);
-  })
-  .catch((error) => {
-    console.error("Error:", error.response ? error.response.data : error.message);
-  });
-
-```
-
-> body
-
-```json
-{
-  "symbol": "BTCUSDT",
-  "volume": 1.0,
-  "side": "BUY",
-  "type": "LIMIT",
-  "price": 65000.0,
-  "newClientOrderId": "111000000111"
-}
-```
-
-**请求参数**
-
-| 参数名                            | 类型   | 描述                                                                                                                   |
-| :-------------------------------- | :----- | :--------------------------------------------------------------------------------------------------------------------- |
-| symbol<font color="red">\*</font> | string | `大写`币对名称，例如：`BTCUSDT` (参考 [币对列表](#现货交易-公共-币对列表) 的 `symbol` )                                |
-| volume<font color="red">\*</font> | number | 订单数量，有精度限制，精度由管理员配置 (参考 [币对列表](#现货交易-公共-币对列表) 的 `limitVolumeMin` )                 |
-| side<font color="red">\*</font>   | string | 订单方向，`BUY/SELL`                                                                                                   |
-| type<font color="red">\*</font>   | string | 订单类型，`LIMIT/MARKET`                                                                                               |
-| price                             | number | 订单价格，对于`LIMIT`订单必须发送，有精度限制，精度由管理员配置 (参考 [最近成交](#现货交易-行情-最近成交) 的 `price` ) |
-| newClientOrderId                  | string | 客户端订单标识                                                                                                         |
-
-> 返回示例
-
-```json
-{
-  "code": 0,
-  "msg": "Success",
-  "data": {
-    "orderId": "781594618796015616",
-    "clientOrderId": "",
-    "symbol": "ENAUSDT",
-    "transactTime": 1764183478446,
-    "price": 0.1,
-    "origQty": 50,
-    "executedQty": 0,
-    "type": "LIMIT",
-    "side": "BUY",
-    "status": "INIT"
-  }
-}
-```
-
-**返回参数**
-
-| 参数名        | 类型    | 示例                 | 描述                                                                                                          |
-| :------------ | :------ | :------------------- | :------------------------------------------------------------------------------------------------------------ |
-| orderId       | long    | `781594618796015616` | 订单 ID（系统生成）                                                                                           |
-| clientOrderId | string  | `213443`             | 订单 ID（用户生成）                                                                                           |
-| symbol        | string  | `BTCUSDT`            | `大写`币对名称                                                                                                |
-| transactTime  | integer | `1704959985403`      | 订单创建时间戳                                                                                                |
-| price         | float   | `47651.29`           | 订单价格                                                                                                      |
-| origQty       | float   | `0.01`               | 订单数量                                                                                                      |
-| executedQty   | float   | `0`                  | 已经成交订单数量                                                                                              |
-| type          | string  | `LIMIT`              | 订单类型。可能出现的值只能为：`LIMIT`(限价)和`MARKET`（市价）                                                 |
-| side          | string  | `BUY`                | 订单方向。可能出现的值只能为：`BUY`（买入做多）和`SELL`（卖出做空）                                           |
-| status        | string  | `NEW`                | 订单状态。可能出现的值为：`New Order`（新订单，无成交）、`Partially Filled`（部分成交）、`Filled`（全部成交） |
-
-### 创建新订单-V2
 
 `POST https://t(:spot_http_url)/sapi/v2/order`
 
@@ -5325,480 +4572,6 @@ body
 
 ### 订单查询
 
-`GET https://t(:spot_http_url)/sapi/v1/order`
-
-**限速规则: 20 次/2s**
-
-**请求头**
-
-| 参数名                                 | 类型    | 描述         |
-| :------------------------------------- | :------ | :----------- |
-| X-CH-SIGN<font color="red">\*</font>   | string  | 签名         |
-| X-CH-APIKEY<font color="red">\*</font> | string  | 您的 API-key |
-| X-CH-TS<font color="red">\*</font>     | integer | 时间戳       |
-
-> 请求示例
-
-```http
-GET https://t(:spot_http_url)/sapi/v1/order?orderId=2618039663715064005&symbol=btcusdt
-
-// request headers
-Content-Type: application/json
-X-CH-TS: 1739503617552
-X-CH-APIKEY: 您的API-KEY
-X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
-```
-
-```shell
-#!/bin/bash
-
-# 设置 API 相关信息
-API_URL="https://t(:spot_http_url)"
-REQUEST_URL="/sapi/v1/order"
-QUERY_STRING="?orderId=2618039663715064005&symbol=btcusdt"
-
-# 计算完整的请求路径
-REQUEST_PATH="${REQUEST_URL}${QUERY_STRING}"
-FULL_URL="${API_URL}${REQUEST_PATH}"
-
-# API 认证信息
-API_KEY="您的API-KEY"
-API_SECRET="您的API-SECRET"
-
-# 生成当前毫秒级时间戳
-timestamp=$(date +%s | awk '{print $1 * 1000}')
-
-# 定义请求方法
-METHOD="GET"
-
-# 生成签名 (X-CH-SIGN) - GET 请求没有 body
-SIGN_PAYLOAD="${timestamp}${METHOD}${REQUEST_PATH}"
-SIGNATURE=$(echo -n "$SIGN_PAYLOAD" | openssl dgst -sha256 -hmac "$API_SECRET" | awk '{print $2}')
-
-# **打印调试信息**
-echo "==== 请求信息 ===="
-echo "Timestamp (X-CH-TS): $timestamp"
-echo "Sign Payload (待签名字符串): $SIGN_PAYLOAD"
-echo "Signature (X-CH-SIGN): $SIGNATURE"
-echo "Request URL: ${FULL_URL}"
-echo "=================="
-
-# 发送 GET 请求
-curl -X GET "$FULL_URL" \
-    -H "X-CH-SIGN: $SIGNATURE" \
-    -H "X-CH-APIKEY: $API_KEY" \
-    -H "X-CH-TS: $timestamp" \
-    -H "Content-Type: application/json"
-
-```
-
-```java
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.time.Instant;
-import java.util.Scanner;
-
-public class FameexApiRequest {
-    public static void main(String[] args) {
-        try {
-            // API 相关信息
-            String apiUrl = "https://t(:spot_http_url)";
-            String requestUrl = "/sapi/v1/order";
-            String queryString = "?orderId=2618039663715064005&symbol=btcusdt";
-
-            // 计算完整的请求路径
-            String requestPath = requestUrl + queryString;
-            String fullUrl = apiUrl + requestPath;
-
-            // API 认证信息
-            String apiKey = "您的API-KEY";
-            String apiSecret = "您的API-SECRET";
-
-            // 生成当前毫秒级时间戳
-            String timestamp = String.valueOf(Instant.now().toEpochMilli());
-
-            // 请求方法
-            String method = "GET";
-
-            // 生成签名 (X-CH-SIGN) - GET 请求没有 body
-            String signPayload = timestamp + method + requestPath;
-            String signature = hmacSha256(signPayload, apiSecret);
-
-            // **打印调试信息**
-            System.out.println("==== 请求信息 ====");
-            System.out.println("Timestamp (X-CH-TS): " + timestamp);
-            System.out.println("Sign Payload (待签名字符串): " + signPayload);
-            System.out.println("Signature (X-CH-SIGN): " + signature);
-            System.out.println("Request URL: " + fullUrl);
-            System.out.println("==================");
-
-            // 发送 GET 请求
-            sendGetRequest(fullUrl, apiKey, timestamp, signature);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // HMAC-SHA256 签名计算
-    public static String hmacSha256(String data, String secret) throws Exception {
-        Mac mac = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-        mac.init(secretKeySpec);
-        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
-
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : hash) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) {
-                hexString.append('0');
-            }
-            hexString.append(hex);
-        }
-        return hexString.toString();
-    }
-
-    // 发送 HTTP GET 请求
-    public static void sendGetRequest(String fullUrl, String apiKey, String timestamp, String signature) {
-        try {
-            URL url = new URL(fullUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-
-            // 设置请求头
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("X-CH-SIGN", signature);
-            conn.setRequestProperty("X-CH-APIKEY", apiKey);
-            conn.setRequestProperty("X-CH-TS", timestamp);
-
-            // 发送请求并获取响应
-            int responseCode = conn.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
-
-            Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name());
-            while (scanner.hasNextLine()) {
-                System.out.println(scanner.nextLine());
-            }
-            scanner.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-```
-
-```go
-package main
-
-import (
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
-)
-
-func main() {
-	// API 相关信息
-	apiURL := "https://t(:spot_http_url)"
-	requestURL := "/sapi/v1/order"
-	queryString := "?orderId=2618039663715064005&symbol=btcusdt"
-
-	// 计算完整的请求路径
-	requestPath := requestURL + queryString
-	fullURL := apiURL + requestPath
-
-	// API 认证信息
-	apiKey := "您的API-KEY"
-	apiSecret := "您的API-SECRET"
-
-	// 生成当前毫秒级时间戳
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
-
-	// 请求方法
-	method := "GET"
-
-	// 生成签名 (X-CH-SIGN) - GET 请求没有 body
-	signPayload := timestamp + method + requestPath
-	signature := hmacSHA256(signPayload, apiSecret)
-
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (待签名字符串):", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request URL:", fullURL)
-	fmt.Println("==================")
-
-	// 发送 GET 请求
-	sendGetRequest(fullURL, apiKey, timestamp, signature)
-}
-
-// 计算 HMAC-SHA256 签名
-func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
-}
-
-// 发送 HTTP GET 请求
-func sendGetRequest(fullURL, apiKey, timestamp, signature string) {
-	client := &http.Client{}
-
-	// 创建请求
-	req, err := http.NewRequest("GET", fullURL, nil)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
-
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
-
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
-
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
-}
-
-```
-
-```python
-import time
-import hmac
-import hashlib
-import requests
-
-# API 相关信息
-API_URL = "https://t(:spot_http_url)"
-REQUEST_URL = "/sapi/v1/order"
-QUERY_STRING = "?orderId=2618039663715064005&symbol=btcusdt"
-
-# 计算完整的请求路径
-REQUEST_PATH = REQUEST_URL + QUERY_STRING
-FULL_URL = API_URL + REQUEST_PATH
-
-# API 认证信息
-API_KEY = "您的API-KEY"
-API_SECRET = "您的API-SECRET"
-
-# 生成当前毫秒级时间戳
-timestamp = str(int(time.time() * 1000))
-
-# 请求方法
-METHOD = "GET"
-
-# 生成签名 (X-CH-SIGN) - GET 请求没有 body
-SIGN_PAYLOAD = timestamp + METHOD + REQUEST_PATH
-SIGNATURE = hmac.new(API_SECRET.encode(), SIGN_PAYLOAD.encode(), hashlib.sha256).hexdigest()
-
-# **打印调试信息**
-print("==== 请求信息 ====")
-print("Timestamp (X-CH-TS):", timestamp)
-print("Sign Payload (待签名字符串):", SIGN_PAYLOAD)
-print("Signature (X-CH-SIGN):", SIGNATURE)
-print("Request URL:", FULL_URL)
-print("==================")
-
-# 发送 GET 请求
-headers = {
-    "X-CH-SIGN": SIGNATURE,
-    "X-CH-APIKEY": API_KEY,
-    "X-CH-TS": timestamp,
-    "Content-Type": "application/json"
-}
-
-response = requests.get(FULL_URL, headers=headers)
-
-# 打印响应
-print("Response Code:", response.status_code)
-print("Response Body:", response.text)
-
-```
-
-```php
-<?
-
-// API 相关信息
-$API_URL = "https://t(:spot_http_url)";
-$REQUEST_URL = "/sapi/v1/order";
-$QUERY_STRING = "?orderId=2618039663715064005&symbol=btcusdt";
-
-// 计算完整的请求路径
-$REQUEST_PATH = $REQUEST_URL . $QUERY_STRING;
-$FULL_URL = $API_URL . $REQUEST_PATH;
-
-// API 认证信息
-$API_KEY = "您的API-KEY";
-$API_SECRET = "您的API-SECRET";
-
-// 生成当前毫秒级时间戳
-$timestamp = round(microtime(true) * 1000);
-
-// 请求方法
-$METHOD = "GET";
-
-// 生成签名 (X-CH-SIGN) - GET 请求没有 body
-$SIGN_PAYLOAD = $timestamp . $METHOD . $REQUEST_PATH;
-$SIGNATURE = hash_hmac('sha256', $SIGN_PAYLOAD, $API_SECRET);
-
-// **打印调试信息**
-echo "==== 请求信息 ====\n";
-echo "Timestamp (X-CH-TS): " . $timestamp . "\n";
-echo "Sign Payload (待签名字符串): " . $SIGN_PAYLOAD . "\n";
-echo "Signature (X-CH-SIGN): " . $SIGNATURE . "\n";
-echo "Request URL: " . $FULL_URL . "\n";
-echo "==================\n";
-
-// 发送 GET 请求
-$headers = [
-    "Content-Type: application/json",
-    "X-CH-SIGN: $SIGNATURE",
-    "X-CH-APIKEY: $API_KEY",
-    "X-CH-TS: $timestamp"
-];
-
-// 使用 cURL 发送 GET 请求
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $FULL_URL);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-// 执行请求并获取响应
-$response = curl_exec($ch);
-$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
-
-// 打印响应
-echo "Response Code: $http_code\n";
-echo "Response Body: $response\n";
-
-?>
-```
-
-```javascript--node
-const axios = require("axios");
-const crypto = require("crypto");
-
-// API 相关信息
-const API_URL = "https://t(:spot_http_url)";
-const REQUEST_URL = "/sapi/v1/order";
-const QUERY_STRING = "?orderId=2618039663715064005&symbol=btcusdt";
-
-// 计算完整的请求路径
-const REQUEST_PATH = REQUEST_URL + QUERY_STRING;
-const FULL_URL = API_URL + REQUEST_PATH;
-
-// API 认证信息
-const API_KEY = "您的API-KEY";
-const API_SECRET = "您的API-SECRET";
-
-// 生成当前毫秒级时间戳
-const timestamp = Date.now().toString();
-
-// 请求方法
-const METHOD = "GET";
-
-// 生成签名 (X-CH-SIGN) - GET 请求没有 body
-const SIGN_PAYLOAD = timestamp + METHOD + REQUEST_PATH;
-const SIGNATURE = crypto
-  .createHmac("sha256", API_SECRET)
-  .update(SIGN_PAYLOAD)
-  .digest("hex");
-
-// **打印调试信息**
-console.log("==== 请求信息 ====");
-console.log("Timestamp (X-CH-TS):", timestamp);
-console.log("Sign Payload (待签名字符串):", SIGN_PAYLOAD);
-console.log("Signature (X-CH-SIGN):", SIGNATURE);
-console.log("Request URL:", FULL_URL);
-console.log("==================");
-
-// 发送 GET 请求
-const headers = {
-  "Content-Type": "application/json",
-  "X-CH-SIGN": SIGNATURE,
-  "X-CH-APIKEY": API_KEY,
-  "X-CH-TS": timestamp,
-};
-
-axios
-  .get(FULL_URL, { headers })
-  .then((response) => {
-    console.log("Response Code:", response.status);
-    console.log("Response Body:", response.data);
-  })
-  .catch((error) => {
-    console.error("Error:", error.response ? error.response.data : error.message);
-  });
-```
-
-**请求参数**
-
-| 参数名                             | 类型   | 描述                            |
-| :--------------------------------- | :----- | :------------------------------ |
-| orderId<font color="red">\*</font> | string | 订单 id（系统生成）             |
-| symbol<font color="red">\*</font>  | string | `小写`币对名称，例如：`ethusdt` |
-
-> 返回示例
-
-```json
-{
-  "code": 0,
-  "msg": "Success",
-  "data": {
-    "orderId": "781601003987136512",
-    "clientOrderId": "",
-    "symbol": "enausdt",
-    "price": 0.1,
-    "origQty": 50,
-    "executedQty": 0,
-    "avgPrice": 0,
-    "type": "LIMIT",
-    "transactTime": 1764185000794,
-    "side": "BUY",
-    "status": "NEW"
-  }
-}
-```
-
-**返回参数**
-
-| 参数名        | 类型   | 示例                 | 描述                                                                                                        |
-| :------------ | :----- | :------------------- | :---------------------------------------------------------------------------------------------------------- |
-| orderId       | long   | `150695552109032492` | 订单 ID（系统生成）                                                                                         |
-| clientOrderId | string | `213443`             | 订单 ID（用户生成）                                                                                         |
-| symbol        | string | `ethusdt`            | `小写`币对名称                                                                                              |
-| price         | float  | `4765.29`            | 订单价格                                                                                                    |
-| origQty       | float  | `1.01`               | 订单数量                                                                                                    |
-| executedQty   | float  | `0`                  | 已经成交订单数量                                                                                            |
-| avgPrice      | float  | `4754.24`            | 订单已经成交的平均价格                                                                                      |
-| type          | string | `LIMIT`              | 订单类型。可能出现的值只能为：`LIMIT`(限价)和`MARKET`（市价）                                               |
-| time          | long   | `1672274311107`      | 时间戳                                                                                                      |
-| side          | string | `BUY`                | 订单方向。可能出现的值只能为：`BUY`（买入做多）和`SELL`（卖出做空）                                         |
-| status        | string | `New Order`          | 订单状态。可能出现的值为：`New Order`(新订单，无成交)、`Partially Filled`（部分成交）、`Filled`（全部成交） |
-
-### 订单查询-V2
-
 `GET https://t(:spot_http_url)/sapi/v2/order`
 
 **限速规则: 20 次/2s**
@@ -6272,470 +5045,6 @@ axios
 | status        | string | `New Order`          | 订单状态。可能出现的值为：`New Order`(新订单，无成交)、`Partially Filled`（部分成交）、`Filled`（全部成交） |
 
 ### 撤销订单
-
-`POST https://t(:spot_http_url)/sapi/v1/cancel`
-
-**限速规则: 100 次/2s**
-
-**请求头**
-
-| 参数名                                 | 类型    | 描述         |
-| :------------------------------------- | :------ | :----------- |
-| X-CH-SIGN<font color="red">\*</font>   | string  | 签名         |
-| X-CH-APIKEY<font color="red">\*</font> | string  | 您的 API-key |
-| X-CH-TS<font color="red">\*</font>     | integer | 时间戳       |
-
-> 请求示例
-
-```http
-POST https://t(:spot_http_url)/sapi/v1/cancel
-
-// request headers
-Content-Type: application/json
-X-CH-TS: 1739945835000
-X-CH-APIKEY: 您的API-KEY
-X-CH-SIGN: 3c22ee3d2940df5e9dc5b7b862ba3d75e805e97a242f52f12fec9d16bc73e1c7
-```
-
-```shell
-#!/bin/bash
-
-# 设置 API 相关信息
-URL="https://t(:spot_http_url)"
-REQUEST_PATH="/sapi/v1/cancel"
-API_URL="${URL}${REQUEST_PATH}"
-API_KEY="您的API-KEY"
-API_SECRET="您的API-SECRET"
-
-# 生成当前毫秒级时间戳
-timestamp=$(date +%s | awk '{print $1 * 1000}')
-
-# 定义请求方法
-METHOD="POST"
-
-# 定义请求体 (JSON 格式)
-BODY_JSON='{"symbol":"btcusdt","orderId":"2618039663715064005"}'
-
-# 生成签名 (X-CH-SIGN)
-SIGN_PAYLOAD="${timestamp}${METHOD}${REQUEST_PATH}${BODY_JSON}"
-SIGNATURE=$(echo -n "$SIGN_PAYLOAD" | openssl dgst -sha256 -hmac "$API_SECRET" | awk '{print $2}')
-
-# **打印调试信息**
-echo "==== 请求信息 ===="
-echo "Timestamp (X-CH-TS): $timestamp"
-echo "Sign Payload (待签名字符串): $SIGN_PAYLOAD"
-echo "Signature (X-CH-SIGN): $SIGNATURE"
-echo "Request Body: $BODY_JSON"
-echo "=================="
-
-# 发送请求
-curl -X POST "$API_URL" \
-    -H "X-CH-SIGN: $SIGNATURE" \
-    -H "X-CH-APIKEY: $API_KEY" \
-    -H "X-CH-TS: $timestamp" \
-    -H "Content-Type: application/json" \
-    -d "$BODY_JSON"
-```
-
-```java
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
-import java.io.OutputStream;
-import java.time.Instant;
-import java.util.Base64;
-
-public class FameexApiRequest {
-    public static void main(String[] args) {
-        try {
-            // API 相关信息
-            String url = "https://t(:spot_http_url)";
-            String requestPath = "/sapi/v1/cancel";
-            String apiUrl = url + requestPath;
-            String apiKey = "您的API-KEY";
-            String apiSecret = "您的API-SECRET";
-
-            // 获取当前毫秒级时间戳
-            String timestamp = String.valueOf(Instant.now().toEpochMilli());
-
-            // 请求方法
-            String method = "POST";
-
-            // 定义请求体 (JSON 格式)
-            String bodyJson = "{\"symbol\":\"btcusdt\",\"orderId\":\"2618039663715064005\"";
-
-            // 生成签名 (X-CH-SIGN)
-            String signPayload = timestamp + method + requestPath + bodyJson;
-            String signature = hmacSha256(signPayload, apiSecret);
-
-            // **打印调试信息**
-            System.out.println("==== 请求信息 ====");
-            System.out.println("Timestamp (X-CH-TS): " + timestamp);
-            System.out.println("Sign Payload (待签名字符串): " + signPayload);
-            System.out.println("Signature (X-CH-SIGN): " + signature);
-            System.out.println("Request Body: " + bodyJson);
-            System.out.println("==================");
-
-            // 发送请求
-            sendPostRequest(apiUrl, apiKey, timestamp, signature, bodyJson);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // HMAC-SHA256 签名计算
-    public static String hmacSha256(String data, String secret) throws Exception {
-        Mac mac = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-        mac.init(secretKeySpec);
-        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : hash) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) {
-                hexString.append('0');
-            }
-            hexString.append(hex);
-        }
-        return hexString.toString();
-    }
-
-    // 发送 HTTP POST 请求
-    public static void sendPostRequest(String apiUrl, String apiKey, String timestamp, String signature, String bodyJson) {
-        try {
-            URL url = new URL(apiUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("X-CH-SIGN", signature);
-            conn.setRequestProperty("X-CH-APIKEY", apiKey);
-            conn.setRequestProperty("X-CH-TS", timestamp);
-            conn.setDoOutput(true);
-
-            // 发送请求体
-            try (OutputStream os = conn.getOutputStream()) {
-                byte[] input = bodyJson.getBytes(StandardCharsets.UTF_8);
-                os.write(input, 0, input.length);
-            }
-
-            // 读取响应
-            int responseCode = conn.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
-
-            Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name());
-            while (scanner.hasNextLine()) {
-                System.out.println(scanner.nextLine());
-            }
-            scanner.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-```
-
-```go
-package main
-
-import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
-)
-
-func main() {
-	// API 相关信息
-    url := "https://t(:spot_http_url)"
-    requestPath := "/sapi/v1/cancel"
-	apiURL := url + requestPath
-	apiKey := "您的API-KEY"
-	apiSecret := "您的API-SECRET"
-
-	// 生成当前毫秒级时间戳
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
-
-	// 请求方法
-	method := "POST"
-
-	// 定义请求体 (JSON 格式)
-	bodyJSON := `{"symbol":"btcusdt","orderId":"2618039663715064005"}`
-
-	// 生成签名 (X-CH-SIGN)
-	signPayload := timestamp + method + requestPath + bodyJSON
-	signature := hmacSHA256(signPayload, apiSecret)
-
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (待签名字符串):", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request Body:", bodyJSON)
-	fmt.Println("==================")
-
-	// 发送请求
-	sendPostRequest(apiURL, apiKey, timestamp, signature, bodyJSON)
-}
-
-// HMAC-SHA256 签名计算
-func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
-}
-
-// 发送 HTTP POST 请求
-func sendPostRequest(apiURL, apiKey, timestamp, signature, bodyJSON string) {
-	client := &http.Client{}
-
-	// 创建请求
-	req, err := http.NewRequest("POST", apiURL, bytes.NewBuffer([]byte(bodyJSON)))
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
-
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
-
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
-
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response:", string(body))
-}
-```
-
-```python
-import time
-import hmac
-import hashlib
-import requests
-import json
-
-# API 相关信息
-URL = "https://t(:spot_http_url)"
-REQUEST_PATH = "/sapi/v1/cancel"
-API_URL = URL + REQUEST_PATH
-API_KEY = "您的API-KEY"
-API_SECRET = "您的API-SECRET"
-
-# 生成当前毫秒级时间戳
-timestamp = str(int(time.time() * 1000))
-
-# 请求方法
-METHOD = "POST"
-
-# 定义请求体 (JSON 格式)
-body_json = {
-    "symbol": "btcusdt",
-    "orderId": "2618039663715064005"
-}
-body_str = json.dumps(body_json, separators=(',', ':'))  # 确保 JSON 字符串格式正确
-
-# 生成签名 (X-CH-SIGN)
-sign_payload = timestamp + METHOD + REQUEST_PATH + body_str
-signature = hmac.new(API_SECRET.encode(), sign_payload.encode(), hashlib.sha256).hexdigest()
-
-# **打印调试信息**
-print("==== 请求信息 ====")
-print("Timestamp (X-CH-TS):", timestamp)
-print("Sign Payload (待签名字符串):", sign_payload)
-print("Signature (X-CH-SIGN):", signature)
-print("Request Body:", body_str)
-print("==================")
-
-# 发送请求
-headers = {
-    "X-CH-SIGN": signature,
-    "X-CH-APIKEY": API_KEY,
-    "X-CH-TS": timestamp,
-    "Content-Type": "application/json"
-}
-
-response = requests.post(API_URL, headers=headers, data=body_str)
-
-# 打印响应
-print("Response Code:", response.status_code)
-print("Response Body:", response.text)
-
-```
-
-```php
-<?
-
-// API 相关信息
-$url = "https://t(:spot_http_url)";
-$request_path = "/sapi/v1/cancel";
-$api_url = $url . $request_path;
-$api_key = "您的API-KEY";
-$api_secret = "您的API-SECRET";
-
-// 生成当前毫秒级时间戳
-$timestamp = round(microtime(true) * 1000);
-
-// 请求方法
-$method = "POST";
-
-// 定义请求体 (JSON 格式)
-$body_json = json_encode([
-    "symbol" => "btcusdt",
-    "orderId" => "2618039663715064005"
-], JSON_UNESCAPED_SLASHES); // 确保 JSON 格式正确
-
-// 生成签名 (X-CH-SIGN)
-$sign_payload = $timestamp . $method . $request_path . $body_json;
-$signature = hash_hmac('sha256', $sign_payload, $api_secret);
-
-// **打印调试信息**
-echo "==== 请求信息 ====\n";
-echo "Timestamp (X-CH-TS): " . $timestamp . "\n";
-echo "Sign Payload (待签名字符串): " . $sign_payload . "\n";
-echo "Signature (X-CH-SIGN): " . $signature . "\n";
-echo "Request Body: " . $body_json . "\n";
-echo "==================\n";
-
-// 发送请求
-$headers = [
-    "Content-Type: application/json",
-    "X-CH-SIGN: $signature",
-    "X-CH-APIKEY: $api_key",
-    "X-CH-TS: $timestamp"
-];
-
-// 使用 cURL 发送 POST 请求
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $api_url);
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $body_json);
-
-// 执行请求并获取响应
-$response = curl_exec($ch);
-$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
-
-// 打印响应
-echo "Response Code: $http_code\n";
-echo "Response Body: $response\n";
-
-```
-
-```javascript--node
-const axios = require("axios");
-const crypto = require("crypto");
-
-// API 相关信息
-const URL = "https://t(:spot_http_url)";
-const REQUEST_PATH = "/sapi/v1/cancel";
-const API_URL = URL + REQUEST_PATH;
-const API_KEY = "您的API-KEY";
-const API_SECRET = "您的API-SECRET";
-
-// 生成当前毫秒级时间戳
-const timestamp = Date.now().toString();
-
-// 请求方法
-const METHOD = "POST";
-
-// 定义请求体 (JSON 格式)
-const bodyJson = JSON.stringify({
-  symbol: "btcusdt",
-  orderId: "2618039663715064005",
-});
-
-// 生成签名 (X-CH-SIGN)
-const signPayload = timestamp + METHOD + REQUEST_PATH + bodyJson;
-const signature = crypto
-  .createHmac("sha256", API_SECRET)
-  .update(signPayload)
-  .digest("hex");
-
-// **打印调试信息**
-console.log("==== 请求信息 ====");
-console.log("Timestamp (X-CH-TS):", timestamp);
-console.log("Sign Payload (待签名字符串):", signPayload);
-console.log("Signature (X-CH-SIGN):", signature);
-console.log("Request Body:", bodyJson);
-console.log("==================");
-
-// 发送请求
-const headers = {
-  "Content-Type": "application/json",
-  "X-CH-SIGN": signature,
-  "X-CH-APIKEY": API_KEY,
-  "X-CH-TS": timestamp,
-};
-
-axios
-  .post(API_URL, bodyJson, { headers })
-  .then((response) => {
-    console.log("Response Code:", response.status);
-    console.log("Response Body:", response.data);
-  })
-  .catch((error) => {
-    console.error("Error:", error.response ? error.response.data : error.message);
-  });
-
-```
-
-> body
-
-```json
-{ "symbol": "btcusdt", "orderId": "2618039663715064005" }
-```
-
-**请求参数**
-
-| 参数名                             | 类型   | 描述                            |
-| :--------------------------------- | :----- | :------------------------------ |
-| orderId<font color="red">\*</font> | string | 订单 id（系统生成）             |
-| symbol<font color="red">\*</font>  | string | `小写`币对名称，例如：`ethusdt` |
-
-> 返回示例
-
-```json
-{
-  "code": 0,
-  "msg": "Success",
-  "data": {
-    "orderId": "781594618796015616",
-    "symbol": "enausdt",
-    "status": "PENDING_CANCEL"
-  }
-}
-```
-
-**返回参数**
-
-| 参数名  | 类型   | 示例                  | 描述                       |
-| :------ | :----- | :-------------------- | :------------------------- |
-| orderId | long   | `1938321163093079425` | 订单 ID（系统生成）        |
-| symbol  | string | `ethusdt`             | 币对名称                   |
-| status  | string | `PENDING_CANCEL`      | 订单状态：`PENDING_CANCEL` |
-
-### 撤销订单-V2
 
 `POST https://t(:spot_http_url)/sapi/v2/cancel`
 
@@ -7567,492 +5876,6 @@ axios
 ```
 
 ### 当前订单
-
-`GET https://t(:spot_http_url)/sapi/v1/openOrders`
-
-**限速规则: 20 次/2s**
-
-**请求头**
-
-| 参数名                                 | 类型    | 描述         |
-| :------------------------------------- | :------ | :----------- |
-| X-CH-SIGN<font color="red">\*</font>   | string  | 签名         |
-| X-CH-APIKEY<font color="red">\*</font> | string  | 您的 API-key |
-| X-CH-TS<font color="red">\*</font>     | integer | 时间戳       |
-
-> 请求示例
-
-```http
-GET https://t(:spot_http_url)/sapi/v1/openOrders?symbol=btcusdt&limit=10
-
-// request headers
-Content-Type: application/json
-X-CH-TS: 1739503617552
-X-CH-APIKEY: 您的API-KEY
-X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
-```
-
-```shell
-#!/bin/bash
-
-# 设置 API 相关信息
-API_URL="https://t(:spot_http_url)"
-REQUEST_URL="/sapi/v1/openOrders"
-QUERY_STRING="?symbol=btcusdt&limit=10"
-
-# 计算完整的请求路径
-REQUEST_PATH="${REQUEST_URL}${QUERY_STRING}"
-FULL_URL="${API_URL}${REQUEST_PATH}"
-
-# API 认证信息
-API_KEY="您的API-KEY"
-API_SECRET="您的API-SECRET"
-
-# 生成当前毫秒级时间戳
-timestamp=$(date +%s | awk '{print $1 * 1000}')
-
-# 定义请求方法
-METHOD="GET"
-
-# 生成签名 (X-CH-SIGN) - GET 请求没有 body
-SIGN_PAYLOAD="${timestamp}${METHOD}${REQUEST_PATH}"
-SIGNATURE=$(echo -n "$SIGN_PAYLOAD" | openssl dgst -sha256 -hmac "$API_SECRET" | awk '{print $2}')
-
-# **打印调试信息**
-echo "==== 请求信息 ===="
-echo "Timestamp (X-CH-TS): $timestamp"
-echo "Sign Payload (待签名字符串): $SIGN_PAYLOAD"
-echo "Signature (X-CH-SIGN): $SIGNATURE"
-echo "Request URL: ${FULL_URL}"
-echo "=================="
-
-# 发送 GET 请求
-curl -X GET "$FULL_URL" \
-    -H "X-CH-SIGN: $SIGNATURE" \
-    -H "X-CH-APIKEY: $API_KEY" \
-    -H "X-CH-TS: $timestamp" \
-    -H "Content-Type: application/json"
-
-```
-
-```java
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.time.Instant;
-import java.util.Scanner;
-
-public class FameexApiRequest {
-    public static void main(String[] args) {
-        try {
-            // API 相关信息
-            String apiUrl = "https://t(:spot_http_url)";
-            String requestUrl = "/sapi/v1/openOrders";
-            String queryString = "?symbol=btcusdt&limit=10";
-
-            // 计算完整的请求路径
-            String requestPath = requestUrl + queryString;
-            String fullUrl = apiUrl + requestPath;
-
-            // API 认证信息
-            String apiKey = "您的API-KEY";
-            String apiSecret = "您的API-SECRET";
-
-            // 生成当前毫秒级时间戳
-            String timestamp = String.valueOf(Instant.now().toEpochMilli());
-
-            // 请求方法
-            String method = "GET";
-
-            // 生成签名 (X-CH-SIGN) - GET 请求没有 body
-            String signPayload = timestamp + method + requestPath;
-            String signature = hmacSha256(signPayload, apiSecret);
-
-            // **打印调试信息**
-            System.out.println("==== 请求信息 ====");
-            System.out.println("Timestamp (X-CH-TS): " + timestamp);
-            System.out.println("Sign Payload (待签名字符串): " + signPayload);
-            System.out.println("Signature (X-CH-SIGN): " + signature);
-            System.out.println("Request URL: " + fullUrl);
-            System.out.println("==================");
-
-            // 发送 GET 请求
-            sendGetRequest(fullUrl, apiKey, timestamp, signature);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // HMAC-SHA256 签名计算
-    public static String hmacSha256(String data, String secret) throws Exception {
-        Mac mac = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-        mac.init(secretKeySpec);
-        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
-
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : hash) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) {
-                hexString.append('0');
-            }
-            hexString.append(hex);
-        }
-        return hexString.toString();
-    }
-
-    // 发送 HTTP GET 请求
-    public static void sendGetRequest(String fullUrl, String apiKey, String timestamp, String signature) {
-        try {
-            URL url = new URL(fullUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-
-            // 设置请求头
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("X-CH-SIGN", signature);
-            conn.setRequestProperty("X-CH-APIKEY", apiKey);
-            conn.setRequestProperty("X-CH-TS", timestamp);
-
-            // 发送请求并获取响应
-            int responseCode = conn.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
-
-            Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name());
-            while (scanner.hasNextLine()) {
-                System.out.println(scanner.nextLine());
-            }
-            scanner.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-```
-
-```go
-package main
-
-import (
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
-)
-
-func main() {
-	// API 相关信息
-	apiURL := "https://t(:spot_http_url)"
-	requestURL := "/sapi/v1/openOrders"
-	queryString := "?symbol=btcusdt&limit=10"
-
-	// 计算完整的请求路径
-	requestPath := requestURL + queryString
-	fullURL := apiURL + requestPath
-
-	// API 认证信息
-	apiKey := "您的API-KEY"
-	apiSecret := "您的API-SECRET"
-
-	// 生成当前毫秒级时间戳
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
-
-	// 请求方法
-	method := "GET"
-
-	// 生成签名 (X-CH-SIGN) - GET 请求没有 body
-	signPayload := timestamp + method + requestPath
-	signature := hmacSHA256(signPayload, apiSecret)
-
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (待签名字符串):", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request URL:", fullURL)
-	fmt.Println("==================")
-
-	// 发送 GET 请求
-	sendGetRequest(fullURL, apiKey, timestamp, signature)
-}
-
-// 计算 HMAC-SHA256 签名
-func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
-}
-
-// 发送 HTTP GET 请求
-func sendGetRequest(fullURL, apiKey, timestamp, signature string) {
-	client := &http.Client{}
-
-	// 创建请求
-	req, err := http.NewRequest("GET", fullURL, nil)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
-
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
-
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
-
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
-}
-
-```
-
-```python
-import time
-import hmac
-import hashlib
-import requests
-
-# API 相关信息
-API_URL = "https://t(:spot_http_url)"
-REQUEST_URL = "/sapi/v1/openOrders"
-QUERY_STRING = "?symbol=btcusdt&limit=10"
-
-# 计算完整的请求路径
-REQUEST_PATH = REQUEST_URL + QUERY_STRING
-FULL_URL = API_URL + REQUEST_PATH
-
-# API 认证信息
-API_KEY = "您的API-KEY"
-API_SECRET = "您的API-SECRET"
-
-# 生成当前毫秒级时间戳
-timestamp = str(int(time.time() * 1000))
-
-# 请求方法
-METHOD = "GET"
-
-# 生成签名 (X-CH-SIGN) - GET 请求没有 body
-SIGN_PAYLOAD = timestamp + METHOD + REQUEST_PATH
-SIGNATURE = hmac.new(API_SECRET.encode(), SIGN_PAYLOAD.encode(), hashlib.sha256).hexdigest()
-
-# **打印调试信息**
-print("==== 请求信息 ====")
-print("Timestamp (X-CH-TS):", timestamp)
-print("Sign Payload (待签名字符串):", SIGN_PAYLOAD)
-print("Signature (X-CH-SIGN):", SIGNATURE)
-print("Request URL:", FULL_URL)
-print("==================")
-
-# 发送 GET 请求
-headers = {
-    "X-CH-SIGN": SIGNATURE,
-    "X-CH-APIKEY": API_KEY,
-    "X-CH-TS": timestamp,
-    "Content-Type": "application/json"
-}
-
-response = requests.get(FULL_URL, headers=headers)
-
-# 打印响应
-print("Response Code:", response.status_code)
-print("Response Body:", response.text)
-
-```
-
-```php
-<?
-
-// API 相关信息
-$API_URL = "https://t(:spot_http_url)";
-$REQUEST_URL = "/sapi/v1/openOrders";
-$QUERY_STRING = "?symbol=btcusdt&limit=10";
-
-// 计算完整的请求路径
-$REQUEST_PATH = $REQUEST_URL . $QUERY_STRING;
-$FULL_URL = $API_URL . $REQUEST_PATH;
-
-// API 认证信息
-$API_KEY = "您的API-KEY";
-$API_SECRET = "您的API-SECRET";
-
-// 生成当前毫秒级时间戳
-$timestamp = round(microtime(true) * 1000);
-
-// 请求方法
-$METHOD = "GET";
-
-// 生成签名 (X-CH-SIGN) - GET 请求没有 body
-$SIGN_PAYLOAD = $timestamp . $METHOD . $REQUEST_PATH;
-$SIGNATURE = hash_hmac('sha256', $SIGN_PAYLOAD, $API_SECRET);
-
-// **打印调试信息**
-echo "==== 请求信息 ====\n";
-echo "Timestamp (X-CH-TS): " . $timestamp . "\n";
-echo "Sign Payload (待签名字符串): " . $SIGN_PAYLOAD . "\n";
-echo "Signature (X-CH-SIGN): " . $SIGNATURE . "\n";
-echo "Request URL: " . $FULL_URL . "\n";
-echo "==================\n";
-
-// 发送 GET 请求
-$headers = [
-    "Content-Type: application/json",
-    "X-CH-SIGN: $SIGNATURE",
-    "X-CH-APIKEY: $API_KEY",
-    "X-CH-TS: $timestamp"
-];
-
-// 使用 cURL 发送 GET 请求
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $FULL_URL);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-// 执行请求并获取响应
-$response = curl_exec($ch);
-$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
-
-// 打印响应
-echo "Response Code: $http_code\n";
-echo "Response Body: $response\n";
-
-?>
-```
-
-```javascript--node
-const axios = require("axios");
-const crypto = require("crypto");
-
-// API 相关信息
-const API_URL = "https://t(:spot_http_url)";
-const REQUEST_URL = "/sapi/v1/openOrders";
-const QUERY_STRING = "?symbol=btcusdt&limit=10";
-
-// 计算完整的请求路径
-const REQUEST_PATH = REQUEST_URL + QUERY_STRING;
-const FULL_URL = API_URL + REQUEST_PATH;
-
-// API 认证信息
-const API_KEY = "您的API-KEY";
-const API_SECRET = "您的API-SECRET";
-
-// 生成当前毫秒级时间戳
-const timestamp = Date.now().toString();
-
-// 请求方法
-const METHOD = "GET";
-
-// 生成签名 (X-CH-SIGN) - GET 请求没有 body
-const SIGN_PAYLOAD = timestamp + METHOD + REQUEST_PATH;
-const SIGNATURE = crypto
-  .createHmac("sha256", API_SECRET)
-  .update(SIGN_PAYLOAD)
-  .digest("hex");
-
-// **打印调试信息**
-console.log("==== 请求信息 ====");
-console.log("Timestamp (X-CH-TS):", timestamp);
-console.log("Sign Payload (待签名字符串):", SIGN_PAYLOAD);
-console.log("Signature (X-CH-SIGN):", SIGNATURE);
-console.log("Request URL:", FULL_URL);
-console.log("==================");
-
-// 发送 GET 请求
-const headers = {
-  "Content-Type": "application/json",
-  "X-CH-SIGN": SIGNATURE,
-  "X-CH-APIKEY": API_KEY,
-  "X-CH-TS": timestamp,
-};
-
-axios
-  .get(FULL_URL, { headers })
-  .then((response) => {
-    console.log("Response Code:", response.status);
-    console.log("Response Body:", response.data);
-  })
-  .catch((error) => {
-    console.error("Error:", error.response ? error.response.data : error.message);
-  });
-```
-
-**请求参数**
-
-| 参数名                            | 类型    | 描述                            |
-| :-------------------------------- | :------ | :------------------------------ |
-| symbol<font color="red">\*</font> | string  | `小写`币对名称，例如：`ethusdt` |
-| limit                             | integer | 最大 1000                       |
-
-> 返回示例
-
-```json
-{
-  "code": 0,
-  "msg": "Success",
-  "data": [
-    {
-      "orderId": "781594618796015616",
-      "symbol": "ENAUSDT",
-      "price": 0.1,
-      "origQty": 50,
-      "executedQty": 0,
-      "avgPrice": 0,
-      "type": "LIMIT",
-      "time": 1764183478446,
-      "side": "BUY",
-      "status": "NEW"
-    },
-    {
-      "symbol": "ETHUSDT",
-      "side": "BUY",
-      "executedQty": "0",
-      "orderId": 1938321163093078022,
-      "price": "0",
-      "origQty": "0.01",
-      "avgPrice": "0",
-      "time": 1701243281850,
-      "type": "MARKET",
-      "status": "NEW_"
-    }
-  ]
-}
-```
-
-**返回参数**
-
-| 参数名      | 类型   | 示例                 | 描述                                                                                                        |
-| :---------- | :----- | :------------------- | :---------------------------------------------------------------------------------------------------------- |
-| orderId     | long   | `150695552109032492` | 订单 ID（系统生成）                                                                                         |
-| symbol      | string | `ETHUSDT`            | 币对名称                                                                                                    |
-| price       | float  | `4765.29`            | 订单价格                                                                                                    |
-| origQty     | float  | `1.01`               | 订单数量                                                                                                    |
-| executedQty | float  | `1.01`               | 已经成交订单数量                                                                                            |
-| avgPrice    | float  | `4754.24`            | 订单已经成交的平均价格                                                                                      |
-| type        | string | `LIMIT`              | 订单类型。可能出现的值只能为：`LIMIT`(限价)和`MARKET`（市价）                                               |
-| time        | long   | `1701243281850`      | 时间戳                                                                                                      |
-| side        | string | `BUY`                | 订单方向。可能出现的值只能为：`BUY`（买入做多）和`SELL`（卖出做空）                                         |
-| status      | string | `New Order`          | 订单状态。可能出现的值为：`New Order`(新订单，无成交)、`Partially Filled`（部分成交）、`Filled`（全部成交） |
-
-### 当前订单-V2
 
 `GET https://t(:spot_http_url)/sapi/v2/openOrders`
 
@@ -9030,7 +6853,6 @@ axios
 | fee       | number  | `0.00000000428`       | 交易手续费                                        |
 | bidUserId | integer | `10083`               | 买方用户 uid                                      |
 | askUserId | integer | `10671`               | 卖方用户 uid                                      |
-| isSelf    | boolean | `false`               | 是否为自成交，`true`=是自成交，`false`=不是自成交 |
 | side      | string  | `BUY`                 | 主动单方向`BUY`/`SELL`                            |
 
 ## 账户
@@ -9039,467 +6861,6 @@ axios
 
 <aside class="notice">账户下方的接口都需要签名和API-key验证。</aside>
 
-### 账户信息（废弃）
-
-`GET https://t(:spot_http_url)/sapi/v1/account`
-
-**限速规则: 20 次/2s**
-
-**请求头**
-
-| 参数名                                 | 类型    | 描述         |
-| :------------------------------------- | :------ | :----------- |
-| X-CH-SIGN<font color="red">\*</font>   | string  | 签名         |
-| X-CH-APIKEY<font color="red">\*</font> | string  | 您的 API-key |
-| X-CH-TS<font color="red">\*</font>     | integer | 时间戳       |
-
-> 请求示例
-
-```http
-GET https://t(:spot_http_url)/sapi/v1/account
-
-// request headers
-Content-Type: application/json
-X-CH-TS: 1739503617552
-X-CH-APIKEY: 您的API-KEY
-X-CH-SIGN: 325b02a8444da041c71fb6e3c35c6baf87e5cb48acc19e4cd312b8bf821bfc1b
-```
-
-```shell
-#!/bin/bash
-
-# 设置 API 相关信息
-API_URL="https://t(:spot_http_url)"
-REQUEST_URL="/sapi/v1/account"
-QUERY_STRING=""
-
-# 计算完整的请求路径
-REQUEST_PATH="${REQUEST_URL}${QUERY_STRING}"
-FULL_URL="${API_URL}${REQUEST_PATH}"
-
-# API 认证信息
-API_KEY="您的API-KEY"
-API_SECRET="您的API-SECRET"
-
-# 生成当前毫秒级时间戳
-timestamp=$(date +%s | awk '{print $1 * 1000}')
-
-# 定义请求方法
-METHOD="GET"
-
-# 生成签名 (X-CH-SIGN) - GET 请求没有 body
-SIGN_PAYLOAD="${timestamp}${METHOD}${REQUEST_PATH}"
-SIGNATURE=$(echo -n "$SIGN_PAYLOAD" | openssl dgst -sha256 -hmac "$API_SECRET" | awk '{print $2}')
-
-# **打印调试信息**
-echo "==== 请求信息 ===="
-echo "Timestamp (X-CH-TS): $timestamp"
-echo "Sign Payload (待签名字符串): $SIGN_PAYLOAD"
-echo "Signature (X-CH-SIGN): $SIGNATURE"
-echo "Request URL: ${FULL_URL}"
-echo "=================="
-
-# 发送 GET 请求
-curl -X GET "$FULL_URL" \
-    -H "X-CH-SIGN: $SIGNATURE" \
-    -H "X-CH-APIKEY: $API_KEY" \
-    -H "X-CH-TS: $timestamp" \
-    -H "Content-Type: application/json"
-
-```
-
-```java
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.time.Instant;
-import java.util.Scanner;
-
-public class FameexApiRequest {
-    public static void main(String[] args) {
-        try {
-            // API 相关信息
-            String apiUrl = "https://t(:spot_http_url)";
-            String requestUrl = "/sapi/v1/account";
-            String queryString = "";
-
-            // 计算完整的请求路径
-            String requestPath = requestUrl + queryString;
-            String fullUrl = apiUrl + requestPath;
-
-            // API 认证信息
-            String apiKey = "您的API-KEY";
-            String apiSecret = "您的API-SECRET";
-
-            // 生成当前毫秒级时间戳
-            String timestamp = String.valueOf(Instant.now().toEpochMilli());
-
-            // 请求方法
-            String method = "GET";
-
-            // 生成签名 (X-CH-SIGN) - GET 请求没有 body
-            String signPayload = timestamp + method + requestPath;
-            String signature = hmacSha256(signPayload, apiSecret);
-
-            // **打印调试信息**
-            System.out.println("==== 请求信息 ====");
-            System.out.println("Timestamp (X-CH-TS): " + timestamp);
-            System.out.println("Sign Payload (待签名字符串): " + signPayload);
-            System.out.println("Signature (X-CH-SIGN): " + signature);
-            System.out.println("Request URL: " + fullUrl);
-            System.out.println("==================");
-
-            // 发送 GET 请求
-            sendGetRequest(fullUrl, apiKey, timestamp, signature);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // HMAC-SHA256 签名计算
-    public static String hmacSha256(String data, String secret) throws Exception {
-        Mac mac = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-        mac.init(secretKeySpec);
-        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
-
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : hash) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) {
-                hexString.append('0');
-            }
-            hexString.append(hex);
-        }
-        return hexString.toString();
-    }
-
-    // 发送 HTTP GET 请求
-    public static void sendGetRequest(String fullUrl, String apiKey, String timestamp, String signature) {
-        try {
-            URL url = new URL(fullUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-
-            // 设置请求头
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("X-CH-SIGN", signature);
-            conn.setRequestProperty("X-CH-APIKEY", apiKey);
-            conn.setRequestProperty("X-CH-TS", timestamp);
-
-            // 发送请求并获取响应
-            int responseCode = conn.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
-
-            Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name());
-            while (scanner.hasNextLine()) {
-                System.out.println(scanner.nextLine());
-            }
-            scanner.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-```
-
-```go
-package main
-
-import (
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
-)
-
-func main() {
-	// API 相关信息
-	apiURL := "https://t(:spot_http_url)"
-	requestURL := "/sapi/v1/account"
-	queryString := ""
-
-	// 计算完整的请求路径
-	requestPath := requestURL + queryString
-	fullURL := apiURL + requestPath
-
-	// API 认证信息
-	apiKey := "您的API-KEY"
-	apiSecret := "您的API-SECRET"
-
-	// 生成当前毫秒级时间戳
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
-
-	// 请求方法
-	method := "GET"
-
-	// 生成签名 (X-CH-SIGN) - GET 请求没有 body
-	signPayload := timestamp + method + requestPath
-	signature := hmacSHA256(signPayload, apiSecret)
-
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (待签名字符串):", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request URL:", fullURL)
-	fmt.Println("==================")
-
-	// 发送 GET 请求
-	sendGetRequest(fullURL, apiKey, timestamp, signature)
-}
-
-// 计算 HMAC-SHA256 签名
-func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
-}
-
-// 发送 HTTP GET 请求
-func sendGetRequest(fullURL, apiKey, timestamp, signature string) {
-	client := &http.Client{}
-
-	// 创建请求
-	req, err := http.NewRequest("GET", fullURL, nil)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
-
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
-
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
-
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
-}
-
-```
-
-```python
-import time
-import hmac
-import hashlib
-import requests
-
-# API 相关信息
-API_URL = "https://t(:spot_http_url)"
-REQUEST_URL = "/sapi/v1/account"
-QUERY_STRING = ""
-
-# 计算完整的请求路径
-REQUEST_PATH = REQUEST_URL + QUERY_STRING
-FULL_URL = API_URL + REQUEST_PATH
-
-# API 认证信息
-API_KEY = "您的API-KEY"
-API_SECRET = "您的API-SECRET"
-
-# 生成当前毫秒级时间戳
-timestamp = str(int(time.time() * 1000))
-
-# 请求方法
-METHOD = "GET"
-
-# 生成签名 (X-CH-SIGN) - GET 请求没有 body
-SIGN_PAYLOAD = timestamp + METHOD + REQUEST_PATH
-SIGNATURE = hmac.new(API_SECRET.encode(), SIGN_PAYLOAD.encode(), hashlib.sha256).hexdigest()
-
-# **打印调试信息**
-print("==== 请求信息 ====")
-print("Timestamp (X-CH-TS):", timestamp)
-print("Sign Payload (待签名字符串):", SIGN_PAYLOAD)
-print("Signature (X-CH-SIGN):", SIGNATURE)
-print("Request URL:", FULL_URL)
-print("==================")
-
-# 发送 GET 请求
-headers = {
-    "X-CH-SIGN": SIGNATURE,
-    "X-CH-APIKEY": API_KEY,
-    "X-CH-TS": timestamp,
-    "Content-Type": "application/json"
-}
-
-response = requests.get(FULL_URL, headers=headers)
-
-# 打印响应
-print("Response Code:", response.status_code)
-print("Response Body:", response.text)
-
-```
-
-```php
-<?
-
-// API 相关信息
-$API_URL = "https://t(:spot_http_url)";
-$REQUEST_URL = "/sapi/v1/account";
-$QUERY_STRING = "";
-
-// 计算完整的请求路径
-$REQUEST_PATH = $REQUEST_URL . $QUERY_STRING;
-$FULL_URL = $API_URL . $REQUEST_PATH;
-
-// API 认证信息
-$API_KEY = "您的API-KEY";
-$API_SECRET = "您的API-SECRET";
-
-// 生成当前毫秒级时间戳
-$timestamp = round(microtime(true) * 1000);
-
-// 请求方法
-$METHOD = "GET";
-
-// 生成签名 (X-CH-SIGN) - GET 请求没有 body
-$SIGN_PAYLOAD = $timestamp . $METHOD . $REQUEST_PATH;
-$SIGNATURE = hash_hmac('sha256', $SIGN_PAYLOAD, $API_SECRET);
-
-// **打印调试信息**
-echo "==== 请求信息 ====\n";
-echo "Timestamp (X-CH-TS): " . $timestamp . "\n";
-echo "Sign Payload (待签名字符串): " . $SIGN_PAYLOAD . "\n";
-echo "Signature (X-CH-SIGN): " . $SIGNATURE . "\n";
-echo "Request URL: " . $FULL_URL . "\n";
-echo "==================\n";
-
-// 发送 GET 请求
-$headers = [
-    "Content-Type: application/json",
-    "X-CH-SIGN: $SIGNATURE",
-    "X-CH-APIKEY: $API_KEY",
-    "X-CH-TS: $timestamp"
-];
-
-// 使用 cURL 发送 GET 请求
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $FULL_URL);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-// 执行请求并获取响应
-$response = curl_exec($ch);
-$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
-
-// 打印响应
-echo "Response Code: $http_code\n";
-echo "Response Body: $response\n";
-
-?>
-```
-
-```javascript--node
-const axios = require("axios");
-const crypto = require("crypto");
-
-// API 相关信息
-const API_URL = "https://t(:spot_http_url)";
-const REQUEST_URL = "/sapi/v1/account";
-const QUERY_STRING = "";
-
-// 计算完整的请求路径
-const REQUEST_PATH = REQUEST_URL + QUERY_STRING;
-const FULL_URL = API_URL + REQUEST_PATH;
-
-// API 认证信息
-const API_KEY = "您的API-KEY";
-const API_SECRET = "您的API-SECRET";
-
-// 生成当前毫秒级时间戳
-const timestamp = Date.now().toString();
-
-// 请求方法
-const METHOD = "GET";
-
-// 生成签名 (X-CH-SIGN) - GET 请求没有 body
-const SIGN_PAYLOAD = timestamp + METHOD + REQUEST_PATH;
-const SIGNATURE = crypto
-  .createHmac("sha256", API_SECRET)
-  .update(SIGN_PAYLOAD)
-  .digest("hex");
-
-// **打印调试信息**
-console.log("==== 请求信息 ====");
-console.log("Timestamp (X-CH-TS):", timestamp);
-console.log("Sign Payload (待签名字符串):", SIGN_PAYLOAD);
-console.log("Signature (X-CH-SIGN):", SIGNATURE);
-console.log("Request URL:", FULL_URL);
-console.log("==================");
-
-// 发送 GET 请求
-const headers = {
-  "Content-Type": "application/json",
-  "X-CH-SIGN": SIGNATURE,
-  "X-CH-APIKEY": API_KEY,
-  "X-CH-TS": timestamp,
-};
-
-axios
-  .get(FULL_URL, { headers })
-  .then((response) => {
-    console.log("Response Code:", response.status);
-    console.log("Response Body:", response.data);
-  })
-  .catch((error) => {
-    console.error("Error:", error.response ? error.response.data : error.message);
-  });
-```
-
-> 返回示例
-
-```json
-{
-  "balances": [
-    {
-      "asset": "ABAT",
-      "free": "10.00",
-      "locked": "20.00"
-    },
-    {
-      "asset": "DOT",
-      "free": "10.00",
-      "locked": "10.00"
-    },
-    {
-      "asset": "TT",
-      "free": "50.00",
-      "locked": "50.00"
-    }
-  ]
-}
-```
-
-**返回参数**
-
-| 参数名   | 类型   | 描述         |
-| :------- | :----- | :----------- |
-| balances | array  | 账户余额集合 |
-| asset    | string | 交易对       |
-| free     | string | 可用余额     |
-| locked   | string | 冻结余额     |
 
 ### 账户信息（推荐）
 
@@ -9973,11 +7334,57 @@ axios
 | 参数名   | 类型   | 描述     |
 | :------- | :----- | :------- |
 | balances | array  | 账户余额 |
-| asset    | string | 交易对   |
+| asset    | string | 币种   |
 | free     | string | 可用余额 |
 | locked   | string | 冻结余额 |
 
 # 合约交易
+
+## 枚举类型
+
+### 交易对
+
+| 值      | 说明                                           |
+| :------ | :--------------------------------------------- |
+| `base`  | 指一个交易对的交易对象，即写在靠前部分的资产名 |
+| `quote` | 指一个交易对的定价资产，即写在靠后部分资产名   |
+
+### 订单状态
+
+| 值                           | 说明            |
+| :--------------------------- | :-------------- |
+| `New Order`                  | 新建订单        |
+| `Partially Filled`           | 部分成交        |
+| `Filled`                     | 全部成交        |
+| `Cancelled`                  | 已撤销          |
+| `To be Cancelled`            | 正在撤销中      |
+| `Partially Filled/Cancelled` | 部分成交/已取消 |
+| `REJECTED`                   | 订单被拒绝      |
+
+### 订单种类
+
+| 值       | 说明   |
+| :------- | :----- |
+| `LIMIT`  | 限价单 |
+| `MARKET` | 市价单 |
+
+### 订单方向
+
+| 值     | 说明 |
+| :----- | :--- |
+| `BUY`  | 买单 |
+| `SELL` | 卖单 |
+
+### K 线间隔
+
+| 值      | 说明 | 示例                                      |
+| :------ | :--- | :---------------------------------------- |
+| `min`   | 分钟 | `1min`, `5min`, `15min`, `30min`, `60min` |
+| `h`     | 小时 | `1h`, `4h`                                |
+| `day`   | 天   | `1day`                                    |
+| `week`  | 周   | `1week`                                   |
+| `month` | 月   |                                           |
+
 
 ## 公共
 
@@ -10300,8 +7707,8 @@ https.get(url, (res) => {
 
 | 参数名     | 类型   | 示例                  | 描述         |
 | :--------- | :----- | :-------------------- | :----------- |
-| timezone   | string | `China Standard Time` | 服务器时区   |
-| serverTime | long   | `1607702400000`       | 服务器时间戳 |
+| timezone   | string | `UTC Time`            | UTC时区     |
+| serverTime | long   | `1607702400000`       | 毫秒級时间戳 |
 
 ### 合约列表
 
@@ -10696,187 +8103,6 @@ https.get(url, (res) => {
 | asks   | list | `[[4.00000200,12.0],[5.1,28.0]]` | 订单薄卖盘信息，数组第一位为价格，类型为 float；第二位为当前价格对应的数量，类型为 float |
 
 bids 和 asks 所对应的信息代表了订单薄的所有价格以及价格对应的数量的信息, 由最优价格从上到下排列
-
-### 行情 Ticker
-
-`GET https://t(:futures_http_url)/fapi/v1/ticker`
-
-24 小时价格变化数据
-
-> 请求示例
-
-```http
-GET https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT
-
-// request headers
-Content-Type:application/json
-```
-
-```shell
-curl -X GET "https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT"
-```
-
-```java
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
-
-public class Main {
-  public static void main(String[] args) {
-    try {
-      // 使用 URI 创建 URL
-      URI uri = new URI("https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT");
-      HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
-      conn.setRequestMethod("GET");
-      conn.setRequestProperty("User-Agent", "Java-Client");
-
-      // 读取响应
-      BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-      StringBuilder response = new StringBuilder();
-      String line;
-      while ((line = reader.readLine()) != null) {
-        response.append(line);
-      }
-      reader.close();
-
-      // 输出结果
-      System.out.println("Response: " + response.toString());
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-}
-
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
-)
-
-func main() {
-	url := "https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT"
-
-	// 发送 GET 请求
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
-
-	// 读取响应体
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("读取响应失败:", err)
-		return
-	}
-
-	// 打印响应
-	fmt.Println("服务器返回:", string(body))
-}
-```
-
-```python
-import requests
-
-url = "https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT"
-
-try:
-    response = requests.get(url)
-    response.raise_for_status()  # 检查请求是否成功
-    print("Response:", response.text)
-except requests.exceptions.RequestException as e:
-    print("请求错误:", e)
-```
-
-```php
-$url = "https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT";
-
-// 初始化 cURL
-$ch = curl_init();
-
-// 设置 cURL 选项
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过 SSL 证书验证（如果 API 需要）
-
-// 执行请求
-$response = curl_exec($ch);
-
-// 检查是否有错误
-if (curl_errno($ch)) {
-    echo "cURL 错误：" . curl_error($ch);
-} else {
-    echo "Response: " . $response;
-}
-
-// 关闭 cURL
-curl_close($ch);
-```
-
-```javascript--node
-const https = require('https');
-
-const url = 'https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT';
-
-https.get(url, (res) => {
-  let data = '';
-
-  // A chunk of data has been received.
-  res.on('data', (chunk) => {
-    data += chunk;
-  });
-
-  // The whole response has been received.
-  res.on('end', () => {
-    console.log("Response:", data);
-  });
-
-}).on('error', (err) => {
-  console.log('请求错误:', err.message);
-});
-```
-
-**请求参数**
-
-| 参数名                                  | 类型   | 描述                               |
-| :-------------------------------------- | :----- | :--------------------------------- |
-| contractName<font color="red">\*</font> | string | `大写`合约名称，例如：`E-BTC-USDT` |
-
-> 返回示例
-
-```json
-{
-  "high": 56120.22,
-  "vol": 51.21,
-  "last": 55989.93,
-  "low": 55982.24,
-  "buy": 55988.1,
-  "sell": 55990.1,
-  "rose": "+0.05",
-  "time": 1704966225000
-}
-```
-
-**返回参数**
-
-| 参数名 | 类型   | 示例            | 描述                                      |
-| :----- | :----- | :-------------- | :---------------------------------------- |
-| time   | long   | `1595563624731` | 时间戳                                    |
-| high   | float  | `56120.22`      | 最高价                                    |
-| low    | float  | `55982.24`      | 最低价                                    |
-| last   | float  | `55989.93`      | 最新价                                    |
-| vol    | float  | `51.21`         | 交易量                                    |
-| rose   | string | `+0.05`         | 涨跌幅，`+`为涨，`-`为跌，`+0.05`为涨`5%` |
-| buy    | float  | `55988.10`      | 买一价格                                  |
-| sell   | float  | `55990.10`      | 卖一价格                                  |
 
 ### 行情 Ticker-V2
 
@@ -17455,6 +14681,261 @@ Kline interval 后缀
 ## Java
 
 [JAVA Demo](https://github.com/exchange2021/openApi-java-demo/tree/master/src/main/java/com)
+
+<a name="返回码类型"></a>
+
+# 返回码类型
+
+异常码和错误码的描述和原因
+
+<aside class="warning">以下返回内容均为基本参数校验，若返回码不包含在以下列出的返回码类型中，则为业务层以外的错误提示返回，需要联系技术人员进行处理。</aside>
+
+## 10XX - 通用服务器和网络错误
+
+### Code:-1000 UNKNOWN
+
+| Code | Tag     | msg                    | 原因                   |
+| :--- | :------ | :--------------------- | :--------------------- |
+| 1000 | UNKNOWN | 处理请求时发生未知错误 | 处理请求时发生未知错误 |
+
+### Code:-1001 DISCONNECTED
+
+| Code | Tag          | msg                                    | 原因                       |
+| :--- | :----------- | :------------------------------------- | :------------------------- |
+| 1001 | DISCONNECTED | 内部错误；无法处理您的请求。请再试一次 | 内部错误；无法处理您的请求 |
+
+### Code:-1002 UNAUTHORIZED
+
+| Code | Tag          | msg                                                                              | 原因                       |
+| :--- | :----------- | :------------------------------------------------------------------------------- | :------------------------- |
+| 1002 | UNAUTHORIZED | 您无权执行此请求。请求需要发送 API Key，我们建议在所有的请求头附加 `X-CH-APIKEY` | 请求头中缺少 `X-CH-APIKEY` |
+
+### Code:-1003 TOO_MANY_REQUESTS
+
+| Code | Tag               | msg                  | 原因                 |
+| :--- | :---------------- | :------------------- | :------------------- |
+| 1003 | TOO_MANY_REQUESTS | 请求过于频繁超过限制 | 请求过于频繁超过限制 |
+
+### Code:-1004 NO_THIS_COMPANY
+
+| Code | Tag             | msg                            | 原因                           |
+| :--- | :-------------- | :----------------------------- | :----------------------------- |
+| 1004 | NO_THIS_COMPANY | 您无权执行此请求 user not exit | 您无权执行此请求 user not exit |
+
+### Code:-1006 UNEXPECTED_RESP
+
+| Code | Tag             | msg                                        | 原因                                       |
+| :--- | :-------------- | :----------------------------------------- | :----------------------------------------- |
+| 1006 | UNEXPECTED_RESP | 接收到了不符合预设格式的消息，下单状态未知 | 接收到了不符合预设格式的消息，下单状态未知 |
+
+### Code:-1007 TIMEOUT
+
+| Code | Tag     | msg                                                | 原因     |
+| :--- | :------ | :------------------------------------------------- | :------- |
+| 1007 | TIMEOUT | 等待后端服务器响应超时。发送状态未知；执行状态未知 | 请求超时 |
+
+### Code:-1014 UNKNOWN_ORDER_COMPOSITION
+
+| Code | Tag                       | msg              | 原因                                 |
+| :--- | :------------------------ | :--------------- | :----------------------------------- |
+| 1014 | UNKNOWN_ORDER_COMPOSITION | 不支持的订单组合 | 订单组合不存在或输入了错误的订单组合 |
+
+### Code:-1015 TOO_MANY_ORDERS
+
+| Code | Tag             | msg                          | 原因                     |
+| :--- | :-------------- | :--------------------------- | :----------------------- |
+| 1015 | TOO_MANY_ORDERS | 订单太多。请减少你的订单数量 | 下单数量超过最大数量限制 |
+
+### Code:-1016 SERVICE_SHUTTING_DOWN
+
+| Code | Tag                   | msg        | 原因                         |
+| :--- | :-------------------- | :--------- | :--------------------------- |
+| 1016 | SERVICE_SHUTTING_DOWN | 服务器下线 | 服务器已下线，无法访问该接口 |
+
+### Code:-1017 NO_CONTENT_TYPE
+
+| Code | Tag             | msg                                                                | 原因                      |
+| :--- | :-------------- | :----------------------------------------------------------------- | :------------------------ |
+| 1017 | NO_CONTENT_TYPE | 我们建议在所有的请求头附加 Content-Type，并设置成 application/json | 请求头中缺少 Content-Type |
+
+### Code:-1020 UNSUPPORTED_OPERATION
+
+| Code | Tag                   | msg          | 原因                                             |
+| :--- | :-------------------- | :----------- | :----------------------------------------------- |
+| 1020 | UNSUPPORTED_OPERATION | 不支持此操作 | 进行了错误的请求操作，需要同技术团队进行对接解决 |
+
+### Code:-1021 INVALID_TIMESTAMP
+
+| Code | Tag               | msg                        | 原因                                                                                |
+| :--- | :---------------- | :------------------------- | :---------------------------------------------------------------------------------- |
+| 1021 | INVALID_TIMESTAMP | 无效的时间戳，时间偏移过大 | 时间戳偏移偏大，服务器根据请求中的时间戳判定客户端时间比服务器时间提前了 1 秒钟以上 |
+
+### Code:-1022 INVALID_SIGNATURE
+
+| Code | Tag               | msg        | 原因         |
+| :--- | :---------------- | :--------- | :----------- |
+| 1022 | INVALID_SIGNATURE | 无效的签名 | 签名验证失败 |
+
+### Code:-1023 UNAUTHORIZED
+
+| Code | Tag          | msg                                                                            | 原因                   |
+| :--- | :----------- | :----------------------------------------------------------------------------- | :--------------------- |
+| 1023 | UNAUTHORIZED | 您无权执行此请求。请求需要发送 timestamp，我们建议在所有的请求头附加 `X-CH-TS` | 请求头中缺少 `X-CH-TS` |
+
+### Code:-1024 UNAUTHORIZED
+
+| Code | Tag          | msg                                                                         | 原因                     |
+| :--- | :----------- | :-------------------------------------------------------------------------- | :----------------------- |
+| 1024 | UNAUTHORIZED | 您无权执行此请求。请求需要发送 sign，我们建议在所有的请求头附加 `X-CH-SIGN` | 请求头中缺少 `X-CH-SIGN` |
+
+## 11XX - 请求内容中的问题
+
+### Code:-1100 ILLEGAL_CHARS
+
+| Code | Tag           | msg                | 原因               |
+| :--- | :------------ | :----------------- | :----------------- |
+| 1100 | ILLEGAL_CHARS | 请求中存在非法字符 | 请求中存在非法字符 |
+
+### Code:-1101 TOO_MANY_PARAMETERS
+
+| Code | Tag                 | msg            | 原因                             |
+| :--- | :------------------ | :------------- | :------------------------------- |
+| 1101 | TOO_MANY_PARAMETERS | 发送的参数太多 | 参数内容过多或检测到的参数值重复 |
+
+### Code:-1102 MANDATORY_PARAM_EMPTY_OR_MALFORMED
+
+| Code | Tag                                | msg                                | 原因                                     |
+| :--- | :--------------------------------- | :--------------------------------- | :--------------------------------------- |
+| 1102 | MANDATORY_PARAM_EMPTY_OR_MALFORMED | 强制参数{0}未发送，为空/或格式错误 | 参数为空，必传参数未传或不正确的入参格式 |
+
+### Code:-1103 UNKNOWN_PARAM
+
+| Code | Tag           | msg            | 原因                                                       |
+| :--- | :------------ | :------------- | :--------------------------------------------------------- |
+| 1103 | UNKNOWN_PARAM | 发送了未知参数 | 请求参数中的参数内容或者格式错误，请检查是否字段中包含空格 |
+
+### Code:-1104 UNREAD_PARAMETERS
+
+| Code | Tag               | msg                        | 原因                                                         |
+| :--- | :---------------- | :------------------------- | :----------------------------------------------------------- |
+| 1104 | UNREAD_PARAMETERS | 并非所有发送的参数都被读取 | 并非所有发送的参数都被读取；读取了'％s'参数，但被发送了'％s' |
+
+### Code:-1105 PARAM_EMPTY
+
+| Code | Tag         | msg         | 原因         |
+| :--- | :---------- | :---------- | :----------- |
+| 1105 | PARAM_EMPTY | 参数{0}为空 | 必传参数为空 |
+
+### Code:-1106 PARAM_NOT_REQUIRED
+
+| Code | Tag                | msg              | 原因                |
+| :--- | :----------------- | :--------------- | :------------------ |
+| 1106 | PARAM_NOT_REQUIRED | 不需要发送此参数 | 不需要发送参数'％s' |
+
+### Code:-1111 BAD_PRECISION
+
+| Code | Tag           | msg                        | 原因                       |
+| :--- | :------------ | :------------------------- | :------------------------- |
+| 1111 | BAD_PRECISION | 精度超过此资产定义的最大值 | 精度超过此资产定义的最大值 |
+
+### Code:-1112 NO_DEPTH
+
+| Code | Tag      | msg            | 原因                   |
+| :--- | :------- | :------------- | :--------------------- |
+| 1112 | NO_DEPTH | 交易对没有挂单 | 需要取消的该订单不存在 |
+
+### Code:-1116 INVALID_ORDER_TYPE
+
+| Code | Tag                | msg          | 原因         |
+| :--- | :----------------- | :----------- | :----------- |
+| 1116 | INVALID_ORDER_TYPE | 无效订单类型 | 无效订单类型 |
+
+### Code:-1117 INVALID_SIDE
+
+| Code | Tag          | msg          | 原因         |
+| :--- | :----------- | :----------- | :----------- |
+| 1117 | INVALID_SIDE | 无效买卖方向 | 无效买卖方向 |
+
+### Code:-1121 BAD_SYMBOL
+
+| Code | Tag        | msg        | 原因                               |
+| :--- | :--------- | :--------- | :--------------------------------- |
+| 1121 | BAD_SYMBOL | 无效的合约 | 币对名称输入错误或合约名称输入错误 |
+
+### Code:-1136 ORDER_QUANTITY_TOO_SMALL
+
+| Code | Tag                      | msg                | 原因                     |
+| :--- | :----------------------- | :----------------- | :----------------------- |
+| 1136 | ORDER_QUANTITY_TOO_SMALL | 订单数量小于最小值 | 订单 quantity 小于最小值 |
+
+### Code:-1138 ORDER_PRICE_WAVE_EXCEED
+
+| Code | Tag                     | msg                  | 原因                 |
+| :--- | :---------------------- | :------------------- | :------------------- |
+| 1138 | ORDER_PRICE_WAVE_EXCEED | 订单价格超出允许范围 | 订单价格超出允许范围 |
+
+### Code:-1139 ORDER_NOT_SUPPORT_MARKET
+
+| Code | Tag                      | msg                  | 原因                   |
+| :--- | :----------------------- | :------------------- | :--------------------- |
+| 1139 | ORDER_NOT_SUPPORT_MARKET | 该币对不支持市价交易 | 该交易对不支持市价交易 |
+
+### Code:-1145 ORDER_NOT_SUPPORT_CANCELLATION
+
+| Code | Tag                            | msg                  | 原因             |
+| :--- | :----------------------------- | :------------------- | :--------------- |
+| 1145 | ORDER_NOT_SUPPORT_CANCELLATION | 该订单状态不允许撤销 | 订单不能够被取消 |
+
+### Code:-1147 PRICE_VOLUME_PRESION_ERROR
+
+| Code | Tag                        | msg                        | 原因                         |
+| :--- | :------------------------- | :------------------------- | :--------------------------- |
+| 1147 | PRICE_VOLUME_PRESION_ERROR | 价格或数量精度超过最大限制 | 订单的价格或数量超过最大限制 |
+
+## 2XXX - 其他相关返回码
+
+### Code:-2013 NO_SUCH_ORDER
+
+| Code | Tag           | msg        | 原因       |
+| :--- | :------------ | :--------- | :--------- |
+| 2013 | NO_SUCH_ORDER | 订单不存在 | 订单不存在 |
+
+### Code:-2015 REJECTED_API_KEY
+
+| Code | Tag              | msg                            | 原因             |
+| :--- | :--------------- | :----------------------------- | :--------------- |
+| 2015 | REJECTED_API_KEY | 无效的 API 密钥，IP 或操作权限 | 签名或 IP 不通过 |
+
+### Code:-2016 EXCHANGE_LOCK
+
+| Code | Tag           | msg        | 原因             |
+| :--- | :------------ | :--------- | :--------------- |
+| 2016 | EXCHANGE_LOCK | 交易被冻结 | 该用户交易被冻结 |
+
+### Code:-2017 BALANCE_NOT_ENOUGH
+
+| Code | Tag                | msg      | 原因                 |
+| :--- | :----------------- | :------- | :------------------- |
+| 2017 | BALANCE_NOT_ENOUGH | 余额不足 | 用户该账户中余额不足 |
+
+### Code:-2100 PARAM_ERROR
+
+| Code | Tag         | msg      | 原因         |
+| :--- | :---------- | :------- | :----------- |
+| 2100 | PARAM_ERROR | 参数问题 | 参数输入错误 |
+
+### Code:-2200 ORDER_CREATE_FAILS
+
+| Code | Tag                | msg        | 原因          |
+| :--- | :----------------- | :--------- | :------------ |
+| 2200 | ORDER_CREATE_FAILS | Illegal IP | 不是信任的 IP |
+
+### Code:35
+
+| Code | Tag | msg      | 原因               |
+| :--- | :-- | :------- | :----------------- |
+| 35   |     | 禁止下单 | 用户交易可能被限制 |
+
 
 # 常见问题
 
