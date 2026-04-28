@@ -136,31 +136,31 @@ public class Main {
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
+  "fmt"
+  "io/ioutil"
+  "net/http"
 )
 
 func main() {
-	url := "https://t(:spot_http_url)/sapi/v1/time"
+  url := "https://t(:spot_http_url)/sapi/v1/time"
 
-	// 发送 GET 请求
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送 GET 请求
+  resp, err := http.Get(url)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应体
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("读取响应失败:", err)
-		return
-	}
+  // 读取响应体
+  body, err := ioutil.ReadAll(resp.Body)
+  if err != nil {
+    fmt.Println("读取响应失败:", err)
+    return
+  }
 
-	// 打印响应
-	fmt.Println("服务器返回:", string(body))
+  // 打印响应
+  fmt.Println("服务器返回:", string(body))
 }
 ```
 
@@ -433,88 +433,88 @@ public class FameexApiRequest {
 package main
 
 import (
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "strconv"
+  "time"
 )
 
 func main() {
-	// API 相关信息
-	apiURL := "https://t(:spot_http_url)"
-	requestURL := "/sapi/v1/order"
-	queryString := "?orderId=12&symbol=ethusdt"
+  // API 相关信息
+  apiURL := "https://t(:spot_http_url)"
+  requestURL := "/sapi/v1/order"
+  queryString := "?orderId=12&symbol=ethusdt"
 
-	// 计算完整的请求路径
-	requestPath := requestURL + queryString
-	fullURL := apiURL + requestPath
+  // 计算完整的请求路径
+  requestPath := requestURL + queryString
+  fullURL := apiURL + requestPath
 
-	// API 认证信息
-	apiKey := "您的API-KEY"
-	apiSecret := "您的API-SECRET"
+  // API 认证信息
+  apiKey := "您的API-KEY"
+  apiSecret := "您的API-SECRET"
 
-	// 生成当前毫秒级时间戳
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
+  // 生成当前毫秒级时间戳
+  timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
 
-	// 请求方法
-	method := "GET"
+  // 请求方法
+  method := "GET"
 
-	// 生成签名 (X-CH-SIGN) - GET 请求没有 body
-	signPayload := timestamp + method + requestPath
-	signature := hmacSHA256(signPayload, apiSecret)
+  // 生成签名 (X-CH-SIGN) - GET 请求没有 body
+  signPayload := timestamp + method + requestPath
+  signature := hmacSHA256(signPayload, apiSecret)
 
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (待签名字符串):", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request URL:", fullURL)
-	fmt.Println("==================")
+  // **打印调试信息**
+  fmt.Println("==== 请求信息 ====")
+  fmt.Println("Timestamp (X-CH-TS):", timestamp)
+  fmt.Println("Sign Payload (待签名字符串):", signPayload)
+  fmt.Println("Signature (X-CH-SIGN):", signature)
+  fmt.Println("Request URL:", fullURL)
+  fmt.Println("==================")
 
-	// 发送 GET 请求
-	sendGetRequest(fullURL, apiKey, timestamp, signature)
+  // 发送 GET 请求
+  sendGetRequest(fullURL, apiKey, timestamp, signature)
 }
 
 // 计算 HMAC-SHA256 签名
 func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 
 // 发送 HTTP GET 请求
 func sendGetRequest(fullURL, apiKey, timestamp, signature string) {
-	client := &http.Client{}
+  client := &http.Client{}
 
-	// 创建请求
-	req, err := http.NewRequest("GET", fullURL, nil)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
+  // 创建请求
+  req, err := http.NewRequest("GET", fullURL, nil)
+  if err != nil {
+    fmt.Println("Error creating request:", err)
+    return
+  }
 
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
+  // 设置 Headers
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-SIGN", signature)
+  req.Header.Set("X-CH-APIKEY", apiKey)
+  req.Header.Set("X-CH-TS", timestamp)
 
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送请求
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("Error sending request:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
+  // 读取响应
+  body, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("Response Code:", resp.StatusCode)
+  fmt.Println("Response Body:", string(body))
 }
 
 ```
@@ -724,9 +724,9 @@ public static String hmacSha256(String data, String secret) throws Exception {
 ```go
 // 计算 HMAC-SHA256 签名
 func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 ```
 
@@ -985,85 +985,85 @@ public class FameexApiRequest {
 package main
 
 import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
+  "bytes"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "strconv"
+  "time"
 )
 
 func main() {
-	// API 相关信息
+  // API 相关信息
     url := "https://t(:spot_http_url)"
     requestPath := "/sapi/v1/order/test"
-	apiURL := url + requestPath
-	apiKey := "您的API-KEY"
-	apiSecret := "您的API-SECRET"
+  apiURL := url + requestPath
+  apiKey := "您的API-KEY"
+  apiSecret := "您的API-SECRET"
 
-	// 生成当前毫秒级时间戳
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
+  // 生成当前毫秒级时间戳
+  timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
 
-	// 请求方法
-	method := "POST"
+  // 请求方法
+  method := "POST"
 
-	// 定义请求体 (JSON 格式)
-	bodyJSON := `{"symbol":"BTCUSDT","price":"9300","volume":"1","side":"BUY","type":"LIMIT"}`
+  // 定义请求体 (JSON 格式)
+  bodyJSON := `{"symbol":"BTCUSDT","price":"9300","volume":"1","side":"BUY","type":"LIMIT"}`
 
-	// 生成签名 (X-CH-SIGN)
-	signPayload := timestamp + method + requestPath + bodyJSON
-	signature := hmacSHA256(signPayload, apiSecret)
+  // 生成签名 (X-CH-SIGN)
+  signPayload := timestamp + method + requestPath + bodyJSON
+  signature := hmacSHA256(signPayload, apiSecret)
 
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (待签名字符串):", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request Body:", bodyJSON)
-	fmt.Println("==================")
+  // **打印调试信息**
+  fmt.Println("==== 请求信息 ====")
+  fmt.Println("Timestamp (X-CH-TS):", timestamp)
+  fmt.Println("Sign Payload (待签名字符串):", signPayload)
+  fmt.Println("Signature (X-CH-SIGN):", signature)
+  fmt.Println("Request Body:", bodyJSON)
+  fmt.Println("==================")
 
-	// 发送请求
-	sendPostRequest(apiURL, apiKey, timestamp, signature, bodyJSON)
+  // 发送请求
+  sendPostRequest(apiURL, apiKey, timestamp, signature, bodyJSON)
 }
 
 // HMAC-SHA256 签名计算
 func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 
 // 发送 HTTP POST 请求
 func sendPostRequest(apiURL, apiKey, timestamp, signature, bodyJSON string) {
-	client := &http.Client{}
+  client := &http.Client{}
 
-	// 创建请求
-	req, err := http.NewRequest("POST", apiURL, bytes.NewBuffer([]byte(bodyJSON)))
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
+  // 创建请求
+  req, err := http.NewRequest("POST", apiURL, bytes.NewBuffer([]byte(bodyJSON)))
+  if err != nil {
+    fmt.Println("Error creating request:", err)
+    return
+  }
 
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
+  // 设置 Headers
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-SIGN", signature)
+  req.Header.Set("X-CH-APIKEY", apiKey)
+  req.Header.Set("X-CH-TS", timestamp)
 
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送请求
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("Error sending request:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response:", string(body))
+  // 读取响应
+  body, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("Response:", string(body))
 }
 ```
 
@@ -1294,9 +1294,9 @@ public static String hmacSha256(String data, String secret) throws Exception {
 ```go
 // HMAC-SHA256 签名计算
 func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 ```
 
@@ -1522,31 +1522,31 @@ public class Main {
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
+  "fmt"
+  "io/ioutil"
+  "net/http"
 )
 
 func main() {
-	url := "https://t(:spot_http_url)/sapi/v1/ping"
+  url := "https://t(:spot_http_url)/sapi/v1/ping"
 
-	// 发送 GET 请求
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送 GET 请求
+  resp, err := http.Get(url)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应体
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("读取响应失败:", err)
-		return
-	}
+  // 读取响应体
+  body, err := ioutil.ReadAll(resp.Body)
+  if err != nil {
+    fmt.Println("读取响应失败:", err)
+    return
+  }
 
-	// 打印响应
-	fmt.Println("服务器返回:", string(body))
+  // 打印响应
+  fmt.Println("服务器返回:", string(body))
 }
 ```
 
@@ -1676,31 +1676,31 @@ public class Main {
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
+  "fmt"
+  "io/ioutil"
+  "net/http"
 )
 
 func main() {
-	url := "https://t(:spot_http_url)/sapi/v1/time"
+  url := "https://t(:spot_http_url)/sapi/v1/time"
 
-	// 发送 GET 请求
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送 GET 请求
+  resp, err := http.Get(url)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应体
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("读取响应失败:", err)
-		return
-	}
+  // 读取响应体
+  body, err := ioutil.ReadAll(resp.Body)
+  if err != nil {
+    fmt.Println("读取响应失败:", err)
+    return
+  }
 
-	// 打印响应
-	fmt.Println("服务器返回:", string(body))
+  // 打印响应
+  fmt.Println("服务器返回:", string(body))
 }
 ```
 
@@ -1842,31 +1842,31 @@ public class Main {
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
+  "fmt"
+  "io/ioutil"
+  "net/http"
 )
 
 func main() {
-	url := "https://t(:spot_http_url)/sapi/v1/symbols"
+  url := "https://t(:spot_http_url)/sapi/v1/symbols"
 
-	// 发送 GET 请求
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送 GET 请求
+  resp, err := http.Get(url)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应体
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("读取响应失败:", err)
-		return
-	}
+  // 读取响应体
+  body, err := ioutil.ReadAll(resp.Body)
+  if err != nil {
+    fmt.Println("读取响应失败:", err)
+    return
+  }
 
-	// 打印响应
-	fmt.Println("服务器返回:", string(body))
+  // 打印响应
+  fmt.Println("服务器返回:", string(body))
 }
 ```
 
@@ -2136,59 +2136,59 @@ public class FameexApiRequest {
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
+  "fmt"
+  "io/ioutil"
+  "net/http"
 )
 
 func main() {
-	// API 相关信息
-	apiURL := "https://t(:spot_http_url)"
-	requestURL := "/sapi/v1/depth"
-	queryString := "?symbol=BTCUSDT&limit=100"
+  // API 相关信息
+  apiURL := "https://t(:spot_http_url)"
+  requestURL := "/sapi/v1/depth"
+  queryString := "?symbol=BTCUSDT&limit=100"
 
-	// 计算完整的请求路径
-	requestPath := requestURL + queryString
-	fullURL := apiURL + requestPath
+  // 计算完整的请求路径
+  requestPath := requestURL + queryString
+  fullURL := apiURL + requestPath
 
-	// 请求方法
-	method := "GET"
+  // 请求方法
+  method := "GET"
 
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Request URL:", fullURL)
-	fmt.Println("==================")
+  // **打印调试信息**
+  fmt.Println("==== 请求信息 ====")
+  fmt.Println("Request URL:", fullURL)
+  fmt.Println("==================")
 
-	// 发送 GET 请求
-	sendGetRequest(fullURL, method)
+  // 发送 GET 请求
+  sendGetRequest(fullURL, method)
 }
 
 // 发送 HTTP GET 请求
 func sendGetRequest(fullURL, method string) {
-	client := &http.Client{}
+  client := &http.Client{}
 
-	// 创建请求
-	req, err := http.NewRequest(method, fullURL, nil)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
+  // 创建请求
+  req, err := http.NewRequest(method, fullURL, nil)
+  if err != nil {
+    fmt.Println("Error creating request:", err)
+    return
+  }
 
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
+  // 设置 Headers
+  req.Header.Set("Content-Type", "application/json")
 
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送请求
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("Error sending request:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
+  // 读取响应
+  body, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("Response Code:", resp.StatusCode)
+  fmt.Println("Response Body:", string(body))
 }
 ```
 
@@ -2332,317 +2332,6 @@ bids 和 asks 所对应的信息代表了订单薄的所有价格以及价格对
 
 ### 行情 Ticker
 
-`GET https://t(:spot_http_url)/sapi/v1/ticker`
-
-获取 24 小时价格变化数据
-
-> 请求示例
-
-```http
-GET https://t(:spot_http_url)/sapi/v1/ticker?symbol=BTCUSDT
-
-// request headers
-Content-Type: application/json
-```
-
-```shell
-#!/bin/bash
-
-# 设置 API 相关信息
-API_URL="https://t(:spot_http_url)"
-REQUEST_URL="/sapi/v1/ticker"
-QUERY_STRING="?symbol=BTCUSDT"
-
-# 计算完整的请求路径
-REQUEST_PATH="${REQUEST_URL}${QUERY_STRING}"
-FULL_URL="${API_URL}${REQUEST_PATH}"
-
-# 定义请求方法
-METHOD="GET"
-
-# **打印调试信息**
-echo "==== 请求信息 ===="
-echo "Request URL: ${FULL_URL}"
-echo "=================="
-
-# 发送 GET 请求
-curl -X GET "$FULL_URL" \
-    -H "Content-Type: application/json"
-```
-
-```java
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.time.Instant;
-import java.util.Scanner;
-
-public class FameexApiRequest {
-    public static void main(String[] args) {
-        try {
-            // API 相关信息
-            String apiUrl = "https://t(:spot_http_url)";
-            String requestUrl = "/sapi/v1/ticker";
-            String queryString = "?symbol=BTCUSDT";
-
-            // 计算完整的请求路径
-            String requestPath = requestUrl + queryString;
-            String fullUrl = apiUrl + requestPath;
-
-            // 请求方法
-            String method = "GET";
-
-            // **打印调试信息**
-            System.out.println("==== 请求信息 ====");
-            System.out.println("Request URL: " + fullUrl);
-            System.out.println("==================");
-
-            // 发送 GET 请求
-            sendGetRequest(fullUrl);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // 发送 HTTP GET 请求
-    public static void sendGetRequest(String fullUrl) {
-        try {
-            URL url = new URL(fullUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-
-            // 设置请求头
-            conn.setRequestProperty("Content-Type", "application/json");
-
-            // 发送请求并获取响应
-            int responseCode = conn.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
-
-            Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name());
-            while (scanner.hasNextLine()) {
-                System.out.println(scanner.nextLine());
-            }
-            scanner.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
-)
-
-func main() {
-	// API 相关信息
-	apiURL := "https://t(:spot_http_url)"
-	requestURL := "/sapi/v1/ticker"
-	queryString := "?symbol=BTCUSDT"
-
-	// 计算完整的请求路径
-	requestPath := requestURL + queryString
-	fullURL := apiURL + requestPath
-
-	// 请求方法
-	method := "GET"
-
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Request URL:", fullURL)
-	fmt.Println("==================")
-
-	// 发送 GET 请求
-	sendGetRequest(fullURL, method)
-}
-
-// 发送 HTTP GET 请求
-func sendGetRequest(fullURL, method string) {
-	client := &http.Client{}
-
-	// 创建请求
-	req, err := http.NewRequest(method, fullURL, nil)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
-
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
-
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
-
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
-}
-```
-
-```python
-import time
-import hmac
-import hashlib
-import requests
-
-# API 相关信息
-API_URL = "https://t(:spot_http_url)"
-REQUEST_URL = "/sapi/v1/ticker"
-QUERY_STRING = "?symbol=BTCUSDT"
-
-# 计算完整的请求路径
-REQUEST_PATH = REQUEST_URL + QUERY_STRING
-FULL_URL = API_URL + REQUEST_PATH
-
-# **打印调试信息**
-print("==== 请求信息 ====")
-print("Request URL:", FULL_URL)
-print("==================")
-
-# 发送 GET 请求
-headers = {
-    "Content-Type": "application/json"
-}
-
-response = requests.get(FULL_URL, headers=headers)
-
-# 打印响应
-print("Response Code:", response.status_code)
-print("Response Body:", response.text)
-
-```
-
-```php
-<?
-
-// API 相关信息
-$API_URL = "https://t(:spot_http_url)";
-$REQUEST_URL = "/sapi/v1/ticker";
-$QUERY_STRING = "?symbol=BTCUSDT";
-
-// 计算完整的请求路径
-$REQUEST_PATH = $REQUEST_URL . $QUERY_STRING;
-$FULL_URL = $API_URL . $REQUEST_PATH;
-
-// **打印调试信息**
-echo "==== 请求信息 ====\n";
-echo "Request URL: " . $FULL_URL . "\n";
-echo "==================\n";
-
-// 发送 GET 请求
-$headers = [
-    "Content-Type: application/json",
-];
-
-// 使用 cURL 发送 GET 请求
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $FULL_URL);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-// 执行请求并获取响应
-$response = curl_exec($ch);
-$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
-
-// 打印响应
-echo "Response Code: $http_code\n";
-echo "Response Body: $response\n";
-
-?>
-```
-
-```javascript--node
-const axios = require("axios");
-const crypto = require("crypto");
-
-// API 相关信息
-const API_URL = "https://t(:spot_http_url)";
-const REQUEST_URL = "/sapi/v1/ticker";
-const QUERY_STRING = "?symbol=BTCUSDT";
-
-// 计算完整的请求路径
-const REQUEST_PATH = REQUEST_URL + QUERY_STRING;
-const FULL_URL = API_URL + REQUEST_PATH;
-
-// **打印调试信息**
-console.log("==== 请求信息 ====");
-console.log("Request URL:", FULL_URL);
-console.log("==================");
-
-// 发送 GET 请求
-const headers = {
-  "Content-Type": "application/json",
-};
-
-axios
-  .get(FULL_URL, { headers })
-  .then((response) => {
-    console.log("Response Code:", response.status);
-    console.log("Response Body:", response.data);
-  })
-  .catch((error) => {
-    console.error("Error:", error.response ? error.response.data : error.message);
-  });
-```
-
-**请求参数**
-
-| 参数名                            | 类型   | 描述                          |
-| :-------------------------------- | :----- | :---------------------------- |
-| symbol<font color="red">\*</font> | string | 大写币对名称，例如：`BTCUSDT` |
-
-> 返回示例
-
-```json
-{
-  "code": 0,
-  "msg": "Success",
-  "data": {
-    "amount": 1357550713.60334,
-    "high": 90267.9,
-    "vol": 15520.54679,
-    "last": 90253.5,
-    "low": 86180.1,
-    "buy": 90217.6,
-    "sell": 90217.7,
-    "rose": "+0.0295494912",
-    "time": 1764180900000
-  }
-}
-```
-
-**返回参数**
-
-| 参数名 | 类型   | 示例            | 描述                                      |
-| :----- | :----- | :-------------- | :---------------------------------------- |
-| time   | long   | `1595563624731` | 当前时间戳                                |
-| high   | float  | `9900.51`       | 最高价                                    |
-| low    | float  | `9100.34`       | 最低价                                    |
-| last   | float  | `9211.60`       | 最新成交价                                |
-| vol    | float  | `4691.0`        | 交易量                                    |
-| amount | float  | `22400.0`       | 交易额                                    |
-| buy    | float  | `9210.0`        | 买一价格                                  |
-| sell   | float  | `9213.0`        | 卖一价格                                  |
-| rose   | string | `+0.05`         | 涨跌幅，`+`为涨，`-`为跌，`+0.05`为涨`5%` |
-
-### 行情 Ticker-V2
-
 `GET https://t(:spot_http_url)/v2/public/ticker`
 
 获取 24 小时价格变化数据
@@ -2747,58 +2436,58 @@ public class FameexApiRequest {
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
+  "fmt"
+  "io/ioutil"
+  "net/http"
 )
 
 func main() {
-	// API 相关信息
-	apiURL := "https://t(:spot_http_url)"
-	requestURL := "/v2/public/ticker"
+  // API 相关信息
+  apiURL := "https://t(:spot_http_url)"
+  requestURL := "/v2/public/ticker"
 
-	// 计算完整的请求路径
-	requestPath := requestURL
-	fullURL := apiURL + requestPath
+  // 计算完整的请求路径
+  requestPath := requestURL
+  fullURL := apiURL + requestPath
 
-	// 请求方法
-	method := "GET"
+  // 请求方法
+  method := "GET"
 
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Request URL:", fullURL)
-	fmt.Println("==================")
+  // **打印调试信息**
+  fmt.Println("==== 请求信息 ====")
+  fmt.Println("Request URL:", fullURL)
+  fmt.Println("==================")
 
-	// 发送 GET 请求
-	sendGetRequest(fullURL, method)
+  // 发送 GET 请求
+  sendGetRequest(fullURL, method)
 }
 
 // 发送 HTTP GET 请求
 func sendGetRequest(fullURL, method string) {
-	client := &http.Client{}
+  client := &http.Client{}
 
-	// 创建请求
-	req, err := http.NewRequest(method, fullURL, nil)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
+  // 创建请求
+  req, err := http.NewRequest(method, fullURL, nil)
+  if err != nil {
+    fmt.Println("Error creating request:", err)
+    return
+  }
 
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
+  // 设置 Headers
+  req.Header.Set("Content-Type", "application/json")
 
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送请求
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("Error sending request:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
+  // 读取响应
+  body, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("Response Code:", resp.StatusCode)
+  fmt.Println("Response Body:", string(body))
 }
 ```
 
@@ -3061,59 +2750,59 @@ public class FameexApiRequest {
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
+  "fmt"
+  "io/ioutil"
+  "net/http"
 )
 
 func main() {
-	// API 相关信息
-	apiURL := "https://t(:spot_http_url)"
-	requestURL := "/sapi/v1/trades"
-	queryString := "?symbol=BTCUSDT&limit=10"
+  // API 相关信息
+  apiURL := "https://t(:spot_http_url)"
+  requestURL := "/sapi/v1/trades"
+  queryString := "?symbol=BTCUSDT&limit=10"
 
-	// 计算完整的请求路径
-	requestPath := requestURL + queryString
-	fullURL := apiURL + requestPath
+  // 计算完整的请求路径
+  requestPath := requestURL + queryString
+  fullURL := apiURL + requestPath
 
-	// 请求方法
-	method := "GET"
+  // 请求方法
+  method := "GET"
 
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Request URL:", fullURL)
-	fmt.Println("==================")
+  // **打印调试信息**
+  fmt.Println("==== 请求信息 ====")
+  fmt.Println("Request URL:", fullURL)
+  fmt.Println("==================")
 
-	// 发送 GET 请求
-	sendGetRequest(fullURL, method)
+  // 发送 GET 请求
+  sendGetRequest(fullURL, method)
 }
 
 // 发送 HTTP GET 请求
 func sendGetRequest(fullURL, method string) {
-	client := &http.Client{}
+  client := &http.Client{}
 
-	// 创建请求
-	req, err := http.NewRequest(method, fullURL, nil)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
+  // 创建请求
+  req, err := http.NewRequest(method, fullURL, nil)
+  if err != nil {
+    fmt.Println("Error creating request:", err)
+    return
+  }
 
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
+  // 设置 Headers
+  req.Header.Set("Content-Type", "application/json")
 
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送请求
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("Error sending request:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
+  // 读取响应
+  body, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("Response Code:", resp.StatusCode)
+  fmt.Println("Response Body:", string(body))
 }
 ```
 
@@ -3371,59 +3060,59 @@ public class FameexApiRequest {
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
+  "fmt"
+  "io/ioutil"
+  "net/http"
 )
 
 func main() {
-	// API 相关信息
-	apiURL := "https://t(:spot_http_url)"
-	requestURL := "/sapi/v1/klines"
-	queryString := "?symbol=BTCUSDT&interval=1min&limit=5"
+  // API 相关信息
+  apiURL := "https://t(:spot_http_url)"
+  requestURL := "/sapi/v1/klines"
+  queryString := "?symbol=BTCUSDT&interval=1min&limit=5"
 
-	// 计算完整的请求路径
-	requestPath := requestURL + queryString
-	fullURL := apiURL + requestPath
+  // 计算完整的请求路径
+  requestPath := requestURL + queryString
+  fullURL := apiURL + requestPath
 
-	// 请求方法
-	method := "GET"
+  // 请求方法
+  method := "GET"
 
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Request URL:", fullURL)
-	fmt.Println("==================")
+  // **打印调试信息**
+  fmt.Println("==== 请求信息 ====")
+  fmt.Println("Request URL:", fullURL)
+  fmt.Println("==================")
 
-	// 发送 GET 请求
-	sendGetRequest(fullURL, method)
+  // 发送 GET 请求
+  sendGetRequest(fullURL, method)
 }
 
 // 发送 HTTP GET 请求
 func sendGetRequest(fullURL, method string) {
-	client := &http.Client{}
+  client := &http.Client{}
 
-	// 创建请求
-	req, err := http.NewRequest(method, fullURL, nil)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
+  // 创建请求
+  req, err := http.NewRequest(method, fullURL, nil)
+  if err != nil {
+    fmt.Println("Error creating request:", err)
+    return
+  }
 
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
+  // 设置 Headers
+  req.Header.Set("Content-Type", "application/json")
 
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送请求
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("Error sending request:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
+  // 读取响应
+  body, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("Response Code:", resp.StatusCode)
+  fmt.Println("Response Body:", string(body))
 }
 ```
 
@@ -3749,75 +3438,75 @@ public class SendOrder {
 package main
 
 import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
+  "bytes"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "time"
 )
 
 // API 相关信息
 const (
-	APIKey     = "您的API-KEY"
-	APISecret  = "您的API-SECRET"
-	BaseURL    = "https://t(:spot_http_url)"
-	RequestPath = "/sapi/v2/order"
+  APIKey     = "您的API-KEY"
+  APISecret  = "您的API-SECRET"
+  BaseURL    = "https://t(:spot_http_url)"
+  RequestPath = "/sapi/v2/order"
 )
 
 func main() {
-	// 获取毫秒级时间戳
-	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+  // 获取毫秒级时间戳
+  timestamp := time.Now().UnixNano() / int64(time.Millisecond)
 
-	// 请求方法
-	method := "POST"
+  // 请求方法
+  method := "POST"
 
-	// 请求主体 (JSON 格式)
-	body := `{"symbol":"BTCUSDT","volume":"1.00","side":"BUY","type":"LIMIT","price":"65000.00","newClientOrderId":"111000000111"}`
+  // 请求主体 (JSON 格式)
+  body := `{"symbol":"BTCUSDT","volume":"1.00","side":"BUY","type":"LIMIT","price":"65000.00","newClientOrderId":"111000000111"}`
 
-	// 拼接签名字符串
-	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
-	fmt.Println("签名字符串:", signStr)
+  // 拼接签名字符串
+  signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+  fmt.Println("签名字符串:", signStr)
 
-	// 生成 HMAC SHA256 签名
-	signature := generateHMACSHA256(signStr, APISecret)
-	fmt.Println("签名 (X-CH-SIGN):", signature)
+  // 生成 HMAC SHA256 签名
+  signature := generateHMACSHA256(signStr, APISecret)
+  fmt.Println("签名 (X-CH-SIGN):", signature)
 
-	// 发送 POST 请求
-	url := BaseURL + RequestPath
-	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
-	if err != nil {
-		fmt.Println("创建请求失败:", err)
-		return
-	}
+  // 发送 POST 请求
+  url := BaseURL + RequestPath
+  req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+  if err != nil {
+    fmt.Println("创建请求失败:", err)
+    return
+  }
 
-	// 设置请求头
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
-	req.Header.Set("X-CH-APIKEY", APIKey)
-	req.Header.Set("X-CH-SIGN", signature)
+  // 设置请求头
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+  req.Header.Set("X-CH-APIKEY", APIKey)
+  req.Header.Set("X-CH-SIGN", signature)
 
-	// 执行请求
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 执行请求
+  client := &http.Client{}
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("响应:", string(responseBody))
+  // 读取响应
+  responseBody, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("响应:", string(responseBody))
 }
 
 // 生成 HMAC SHA256 签名
 func generateHMACSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 ```
 
@@ -4206,85 +3895,85 @@ public class FameexApiRequest {
 package main
 
 import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
+  "bytes"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "strconv"
+  "time"
 )
 
 func main() {
-	// API 相关信息
+  // API 相关信息
     url := "https://t(:spot_http_url)"
     requestPath := "/sapi/v1/order/test"
-	apiURL := url + requestPath
-	apiKey := "您的API-KEY"
-	apiSecret := "您的API-SECRET"
+  apiURL := url + requestPath
+  apiKey := "您的API-KEY"
+  apiSecret := "您的API-SECRET"
 
-	// 生成当前毫秒级时间戳
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
+  // 生成当前毫秒级时间戳
+  timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
 
-	// 请求方法
-	method := "POST"
+  // 请求方法
+  method := "POST"
 
-	// 定义请求体 (JSON 格式)
-	bodyJSON := `{"symbol":"BTCUSDT","price":"9300","volume":"1","side":"BUY","type":"LIMIT"}`
+  // 定义请求体 (JSON 格式)
+  bodyJSON := `{"symbol":"BTCUSDT","price":"9300","volume":"1","side":"BUY","type":"LIMIT"}`
 
-	// 生成签名 (X-CH-SIGN)
-	signPayload := timestamp + method + requestPath + bodyJSON
-	signature := hmacSHA256(signPayload, apiSecret)
+  // 生成签名 (X-CH-SIGN)
+  signPayload := timestamp + method + requestPath + bodyJSON
+  signature := hmacSHA256(signPayload, apiSecret)
 
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (待签名字符串):", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request Body:", bodyJSON)
-	fmt.Println("==================")
+  // **打印调试信息**
+  fmt.Println("==== 请求信息 ====")
+  fmt.Println("Timestamp (X-CH-TS):", timestamp)
+  fmt.Println("Sign Payload (待签名字符串):", signPayload)
+  fmt.Println("Signature (X-CH-SIGN):", signature)
+  fmt.Println("Request Body:", bodyJSON)
+  fmt.Println("==================")
 
-	// 发送请求
-	sendPostRequest(apiURL, apiKey, timestamp, signature, bodyJSON)
+  // 发送请求
+  sendPostRequest(apiURL, apiKey, timestamp, signature, bodyJSON)
 }
 
 // HMAC-SHA256 签名计算
 func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 
 // 发送 HTTP POST 请求
 func sendPostRequest(apiURL, apiKey, timestamp, signature, bodyJSON string) {
-	client := &http.Client{}
+  client := &http.Client{}
 
-	// 创建请求
-	req, err := http.NewRequest("POST", apiURL, bytes.NewBuffer([]byte(bodyJSON)))
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
+  // 创建请求
+  req, err := http.NewRequest("POST", apiURL, bytes.NewBuffer([]byte(bodyJSON)))
+  if err != nil {
+    fmt.Println("Error creating request:", err)
+    return
+  }
 
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
+  // 设置 Headers
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-SIGN", signature)
+  req.Header.Set("X-CH-APIKEY", apiKey)
+  req.Header.Set("X-CH-TS", timestamp)
 
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送请求
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("Error sending request:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response:", string(body))
+  // 读取响应
+  body, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("Response:", string(body))
 }
 ```
 
@@ -4744,88 +4433,88 @@ public class FameexApiRequest {
 package main
 
 import (
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "strconv"
+  "time"
 )
 
 func main() {
-	// API 相关信息
-	apiURL := "https://t(:spot_http_url)"
-	requestURL := "/sapi/v2/order"
-	queryString := "?orderId=2618039663715064005&symbol=btcusdt"
+  // API 相关信息
+  apiURL := "https://t(:spot_http_url)"
+  requestURL := "/sapi/v2/order"
+  queryString := "?orderId=2618039663715064005&symbol=btcusdt"
 
-	// 计算完整的请求路径
-	requestPath := requestURL + queryString
-	fullURL := apiURL + requestPath
+  // 计算完整的请求路径
+  requestPath := requestURL + queryString
+  fullURL := apiURL + requestPath
 
-	// API 认证信息
-	apiKey := "您的API-KEY"
-	apiSecret := "您的API-SECRET"
+  // API 认证信息
+  apiKey := "您的API-KEY"
+  apiSecret := "您的API-SECRET"
 
-	// 生成当前毫秒级时间戳
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
+  // 生成当前毫秒级时间戳
+  timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
 
-	// 请求方法
-	method := "GET"
+  // 请求方法
+  method := "GET"
 
-	// 生成签名 (X-CH-SIGN) - GET 请求没有 body
-	signPayload := timestamp + method + requestPath
-	signature := hmacSHA256(signPayload, apiSecret)
+  // 生成签名 (X-CH-SIGN) - GET 请求没有 body
+  signPayload := timestamp + method + requestPath
+  signature := hmacSHA256(signPayload, apiSecret)
 
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (待签名字符串):", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request URL:", fullURL)
-	fmt.Println("==================")
+  // **打印调试信息**
+  fmt.Println("==== 请求信息 ====")
+  fmt.Println("Timestamp (X-CH-TS):", timestamp)
+  fmt.Println("Sign Payload (待签名字符串):", signPayload)
+  fmt.Println("Signature (X-CH-SIGN):", signature)
+  fmt.Println("Request URL:", fullURL)
+  fmt.Println("==================")
 
-	// 发送 GET 请求
-	sendGetRequest(fullURL, apiKey, timestamp, signature)
+  // 发送 GET 请求
+  sendGetRequest(fullURL, apiKey, timestamp, signature)
 }
 
 // 计算 HMAC-SHA256 签名
 func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 
 // 发送 HTTP GET 请求
 func sendGetRequest(fullURL, apiKey, timestamp, signature string) {
-	client := &http.Client{}
+  client := &http.Client{}
 
-	// 创建请求
-	req, err := http.NewRequest("GET", fullURL, nil)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
+  // 创建请求
+  req, err := http.NewRequest("GET", fullURL, nil)
+  if err != nil {
+    fmt.Println("Error creating request:", err)
+    return
+  }
 
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
+  // 设置 Headers
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-SIGN", signature)
+  req.Header.Set("X-CH-APIKEY", apiKey)
+  req.Header.Set("X-CH-TS", timestamp)
 
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送请求
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("Error sending request:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
+  // 读取响应
+  body, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("Response Code:", resp.StatusCode)
+  fmt.Println("Response Body:", string(body))
 }
 
 ```
@@ -5209,75 +4898,75 @@ public class SendOrder {
 package main
 
 import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
+  "bytes"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "time"
 )
 
 // API 相关信息
 const (
-	APIKey     = "您的API-KEY"
-	APISecret  = "您的API-SECRET"
-	BaseURL    = "https://t(:spot_http_url)"
-	RequestPath = "/sapi/v2/cancel"
+  APIKey     = "您的API-KEY"
+  APISecret  = "您的API-SECRET"
+  BaseURL    = "https://t(:spot_http_url)"
+  RequestPath = "/sapi/v2/cancel"
 )
 
 func main() {
-	// 获取毫秒级时间戳
-	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+  // 获取毫秒级时间戳
+  timestamp := time.Now().UnixNano() / int64(time.Millisecond)
 
-	// 请求方法
-	method := "POST"
+  // 请求方法
+  method := "POST"
 
-	// 请求主体 (JSON 格式)
-	body := `{"symbol": "ethusdt","orderId": "111000111"}`
+  // 请求主体 (JSON 格式)
+  body := `{"symbol": "ethusdt","orderId": "111000111"}`
 
-	// 拼接签名字符串
-	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
-	fmt.Println("签名字符串:", signStr)
+  // 拼接签名字符串
+  signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+  fmt.Println("签名字符串:", signStr)
 
-	// 生成 HMAC SHA256 签名
-	signature := generateHMACSHA256(signStr, APISecret)
-	fmt.Println("签名 (X-CH-SIGN):", signature)
+  // 生成 HMAC SHA256 签名
+  signature := generateHMACSHA256(signStr, APISecret)
+  fmt.Println("签名 (X-CH-SIGN):", signature)
 
-	// 发送 POST 请求
-	url := BaseURL + RequestPath
-	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
-	if err != nil {
-		fmt.Println("创建请求失败:", err)
-		return
-	}
+  // 发送 POST 请求
+  url := BaseURL + RequestPath
+  req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+  if err != nil {
+    fmt.Println("创建请求失败:", err)
+    return
+  }
 
-	// 设置请求头
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
-	req.Header.Set("X-CH-APIKEY", APIKey)
-	req.Header.Set("X-CH-SIGN", signature)
+  // 设置请求头
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+  req.Header.Set("X-CH-APIKEY", APIKey)
+  req.Header.Set("X-CH-SIGN", signature)
 
-	// 执行请求
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 执行请求
+  client := &http.Client{}
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("响应:", string(responseBody))
+  // 读取响应
+  responseBody, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("响应:", string(responseBody))
 }
 
 // 生成 HMAC SHA256 签名
 func generateHMACSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 ```
 
@@ -5644,85 +5333,85 @@ public class FameexApiRequest {
 package main
 
 import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
+  "bytes"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "strconv"
+  "time"
 )
 
 func main() {
-	// API 相关信息
+  // API 相关信息
     url := "https://t(:spot_http_url)"
     requestPath := "/sapi/v1/batchCancel"
-	apiURL := url + requestPath
-	apiKey := "您的API-KEY"
-	apiSecret := "您的API-SECRET"
+  apiURL := url + requestPath
+  apiKey := "您的API-KEY"
+  apiSecret := "您的API-SECRET"
 
-	// 生成当前毫秒级时间戳
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
+  // 生成当前毫秒级时间戳
+  timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
 
-	// 请求方法
-	method := "POST"
+  // 请求方法
+  method := "POST"
 
-	// 定义请求体 (JSON 格式)
-	bodyJSON := `{"symbol":"BTCUSDT","orderId":["111000111","111000112"]}`
+  // 定义请求体 (JSON 格式)
+  bodyJSON := `{"symbol":"BTCUSDT","orderId":["111000111","111000112"]}`
 
-	// 生成签名 (X-CH-SIGN)
-	signPayload := timestamp + method + requestPath + bodyJSON
-	signature := hmacSHA256(signPayload, apiSecret)
+  // 生成签名 (X-CH-SIGN)
+  signPayload := timestamp + method + requestPath + bodyJSON
+  signature := hmacSHA256(signPayload, apiSecret)
 
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (待签名字符串):", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request Body:", bodyJSON)
-	fmt.Println("==================")
+  // **打印调试信息**
+  fmt.Println("==== 请求信息 ====")
+  fmt.Println("Timestamp (X-CH-TS):", timestamp)
+  fmt.Println("Sign Payload (待签名字符串):", signPayload)
+  fmt.Println("Signature (X-CH-SIGN):", signature)
+  fmt.Println("Request Body:", bodyJSON)
+  fmt.Println("==================")
 
-	// 发送请求
-	sendPostRequest(apiURL, apiKey, timestamp, signature, bodyJSON)
+  // 发送请求
+  sendPostRequest(apiURL, apiKey, timestamp, signature, bodyJSON)
 }
 
 // HMAC-SHA256 签名计算
 func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 
 // 发送 HTTP POST 请求
 func sendPostRequest(apiURL, apiKey, timestamp, signature, bodyJSON string) {
-	client := &http.Client{}
+  client := &http.Client{}
 
-	// 创建请求
-	req, err := http.NewRequest("POST", apiURL, bytes.NewBuffer([]byte(bodyJSON)))
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
+  // 创建请求
+  req, err := http.NewRequest("POST", apiURL, bytes.NewBuffer([]byte(bodyJSON)))
+  if err != nil {
+    fmt.Println("Error creating request:", err)
+    return
+  }
 
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
+  // 设置 Headers
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-SIGN", signature)
+  req.Header.Set("X-CH-APIKEY", apiKey)
+  req.Header.Set("X-CH-TS", timestamp)
 
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送请求
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("Error sending request:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response:", string(body))
+  // 读取响应
+  body, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("Response:", string(body))
 }
 ```
 
@@ -6050,88 +5739,88 @@ public class FameexApiRequest {
 package main
 
 import (
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "strconv"
+  "time"
 )
 
 func main() {
-	// API 相关信息
-	apiURL := "https://t(:spot_http_url)"
-	requestURL := "/sapi/v2/openOrders"
-	queryString := "?symbol=btcusdt&limit=10"
+  // API 相关信息
+  apiURL := "https://t(:spot_http_url)"
+  requestURL := "/sapi/v2/openOrders"
+  queryString := "?symbol=btcusdt&limit=10"
 
-	// 计算完整的请求路径
-	requestPath := requestURL + queryString
-	fullURL := apiURL + requestPath
+  // 计算完整的请求路径
+  requestPath := requestURL + queryString
+  fullURL := apiURL + requestPath
 
-	// API 认证信息
-	apiKey := "您的API-KEY"
-	apiSecret := "您的API-SECRET"
+  // API 认证信息
+  apiKey := "您的API-KEY"
+  apiSecret := "您的API-SECRET"
 
-	// 生成当前毫秒级时间戳
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
+  // 生成当前毫秒级时间戳
+  timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
 
-	// 请求方法
-	method := "GET"
+  // 请求方法
+  method := "GET"
 
-	// 生成签名 (X-CH-SIGN) - GET 请求没有 body
-	signPayload := timestamp + method + requestPath
-	signature := hmacSHA256(signPayload, apiSecret)
+  // 生成签名 (X-CH-SIGN) - GET 请求没有 body
+  signPayload := timestamp + method + requestPath
+  signature := hmacSHA256(signPayload, apiSecret)
 
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (待签名字符串):", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request URL:", fullURL)
-	fmt.Println("==================")
+  // **打印调试信息**
+  fmt.Println("==== 请求信息 ====")
+  fmt.Println("Timestamp (X-CH-TS):", timestamp)
+  fmt.Println("Sign Payload (待签名字符串):", signPayload)
+  fmt.Println("Signature (X-CH-SIGN):", signature)
+  fmt.Println("Request URL:", fullURL)
+  fmt.Println("==================")
 
-	// 发送 GET 请求
-	sendGetRequest(fullURL, apiKey, timestamp, signature)
+  // 发送 GET 请求
+  sendGetRequest(fullURL, apiKey, timestamp, signature)
 }
 
 // 计算 HMAC-SHA256 签名
 func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 
 // 发送 HTTP GET 请求
 func sendGetRequest(fullURL, apiKey, timestamp, signature string) {
-	client := &http.Client{}
+  client := &http.Client{}
 
-	// 创建请求
-	req, err := http.NewRequest("GET", fullURL, nil)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
+  // 创建请求
+  req, err := http.NewRequest("GET", fullURL, nil)
+  if err != nil {
+    fmt.Println("Error creating request:", err)
+    return
+  }
 
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
+  // 设置 Headers
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-SIGN", signature)
+  req.Header.Set("X-CH-APIKEY", apiKey)
+  req.Header.Set("X-CH-TS", timestamp)
 
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送请求
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("Error sending request:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
+  // 读取响应
+  body, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("Response Code:", resp.StatusCode)
+  fmt.Println("Response Body:", string(body))
 }
 
 ```
@@ -6536,88 +6225,88 @@ public class FameexApiRequest {
 package main
 
 import (
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "strconv"
+  "time"
 )
 
 func main() {
-	// API 相关信息
-	apiURL := "https://t(:spot_http_url)"
-	requestURL := "/sapi/v1/myTrades"
-	queryString := "?symbol=BTCUSDT&limit=100"
+  // API 相关信息
+  apiURL := "https://t(:spot_http_url)"
+  requestURL := "/sapi/v1/myTrades"
+  queryString := "?symbol=BTCUSDT&limit=100"
 
-	// 计算完整的请求路径
-	requestPath := requestURL + queryString
-	fullURL := apiURL + requestPath
+  // 计算完整的请求路径
+  requestPath := requestURL + queryString
+  fullURL := apiURL + requestPath
 
-	// API 认证信息
-	apiKey := "您的API-KEY"
-	apiSecret := "您的API-SECRET"
+  // API 认证信息
+  apiKey := "您的API-KEY"
+  apiSecret := "您的API-SECRET"
 
-	// 生成当前毫秒级时间戳
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
+  // 生成当前毫秒级时间戳
+  timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
 
-	// 请求方法
-	method := "GET"
+  // 请求方法
+  method := "GET"
 
-	// 生成签名 (X-CH-SIGN) - GET 请求没有 body
-	signPayload := timestamp + method + requestPath
-	signature := hmacSHA256(signPayload, apiSecret)
+  // 生成签名 (X-CH-SIGN) - GET 请求没有 body
+  signPayload := timestamp + method + requestPath
+  signature := hmacSHA256(signPayload, apiSecret)
 
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (待签名字符串):", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request URL:", fullURL)
-	fmt.Println("==================")
+  // **打印调试信息**
+  fmt.Println("==== 请求信息 ====")
+  fmt.Println("Timestamp (X-CH-TS):", timestamp)
+  fmt.Println("Sign Payload (待签名字符串):", signPayload)
+  fmt.Println("Signature (X-CH-SIGN):", signature)
+  fmt.Println("Request URL:", fullURL)
+  fmt.Println("==================")
 
-	// 发送 GET 请求
-	sendGetRequest(fullURL, apiKey, timestamp, signature)
+  // 发送 GET 请求
+  sendGetRequest(fullURL, apiKey, timestamp, signature)
 }
 
 // 计算 HMAC-SHA256 签名
 func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 
 // 发送 HTTP GET 请求
 func sendGetRequest(fullURL, apiKey, timestamp, signature string) {
-	client := &http.Client{}
+  client := &http.Client{}
 
-	// 创建请求
-	req, err := http.NewRequest("GET", fullURL, nil)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
+  // 创建请求
+  req, err := http.NewRequest("GET", fullURL, nil)
+  if err != nil {
+    fmt.Println("Error creating request:", err)
+    return
+  }
 
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
+  // 设置 Headers
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-SIGN", signature)
+  req.Header.Set("X-CH-APIKEY", apiKey)
+  req.Header.Set("X-CH-TS", timestamp)
 
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送请求
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("Error sending request:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
+  // 读取响应
+  body, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("Response Code:", resp.StatusCode)
+  fmt.Println("Response Body:", string(body))
 }
 
 ```
@@ -7037,88 +6726,88 @@ public class FameexApiRequest {
 package main
 
 import (
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"strconv"
-	"time"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "strconv"
+  "time"
 )
 
 func main() {
-	// API 相关信息
-	apiURL := "https://t(:spot_http_url)"
-	requestURL := "/sapi/v1/account/balance"
-	queryString := "?symbols=USDT,BTC,ETH"
+  // API 相关信息
+  apiURL := "https://t(:spot_http_url)"
+  requestURL := "/sapi/v1/account/balance"
+  queryString := "?symbols=USDT,BTC,ETH"
 
-	// 计算完整的请求路径
-	requestPath := requestURL + queryString
-	fullURL := apiURL + requestPath
+  // 计算完整的请求路径
+  requestPath := requestURL + queryString
+  fullURL := apiURL + requestPath
 
-	// API 认证信息
-	apiKey := "您的API-KEY"
-	apiSecret := "您的API-SECRET"
+  // API 认证信息
+  apiKey := "您的API-KEY"
+  apiSecret := "您的API-SECRET"
 
-	// 生成当前毫秒级时间戳
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
+  // 生成当前毫秒级时间戳
+  timestamp := strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
 
-	// 请求方法
-	method := "GET"
+  // 请求方法
+  method := "GET"
 
-	// 生成签名 (X-CH-SIGN) - GET 请求没有 body
-	signPayload := timestamp + method + requestPath
-	signature := hmacSHA256(signPayload, apiSecret)
+  // 生成签名 (X-CH-SIGN) - GET 请求没有 body
+  signPayload := timestamp + method + requestPath
+  signature := hmacSHA256(signPayload, apiSecret)
 
-	// **打印调试信息**
-	fmt.Println("==== 请求信息 ====")
-	fmt.Println("Timestamp (X-CH-TS):", timestamp)
-	fmt.Println("Sign Payload (待签名字符串):", signPayload)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-	fmt.Println("Request URL:", fullURL)
-	fmt.Println("==================")
+  // **打印调试信息**
+  fmt.Println("==== 请求信息 ====")
+  fmt.Println("Timestamp (X-CH-TS):", timestamp)
+  fmt.Println("Sign Payload (待签名字符串):", signPayload)
+  fmt.Println("Signature (X-CH-SIGN):", signature)
+  fmt.Println("Request URL:", fullURL)
+  fmt.Println("==================")
 
-	// 发送 GET 请求
-	sendGetRequest(fullURL, apiKey, timestamp, signature)
+  // 发送 GET 请求
+  sendGetRequest(fullURL, apiKey, timestamp, signature)
 }
 
 // 计算 HMAC-SHA256 签名
 func hmacSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 
 // 发送 HTTP GET 请求
 func sendGetRequest(fullURL, apiKey, timestamp, signature string) {
-	client := &http.Client{}
+  client := &http.Client{}
 
-	// 创建请求
-	req, err := http.NewRequest("GET", fullURL, nil)
-	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
-	}
+  // 创建请求
+  req, err := http.NewRequest("GET", fullURL, nil)
+  if err != nil {
+    fmt.Println("Error creating request:", err)
+    return
+  }
 
-	// 设置 Headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-SIGN", signature)
-	req.Header.Set("X-CH-APIKEY", apiKey)
-	req.Header.Set("X-CH-TS", timestamp)
+  // 设置 Headers
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-SIGN", signature)
+  req.Header.Set("X-CH-APIKEY", apiKey)
+  req.Header.Set("X-CH-TS", timestamp)
 
-	// 发送请求
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Error sending request:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送请求
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("Error sending request:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response Code:", resp.StatusCode)
-	fmt.Println("Response Body:", string(body))
+  // 读取响应
+  body, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("Response Code:", resp.StatusCode)
+  fmt.Println("Response Body:", string(body))
 }
 
 ```
@@ -7439,31 +7128,31 @@ public class Main {
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
+  "fmt"
+  "io/ioutil"
+  "net/http"
 )
 
 func main() {
-	url := "https://t(:futures_http_url)/fapi/v1/ping"
+  url := "https://t(:futures_http_url)/fapi/v1/ping"
 
-	// 发送 GET 请求
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送 GET 请求
+  resp, err := http.Get(url)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应体
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("读取响应失败:", err)
-		return
-	}
+  // 读取响应体
+  body, err := ioutil.ReadAll(resp.Body)
+  if err != nil {
+    fmt.Println("读取响应失败:", err)
+    return
+  }
 
-	// 打印响应
-	fmt.Println("服务器返回:", string(body))
+  // 打印响应
+  fmt.Println("服务器返回:", string(body))
 }
 ```
 
@@ -7596,31 +7285,31 @@ public class Main {
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
+  "fmt"
+  "io/ioutil"
+  "net/http"
 )
 
 func main() {
-	url := "https://t(:futures_http_url)/fapi/v1/time"
+  url := "https://t(:futures_http_url)/fapi/v1/time"
 
-	// 发送 GET 请求
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送 GET 请求
+  resp, err := http.Get(url)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应体
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("读取响应失败:", err)
-		return
-	}
+  // 读取响应体
+  body, err := ioutil.ReadAll(resp.Body)
+  if err != nil {
+    fmt.Println("读取响应失败:", err)
+    return
+  }
 
-	// 打印响应
-	fmt.Println("服务器返回:", string(body))
+  // 打印响应
+  fmt.Println("服务器返回:", string(body))
 }
 ```
 
@@ -7757,31 +7446,31 @@ public class Main {
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
+  "fmt"
+  "io/ioutil"
+  "net/http"
 )
 
 func main() {
-	url := "https://t(:futures_http_url)/fapi/v1/contracts"
+  url := "https://t(:futures_http_url)/fapi/v1/contracts"
 
-	// 发送 GET 请求
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送 GET 请求
+  resp, err := http.Get(url)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应体
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("读取响应失败:", err)
-		return
-	}
+  // 读取响应体
+  body, err := ioutil.ReadAll(resp.Body)
+  if err != nil {
+    fmt.Println("读取响应失败:", err)
+    return
+  }
 
-	// 打印响应
-	fmt.Println("服务器返回:", string(body))
+  // 打印响应
+  fmt.Println("服务器返回:", string(body))
 }
 ```
 
@@ -7967,31 +7656,31 @@ public class Main {
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
+  "fmt"
+  "io/ioutil"
+  "net/http"
 )
 
 func main() {
-	url := "https://t(:futures_http_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100"
+  url := "https://t(:futures_http_url)/fapi/v1/depth?contractName=E-BTC-USDT&limit=100"
 
-	// 发送 GET 请求
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送 GET 请求
+  resp, err := http.Get(url)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应体
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("读取响应失败:", err)
-		return
-	}
+  // 读取响应体
+  body, err := ioutil.ReadAll(resp.Body)
+  if err != nil {
+    fmt.Println("读取响应失败:", err)
+    return
+  }
 
-	// 打印响应
-	fmt.Println("服务器返回:", string(body))
+  // 打印响应
+  fmt.Println("服务器返回:", string(body))
 }
 ```
 
@@ -8159,31 +7848,31 @@ public class Main {
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
+  "fmt"
+  "io/ioutil"
+  "net/http"
 )
 
 func main() {
-	url := "https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT"
+  url := "https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT"
 
-	// 发送 GET 请求
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送 GET 请求
+  resp, err := http.Get(url)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应体
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("读取响应失败:", err)
-		return
-	}
+  // 读取响应体
+  body, err := ioutil.ReadAll(resp.Body)
+  if err != nil {
+    fmt.Println("读取响应失败:", err)
+    return
+  }
 
-	// 打印响应
-	fmt.Println("服务器返回:", string(body))
+  // 打印响应
+  fmt.Println("服务器返回:", string(body))
 }
 ```
 
@@ -8282,68 +7971,6 @@ https.get(url, (res) => {
 | buy    | float  | `55988.10`      | 买一价格                                  |
 | sell   | float  | `55990.10`      | 卖一价格                                  |
 
-### 行情 Ticker-V2
-
-`GET https://t(:futures_http_url)/swap-api/v2/tickers`
-
-24 小时价格变化数据
-
-> 请求示例
-
-```http
-GET https://t(:futures_http_url)/swap-api/v2/tickers
-
-// request headers
-Content-Type:application/json
-```
-
-> 返回示例
-
-```json
-[
-  {
-    "base_currency": "ETH",
-    "open_interest_usd": "3158506.047",
-    "quote_volume": "475254656162",
-    "base_volume": "2135453.51",
-    "open_interest": "1372.13",
-    "index_price": "2302.705",
-    "basis": "0.0003",
-    "quote_currency": "USDT",
-    "ticker_id": "ETH-USDT",
-    "funding_rate": "0.0000632068687814",
-    "high": "2318.84",
-    "product_type": "Perpetual",
-    "low": "2160.71",
-    "ask": "2301.96",
-    "next_funding_rate_timestam": 1741248000000,
-    "bid": "2301.8",
-    "last_price": "2301.9"
-  }
-]
-```
-
-**返回参数**
-
-| 参数名                     | 类型   | 示例                 | 描述               |
-| :------------------------- | :----- | :------------------- | :----------------- |
-| ticker_id                  | string | `ETH-USDT`           | 交易对             |
-| product_type               | string | `Perpetual`          | 合约类型           |
-| base_currency              | string | `ETH`                | 交易币种           |
-| quote_currency             | string | `USDT`               | 计价币种           |
-| last_price                 | float  | `2301.9`             | 最新成交价         |
-| index_price                | float  | `2302.705`           | 指数价格           |
-| base_volume                | float  | `2135453.51`         | 交易量             |
-| quote_volume               | string | `475254656162`       | 交易额             |
-| bid                        | float  | `2301.8`             | 买一价格           |
-| ask                        | float  | `2301.96`            | 卖一价格           |
-| high                       | float  | `2318.84`            | 最高价格           |
-| low                        | float  | `2160.71`            | 最低价格           |
-| open_interest              | float  | `1372.13`            | 开仓数量           |
-| open_interest_usd          | float  | `3158506.047`        | 开仓金额           |
-| basis                      | float  | `0.0003`             | 基差               |
-| funding_rate               | float  | `0.0000632068687814` | 资金费率           |
-| next_funding_rate_timestam | float  | `1741248000000`      | 下一期资金费率时间 |
 
 ### 获取指数/标记价格
 
@@ -8401,31 +8028,31 @@ public class Main {
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
+  "fmt"
+  "io/ioutil"
+  "net/http"
 )
 
 func main() {
-	url := "https://t(:futures_http_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100"
+  url := "https://t(:futures_http_url)/fapi/v1/index?contractName=E-BTC-USDT&limit=100"
 
-	// 发送 GET 请求
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送 GET 请求
+  resp, err := http.Get(url)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应体
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("读取响应失败:", err)
-		return
-	}
+  // 读取响应体
+  body, err := ioutil.ReadAll(resp.Body)
+  if err != nil {
+    fmt.Println("读取响应失败:", err)
+    return
+  }
 
-	// 打印响应
-	fmt.Println("服务器返回:", string(body))
+  // 打印响应
+  fmt.Println("服务器返回:", string(body))
 }
 ```
 
@@ -8579,31 +8206,31 @@ public class Main {
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
+  "fmt"
+  "io/ioutil"
+  "net/http"
 )
 
 func main() {
-	url := "https://t(:futures_http_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000"
+  url := "https://t(:futures_http_url)/fapi/v1/klines?contractName=E-BTC-USDT&interval=1min&limit=100&startTime=1739116800000&endTime=1739852318000"
 
-	// 发送 GET 请求
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 发送 GET 请求
+  resp, err := http.Get(url)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应体
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("读取响应失败:", err)
-		return
-	}
+  // 读取响应体
+  body, err := ioutil.ReadAll(resp.Body)
+  if err != nil {
+    fmt.Println("读取响应失败:", err)
+    return
+  }
 
-	// 打印响应
-	fmt.Println("服务器返回:", string(body))
+  // 打印响应
+  fmt.Println("服务器返回:", string(body))
 }
 ```
 
@@ -8889,75 +8516,75 @@ public class SendOrder {
 package main
 
 import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
+  "bytes"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "time"
 )
 
 // API 相关信息
 const (
-	APIKey     = "您的API-KEY"
-	APISecret  = "您的API-SECRET"
-	BaseURL    = "https://t(:futures_http_url)"
-	RequestPath = "/fapi/v1/order"
+  APIKey     = "您的API-KEY"
+  APISecret  = "您的API-SECRET"
+  BaseURL    = "https://t(:futures_http_url)"
+  RequestPath = "/fapi/v1/order"
 )
 
 func main() {
-	// 获取毫秒级时间戳
-	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+  // 获取毫秒级时间戳
+  timestamp := time.Now().UnixNano() / int64(time.Millisecond)
 
-	// 请求方法
-	method := "POST"
+  // 请求方法
+  method := "POST"
 
-	// 请求主体 (JSON 格式)
-	body := `{"contractName":"E-BTC-USDT","price":65000.00,"volume":1.00,"type":"LIMIT","side":"BUY","open":"OPEN","positionType":1,"clientOrderId":"111000111","timeInForce":"IOC"}`
+  // 请求主体 (JSON 格式)
+  body := `{"contractName":"E-BTC-USDT","price":65000.00,"volume":1.00,"type":"LIMIT","side":"BUY","open":"OPEN","positionType":1,"clientOrderId":"111000111","timeInForce":"IOC"}`
 
-	// 拼接签名字符串
-	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
-	fmt.Println("签名字符串:", signStr)
+  // 拼接签名字符串
+  signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+  fmt.Println("签名字符串:", signStr)
 
-	// 生成 HMAC SHA256 签名
-	signature := generateHMACSHA256(signStr, APISecret)
-	fmt.Println("签名 (X-CH-SIGN):", signature)
+  // 生成 HMAC SHA256 签名
+  signature := generateHMACSHA256(signStr, APISecret)
+  fmt.Println("签名 (X-CH-SIGN):", signature)
 
-	// 发送 POST 请求
-	url := BaseURL + RequestPath
-	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
-	if err != nil {
-		fmt.Println("创建请求失败:", err)
-		return
-	}
+  // 发送 POST 请求
+  url := BaseURL + RequestPath
+  req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+  if err != nil {
+    fmt.Println("创建请求失败:", err)
+    return
+  }
 
-	// 设置请求头
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
-	req.Header.Set("X-CH-APIKEY", APIKey)
-	req.Header.Set("X-CH-SIGN", signature)
+  // 设置请求头
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+  req.Header.Set("X-CH-APIKEY", APIKey)
+  req.Header.Set("X-CH-SIGN", signature)
 
-	// 执行请求
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 执行请求
+  client := &http.Client{}
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("响应:", string(responseBody))
+  // 读取响应
+  responseBody, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("响应:", string(responseBody))
 }
 
 // 生成 HMAC SHA256 签名
 func generateHMACSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 ```
 
@@ -9330,75 +8957,75 @@ public class SendOrder {
 package main
 
 import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
+  "bytes"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "time"
 )
 
 // API 相关信息
 const (
-	APIKey     = "您的API-KEY"
-	APISecret  = "您的API-SECRET"
-	BaseURL    = "https://t(:futures_http_url)"
-	RequestPath = "/fapi/v1/conditionOrder"
+  APIKey     = "您的API-KEY"
+  APISecret  = "您的API-SECRET"
+  BaseURL    = "https://t(:futures_http_url)"
+  RequestPath = "/fapi/v1/conditionOrder"
 )
 
 func main() {
-	// 获取毫秒级时间戳
-	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+  // 获取毫秒级时间戳
+  timestamp := time.Now().UnixNano() / int64(time.Millisecond)
 
-	// 请求方法
-	method := "POST"
+  // 请求方法
+  method := "POST"
 
-	// 请求主体 (JSON 格式)
-	body := `{"contractName":"E-BTC-USDT","price":"100.00","volume":"1.00","type":"LIMIT","side":"BUY","positionType":"1","open":"OPEN","triggerType":"1","triggerPrice":"455"}`
+  // 请求主体 (JSON 格式)
+  body := `{"contractName":"E-BTC-USDT","price":"100.00","volume":"1.00","type":"LIMIT","side":"BUY","positionType":"1","open":"OPEN","triggerType":"1","triggerPrice":"455"}`
 
-	// 拼接签名字符串
-	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
-	fmt.Println("签名字符串:", signStr)
+  // 拼接签名字符串
+  signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+  fmt.Println("签名字符串:", signStr)
 
-	// 生成 HMAC SHA256 签名
-	signature := generateHMACSHA256(signStr, APISecret)
-	fmt.Println("签名 (X-CH-SIGN):", signature)
+  // 生成 HMAC SHA256 签名
+  signature := generateHMACSHA256(signStr, APISecret)
+  fmt.Println("签名 (X-CH-SIGN):", signature)
 
-	// 发送 POST 请求
-	url := BaseURL + RequestPath
-	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
-	if err != nil {
-		fmt.Println("创建请求失败:", err)
-		return
-	}
+  // 发送 POST 请求
+  url := BaseURL + RequestPath
+  req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+  if err != nil {
+    fmt.Println("创建请求失败:", err)
+    return
+  }
 
-	// 设置请求头
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
-	req.Header.Set("X-CH-APIKEY", APIKey)
-	req.Header.Set("X-CH-SIGN", signature)
+  // 设置请求头
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+  req.Header.Set("X-CH-APIKEY", APIKey)
+  req.Header.Set("X-CH-SIGN", signature)
 
-	// 执行请求
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 执行请求
+  client := &http.Client{}
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("响应:", string(responseBody))
+  // 读取响应
+  responseBody, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("响应:", string(responseBody))
 }
 
 // 生成 HMAC SHA256 签名
 func generateHMACSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 ```
 
@@ -9770,75 +9397,75 @@ public class SendOrder {
 package main
 
 import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
+  "bytes"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "time"
 )
 
 // API 相关信息
 const (
-	APIKey     = "您的API-KEY"
-	APISecret  = "您的API-SECRET"
-	BaseURL    = "https://t(:futures_http_url)"
-	RequestPath = "/fapi/v1/cancel"
+  APIKey     = "您的API-KEY"
+  APISecret  = "您的API-SECRET"
+  BaseURL    = "https://t(:futures_http_url)"
+  RequestPath = "/fapi/v1/cancel"
 )
 
 func main() {
-	// 获取毫秒级时间戳
-	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+  // 获取毫秒级时间戳
+  timestamp := time.Now().UnixNano() / int64(time.Millisecond)
 
-	// 请求方法
-	method := "POST"
+  // 请求方法
+  method := "POST"
 
-	// 请求主体 (JSON 格式)
-	body := `{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}`
+  // 请求主体 (JSON 格式)
+  body := `{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}`
 
-	// 拼接签名字符串
-	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
-	fmt.Println("签名字符串:", signStr)
+  // 拼接签名字符串
+  signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+  fmt.Println("签名字符串:", signStr)
 
-	// 生成 HMAC SHA256 签名
-	signature := generateHMACSHA256(signStr, APISecret)
-	fmt.Println("签名 (X-CH-SIGN):", signature)
+  // 生成 HMAC SHA256 签名
+  signature := generateHMACSHA256(signStr, APISecret)
+  fmt.Println("签名 (X-CH-SIGN):", signature)
 
-	// 发送 POST 请求
-	url := BaseURL + RequestPath
-	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
-	if err != nil {
-		fmt.Println("创建请求失败:", err)
-		return
-	}
+  // 发送 POST 请求
+  url := BaseURL + RequestPath
+  req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+  if err != nil {
+    fmt.Println("创建请求失败:", err)
+    return
+  }
 
-	// 设置请求头
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
-	req.Header.Set("X-CH-APIKEY", APIKey)
-	req.Header.Set("X-CH-SIGN", signature)
+  // 设置请求头
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+  req.Header.Set("X-CH-APIKEY", APIKey)
+  req.Header.Set("X-CH-SIGN", signature)
 
-	// 执行请求
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 执行请求
+  client := &http.Client{}
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("响应:", string(responseBody))
+  // 读取响应
+  responseBody, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("响应:", string(responseBody))
 }
 
 // 生成 HMAC SHA256 签名
 func generateHMACSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 ```
 
@@ -10179,75 +9806,75 @@ public class SendOrder {
 package main
 
 import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
+  "bytes"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "time"
 )
 
 // API 相关信息
 const (
-	APIKey     = "您的API-KEY"
-	APISecret  = "您的API-SECRET"
-	BaseURL    = "https://t(:futures_http_url)"
-	RequestPath = "/fapi/v1/cancel_trigger_order"
+  APIKey     = "您的API-KEY"
+  APISecret  = "您的API-SECRET"
+  BaseURL    = "https://t(:futures_http_url)"
+  RequestPath = "/fapi/v1/cancel_trigger_order"
 )
 
 func main() {
-	// 获取毫秒级时间戳
-	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+  // 获取毫秒级时间戳
+  timestamp := time.Now().UnixNano() / int64(time.Millisecond)
 
-	// 请求方法
-	method := "POST"
+  // 请求方法
+  method := "POST"
 
-	// 请求主体 (JSON 格式)
-	body := `{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}`
+  // 请求主体 (JSON 格式)
+  body := `{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}`
 
-	// 拼接签名字符串
-	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
-	fmt.Println("签名字符串:", signStr)
+  // 拼接签名字符串
+  signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+  fmt.Println("签名字符串:", signStr)
 
-	// 生成 HMAC SHA256 签名
-	signature := generateHMACSHA256(signStr, APISecret)
-	fmt.Println("签名 (X-CH-SIGN):", signature)
+  // 生成 HMAC SHA256 签名
+  signature := generateHMACSHA256(signStr, APISecret)
+  fmt.Println("签名 (X-CH-SIGN):", signature)
 
-	// 发送 POST 请求
-	url := BaseURL + RequestPath
-	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
-	if err != nil {
-		fmt.Println("创建请求失败:", err)
-		return
-	}
+  // 发送 POST 请求
+  url := BaseURL + RequestPath
+  req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+  if err != nil {
+    fmt.Println("创建请求失败:", err)
+    return
+  }
 
-	// 设置请求头
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
-	req.Header.Set("X-CH-APIKEY", APIKey)
-	req.Header.Set("X-CH-SIGN", signature)
+  // 设置请求头
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+  req.Header.Set("X-CH-APIKEY", APIKey)
+  req.Header.Set("X-CH-SIGN", signature)
 
-	// 执行请求
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 执行请求
+  client := &http.Client{}
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("响应:", string(responseBody))
+  // 读取响应
+  responseBody, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("响应:", string(responseBody))
 }
 
 // 生成 HMAC SHA256 签名
 func generateHMACSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 ```
 
@@ -10590,75 +10217,75 @@ public class SendOrder {
 package main
 
 import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
+  "bytes"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "time"
 )
 
 // API 相关信息
 const (
-	APIKey     = "您的API-KEY"
-	APISecret  = "您的API-SECRET"
-	BaseURL    = "https://t(:futures_http_url)"
-	RequestPath = "/fapi/v1/order"
+  APIKey     = "您的API-KEY"
+  APISecret  = "您的API-SECRET"
+  BaseURL    = "https://t(:futures_http_url)"
+  RequestPath = "/fapi/v1/order"
 )
 
 func main() {
-	// 获取毫秒级时间戳
-	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+  // 获取毫秒级时间戳
+  timestamp := time.Now().UnixNano() / int64(time.Millisecond)
 
-	// 请求方法
-	method := "POST"
+  // 请求方法
+  method := "POST"
 
-	// 请求主体 (JSON 格式)
-	body := `{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}`
+  // 请求主体 (JSON 格式)
+  body := `{"contractName":"E-BTC-USDT","orderId":"2616833860188981826"}`
 
-	// 拼接签名字符串
-	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
-	fmt.Println("签名字符串:", signStr)
+  // 拼接签名字符串
+  signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+  fmt.Println("签名字符串:", signStr)
 
-	// 生成 HMAC SHA256 签名
-	signature := generateHMACSHA256(signStr, APISecret)
-	fmt.Println("签名 (X-CH-SIGN):", signature)
+  // 生成 HMAC SHA256 签名
+  signature := generateHMACSHA256(signStr, APISecret)
+  fmt.Println("签名 (X-CH-SIGN):", signature)
 
-	// 发送 POST 请求
-	url := BaseURL + RequestPath
-	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
-	if err != nil {
-		fmt.Println("创建请求失败:", err)
-		return
-	}
+  // 发送 POST 请求
+  url := BaseURL + RequestPath
+  req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+  if err != nil {
+    fmt.Println("创建请求失败:", err)
+    return
+  }
 
-	// 设置请求头
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
-	req.Header.Set("X-CH-APIKEY", APIKey)
-	req.Header.Set("X-CH-SIGN", signature)
+  // 设置请求头
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+  req.Header.Set("X-CH-APIKEY", APIKey)
+  req.Header.Set("X-CH-SIGN", signature)
 
-	// 执行请求
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 执行请求
+  client := &http.Client{}
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("响应:", string(responseBody))
+  // 读取响应
+  responseBody, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("响应:", string(responseBody))
 }
 
 // 生成 HMAC SHA256 签名
 func generateHMACSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 ```
 
@@ -11030,75 +10657,75 @@ public class SendOrder {
 package main
 
 import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
+  "bytes"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "time"
 )
 
 // API 相关信息
 const (
-	APIKey     = "您的API-KEY"
-	APISecret  = "您的API-SECRET"
-	BaseURL    = "https://t(:futures_http_url)"
-	RequestPath = "/fapi/v1/openOrders"
+  APIKey     = "您的API-KEY"
+  APISecret  = "您的API-SECRET"
+  BaseURL    = "https://t(:futures_http_url)"
+  RequestPath = "/fapi/v1/openOrders"
 )
 
 func main() {
-	// 获取毫秒级时间戳
-	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+  // 获取毫秒级时间戳
+  timestamp := time.Now().UnixNano() / int64(time.Millisecond)
 
-	// 请求方法
-	method := "POST"
+  // 请求方法
+  method := "POST"
 
-	// 请求主体 (JSON 格式)
-	body := `{"contractName":"E-BTC-USDT"}`
+  // 请求主体 (JSON 格式)
+  body := `{"contractName":"E-BTC-USDT"}`
 
-	// 拼接签名字符串
-	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
-	fmt.Println("签名字符串:", signStr)
+  // 拼接签名字符串
+  signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+  fmt.Println("签名字符串:", signStr)
 
-	// 生成 HMAC SHA256 签名
-	signature := generateHMACSHA256(signStr, APISecret)
-	fmt.Println("签名 (X-CH-SIGN):", signature)
+  // 生成 HMAC SHA256 签名
+  signature := generateHMACSHA256(signStr, APISecret)
+  fmt.Println("签名 (X-CH-SIGN):", signature)
 
-	// 发送 POST 请求
-	url := BaseURL + RequestPath
-	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
-	if err != nil {
-		fmt.Println("创建请求失败:", err)
-		return
-	}
+  // 发送 POST 请求
+  url := BaseURL + RequestPath
+  req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+  if err != nil {
+    fmt.Println("创建请求失败:", err)
+    return
+  }
 
-	// 设置请求头
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
-	req.Header.Set("X-CH-APIKEY", APIKey)
-	req.Header.Set("X-CH-SIGN", signature)
+  // 设置请求头
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+  req.Header.Set("X-CH-APIKEY", APIKey)
+  req.Header.Set("X-CH-SIGN", signature)
 
-	// 执行请求
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 执行请求
+  client := &http.Client{}
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("响应:", string(responseBody))
+  // 读取响应
+  responseBody, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("响应:", string(responseBody))
 }
 
 // 生成 HMAC SHA256 签名
 func generateHMACSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 ```
 
@@ -11464,75 +11091,75 @@ public class SendOrder {
 package main
 
 import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
+  "bytes"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "time"
 )
 
 // API 相关信息
 const (
-	APIKey     = "您的API-KEY"
-	APISecret  = "您的API-SECRET"
-	BaseURL    = "https://t(:futures_http_url)"
-	RequestPath = "/fapi/v1/orderHistorical"
+  APIKey     = "您的API-KEY"
+  APISecret  = "您的API-SECRET"
+  BaseURL    = "https://t(:futures_http_url)"
+  RequestPath = "/fapi/v1/orderHistorical"
 )
 
 func main() {
-	// 获取毫秒级时间戳
-	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+  // 获取毫秒级时间戳
+  timestamp := time.Now().UnixNano() / int64(time.Millisecond)
 
-	// 请求方法
-	method := "POST"
+  // 请求方法
+  method := "POST"
 
-	// 请求主体 (JSON 格式)
-	body := `{"contractName":"E-BTC-USDT"}`
+  // 请求主体 (JSON 格式)
+  body := `{"contractName":"E-BTC-USDT"}`
 
-	// 拼接签名字符串
-	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
-	fmt.Println("签名字符串:", signStr)
+  // 拼接签名字符串
+  signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+  fmt.Println("签名字符串:", signStr)
 
-	// 生成 HMAC SHA256 签名
-	signature := generateHMACSHA256(signStr, APISecret)
-	fmt.Println("签名 (X-CH-SIGN):", signature)
+  // 生成 HMAC SHA256 签名
+  signature := generateHMACSHA256(signStr, APISecret)
+  fmt.Println("签名 (X-CH-SIGN):", signature)
 
-	// 发送 POST 请求
-	url := BaseURL + RequestPath
-	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
-	if err != nil {
-		fmt.Println("创建请求失败:", err)
-		return
-	}
+  // 发送 POST 请求
+  url := BaseURL + RequestPath
+  req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+  if err != nil {
+    fmt.Println("创建请求失败:", err)
+    return
+  }
 
-	// 设置请求头
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
-	req.Header.Set("X-CH-APIKEY", APIKey)
-	req.Header.Set("X-CH-SIGN", signature)
+  // 设置请求头
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+  req.Header.Set("X-CH-APIKEY", APIKey)
+  req.Header.Set("X-CH-SIGN", signature)
 
-	// 执行请求
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 执行请求
+  client := &http.Client{}
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("响应:", string(responseBody))
+  // 读取响应
+  responseBody, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("响应:", string(responseBody))
 }
 
 // 生成 HMAC SHA256 签名
 func generateHMACSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 ```
 
@@ -11896,75 +11523,75 @@ public class SendOrder {
 package main
 
 import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
+  "bytes"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "time"
 )
 
 // API 相关信息
 const (
-	APIKey     = "您的API-KEY"
-	APISecret  = "您的API-SECRET"
-	BaseURL    = "https://t(:futures_http_url)"
-	RequestPath = "/fapi/v1/myTrades"
+  APIKey     = "您的API-KEY"
+  APISecret  = "您的API-SECRET"
+  BaseURL    = "https://t(:futures_http_url)"
+  RequestPath = "/fapi/v1/myTrades"
 )
 
 func main() {
-	// 获取毫秒级时间戳
-	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+  // 获取毫秒级时间戳
+  timestamp := time.Now().UnixNano() / int64(time.Millisecond)
 
-	// 请求方法
-	method := "POST"
+  // 请求方法
+  method := "POST"
 
-	// 请求主体 (JSON 格式)
-	body := `{"contractName":"E-BTC-USDT"}`
+  // 请求主体 (JSON 格式)
+  body := `{"contractName":"E-BTC-USDT"}`
 
-	// 拼接签名字符串
-	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
-	fmt.Println("签名字符串:", signStr)
+  // 拼接签名字符串
+  signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+  fmt.Println("签名字符串:", signStr)
 
-	// 生成 HMAC SHA256 签名
-	signature := generateHMACSHA256(signStr, APISecret)
-	fmt.Println("签名 (X-CH-SIGN):", signature)
+  // 生成 HMAC SHA256 签名
+  signature := generateHMACSHA256(signStr, APISecret)
+  fmt.Println("签名 (X-CH-SIGN):", signature)
 
-	// 发送 POST 请求
-	url := BaseURL + RequestPath
-	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
-	if err != nil {
-		fmt.Println("创建请求失败:", err)
-		return
-	}
+  // 发送 POST 请求
+  url := BaseURL + RequestPath
+  req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+  if err != nil {
+    fmt.Println("创建请求失败:", err)
+    return
+  }
 
-	// 设置请求头
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
-	req.Header.Set("X-CH-APIKEY", APIKey)
-	req.Header.Set("X-CH-SIGN", signature)
+  // 设置请求头
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+  req.Header.Set("X-CH-APIKEY", APIKey)
+  req.Header.Set("X-CH-SIGN", signature)
 
-	// 执行请求
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 执行请求
+  client := &http.Client{}
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("响应:", string(responseBody))
+  // 读取响应
+  responseBody, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("响应:", string(responseBody))
 }
 
 // 生成 HMAC SHA256 签名
 func generateHMACSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 ```
 
@@ -12354,75 +11981,75 @@ public class SendOrder {
 package main
 
 import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
+  "bytes"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "time"
 )
 
 // API 相关信息
 const (
-	APIKey     = "您的API-KEY"
-	APISecret  = "您的API-SECRET"
-	BaseURL    = "https://t(:futures_http_url)"
-	RequestPath = "/fapi/v1/edit_user_position_model"
+  APIKey     = "您的API-KEY"
+  APISecret  = "您的API-SECRET"
+  BaseURL    = "https://t(:futures_http_url)"
+  RequestPath = "/fapi/v1/edit_user_position_model"
 )
 
 func main() {
-	// 获取毫秒级时间戳
-	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+  // 获取毫秒级时间戳
+  timestamp := time.Now().UnixNano() / int64(time.Millisecond)
 
-	// 请求方法
-	method := "POST"
+  // 请求方法
+  method := "POST"
 
-	// 请求主体 (JSON 格式)
-	body := `{"contractName":"E-BTC-USDT","positionModel":"1"}`
+  // 请求主体 (JSON 格式)
+  body := `{"contractName":"E-BTC-USDT","positionModel":"1"}`
 
-	// 拼接签名字符串
-	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
-	fmt.Println("签名字符串:", signStr)
+  // 拼接签名字符串
+  signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+  fmt.Println("签名字符串:", signStr)
 
-	// 生成 HMAC SHA256 签名
-	signature := generateHMACSHA256(signStr, APISecret)
-	fmt.Println("签名 (X-CH-SIGN):", signature)
+  // 生成 HMAC SHA256 签名
+  signature := generateHMACSHA256(signStr, APISecret)
+  fmt.Println("签名 (X-CH-SIGN):", signature)
 
-	// 发送 POST 请求
-	url := BaseURL + RequestPath
-	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
-	if err != nil {
-		fmt.Println("创建请求失败:", err)
-		return
-	}
+  // 发送 POST 请求
+  url := BaseURL + RequestPath
+  req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+  if err != nil {
+    fmt.Println("创建请求失败:", err)
+    return
+  }
 
-	// 设置请求头
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
-	req.Header.Set("X-CH-APIKEY", APIKey)
-	req.Header.Set("X-CH-SIGN", signature)
+  // 设置请求头
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+  req.Header.Set("X-CH-APIKEY", APIKey)
+  req.Header.Set("X-CH-SIGN", signature)
 
-	// 执行请求
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 执行请求
+  client := &http.Client{}
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("响应:", string(responseBody))
+  // 读取响应
+  responseBody, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("响应:", string(responseBody))
 }
 
 // 生成 HMAC SHA256 签名
 func generateHMACSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 ```
 
@@ -12765,75 +12392,75 @@ public class SendOrder {
 package main
 
 import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
+  "bytes"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "time"
 )
 
 // API 相关信息
 const (
-	APIKey     = "您的API-KEY"
-	APISecret  = "您的API-SECRET"
-	BaseURL    = "https://t(:futures_http_url)"
-	RequestPath = "/fapi/v1/edit_user_margin_model"
+  APIKey     = "您的API-KEY"
+  APISecret  = "您的API-SECRET"
+  BaseURL    = "https://t(:futures_http_url)"
+  RequestPath = "/fapi/v1/edit_user_margin_model"
 )
 
 func main() {
-	// 获取毫秒级时间戳
-	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+  // 获取毫秒级时间戳
+  timestamp := time.Now().UnixNano() / int64(time.Millisecond)
 
-	// 请求方法
-	method := "POST"
+  // 请求方法
+  method := "POST"
 
-	// 请求主体 (JSON 格式)
-	body := `{"contractName":"E-BTC-USDT","marginModel":"1"}`
+  // 请求主体 (JSON 格式)
+  body := `{"contractName":"E-BTC-USDT","marginModel":"1"}`
 
-	// 拼接签名字符串
-	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
-	fmt.Println("签名字符串:", signStr)
+  // 拼接签名字符串
+  signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+  fmt.Println("签名字符串:", signStr)
 
-	// 生成 HMAC SHA256 签名
-	signature := generateHMACSHA256(signStr, APISecret)
-	fmt.Println("签名 (X-CH-SIGN):", signature)
+  // 生成 HMAC SHA256 签名
+  signature := generateHMACSHA256(signStr, APISecret)
+  fmt.Println("签名 (X-CH-SIGN):", signature)
 
-	// 发送 POST 请求
-	url := BaseURL + RequestPath
-	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
-	if err != nil {
-		fmt.Println("创建请求失败:", err)
-		return
-	}
+  // 发送 POST 请求
+  url := BaseURL + RequestPath
+  req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+  if err != nil {
+    fmt.Println("创建请求失败:", err)
+    return
+  }
 
-	// 设置请求头
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
-	req.Header.Set("X-CH-APIKEY", APIKey)
-	req.Header.Set("X-CH-SIGN", signature)
+  // 设置请求头
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+  req.Header.Set("X-CH-APIKEY", APIKey)
+  req.Header.Set("X-CH-SIGN", signature)
 
-	// 执行请求
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 执行请求
+  client := &http.Client{}
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("响应:", string(responseBody))
+  // 读取响应
+  responseBody, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("响应:", string(responseBody))
 }
 
 // 生成 HMAC SHA256 签名
 func generateHMACSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 ```
 
@@ -13176,75 +12803,75 @@ public class SendOrder {
 package main
 
 import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
+  "bytes"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "time"
 )
 
 // API 相关信息
 const (
-	APIKey     = "您的API-KEY"
-	APISecret  = "您的API-SECRET"
-	BaseURL    = "https://t(:futures_http_url)"
-	RequestPath = "/fapi/v1/edit_lever"
+  APIKey     = "您的API-KEY"
+  APISecret  = "您的API-SECRET"
+  BaseURL    = "https://t(:futures_http_url)"
+  RequestPath = "/fapi/v1/edit_lever"
 )
 
 func main() {
-	// 获取毫秒级时间戳
-	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+  // 获取毫秒级时间戳
+  timestamp := time.Now().UnixNano() / int64(time.Millisecond)
 
-	// 请求方法
-	method := "POST"
+  // 请求方法
+  method := "POST"
 
-	// 请求主体 (JSON 格式)
-	body := `{"contractName":"E-BTC-USDT","nowLevel":"1"}`
+  // 请求主体 (JSON 格式)
+  body := `{"contractName":"E-BTC-USDT","nowLevel":"1"}`
 
-	// 拼接签名字符串
-	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
-	fmt.Println("签名字符串:", signStr)
+  // 拼接签名字符串
+  signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+  fmt.Println("签名字符串:", signStr)
 
-	// 生成 HMAC SHA256 签名
-	signature := generateHMACSHA256(signStr, APISecret)
-	fmt.Println("签名 (X-CH-SIGN):", signature)
+  // 生成 HMAC SHA256 签名
+  signature := generateHMACSHA256(signStr, APISecret)
+  fmt.Println("签名 (X-CH-SIGN):", signature)
 
-	// 发送 POST 请求
-	url := BaseURL + RequestPath
-	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
-	if err != nil {
-		fmt.Println("创建请求失败:", err)
-		return
-	}
+  // 发送 POST 请求
+  url := BaseURL + RequestPath
+  req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+  if err != nil {
+    fmt.Println("创建请求失败:", err)
+    return
+  }
 
-	// 设置请求头
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
-	req.Header.Set("X-CH-APIKEY", APIKey)
-	req.Header.Set("X-CH-SIGN", signature)
+  // 设置请求头
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+  req.Header.Set("X-CH-APIKEY", APIKey)
+  req.Header.Set("X-CH-SIGN", signature)
 
-	// 执行请求
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 执行请求
+  client := &http.Client{}
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("响应:", string(responseBody))
+  // 读取响应
+  responseBody, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("响应:", string(responseBody))
 }
 
 // 生成 HMAC SHA256 签名
 func generateHMACSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 ```
 
@@ -13587,75 +13214,75 @@ public class SendOrder {
 package main
 
 import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
+  "bytes"
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "time"
 )
 
 // API 相关信息
 const (
-	APIKey     = "您的API-KEY"
-	APISecret  = "您的API-SECRET"
-	BaseURL    = "https://t(:futures_http_url)"
-	RequestPath = "/fapi/v1/positionList"
+  APIKey     = "您的API-KEY"
+  APISecret  = "您的API-SECRET"
+  BaseURL    = "https://t(:futures_http_url)"
+  RequestPath = "/fapi/v1/positionList"
 )
 
 func main() {
-	// 获取毫秒级时间戳
-	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+  // 获取毫秒级时间戳
+  timestamp := time.Now().UnixNano() / int64(time.Millisecond)
 
-	// 请求方法
-	method := "POST"
+  // 请求方法
+  method := "POST"
 
-	// 请求主体 (JSON 格式)
-	body := `{"contractName":"E-BTC-USDT","limit":10,"page":1}`
+  // 请求主体 (JSON 格式)
+  body := `{"contractName":"E-BTC-USDT","limit":10,"page":1}`
 
-	// 拼接签名字符串
-	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
-	fmt.Println("签名字符串:", signStr)
+  // 拼接签名字符串
+  signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
+  fmt.Println("签名字符串:", signStr)
 
-	// 生成 HMAC SHA256 签名
-	signature := generateHMACSHA256(signStr, APISecret)
-	fmt.Println("签名 (X-CH-SIGN):", signature)
+  // 生成 HMAC SHA256 签名
+  signature := generateHMACSHA256(signStr, APISecret)
+  fmt.Println("签名 (X-CH-SIGN):", signature)
 
-	// 发送 POST 请求
-	url := BaseURL + RequestPath
-	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
-	if err != nil {
-		fmt.Println("创建请求失败:", err)
-		return
-	}
+  // 发送 POST 请求
+  url := BaseURL + RequestPath
+  req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
+  if err != nil {
+    fmt.Println("创建请求失败:", err)
+    return
+  }
 
-	// 设置请求头
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
-	req.Header.Set("X-CH-APIKEY", APIKey)
-	req.Header.Set("X-CH-SIGN", signature)
+  // 设置请求头
+  req.Header.Set("Content-Type", "application/json")
+  req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
+  req.Header.Set("X-CH-APIKEY", APIKey)
+  req.Header.Set("X-CH-SIGN", signature)
 
-	// 执行请求
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
+  // 执行请求
+  client := &http.Client{}
+  resp, err := client.Do(req)
+  if err != nil {
+    fmt.Println("请求失败:", err)
+    return
+  }
+  defer resp.Body.Close()
 
-	// 读取响应
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("响应:", string(responseBody))
+  // 读取响应
+  responseBody, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println("响应:", string(responseBody))
 }
 
 // 生成 HMAC SHA256 签名
 func generateHMACSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
+  h := hmac.New(sha256.New, []byte(secret))
+  h.Write([]byte(data))
+  return hex.EncodeToString(h.Sum(nil))
 }
 ```
 
