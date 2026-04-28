@@ -1412,9 +1412,11 @@ if (timestamp < (serverTime + 1000) && (serverTime - timestamp) <= recvWindow) {
 ```
 
 <aside class="notice">Regarding Transaction Timeliness: The internet connection is not 100% reliable and cannot be fully depended on. Therefore, the latency from your local system to the exchange server will have fluctuations. This is the purpose of setting the <code>recvWindow</code>. If you are engaged in high-frequency trading and have higher requirements for transaction timeliness, you can adjust <code>recvWindow</code> flexibly to meet your needs. It is not recommended to use a <code>recvWindow</code> greater than 5 seconds.</aside>
-                                      |
+
+<a name="Return Code Type"></a>
 
 # Spot trading
+
 ## Enumeration type
 
 ### Trading pair
@@ -1458,7 +1460,9 @@ if (timestamp < (serverTime + 1000) && (serverTime - timestamp) <= recvWindow) {
 | `h`     | Hour        | `1h`, `4h`                                |
 | `day`   | Day         | `1day`                                    |
 | `week`  | Week        | `1week`                                   |
-| `month` | Month       |  `month` |
+| `month` | Month       |                                           |
+
+
 ## Public
 
 ### Security type: None
@@ -1771,7 +1775,7 @@ https.get(url, (res) => {
 
 ```json
 {
-  "timezone": "China Standard Time",
+  "timezone": "UTC",
   "serverTime": 1705039779880
 }
 ```
@@ -1780,8 +1784,8 @@ https.get(url, (res) => {
 
 | parameter name | Type   | Example               | Description      |
 | :------------- | :----- | :-------------------- | :--------------- |
-| timezone       | string | `UTC Time`            | UTC zone |
-| serverTime     | long   | `1705039779880`       | timestamp (milliseconds)|
+| timezone       | string | `UTC`                 | UTC time zone |
+| serverTime     | long   | `1705039779880`       | timestamp |
 
 <a name="spot-trading-public-currency-pair-list"></a>
 
@@ -2305,19 +2309,27 @@ axios
 
 ```json
 {
-  "code": 0,
-  "msg": "Success",
-  "data": {
-    "time": 1764180842868,
-    "bids": [
-      [90058.6, 7.7918],
-      [90058.59, 7.09332]
+  "time": 1704962463000,
+  "asks": [
+        [
+            77765.7,
+            849
+        ],
+        [
+            77765.9,
+            636
+        ]
     ],
-    "asks": [
-      [90058.7, 4.35464],
-      [90058.72, 3.95142]
+  "bids": [
+        [
+            77764.7,
+            587
+        ],
+        [
+            77764.6,
+            546
+        ]
     ]
-  }
 }
 ```
 
@@ -2330,6 +2342,317 @@ axios
 | asks           | array | `[[4.0,12.0],[5.1,28.0]]` | Order book ask information, the array length is 2, index 1 is the price, type is float; index 2 is the quantity corresponding to the current price, type is float |
 
 The information corresponding to bids and asks represents all the prices in the order book and the quantities corresponding to those prices, arranged from the best price (highest bid and lowest ask) downwards
+
+### Market Ticker
+
+`GET https://t(:spot_http_url)/sapi/v1/ticker`
+
+Get 24-hour price change data
+
+> Request example
+
+```http
+GET https://t(:spot_http_url)/sapi/v1/ticker?symbol=BTCUSDT
+
+// Set Headers
+Content-Type: application/json
+```
+
+```shell
+#!/bin/bash
+
+# Set API-related information
+API_URL="https://t(:spot_http_url)"
+REQUEST_URL="/sapi/v1/ticker"
+QUERY_STRING="?symbol=BTCUSDT"
+
+# Calculate the complete request path
+REQUEST_PATH="${REQUEST_URL}${QUERY_STRING}"
+FULL_URL="${API_URL}${REQUEST_PATH}"
+
+# Define request method
+METHOD="GET"
+
+# **Print debug information**
+echo "==== Request information ===="
+echo "Request URL: ${FULL_URL}"
+echo "=================="
+
+# Send GET request
+curl -X GET "$FULL_URL" \
+    -H "Content-Type: application/json"
+```
+
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.time.Instant;
+import java.util.Scanner;
+
+public class FameexApiRequest {
+    public static void main(String[] args) {
+        try {
+            // API-related information
+            String apiUrl = "https://t(:spot_http_url)";
+            String requestUrl = "/sapi/v1/ticker";
+            String queryString = "?symbol=BTCUSDT";
+
+            // Calculate the complete request path
+            String requestPath = requestUrl + queryString;
+            String fullUrl = apiUrl + requestPath;
+
+            // Request method
+            String method = "GET";
+
+            // **Print debug information**
+            System.out.println("==== Request information ====");
+            System.out.println("Request URL: " + fullUrl);
+            System.out.println("==================");
+
+            // Send GET request
+            sendGetRequest(fullUrl);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Send HTTP GET request
+    public static void sendGetRequest(String fullUrl) {
+        try {
+            URL url = new URL(fullUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+
+            // Set request headers
+            conn.setRequestProperty("Content-Type", "application/json");
+
+            // Send request and get response
+            int responseCode = conn.getResponseCode();
+            System.out.println("Response Code: " + responseCode);
+
+            Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name());
+            while (scanner.hasNextLine()) {
+                System.out.println(scanner.nextLine());
+            }
+            scanner.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	// API-related information
+	apiURL := "https://t(:spot_http_url)"
+	requestURL := "/sapi/v1/ticker"
+	queryString := "?symbol=BTCUSDT"
+
+	// Calculate the complete request path
+	requestPath := requestURL + queryString
+	fullURL := apiURL + requestPath
+
+	// Request method
+	method := "GET"
+
+	// **Print debug information**
+	fmt.Println("==== Request information ====")
+	fmt.Println("Request URL:", fullURL)
+	fmt.Println("==================")
+
+	// Send GET request
+	sendGetRequest(fullURL, method)
+}
+
+// Send HTTP GET request
+func sendGetRequest(fullURL, method string) {
+	client := &http.Client{}
+
+	// Create request
+	req, err := http.NewRequest(method, fullURL, nil)
+	if err != nil {
+		fmt.Println("Error creating request:", err)
+		return
+	}
+
+	// Set Headers
+	req.Header.Set("Content-Type", "application/json")
+
+	// Send request
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error sending request:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// Read response
+	body, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("Response Code:", resp.StatusCode)
+	fmt.Println("Response Body:", string(body))
+}
+```
+
+```python
+import time
+import hmac
+import hashlib
+import requests
+
+# API-related information
+API_URL = "https://t(:spot_http_url)"
+REQUEST_URL = "/sapi/v1/ticker"
+QUERY_STRING = "?symbol=BTCUSDT"
+
+# Calculate the full request path
+REQUEST_PATH = REQUEST_URL + QUERY_STRING
+FULL_URL = API_URL + REQUEST_PATH
+
+# **Print debug information**
+print("==== Request information ====")
+print("Request URL:", FULL_URL)
+print("==================")
+
+# Send GET request
+headers = {
+    "Content-Type": "application/json"
+}
+
+response = requests.get(FULL_URL, headers=headers)
+
+# Print response
+print("Response Code:", response.status_code)
+print("Response Body:", response.text)
+
+```
+
+```php
+<?
+
+// API-related information
+$API_URL = "https://t(:spot_http_url)";
+$REQUEST_URL = "/sapi/v1/ticker";
+$QUERY_STRING = "?symbol=BTCUSDT";
+
+// Calculate the complete request path
+$REQUEST_PATH = $REQUEST_URL . $QUERY_STRING;
+$FULL_URL = $API_URL . $REQUEST_PATH;
+
+// **Print debug information**
+echo "==== Request information ====\n";
+echo "Request URL: " . $FULL_URL . "\n";
+echo "==================\n";
+
+// Send GET request
+$headers = [
+    "Content-Type: application/json",
+];
+
+// Send GET request using cURL
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $FULL_URL);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+// Execute request and get response
+$response = curl_exec($ch);
+$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+
+// Print response
+echo "Response Code: $http_code\n";
+echo "Response Body: $response\n";
+
+?>
+```
+
+```javascript--node
+const axios = require("axios");
+const crypto = require("crypto");
+
+// API-related information
+const API_URL = "https://t(:spot_http_url)";
+const REQUEST_URL = "/sapi/v1/ticker";
+const QUERY_STRING = "?symbol=BTCUSDT";
+
+// Calculate the full request path
+const REQUEST_PATH = REQUEST_URL + QUERY_STRING;
+const FULL_URL = API_URL + REQUEST_PATH;
+
+// **Print debug information**
+console.log("==== Request information ====");
+console.log("Request URL:", FULL_URL);
+console.log("==================");
+
+// Send GET request
+const headers = {
+  "Content-Type": "application/json",
+};
+
+axios
+  .get(FULL_URL, { headers })
+  .then((response) => {
+    console.log("Response Code:", response.status);
+    console.log("Response Body:", response.data);
+  })
+  .catch((error) => {
+    console.error("Error:", error.response ? error.response.data : error.message);
+  });
+```
+
+**Request parameters**
+
+| Parameter name                    | Type   | Description                                          |
+| :-------------------------------- | :----- | :--------------------------------------------------- |
+| symbol<font color="red">\*</font> | string | Uppercase currency pair name, for example: `BTCUSDT` |
+
+> Return example
+
+```json
+{
+  "code": 0,
+  "msg": "Success",
+  "data": {
+    "amount": 1357550713.60334,
+    "high": 90267.9,
+    "vol": 15520.54679,
+    "last": 90253.5,
+    "low": 86180.1,
+    "buy": 90217.6,
+    "sell": 90217.7,
+    "rose": "+0.0295494912",
+    "time": 1764180900000
+  }
+}
+```
+
+**Return parameter**
+
+| Parameter name | Type   | Example         | Description                                                                                                   |
+| :------------- | :----- | :-------------- | :------------------------------------------------------------------------------------------------------------ |
+| time           | long   | `1595563624731` | Current timestamp                                                                                             |
+| high           | float  | `9900.51`       | Highest price                                                                                                 |
+| low            | float  | `9100.34`       | Lowest price                                                                                                  |
+| last           | float  | `9211.60`       | Latest trade price                                                                                            |
+| vol            | float  | `4691.0`        | Trading volume                                                                                                |
+| amount         | float  | `22400.0`       | Transaction Amount                                                                                            |
+| buy            | float  | `9210.0`        | Bid price                                                                                                     |
+| sell           | float  | `9213.0`        | Ask price                                                                                                     |
+| rose           | string | `+0.05`         | Price change percentage,`+`indicates an increase,`-`indicates a decrease, and `+0.05`indicates a`5%` increase |
 
 ### Market Ticker-V2
 
@@ -3698,7 +4021,7 @@ sendOrder();
   "symbol": "ETHUSDT",
   "side": "BUY",
   "executedQty": 0,
-  "orderId": ["2012274607240433332"],
+  "orderId": "2012274607240433332",
   "price": 47651.29,
   "origQty": 0.01,
   "clientOrderId": "213443",
@@ -3712,7 +4035,7 @@ sendOrder();
 
 | Parameter name | Type    | Example               | Description                                                                                                                     |
 | :------------- | :------ | :-------------------- | :------------------------------------------------------------------------------------------------------------------------------ |
-| orderId        | long    | `2012274607240433332` | Order ID (system-generated)                                                                                                     |
+| orderId        | string    | `2012274607240433332` | Order ID (system-generated)                                                                                                     |
 | clientOrderId  | string  | `213443`              | Order ID (user-generated)                                                                                                       |
 | symbol         | string  | `BTCUSDT`             | `Uppercase` trading pair name                                                                                                   |
 | transactTime   | integer | `1704959985403`       | Order creation timestamp                                                                                                        |
@@ -4694,7 +5017,7 @@ axios
 
 | Parameter name                     | Type   | Description                                    |
 | :--------------------------------- | :----- | :--------------------------------------------- |
-| orderId<font color="red">\*</font> | string | Order ID (system-generated)                    |
+| orderId<font color="red">\*</font> | long   | Order ID (system-generated)                    |
 | symbol<font color="red">\*</font>  | string | `Lowercase`trading pair name, such as`ethusdt` |
 
 > Response example
@@ -4723,7 +5046,7 @@ axios
 
 | Parameter name | Type   | Example              | Description                                                                                                                    |
 | :------------- | :----- | :------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
-| orderId        | long   | `150695552109032492` | Order ID (system-generated)                                                                                                    |
+| orderId        | string   | `150695552109032492` | Order ID (system-generated)                                                                                                    |
 | clientOrderId  | string | `213443`             | Order ID (user-generated)                                                                                                      |
 | symbol         | string | `ethusdt`            | `Lowercase`trading pair name                                                                                                   |
 | price          | float  | `4765.29`            | Order price                                                                                                                    |
@@ -4734,7 +5057,6 @@ axios
 | transactTime   | long   | `1672274311107`      | Timestamp                                                                                                                      |
 | side           | string | `BUY`                | Order direction. Possible values are:`BUY`(Buy/Long) and`SELL`(Sell/Short)                                                     |
 | status         | string | `New Order`          | Order status. Possible values are:`New Order`(New order, no fills),`Partially Filled`(Partially filled),`Filled`(Fully filled) |
-
 
 ### Cancel order
 
@@ -5157,7 +5479,7 @@ sendOrder();
 
 | Parameter name | Type   | Example               | Description                   |
 | :------------- | :----- | :-------------------- | :---------------------------- |
-| orderId        | long   | `1938321163093079425` | Order ID (system-generated)   |
+| orderId        | string   | `1938321163093079425` | Order ID (system-generated)   |
 | symbol         | string | `ethusdt`             | Trading pair name             |
 | status         | string | `PENDING_CANCEL`      | Order status:`PENDING_CANCEL` |
 
@@ -6026,7 +6348,7 @@ axios
       "symbol": "ETHUSDT",
       "side": "BUY",
       "executedQty": "0",
-      "orderId": 1938321163093078022,
+      "orderId": "1938321163093078022",
       "price": "0",
       "origQty": "0.01",
       "avgPrice": "0",
@@ -6042,7 +6364,7 @@ axios
 
 | Parameter name | Type   | Example              | Description                                                                                                                    |
 | :------------- | :----- | :------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
-| orderId        | long   | `150695552109032492` | Order ID (system-generated)                                                                                                    |
+| orderId        | string   | `150695552109032492` | Order ID (system-generated)                                                                                                    |
 | symbol         | string | `ETHUSDT`            | Trading pair name                                                                                                              |
 | price          | float  | `4765.29`            | Order price                                                                                                                    |
 | origQty        | float  | `1.01`               | Order quantity                                                                                                                 |
@@ -6056,8 +6378,6 @@ axios
 ### Transaction records
 
 `GET https://t(:spot_http_url)/sapi/v1/myTrades`
-
-**Rate limit rule: 20 requests per 2 seconds**
 
 **Request headers**
 
@@ -6534,8 +6854,7 @@ axios
 | :------------- | :------ | :-------------------- | :------------------------------------------------------------------------------------- |
 | symbol         | string  | `ETHBTC`              | `Uppercase`currency name                                                               |
 | id             | integer | `159`                 | Transaction ID                                                                         |
-| bidId          | long    | `1954603951049381893` | Buyer order ID                                                                         |
-| askId          | long    | `1856176838352995447` | Seller order ID                                                                        |
+| orderId        | integer  | `836481496066822100` | order ID              |
 | price          | integer | `2334`                | Transaction price                                                                      |
 | qty            | float   | `0.00004284`          | Transaction quantity                                                                   |
 | time           | number  | `1701165091964`       | Transaction timestamp                                                                  |
@@ -6543,9 +6862,6 @@ axios
 | isMaker        | boolean | `false`               | `true`=Maker，`false`=Taker                                                            |
 | feeCoin        | string  | `ETH`                 | Transaction fee currency                                                               |
 | fee            | number  | `0.00000000428`       | Transaction fee                                                                        |
-| bidUserId      | integer | `10083`               | Buyer user UID                                                                         |
-| askUserId      | integer | `10671`               | Seller user UID                                                                        |
-| isSelf         | boolean | `false`               | Is it a self-trade?`true`= yes, it is a self-trade;`false`= no, it is not a self-trade |
 | side           | string  | `BUY`                 | Active order direction:`BUY`/`SELL`                                                    |
 
 ## Account
@@ -6554,7 +6870,7 @@ axios
 
 <aside class="notice">The APIs under the account section require signature and API-key authentication.</aside>
 
-### Account information (recommended)
+### Account information
 
 `GET https://t(:spot_http_url)/sapi/v1/account/balance`
 
@@ -7032,6 +7348,7 @@ axios
 
 # Contract trading
 
+
 ## Enumeration type
 
 ### Trading pair
@@ -7075,7 +7392,9 @@ axios
 | `h`     | Hour        | `1h`, `4h`                                |
 | `day`   | Day         | `1day`                                    |
 | `week`  | Week        | `1week`                                   |
-| `month` | Month       |     
+| `month` | Month       |                                           |
+
+
 
 ## Public
 
@@ -8195,10 +8514,13 @@ https.get(url, (res) => {
 
 ```json
 {
-  "currentFundRate": -0.00375,
-  "indexPrice": 27905.98,
-  "tagPrice": 27824.4422146875,
-  "nextFundRate": -0.00375
+    "currentFundRate": -0.0001121946978565,
+    "indexPrice": 77654.33,
+    "before24LowPrice": 77419.2,
+    "before24HighPrice": 79445.8,
+    "tagPrice": 77607.4889394,
+    "newPrice": 77593.6,
+    "nextFundRate": -0.0001071481385035
 }
 ```
 
@@ -8208,6 +8530,9 @@ https.get(url, (res) => {
 | :-------------- | :---- | :----------------------- | :-------------------------------------------------------- |
 | indexPrice      | float | `27905.9800000000000000` | Index price                                               |
 | tagPrice        | float | `27824.4422146875000000` | Mark price                                                |
+| newPrice        | float | `77593.6`                | New price                     |
+| before24LowPrice| float | `77419.2`                | 24h Low Price                 |
+| before24HighPrice| float | `79445.8`                | 24h High Price                |
 | nextFundRate    | float | `-0.0037500000000000`    | Funding rate price                                        |
 | currentFundRate | float | `-0.0037500000000000`    | Previous funding rate (used for this period's settlement) |
 
@@ -8832,7 +9157,7 @@ sendOrder();
 | price                                   | number | Order price. This field is mandatory for limit orders. It has precision restrictions set by the administrator                    |
 | volume<font color="red">\*</font>       | number | Order quantity. It has precision restrictions set by the administrator. For market orders, this field represents the order value |
 | type<font color="red">\*</font>         | string | Order type:`LIMIT`/`MARKET` (`LIMIT`: Limit order, `MARKET`: Market order)                                                       |
-|                                         |        | Note: When `timeInForce` is provided, this field will be ignored.                                                                |
+|                                         |        | Note: When `timeInForce` is provided, this field will be set `LIMIT`.                                                                |
 | side<font color="red">\*</font>         | string | Order direction:`BUY`/`SELL`                                                                                                     |
 | open<font color="red">\*</font>         | string | Position direction:`OPEN`/`CLOSE`                                                                                                |
 | positionType<font color="red">\*</font> | number | Position type: 1 (Cross Margin) / 2 (Isolated Margin)                                                                            |
@@ -8840,7 +9165,7 @@ sendOrder();
 |                                         |        | (`IOC`: Cancel unfilled parts immediately,                                                                                       |
 |                                         |        | `FOK`: Cancel if not fully filled immediately,                                                                                   |
 |                                         |        | `POST_ONLY`: Cancel if not a passive order )                                                                                     |
-|                                         |        | Note: If this field is set, it will override the `type` field and be used as the final order type.                               |
+|                                         |        | Note: If this field is set, the `type` field defaults to `LIMIT`.                               |
 | clientOrderId                           | string | Client order identifier, a string with a length of fewer than 32 characters                                                      |
 
 > Response example
@@ -9301,8 +9626,6 @@ If this API returns unexpected results, please contact the technical team, and w
 
 `POST https://t(:futures_http_url)/fapi/v1/cancel`
 
-**Rate limit rule: 20 requests per 2 seconds**
-
 **Request headers**
 
 | Parameter name                         | Type    | Description  |
@@ -9711,8 +10034,6 @@ sendOrder();
 ### Cancel conditional order
 
 `POST https://t(:futures_http_url)/fapi/v1/cancel_trigger_order`
-
-**Rate limit rule: 20 requests per 2 seconds**
 
 **Request headers**
 
@@ -10123,8 +10444,6 @@ sendOrder();
 ### Order details
 
 `GET https://t(:futures_http_url)/fapi/v1/order`
-
-**Rate limit rule: 20 requests per 2 seconds**
 
 **Request headers**
 
@@ -10565,8 +10884,6 @@ sendOrder();
 ### Current order
 
 `GET https://t(:futures_http_url)/fapi/v1/openOrders`
-
-**Rate limit rule: 20 requests per 2 seconds**
 
 **Request headers**
 
@@ -11430,441 +11747,9 @@ sendOrder();
 
 If this API returns unexpected results, please contact the technical team, and we will provide you with relevant assistance
 
-### Profit and Loss Record
-
-`POST https://t(:futures_http_url)/fapi/v1/profitHistorical`
-
-If this API returns an error, please contact the technical team, and we will provide you with relevant assistance
-
-**Request headers**
-
-| Parameter name                         | Type   | Description  |
-| :------------------------------------- | :----- | :----------- |
-| X-CH-SIGN<font color="red">\*</font>   | string | Signature    |
-| X-CH-APIKEY<font color="red">\*</font> | string | Your API-KEY |
-| X-CH-TS<font color="red">\*</font>     | string | Timestamp    |
-
-> Request example
-
-```http
-POST https://t(:futures_http_url)/fapi/v1/profitHistorical
-
-body
-{"contractName":"E-BTC-USDT"}
-```
-
-```shell
-#!/bin/bash
-
-# API-related information
-api_key="Your API-KEY"
-api_secret="Your API-SECRET"
-
-# Request information
-timestamp=$(($(date +%s%N)/1000000))  # Millisecond timestamp
-method="POST"
-request_path="/fapi/v1/profitHistorical"
-
-# Request body (in JSON format)
-body='{"contractName":"E-BTC-USDT"}'
-
-# Remove whitespace characters from the body to ensure signature consistency
-body=$(echo "$body" | jq -c)
-
-# Concatenate the signature string
-sign_str="${timestamp}${method}${request_path}${body}"
-echo "Signature string: $sign_str"
-
-# Generate HMAC SHA256 signature
-signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk '{print $2}')
-echo "Signature (X-CH-SIGN): $signature"
-
-# Send a POST request
-response=$(curl -s -X POST "https://t(:futures_http_url)${request_path}" \
-    -H "Content-Type: application/json" \
-    -H "X-CH-TS: $timestamp" \
-    -H "X-CH-APIKEY: $api_key" \
-    -H "X-CH-SIGN: $signature" \
-    -d "$body")
-
-# Output the response result
-echo "Response: $response"
-```
-
-```java
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import java.util.concurrent.TimeUnit;
-
-public class SendOrder {
-
-    // API-related information
-    private static final String API_KEY = "Your API-KEY";
-    private static final String API_SECRET = "Your API-SECRET";
-    private static final String BASE_URL = "https://t(:futures_http_url)";
-    private static final String REQUEST_PATH = "/fapi/v1/profitHistorical";
-
-    public static void main(String[] args) {
-        try {
-            // Get timestamp (in milliseconds)
-            long timestamp = TimeUnit.MILLISECONDS.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
-
-            // Request method
-            String method = "POST";
-
-            // Request body (in JSON format, make sure to use compact format)
-            String body = "{"contractName":"E-BTC-USDT"}";
-            System.out.println("Request body (body): " + body);
-
-            // Concatenate the signature string
-            String signStr = timestamp + method + REQUEST_PATH + body;
-            System.out.println("Signature string: " + signStr);
-
-            // Generate HMAC SHA256 signature
-            String signature = hmacSHA256(signStr, API_SECRET);
-            System.out.println("Signature (X-CH-SIGN): " + signature);
-
-            // Create a URL using URI
-            URI uri = new URI(BASE_URL + REQUEST_PATH);
-            HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("X-CH-TS", String.valueOf(timestamp));
-            conn.setRequestProperty("X-CH-APIKEY", API_KEY);
-            conn.setRequestProperty("X-CH-SIGN", signature);
-            conn.setRequestProperty("User-Agent", "Java-Client");
-            conn.setDoOutput(true);
-
-            // Send the request body
-            try (OutputStream os = conn.getOutputStream()) {
-                os.write(body.getBytes(StandardCharsets.UTF_8));
-                os.flush();
-            }
-
-            // Read response
-            int responseCode = conn.getResponseCode();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    responseCode >= 200 && responseCode < 300 ? conn.getInputStream() : conn.getErrorStream()));
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-            reader.close();
-
-            // Output the response result
-            System.out.println("Response (" + responseCode + "): " + response.toString());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Generate HMAC SHA256 signature
-     *
-     * @param data   String to be signed
-     * @param secret Secret key
-     * @return HMAC SHA256 Signature
-     */
-    public static String hmacSHA256(String data, String secret) throws Exception {
-        Mac mac = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-        mac.init(secretKeySpec);
-        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : hash) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) hexString.append('0');
-            hexString.append(hex);
-        }
-        return hexString.toString();
-    }
-}
-```
-
-```go
-package main
-
-import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
-)
-
-// API-related information
-const (
-	APIKey     = "Your API key"
-	APISecret  = "Your API-SECRET"
-	BaseURL    = "https://t(:futures_http_url)"
-	RequestPath = "/fapi/v1/profitHistorical"
-)
-
-func main() {
-	// Get timestamp in milliseconds
-	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
-
-	// Request method
-	method := "POST"
-
-	// Request body (in JSON format)
-	body := `{"contractName":"E-BTC-USDT"}`
-
-	// Concatenate the signature string
-	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
-	fmt.Println("Signature string:", signStr)
-
-	// Generate HMAC SHA256 signature
-	signature := generateHMACSHA256(signStr, APISecret)
-	fmt.Println("Signature (X-CH-SIGN):", signature)
-
-	// Send a POST request
-	url := BaseURL + RequestPath
-	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
-	if err != nil {
-		fmt.Println("Failed to create request:", err)
-		return
-	}
-
-	// Set request headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
-	req.Header.Set("X-CH-APIKEY", APIKey)
-	req.Header.Set("X-CH-SIGN", signature)
-
-	// Execute the request
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("Request failed:", err)
-		return
-	}
-	defer resp.Body.Close()
-
-	// Read response
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("Response:", string(responseBody))
-}
-
-// Generate HMAC SHA256 signature(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
-}
-```
-
-```python
-import time
-import hmac
-import hashlib
-import requests
-
-# API-related information
-API_KEY = "Your API-KEY"
-API_SECRET = "Your API-SECRET"
-BASE_URL = "https://t(:futures_http_url)"
-REQUEST_PATH = "/fapi/v1/profitHistorical"
-
-
-# Request method and request body
-method = "POST"
-body = {"contractName":"E-BTC-USDT"}
-
-
-# Get timestamp (in milliseconds)
-timestamp = int(time.time() * 1000)
-
-# Convert the request body to a compact JSON string
-import json
-body_str = json.dumps(body, separators=(',', ':'))
-print("Request body (body):", body_str)
-
-# Concatenate the signature string
-sign_str = f"{timestamp}{method}{REQUEST_PATH}{body_str}"
-print("Signature string:", sign_str)
-
-# Generate HMAC SHA256 signature
-signature = hmac.new(API_SECRET.encode('utf-8'), sign_str.encode('utf-8'), hashlib.sha256).hexdigest()
-print("Signature (X-CH-SIGN):", signature)
-
-# Build the request headers
-headers = {
-    "Content-Type": "application/json",
-    "X-CH-TS": str(timestamp),
-    "X-CH-APIKEY": API_KEY,
-    "X-CH-SIGN": signature,
-    "User-Agent": "Python-Client"
-}
-
-# Send a POST request
-url = BASE_URL + REQUEST_PATH
-response = requests.post(url, headers=headers, data=body_str)
-
-# Output the response result
-print("Response status code:", response.status_code)
-print("Response content:", response.text)
-```
-
-```php
-// API-related information
-$apiKey = "Your API-KEY";
-$apiSecret = "Your API-SECRET";
-$baseUrl = "https://t(:futures_http_url)";
-$requestPath = "/fapi/v1/profitHistorical";
-
-// Request method and request body
-$method = "POST";
-$body = json_encode([
-    "contractName" => "E-BTC-USDT"
-], JSON_UNESCAPED_SLASHES);
-
-// Get timestamp in milliseconds
-$timestamp = round(microtime(true) * 1000);
-
-// Concatenate the signature string
-$signStr = $timestamp . $method . $requestPath . $body;
-echo "Signature string: " . $signStr . PHP_EOL;
-
-// Generate HMAC SHA256 signature
-$signature = hash_hmac('sha256', $signStr, $apiSecret);
-echo "Signature (X-CH-SIGN): " . $signature . PHP_EOL;
-
-// Build the request headers
-$headers = [
-    "Content-Type: application/json",
-    "X-CH-TS: $timestamp",
-    "X-CH-APIKEY: $apiKey",
-    "X-CH-SIGN: $signature",
-    "User-Agent: PHP-Client"
-];
-
-// Send a POST request
-$url = $baseUrl . $requestPath;
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Only use in development environments; SSL verification should be enabled in production environments
-
-$response = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-if (curl_errno($ch)) {
-    echo "Request failed: " . curl_error($ch) . PHP_EOL;
-} else {
-    echo "Response status code: $httpCode" . PHP_EOL;
-    echo "Response content: $response" . PHP_EOL;
-}
-
-curl_close($ch);
-```
-
-```javascript--node
-const crypto = require('crypto');
-const axios = require('axios');
-
-// API-related information
-const API_KEY = "Your API-KEY";
-const API_SECRET = "Your API-SECRET";
-const BASE_URL = "https://t(:futures_http_url)";
-const REQUEST_PATH = "/fapi/v1/profitHistorical";
-
-// Request method and request body
-const method = "POST";
-const body = JSON.stringify({
-    contractName: "E-BTC-USDT"
-});
-
-// Get timestamp in milliseconds
-const timestamp = Date.now();
-
-// Concatenate the signature string
-const signStr = `${timestamp}${method}${REQUEST_PATH}${body}`;
-console.log("Signature string:", signStr);
-
-// Generate HMAC SHA256 signature
-const signature = crypto.createHmac('sha256', API_SECRET).update(signStr).digest('hex');
-console.log("Signature (X-CH-SIGN):", signature);
-
-// Build the request headers
-const headers = {
-    "Content-Type": "application/json",
-    "X-CH-TS": timestamp.toString(),
-    "X-CH-APIKEY": API_KEY,
-    "X-CH-SIGN": signature,
-    "User-Agent": "Node.js-Client"
-};
-
-// Send a POST request
-async function sendOrder() {
-    try {
-        const response = await axios.post(`${BASE_URL}${REQUEST_PATH}`, body, { headers });
-        console.log("Response status code:", response.status);
-        console.log("Response content:", response.data);
-    } catch (error) {
-        console.error("Request failed:", error.response ? error.response.data : error.message);
-    }
-}
-
-// Execute the request
-sendOrder();
-
-```
-
-**Request parameters**
-
-| Parameter name                          | Type   | Description                                   |
-| :-------------------------------------- | :----- | :-------------------------------------------- |
-| contractName<font color="red">\*</font> | string | `Uppercase`contract name, such as`E-BTC-USDT` |
-| limit                                   | string | Pagination limit, default: 100; maximum: 1000 |
-| fromId                                  | long   | Start retrieving from this record             |
-
-> Response example
-
-```json
-[
-  {
-    "side": "SELL",
-    "positionType": 2,
-    "tradeFee": -5.23575,
-    "realizedAmount": 0,
-    "leverageLevel": 26,
-    "openPrice": 44500,
-    "settleProfit": 0,
-    "mtime": 1632882739000,
-    "shareAmount": 0,
-    "openEndPrice": 44500,
-    "closeProfit": -45,
-    "volume": 900,
-    "contractId": 1,
-    "historyRealizedAmount": -50.23575,
-    "ctime": 1632882691000,
-    "id": 8764,
-    "capitalFee": 0
-  }
-]
-```
-
-If this API returns unexpected results, please contact the technical team, and we will provide you with relevant assistance
-
 ### Transaction records
 
 `GET https://t(:futures_http_url)/fapi/v1/myTrades`
-
-**Rate limit rule: 20 requests per 2 seconds**
 
 **Request headers**
 
@@ -12719,7 +12604,7 @@ sendOrder();
 | Parameter name                           | Type    | Description                                          |
 | :--------------------------------------- | :------ | :--------------------------------------------------- |
 | contractName<font color="red">\*</font>  | string  | Contract name, e.g.,`E-BTC-USDT`                     |
-| positionModel<font color="red">\*</font> | integer | Position mode, 1:`Net Position`, 2:`Hedged Position` |
+| positionModel<font color="red">\*</font> | integer | Position mode, 1:`both Position`, 2:`Hedged Position` |
 
 > Response example
 
@@ -13130,7 +13015,7 @@ sendOrder();
 | Parameter name                          | Type    | Description                                        |
 | :-------------------------------------- | :------ | :------------------------------------------------- |
 | contractName<font color="red">\*</font> | string  | Contract Name, e.g.,`E-BTC-USDT`                   |
-| marginModel<font color="red">\*</font>  | integer | Position Mode:，1：`Net Position`，2：`Hedge Mode` |
+| marginModel<font color="red">\*</font>  | integer | Margin Mode:，1：`Cross`，2：`Isolated` |
 
 > Response example
 
@@ -13953,9 +13838,9 @@ sendOrder();
 
 | Parameter name                          | Type    | Description                      |
 | :-------------------------------------- | :------ | :------------------------------- |
-| contractName<font color="red">\*</font> | string  | Contract Name, e.g.,`E-BTC-USDT` |
-| limit<font color="red">\*</font>        | integer | Number of records displayed      |
-| page<font color="red">\*</font>         | integer | Current page number              |
+| contractName | string  | Contract Name, e.g.,`E-BTC-USDT` |
+| limit       | integer | Number of records displayed, default=10     |
+| page         | integer | Current page number, default=1              |
 
 > Return example
 
@@ -14012,7 +13897,7 @@ sendOrder();
 | historyRealizedAmount<font color="red">\*</font> | bigDecimal | Historical cumulative realized profits and losses |
 | unRealizedAmount<font color="red">\*</font>      | bigDecimal | Unrealized Profit and Loss                        |
 | ctime<font color="red">\*</font>                 | string     | Creation time                                     |
-| status<font color="red">\*</font>                | integer    | Position Validity (0: Invalid, 1: Valid)          |
+| status<font color="red">\*</font>                | integer    | Position Validity (1: Valid)                      |
 | side<font color="red">\*</font>                  | string     | Position direction                                |
 | leverageLevel<font color="red">\*</font>         | integer    | Leverage ratio                                    |
 
@@ -14553,8 +14438,6 @@ To keep the connection active and stable, it is recommended to perform the follo
 ## Java
 
 [JAVA Demo](https://github.com/)
-
-<a name="Return Code Type"></a>
 
 # Return Code Type
 

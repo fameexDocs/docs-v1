@@ -1412,6 +1412,7 @@ if (timestamp < (serverTime + 1000) && (serverTime - timestamp) <= recvWindow) {
 
 # 现货交易
 
+
 ## 枚举类型
 
 ### 交易对
@@ -1769,7 +1770,7 @@ https.get(url, (res) => {
 
 ```json
 {
-  "timezone": "China Standard Time",
+  "timezone": "UTC Time",
   "serverTime": 1705039779880
 }
 ```
@@ -1778,8 +1779,8 @@ https.get(url, (res) => {
 
 | 参数名     | 类型   | 示例                  | 描述         |
 | :--------- | :----- | :-------------------- | :----------- |
-| timezone   | string | `China Standard Time` | 服务器时区   |
-| serverTime | long   | `1705039779880`       | 服务器时间戳 |
+| timezone   | string | `UTC Time`            | UTC时区       |
+| serverTime | long   | `1705039779880`       | 时间戳        |
 
 <a name="现货交易-公共-币对列表"></a>
 
@@ -2003,7 +2004,7 @@ https.get(url, (res) => {
 
 | 参数名            | 类型       | 示例      | 描述               |
 | :---------------- | :--------- | :-------- | :----------------- |
-| symbol            | string     | `BTCUSDT` | `大写`币对名称     |
+| symbol            | string     | `BTCUSDT` | `大写`币对名称      |
 | baseAsset         | string     | `BTC`     | `基准货币`         |
 | quoteAsset        | string     | `USDT`    | `计价货币`         |
 | pricePrecision    | integer    | `6`       | 价格精度           |
@@ -4007,7 +4008,7 @@ sendOrder();
   "symbol": "ETHUSDT",
   "side": "BUY",
   "executedQty": 0,
-  "orderId": ["2012274607240433332"],
+  "orderId": "2012274607240433332",
   "price": 47651.29,
   "origQty": 0.01,
   "clientOrderId": "213443",
@@ -5003,7 +5004,7 @@ axios
 
 | 参数名                             | 类型   | 描述                            |
 | :--------------------------------- | :----- | :------------------------------ |
-| orderId<font color="red">\*</font> | string | 订单 id                         |
+| orderId<font color="red">\*</font> | integer | 订单 id                         |
 | symbol<font color="red">\*</font>  | string | `小写`币对名称，例如：`ethusdt` |
 
 > 返回示例
@@ -5043,6 +5044,7 @@ axios
 | transactTime  | long   | `1672274311107`      | 时间戳                                                                                                      |
 | side          | string | `BUY`                | 订单方向。可能出现的值只能为：`BUY`（买入做多）和`SELL`（卖出做空）                                         |
 | status        | string | `New Order`          | 订单状态。可能出现的值为：`New Order`(新订单，无成交)、`Partially Filled`（部分成交）、`Filled`（全部成交） |
+
 
 ### 撤销订单
 
@@ -6842,8 +6844,7 @@ axios
 | :-------- | :------ | :-------------------- | :------------------------------------------------ |
 | symbol    | string  | `ETHBTC`              | `大写`币种名称                                    |
 | id        | integer | `159`                 | 交易 ID                                           |
-| bidId     | long    | `1954603951049381893` | 买方订单 ID                                       |
-| askId     | long    | `1856176838352995447` | 卖方订单 ID                                       |
+| orderId   | integer | `836481496066822100`  | 订单 ID                                           | 
 | price     | integer | `2334`                | 交易价格                                          |
 | qty       | float   | `0.00004284`          | 交易数量                                          |
 | time      | number  | `1701165091964`       | 交易时间戳                                        |
@@ -6851,8 +6852,6 @@ axios
 | isMaker   | boolean | `false`               | `true`=Maker，`false`=Taker                       |
 | feeCoin   | string  | `ETH`                 | 交易手续费币种                                    |
 | fee       | number  | `0.00000000428`       | 交易手续费                                        |
-| bidUserId | integer | `10083`               | 买方用户 uid                                      |
-| askUserId | integer | `10671`               | 卖方用户 uid                                      |
 | side      | string  | `BUY`                 | 主动单方向`BUY`/`SELL`                            |
 
 ## 账户
@@ -6861,8 +6860,7 @@ axios
 
 <aside class="notice">账户下方的接口都需要签名和API-key验证。</aside>
 
-
-### 账户信息（推荐）
+### 账户信息
 
 `GET https://t(:spot_http_url)/sapi/v1/account/balance`
 
@@ -7334,7 +7332,7 @@ axios
 | 参数名   | 类型   | 描述     |
 | :------- | :----- | :------- |
 | balances | array  | 账户余额 |
-| asset    | string | 币种   |
+| asset    | string | 币种    |
 | free     | string | 可用余额 |
 | locked   | string | 冻结余额 |
 
@@ -7342,31 +7340,25 @@ axios
 
 ## 枚举类型
 
-### 交易对
-
-| 值      | 说明                                           |
-| :------ | :--------------------------------------------- |
-| `base`  | 指一个交易对的交易对象，即写在靠前部分的资产名 |
-| `quote` | 指一个交易对的定价资产，即写在靠后部分资产名   |
-
 ### 订单状态
-
 | 值                           | 说明            |
 | :--------------------------- | :-------------- |
-| `New Order`                  | 新建订单        |
-| `Partially Filled`           | 部分成交        |
-| `Filled`                     | 全部成交        |
-| `Cancelled`                  | 已撤销          |
-| `To be Cancelled`            | 正在撤销中      |
-| `Partially Filled/Cancelled` | 部分成交/已取消 |
-| `REJECTED`                   | 订单被拒绝      |
+| `0`                          | 初始订单         |
+| `1`                          | 新订单           |
+| `2`                          | 全部成交         | 
+| `3`                          | 部分成交          |
+| `4`                          | 撤銷             |
+| `5`                          | 待撤銷            |
+| `6`                          | 异常订单          |
 
 ### 订单种类
-
 | 值       | 说明   |
 | :------- | :----- |
-| `LIMIT`  | 限价单 |
-| `MARKET` | 市价单 |
+| `1`  | 限价单  |
+| `2`  | 市价单  |
+|`3`   | IOC    |
+|`4`   | FOK    |
+|`5`   | POST_ONLY |
 
 ### 订单方向
 
@@ -7384,7 +7376,6 @@ axios
 | `day`   | 天   | `1day`                                    |
 | `week`  | 周   | `1week`                                   |
 | `month` | 月   |                                           |
-
 
 ## 公共
 
@@ -7707,8 +7698,8 @@ https.get(url, (res) => {
 
 | 参数名     | 类型   | 示例                  | 描述         |
 | :--------- | :----- | :-------------------- | :----------- |
-| timezone   | string | `UTC Time`            | UTC时区     |
-| serverTime | long   | `1607702400000`       | 毫秒級时间戳 |
+| timezone   | string | `China Standard Time` | 服务器时区   |
+| serverTime | long   | `1607702400000`       | 服务器时间戳 |
 
 ### 合约列表
 
@@ -8077,20 +8068,26 @@ https.get(url, (res) => {
 ```json
 {
   "time": 1704962463000,
-  "bids": [
-    [
-      3.9, //价格
-      16.1 //数量
-    ],
-    [4.0, 29.3]
-  ],
   "asks": [
-    [
-      4.000002, //价格
-      12.0 //数量
+        [
+            77765.7,
+            849
+        ],
+        [
+            77765.9,
+            636
+        ]
     ],
-    [5.1, 28.0]
-  ]
+  "bids": [
+        [
+            77764.7,
+            587
+        ],
+        [
+            77764.6,
+            546
+        ]
+    ]
 }
 ```
 
@@ -8103,6 +8100,187 @@ https.get(url, (res) => {
 | asks   | list | `[[4.00000200,12.0],[5.1,28.0]]` | 订单薄卖盘信息，数组第一位为价格，类型为 float；第二位为当前价格对应的数量，类型为 float |
 
 bids 和 asks 所对应的信息代表了订单薄的所有价格以及价格对应的数量的信息, 由最优价格从上到下排列
+
+### 行情 Ticker
+
+`GET https://t(:futures_http_url)/fapi/v1/ticker`
+
+24 小时价格变化数据
+
+> 请求示例
+
+```http
+GET https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT
+
+// request headers
+Content-Type:application/json
+```
+
+```shell
+curl -X GET "https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT"
+```
+
+```java
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+
+public class Main {
+  public static void main(String[] args) {
+    try {
+      // 使用 URI 创建 URL
+      URI uri = new URI("https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT");
+      HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+      conn.setRequestMethod("GET");
+      conn.setRequestProperty("User-Agent", "Java-Client");
+
+      // 读取响应
+      BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+      StringBuilder response = new StringBuilder();
+      String line;
+      while ((line = reader.readLine()) != null) {
+        response.append(line);
+      }
+      reader.close();
+
+      // 输出结果
+      System.out.println("Response: " + response.toString());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	url := "https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT"
+
+	// 发送 GET 请求
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 读取响应体
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("读取响应失败:", err)
+		return
+	}
+
+	// 打印响应
+	fmt.Println("服务器返回:", string(body))
+}
+```
+
+```python
+import requests
+
+url = "https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT"
+
+try:
+    response = requests.get(url)
+    response.raise_for_status()  # 检查请求是否成功
+    print("Response:", response.text)
+except requests.exceptions.RequestException as e:
+    print("请求错误:", e)
+```
+
+```php
+$url = "https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT";
+
+// 初始化 cURL
+$ch = curl_init();
+
+// 设置 cURL 选项
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过 SSL 证书验证（如果 API 需要）
+
+// 执行请求
+$response = curl_exec($ch);
+
+// 检查是否有错误
+if (curl_errno($ch)) {
+    echo "cURL 错误：" . curl_error($ch);
+} else {
+    echo "Response: " . $response;
+}
+
+// 关闭 cURL
+curl_close($ch);
+```
+
+```javascript--node
+const https = require('https');
+
+const url = 'https://t(:futures_http_url)/fapi/v1/ticker?contractName=E-BTC-USDT';
+
+https.get(url, (res) => {
+  let data = '';
+
+  // A chunk of data has been received.
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  // The whole response has been received.
+  res.on('end', () => {
+    console.log("Response:", data);
+  });
+
+}).on('error', (err) => {
+  console.log('请求错误:', err.message);
+});
+```
+
+**请求参数**
+
+| 参数名                                  | 类型   | 描述                               |
+| :-------------------------------------- | :----- | :--------------------------------- |
+| contractName<font color="red">\*</font> | string | `大写`合约名称，例如：`E-BTC-USDT` |
+
+> 返回示例
+
+```json
+{
+  "high": 56120.22,
+  "vol": 51.21,
+  "last": 55989.93,
+  "low": 55982.24,
+  "buy": 55988.1,
+  "sell": 55990.1,
+  "rose": "+0.05",
+  "time": 1704966225000
+}
+```
+
+**返回参数**
+
+| 参数名 | 类型   | 示例            | 描述                                      |
+| :----- | :----- | :-------------- | :---------------------------------------- |
+| time   | long   | `1595563624731` | 时间戳                                    |
+| high   | float  | `56120.22`      | 最高价                                    |
+| low    | float  | `55982.24`      | 最低价                                    |
+| last   | float  | `55989.93`      | 最新价                                    |
+| vol    | float  | `51.21`         | 交易量                                    |
+| rose   | string | `+0.05`         | 涨跌幅，`+`为涨，`-`为跌，`+0.05`为涨`5%` |
+| buy    | float  | `55988.10`      | 买一价格                                  |
+| sell   | float  | `55990.10`      | 卖一价格                                  |
 
 ### 行情 Ticker-V2
 
@@ -8323,10 +8501,13 @@ https.get(url, (res) => {
 
 ```json
 {
-  "currentFundRate": -0.00375,
-  "indexPrice": 27905.98,
-  "tagPrice": 27824.4422146875,
-  "nextFundRate": -0.00375
+    "currentFundRate": -0.0001121946978565,
+    "indexPrice": 77654.33,
+    "before24LowPrice": 77419.2,
+    "before24HighPrice": 79445.8,
+    "tagPrice": 77607.4889394,
+    "newPrice": 77593.6,
+    "nextFundRate": -0.0001071481385035
 }
 ```
 
@@ -8336,6 +8517,9 @@ https.get(url, (res) => {
 | :-------------- | :---- | :----------------------- | :--------------------------- |
 | indexPrice      | float | `27905.9800000000000000` | 指数价格                     |
 | tagPrice        | float | `27824.4422146875000000` | 标记价格                     |
+| newPrice        | float | `77593.6`                | 最新价格                     |
+| before24LowPrice| float | `77419.2`                | 24小时最低价                 |
+| before24HighPrice| float | `79445.8`                | 24小时最高价                 |
 | nextFundRate    | float | `-0.0037500000000000`    | 资金费率价格                 |
 | currentFundRate | float | `-0.0037500000000000`    | 上期资金费率（用于本期结算） |
 
@@ -8960,7 +9144,7 @@ sendOrder();
 | price                                   | number | 下单价格，限价单时该字段为必传，有精度限制，精度由管理员设置         |
 | volume<font color="red">\*</font>       | number | 下单张数，有精度限制，精度由管理员设置，市价开仓时这里单位是价值     |
 | type<font color="red">\*</font>         | string | 订单类型，`LIMIT`/`MARKET` (`LIMIT`:限价委托,`MARKET`:市价委托)      |
-|                                         |        | 注意：当 `timeInForce` 有传值时，此字段会被忽略！                    |
+|                                         |        | 注意：当 `timeInForce` 有传值时，此字段会预设为LIMIT                    |
 | side<font color="red">\*</font>         | string | 买卖方向，`BUY/SELL`                                                 |
 | open<font color="red">\*</font>         | string | 开平仓方向，`OPEN/CLOSE`                                             |
 | positionType<font color="red">\*</font> | number | 持仓类型，`1:全仓/2:逐仓`                                            |
@@ -8968,7 +9152,7 @@ sendOrder();
 |                                         |        | (`IOC`:无法立即成交的部分就撤销,                                     |
 |                                         |        | `FOK`:无法全部立即成交就撤销,                                        |
 |                                         |        | `POST_ONLY`:无法成为被动单就撤销)                                    |
-|                                         |        | 注意：如果该字段有值，将直接覆盖 `type` 字段，作为最终订单类型处理。 |
+|                                         |        | 注意：如果该字段有值，将 `type` 字段预设为LIMIT |
 | clientOrderId                           | string | 客户端下单标识，长度小于 32 位的字符串                               |
 
 > 返回示例
@@ -9429,8 +9613,6 @@ sendOrder();
 
 `POST https://t(:futures_http_url)/fapi/v1/cancel`
 
-**限速规则: 20 次/2s**
-
 **请求头**
 
 | 参数名                                 | 类型    | 描述         |
@@ -9839,8 +10021,6 @@ sendOrder();
 ### 取消条件单
 
 `POST https://t(:futures_http_url)/fapi/v1/cancel_trigger_order`
-
-**限速规则: 20 次/2s**
 
 **请求头**
 
@@ -10252,7 +10432,6 @@ sendOrder();
 
 `GET https://t(:futures_http_url)/fapi/v1/order`
 
-**限速规则: 20 次/2s**
 
 **请求头**
 
@@ -10693,8 +10872,6 @@ sendOrder();
 ### 当前订单
 
 `GET https://t(:futures_http_url)/fapi/v1/openOrders`
-
-**限速规则: 20 次/2s**
 
 **请求头**
 
@@ -11558,441 +11735,9 @@ sendOrder();
 
 如果该接口返回与期望不符，请联系技术团队，我们会为您提供相关帮助
 
-### 盈亏记录
-
-`POST https://t(:futures_http_url)/fapi/v1/profitHistorical`
-
-如果该接口返回报错，请联系技术团队，我们会为您提供相关帮助
-
-**请求头**
-
-| 参数名                                 | 类型   | 描述         |
-| :------------------------------------- | :----- | :----------- |
-| X-CH-SIGN<font color="red">\*</font>   | string | 签名         |
-| X-CH-APIKEY<font color="red">\*</font> | string | 您的 API-key |
-| X-CH-TS<font color="red">\*</font>     | string | 时间戳       |
-
-> 请求示例
-
-```http
-POST https://t(:futures_http_url)/fapi/v1/profitHistorical
-
-body
-{"contractName":"E-BTC-USDT"}
-```
-
-```shell
-#!/bin/bash
-
-# API 相关信息
-api_key="您的API-KEY"
-api_secret="您的API-SECRET"
-
-# 请求信息
-timestamp=$(($(date +%s%N)/1000000))  # 毫秒级时间戳
-method="POST"
-request_path="/fapi/v1/profitHistorical"
-
-# 请求主体 (JSON 格式)
-body='{"contractName":"E-BTC-USDT"}'
-
-# 删除 body 中的空白字符，保证签名的一致性
-body=$(echo "$body" | jq -c)
-
-# 拼接签名字符串
-sign_str="${timestamp}${method}${request_path}${body}"
-echo "签名字符串: $sign_str"
-
-# 生成 HMAC SHA256 签名
-signature=$(echo -n "$sign_str" | openssl dgst -sha256 -hmac "$api_secret" | awk '{print $2}')
-echo "签名 (X-CH-SIGN): $signature"
-
-# 发送 POST 请求
-response=$(curl -s -X POST "https://t(:futures_http_url)${request_path}" \
-    -H "Content-Type: application/json" \
-    -H "X-CH-TS: $timestamp" \
-    -H "X-CH-APIKEY: $api_key" \
-    -H "X-CH-SIGN: $signature" \
-    -d "$body")
-
-# 输出响应结果
-echo "响应: $response"
-```
-
-```java
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import java.util.concurrent.TimeUnit;
-
-public class SendOrder {
-
-    // API 相关信息
-    private static final String API_KEY = "您的API-KEY";
-    private static final String API_SECRET = "您的API-SECRET";
-    private static final String BASE_URL = "https://t(:futures_http_url)";
-    private static final String REQUEST_PATH = "/fapi/v1/profitHistorical";
-
-    public static void main(String[] args) {
-        try {
-            // 获取时间戳 (毫秒)
-            long timestamp = TimeUnit.MILLISECONDS.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
-
-            // 请求方法
-            String method = "POST";
-
-            // 请求主体 (JSON 格式，注意使用紧凑格式)
-            String body = "{"contractName":"E-BTC-USDT"}";
-            System.out.println("请求主体 (body): " + body);
-
-            // 拼接签名字符串
-            String signStr = timestamp + method + REQUEST_PATH + body;
-            System.out.println("签名字符串: " + signStr);
-
-            // 生成 HMAC SHA256 签名
-            String signature = hmacSHA256(signStr, API_SECRET);
-            System.out.println("签名 (X-CH-SIGN): " + signature);
-
-            // 使用 URI 创建 URL
-            URI uri = new URI(BASE_URL + REQUEST_PATH);
-            HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("X-CH-TS", String.valueOf(timestamp));
-            conn.setRequestProperty("X-CH-APIKEY", API_KEY);
-            conn.setRequestProperty("X-CH-SIGN", signature);
-            conn.setRequestProperty("User-Agent", "Java-Client");
-            conn.setDoOutput(true);
-
-            // 发送请求主体
-            try (OutputStream os = conn.getOutputStream()) {
-                os.write(body.getBytes(StandardCharsets.UTF_8));
-                os.flush();
-            }
-
-            // 读取响应
-            int responseCode = conn.getResponseCode();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    responseCode >= 200 && responseCode < 300 ? conn.getInputStream() : conn.getErrorStream()));
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-            reader.close();
-
-            // 输出响应结果
-            System.out.println("响应 (" + responseCode + "): " + response.toString());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 生成 HMAC SHA256 签名
-     *
-     * @param data   要签名的字符串
-     * @param secret 密钥
-     * @return HMAC SHA256 签名
-     */
-    public static String hmacSHA256(String data, String secret) throws Exception {
-        Mac mac = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-        mac.init(secretKeySpec);
-        byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : hash) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) hexString.append('0');
-            hexString.append(hex);
-        }
-        return hexString.toString();
-    }
-}
-```
-
-```go
-package main
-
-import (
-	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
-)
-
-// API 相关信息
-const (
-	APIKey     = "您的API-KEY"
-	APISecret  = "您的API-SECRET"
-	BaseURL    = "https://t(:futures_http_url)"
-	RequestPath = "/fapi/v1/profitHistorical"
-)
-
-func main() {
-	// 获取毫秒级时间戳
-	timestamp := time.Now().UnixNano() / int64(time.Millisecond)
-
-	// 请求方法
-	method := "POST"
-
-	// 请求主体 (JSON 格式)
-	body := `{"contractName":"E-BTC-USDT"}`
-
-	// 拼接签名字符串
-	signStr := fmt.Sprintf("%d%s%s%s", timestamp, method, RequestPath, body)
-	fmt.Println("签名字符串:", signStr)
-
-	// 生成 HMAC SHA256 签名
-	signature := generateHMACSHA256(signStr, APISecret)
-	fmt.Println("签名 (X-CH-SIGN):", signature)
-
-	// 发送 POST 请求
-	url := BaseURL + RequestPath
-	req, err := http.NewRequest(method, url, bytes.NewBuffer([]byte(body)))
-	if err != nil {
-		fmt.Println("创建请求失败:", err)
-		return
-	}
-
-	// 设置请求头
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-CH-TS", fmt.Sprintf("%d", timestamp))
-	req.Header.Set("X-CH-APIKEY", APIKey)
-	req.Header.Set("X-CH-SIGN", signature)
-
-	// 执行请求
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	defer resp.Body.Close()
-
-	// 读取响应
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("响应:", string(responseBody))
-}
-
-// 生成 HMAC SHA256 签名
-func generateHMACSHA256(data, secret string) string {
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write([]byte(data))
-	return hex.EncodeToString(h.Sum(nil))
-}
-```
-
-```python
-import time
-import hmac
-import hashlib
-import requests
-
-# API 相关信息
-API_KEY = "您的API-KEY"
-API_SECRET = "您的API-SECRET"
-BASE_URL = "https://t(:futures_http_url)"
-REQUEST_PATH = "/fapi/v1/profitHistorical"
-
-# 请求方法和请求主体
-method = "POST"
-body = {"contractName":"E-BTC-USDT"}
-
-
-# 获取时间戳 (毫秒级)
-timestamp = int(time.time() * 1000)
-
-# 将请求主体转换为紧凑的 JSON 字符串
-import json
-body_str = json.dumps(body, separators=(',', ':'))
-print("请求主体 (body):", body_str)
-
-# 拼接签名字符串
-sign_str = f"{timestamp}{method}{REQUEST_PATH}{body_str}"
-print("签名字符串:", sign_str)
-
-# 生成 HMAC SHA256 签名
-signature = hmac.new(API_SECRET.encode('utf-8'), sign_str.encode('utf-8'), hashlib.sha256).hexdigest()
-print("签名 (X-CH-SIGN):", signature)
-
-# 构建请求头
-headers = {
-    "Content-Type": "application/json",
-    "X-CH-TS": str(timestamp),
-    "X-CH-APIKEY": API_KEY,
-    "X-CH-SIGN": signature,
-    "User-Agent": "Python-Client"
-}
-
-# 发送 POST 请求
-url = BASE_URL + REQUEST_PATH
-response = requests.post(url, headers=headers, data=body_str)
-
-# 输出响应结果
-print("响应状态码:", response.status_code)
-print("响应内容:", response.text)
-```
-
-```php
-// API 相关信息
-$apiKey = "您的API-KEY";
-$apiSecret = "您的API-SECRET";
-$baseUrl = "https://t(:futures_http_url)";
-$requestPath = "/fapi/v1/profitHistorical";
-
-// 请求方法和请求主体
-$method = "POST";
-$body = json_encode([
-    "contractName" => "E-BTC-USDT"
-], JSON_UNESCAPED_SLASHES);
-
-// 获取毫秒级时间戳
-$timestamp = round(microtime(true) * 1000);
-
-// 拼接签名字符串
-$signStr = $timestamp . $method . $requestPath . $body;
-echo "签名字符串: " . $signStr . PHP_EOL;
-
-// 生成 HMAC SHA256 签名
-$signature = hash_hmac('sha256', $signStr, $apiSecret);
-echo "签名 (X-CH-SIGN): " . $signature . PHP_EOL;
-
-// 构建请求头
-$headers = [
-    "Content-Type: application/json",
-    "X-CH-TS: $timestamp",
-    "X-CH-APIKEY: $apiKey",
-    "X-CH-SIGN: $signature",
-    "User-Agent: PHP-Client"
-];
-
-// 发送 POST 请求
-$url = $baseUrl . $requestPath;
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 仅在开发环境中使用，生产环境应启用 SSL 验证
-
-$response = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-if (curl_errno($ch)) {
-    echo "请求失败: " . curl_error($ch) . PHP_EOL;
-} else {
-    echo "响应状态码: $httpCode" . PHP_EOL;
-    echo "响应内容: $response" . PHP_EOL;
-}
-
-curl_close($ch);
-```
-
-```javascript--node
-const crypto = require('crypto');
-const axios = require('axios');
-
-// API 相关信息
-const API_KEY = "您的API-KEY";
-const API_SECRET = "您的API-SECRET";
-const BASE_URL = "https://t(:futures_http_url)";
-const REQUEST_PATH = "/fapi/v1/profitHistorical";
-
-// 请求方法和请求主体
-const method = "POST";
-const body = JSON.stringify({
-    contractName: "E-BTC-USDT"
-});
-
-// 获取毫秒级时间戳
-const timestamp = Date.now();
-
-// 拼接签名字符串
-const signStr = `${timestamp}${method}${REQUEST_PATH}${body}`;
-console.log("签名字符串:", signStr);
-
-// 生成 HMAC SHA256 签名
-const signature = crypto.createHmac('sha256', API_SECRET).update(signStr).digest('hex');
-console.log("签名 (X-CH-SIGN):", signature);
-
-// 构建请求头
-const headers = {
-    "Content-Type": "application/json",
-    "X-CH-TS": timestamp.toString(),
-    "X-CH-APIKEY": API_KEY,
-    "X-CH-SIGN": signature,
-    "User-Agent": "Node.js-Client"
-};
-
-// 发送 POST 请求
-async function sendOrder() {
-    try {
-        const response = await axios.post(`${BASE_URL}${REQUEST_PATH}`, body, { headers });
-        console.log("响应状态码:", response.status);
-        console.log("响应内容:", response.data);
-    } catch (error) {
-        console.error("请求失败:", error.response ? error.response.data : error.message);
-    }
-}
-
-// 执行请求
-sendOrder();
-
-```
-
-**请求参数**
-
-| 参数名                                  | 类型   | 描述                               |
-| :-------------------------------------- | :----- | :--------------------------------- |
-| contractName<font color="red">\*</font> | string | `大写`合约名称，例如：`E-BTC-USDT` |
-| limit                                   | string | 分页条数，默认：100；最大：1000    |
-| fromId                                  | long   | 从这条记录开始检索                 |
-
-> 返回示例
-
-```json
-[
-  {
-    "side": "SELL",
-    "positionType": 2,
-    "tradeFee": -5.23575,
-    "realizedAmount": 0,
-    "leverageLevel": 26,
-    "openPrice": 44500,
-    "settleProfit": 0,
-    "mtime": 1632882739000,
-    "shareAmount": 0,
-    "openEndPrice": 44500,
-    "closeProfit": -45,
-    "volume": 900,
-    "contractId": 1,
-    "historyRealizedAmount": -50.23575,
-    "ctime": 1632882691000,
-    "id": 8764,
-    "capitalFee": 0
-  }
-]
-```
-
-如果该接口返回与期望不符，请联系技术团队，我们会为您提供相关帮助
-
 ### 交易记录
 
 `GET https://t(:futures_http_url)/fapi/v1/myTrades`
-
-**限速规则: 20 次/2s**
 
 **请求头**
 
@@ -12847,7 +12592,7 @@ sendOrder();
 | 参数名                                   | 类型    | 描述                                 |
 | :--------------------------------------- | :------ | :----------------------------------- |
 | contractName<font color="red">\*</font>  | string  | 合约名称，例如：`E-BTC-USDT`         |
-| positionModel<font color="red">\*</font> | integer | 持仓模式，1：`净持仓`，2：`双向持仓` |
+| positionModel<font color="red">\*</font> | integer | 持仓模式，1：`单向持仓`，2：`双向持仓` |
 
 > 返回示例
 
@@ -13258,7 +13003,7 @@ sendOrder();
 | 参数名                                  | 类型    | 描述                                 |
 | :-------------------------------------- | :------ | :----------------------------------- |
 | contractName<font color="red">\*</font> | string  | 合约名称，例如：`E-BTC-USDT`         |
-| marginModel<font color="red">\*</font>  | integer | 持仓模式，1：`净持仓`，2：`双向持仓` |
+| marginModel<font color="red">\*</font>  | integer | 保證金模式，1:`全仓`, 2:`逐仓` |
 
 > 返回示例
 
@@ -14081,9 +13826,9 @@ sendOrder();
 
 | 参数名                                  | 类型    | 描述                         |
 | :-------------------------------------- | :------ | :--------------------------- |
-| contractName<font color="red">\*</font> | string  | 合约名称，例如：`E-BTC-USDT` |
-| limit<font color="red">\*</font>        | integer | 显示笔数                     |
-| page<font color="red">\*</font>         | integer | 第几页                       |
+| contractName| string  | 合约名称，例如：`E-BTC-USDT` |
+| limit       | integer | 显示笔数  預設10                   |
+| page        | integer | 第几页    預設1                   |
 
 > 返回示例
 
@@ -14137,10 +13882,10 @@ sendOrder();
 | openPrice<font color="red">\*</font>             | bigDecimal | 开仓价格                  |
 | closePrice<font color="red">\*</font>            | bigDecimal | 平仓均价                  |
 | closeVolume<font color="red">\*</font>           | bigDecimal | 已平仓数量                |
-| historyRealizedAmount<font color="red">\*</font> | bigDecimal | 历史累计已实现盈亏        |
+| historyRealizedAmount<font color="red">\*</font> | bigDecimal | 历史累计已实现盈亏         |
 | unRealizedAmount<font color="red">\*</font>      | bigDecimal | 未实现盈亏                |
 | ctime<font color="red">\*</font>                 | string     | 创建时间                  |
-| status<font color="red">\*</font>                | integer    | 仓位有效性(0:无效,1:有效) |
+| status<font color="red">\*</font>                | integer    | 仓位有效性(1:有效)         |
 | side<font color="red">\*</font>                  | string     | 持仓方向                  |
 | leverageLevel<font color="red">\*</font>         | integer    | 杠杆倍数                  |
 
@@ -14935,7 +14680,6 @@ Kline interval 后缀
 | Code | Tag | msg      | 原因               |
 | :--- | :-- | :------- | :----------------- |
 | 35   |     | 禁止下单 | 用户交易可能被限制 |
-
 
 # 常见问题
 
