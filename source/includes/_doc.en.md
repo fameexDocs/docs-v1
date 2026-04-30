@@ -6994,9 +6994,9 @@ axios
 
 **Request parameters**
 
-| Parameter name | Type   | Description                                                                                                 |
-| :------------- | :----- | :---------------------------------------------------------------------------------------------------------- |
-| symbols        | string | Uppercase currency name, such as`BTC`. Supports querying multiple currencies, up to 20, separated by commas |
+| Parameter name                             | Type   | Description                                                                                                 |
+| :----------------------------------------- | :----- | :---------------------------------------------------------------------------------------------------------- |
+| symbols<font color="red">\*</font>  | string | Uppercase currency name, such as`BTC`. Supports querying multiple currencies, up to 20, separated by commas |
 
 > Response example
 
